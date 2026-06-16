@@ -14,7 +14,11 @@ keywords = []
 authors = [
     { name = "Thor Whalen" },
 ]
-dependencies = []
+dependencies = [
+    "pydantic>=2",
+    "jsonschema>=4",
+    "networkx>=3",
+]
 
 [project.license]
 text = "mit"
@@ -33,6 +37,34 @@ dev = [
 docs = [
     "sphinx>=6.0",
     "sphinx-rtd-theme>=1.0",
+]
+# --- functional extras (each behind a Protocol/strategy seam; lazily imported) ---
+llm = [
+    "instructor>=1",
+]
+query = [
+    "duckdb>=0.10",
+    "jmespath>=1",
+]
+semantic = [
+    "linkml>=1.7",
+    "rdflib>=7",
+    "pyshacl>=0.25",
+]
+graphdb = [
+    "neo4j>=5",
+    "pyoxigraph>=0.3",
+    "rustworkx>=0.14",
+]
+eval = [
+    "deepeval>=0.21",
+]
+er = [
+    "splink>=4",
+]
+ingest = [
+    "docling",
+    "markitdown",
 ]
 
 [tool.ruff]
