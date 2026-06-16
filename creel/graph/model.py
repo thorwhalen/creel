@@ -62,6 +62,12 @@ class Graph:
         self._g: nx.MultiDiGraph = nx.MultiDiGraph()
         #: edge_id -> (source, target) for O(1) edge lookup by id.
         self._edge_index: dict[str, tuple[str, str]] = {}
+        #: Separable audit sidecar: element id -> evidence record (D8). Populated by
+        #: the facade; deliberately NOT part of the canonical JSON (joined on demand).
+        self.evidence: dict[str, Any] = {}
+        #: Free-form run report (e.g. skipped edges, unbound elements) attached by
+        #: the facade; also excluded from canonical JSON.
+        self.report: dict[str, Any] = {}
 
     # -- construction ------------------------------------------------------
     def add_node(
