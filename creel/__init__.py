@@ -9,12 +9,37 @@ Conceptually the package is one parameterised facade::
 
     extract(sources, graph_spec, extractors) -> graph
 
-This ``v0.1`` exposes the **data layer**: the grammar (:mod:`creel.spec`) and the
-graph model + canonical JSON (:mod:`creel.graph`). The ``extract`` facade and the
-extractor/verifier strategy layers arrive in subsequent milestones — see
+This ``v0.1`` exposes the grammar (:mod:`creel.spec`), the graph model + canonical
+JSON (:mod:`creel.graph`), and the ``extract`` facade with the deterministic
+pattern/function extractor family (:mod:`creel.extract`). The query and LLM
+strategies and the verifier subsystem arrive in subsequent milestones — see
 ``misc/docs/design/ROADMAP.md``.
 """
 
+from creel.bindings import ExtractorBinding, ExtractorBindings
+from creel.evidence import (
+    Confidence,
+    Evidence,
+    Provenance,
+    TextPositionSelector,
+    TextQuoteSelector,
+)
+from creel.extract import (
+    Cache,
+    DictCache,
+    ExtractedEdge,
+    ExtractedNode,
+    Extraction,
+    ExtractionContext,
+    Extractor,
+    NullCache,
+    RegexEdgeExtractor,
+    RegexNodeExtractor,
+    available_extractors,
+    register_extractor,
+)
+from creel.facade import extract
+from creel.sources import Source, SourceBundle, coerce_sources
 from creel.graph import (
     CANONICAL_SCHEMA_URL,
     CANONICAL_VERSION,
@@ -65,5 +90,32 @@ __all__ = [
     "validate_canonical",
     "CANONICAL_SCHEMA_URL",
     "CANONICAL_VERSION",
+    # facade + sources
+    "extract",
+    "Source",
+    "SourceBundle",
+    "coerce_sources",
+    # extraction strategies
+    "Extractor",
+    "ExtractionContext",
+    "Extraction",
+    "ExtractedNode",
+    "ExtractedEdge",
+    "RegexNodeExtractor",
+    "RegexEdgeExtractor",
+    "register_extractor",
+    "available_extractors",
+    "Cache",
+    "NullCache",
+    "DictCache",
+    # bindings
+    "ExtractorBinding",
+    "ExtractorBindings",
+    # evidence / auditability
+    "Evidence",
+    "Provenance",
+    "Confidence",
+    "TextQuoteSelector",
+    "TextPositionSelector",
     "__version__",
 ]

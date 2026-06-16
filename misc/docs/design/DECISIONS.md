@@ -70,6 +70,25 @@ everything is recorded here so it can be challenged and changed.
   self-preference bias; default judge is a second Claude model unless configured
   otherwise. No provider SDK is pinned in core. (Open Q6.)
 
+### D-OP6 — Concrete extractor result shape & callable `Extractor` (refines synthesis sketch)
+- **Decision.** The synthesis sketched `Extractor.extract(ctx)` returning an
+  `Extraction(value, provenance, confidence)`. The implementation refines this for
+  workability: (a) `Extractor` is **any callable** `(ExtractionContext) -> Extraction`
+  (a plain function qualifies — truest realisation of "strategy as callable, not a
+  class hierarchy"); (b) `Extraction` carries concrete `nodes: tuple[ExtractedNode]`
+  and `edges: tuple[ExtractedEdge]` rather than an opaque `value`, so the facade can
+  assemble the LPG (nodes-before-edges) directly; (c) per-element evidence rides on
+  each `ExtractedNode`/`ExtractedEdge` and is collected by the facade into a
+  separable `graph.evidence` sidecar (and `graph.report` for diagnostics), which the
+  canonical JSON deliberately ignores — preserving D7/D8 separation.
+- **Rationale.** A concrete result shape makes the facade and tests simple and the
+  data flow explicit; callable extractors keep the seam maximally open. The sidecars
+  keep evidence "logically woven, physically separable" without coupling the graph
+  model to the evidence types (they are plain dicts on `Graph`).
+- **Rejected.** Opaque `Extraction.value` (forces every caller to know the shape);
+  an `Extractor` ABC (heavier than a Protocol/callable); storing evidence inside
+  node/edge attributes (would pollute the canonical graph and break separation).
+
 ## Open questions for the user (from the synthesis §"Open questions")
 
 These are recorded in GitHub as `question`-labelled issues and summarized here:
