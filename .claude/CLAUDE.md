@@ -91,6 +91,21 @@ working in that area.
 
 ## Status
 
-Greenfield. Foundation research + synthesis merged (PR #1). Planning artifacts and
-this config are next. Implementation begins at EPIC 2 (grammar/spec layer). The
-empty `creel/__init__.py` is the only code so far.
+**Milestones v0.1–v0.3 implemented and tested (65 tests green locally).** See
+`misc/docs/design/PROGRESS.md` for the detailed log. In short, the engine works
+end-to-end:
+
+- **Grammar** (`creel.spec`), **LPG + canonical JSON** (`creel.graph`) — D1–D4.
+- **`extract()` facade** (`creel.facade`) with the **pattern/function** extractor
+  family, bindings/join, and the separable **evidence** sidecar — D5–D8.
+- **Verifier subsystem** (`creel.verify`): kinds + `graph_match` + `llm_rubric`
+  (G-Eval, injected judge) and the **eval runner** (`creel.evaluation`) — D9.
+- **UNHCR RBM end-to-end corpus** (`tests/data/unhcr/`): grammar + 3 synthetic
+  docs + expected graph, scored at 1.0 by verifiers — D14.
+
+**Not yet built** (next up): the **query** (DuckDB/JMESPath) and **LLM**
+(`creel.extract.llm`) extractor strategies (EPIC 4.3/4.4); LinkML
+authoring/generation (`creel.spec.linkml`, EPIC 2.4); richer export adapters
+(rdf-star, cypher) and the downstream render/RAG contracts (EPIC 8); the
+uv-workspace `creel-core`/`creel-unhcr` split (v0.4, D-OP3); CI activation +
+first release (v0.5, D-OP1). The open design questions are issues #11–#15.
