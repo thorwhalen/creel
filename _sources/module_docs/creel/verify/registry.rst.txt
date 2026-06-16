@@ -1,0 +1,4 @@
+creel.verify.registry
+=====================
+.. automodule:: creel.verify.registry
+   :members:

@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.extract.pattern &mdash; creel 0.0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=e3a6060d"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="creel.extract.protocol" href="protocol.html" />
+    <link rel="prev" title="creel.extract.cache" href="cache.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">creel.extract.pattern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creel.extract.pattern.RegexEdgeExtractor"><code class="docutils literal notranslate"><span class="pre">RegexEdgeExtractor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.extract.pattern.RegexNodeExtractor"><code class="docutils literal notranslate"><span class="pre">RegexNodeExtractor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.extract.pattern.make_function_extractor"><code class="docutils literal notranslate"><span class="pre">make_function_extractor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../graph/canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/rubric.html">creel.verify.rubric</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">creel.extract.pattern</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/module_docs/creel/extract/pattern.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-creel.extract.pattern">
+<span id="creel-extract-pattern"></span><h1>creel.extract.pattern<a class="headerlink" href="#module-creel.extract.pattern" title="Link to this heading"></a></h1>
+<p>Pattern / function extractors — the trivial, deterministic strategy family.</p>
+<p>These are the strategies that bring the facade up before any LLM exists, and the
+ones to prefer whenever a source is regular enough that an LLM would be overkill
+(decision D5: route to the cheapest strategy that fits). They are fully
+deterministic, so every extraction gets <code class="docutils literal notranslate"><span class="pre">confidence=1.0</span></code> and exact grounding.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#creel.extract.pattern.RegexNodeExtractor" title="creel.extract.pattern.RegexNodeExtractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegexNodeExtractor</span></code></a> — scan text sources; each regex match becomes a node
+whose attributes are the named capture groups.</p></li>
+<li><p><a class="reference internal" href="#creel.extract.pattern.RegexEdgeExtractor" title="creel.extract.pattern.RegexEdgeExtractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegexEdgeExtractor</span></code></a> — likewise for first-class edges, with endpoint node
+ids built from templates over the captured groups.</p></li>
+<li><p><a class="reference internal" href="#creel.extract.pattern.make_function_extractor" title="creel.extract.pattern.make_function_extractor"><code class="xref py py-func docutils literal notranslate"><span class="pre">make_function_extractor()</span></code></a> — adapt any <code class="docutils literal notranslate"><span class="pre">(ctx)</span> <span class="pre">-&gt;</span> <span class="pre">Extraction</span></code> callable.</p></li>
+</ul>
+<p>All three are registered (<code class="docutils literal notranslate"><span class="pre">&quot;regex_node&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;regex_edge&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;function&quot;</span></code>) so a
+binding can name them and pass configuration as pure data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.extract.pattern.RegexEdgeExtractor">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.extract.pattern.</span></span><span class="sig-name descname"><span class="pre">RegexEdgeExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_id_template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_id_template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">casts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/creel/extract/pattern.html#RegexEdgeExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.extract.pattern.RegexEdgeExtractor" title="Link to this definition"></a></dt>
+<dd><p>Produce first-class edges from regex matches over text sources.</p>
+<p><code class="docutils literal notranslate"><span class="pre">source_id_template</span></code>/<code class="docutils literal notranslate"><span class="pre">target_id_template</span></code> build the endpoint node ids from
+the captured groups (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;donor:{donor}&quot;</span></code>); remaining groups not consumed by
+the templates become edge attributes.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.extract.pattern.RegexNodeExtractor">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.extract.pattern.</span></span><span class="sig-name descname"><span class="pre">RegexNodeExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_attribute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">casts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/creel/extract/pattern.html#RegexNodeExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.extract.pattern.RegexNodeExtractor" title="Link to this definition"></a></dt>
+<dd><p>Produce nodes from regex matches over text sources.</p>
+<p>The named capture groups become the node’s attributes; <code class="docutils literal notranslate"><span class="pre">id_attribute</span></code> (or a
+content hash) yields a stable node id; <code class="docutils literal notranslate"><span class="pre">casts</span></code> converts captured strings to
+numbers where the grammar expects them.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="creel.extract.pattern.make_function_extractor">
+<span class="sig-prename descclassname"><span class="pre">creel.extract.pattern.</span></span><span class="sig-name descname"><span class="pre">make_function_extractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="protocol.html#creel.extract.protocol.ExtractionContext" title="creel.extract.protocol.ExtractionContext"><span class="pre">ExtractionContext</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="protocol.html#creel.extract.protocol.Extraction" title="creel.extract.protocol.Extraction"><span class="pre">Extraction</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/creel/extract/pattern.html#make_function_extractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.extract.pattern.make_function_extractor" title="Link to this definition"></a></dt>
+<dd><p>Adapt any <code class="docutils literal notranslate"><span class="pre">(ctx)</span> <span class="pre">-&gt;</span> <span class="pre">Extraction</span></code> callable into an extractor (identity wrapper).</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cache.html" class="btn btn-neutral float-left" title="creel.extract.cache" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="protocol.html" class="btn btn-neutral float-right" title="creel.extract.protocol" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

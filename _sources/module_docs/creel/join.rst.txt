@@ -1,0 +1,4 @@
+creel.join
+==========
+.. automodule:: creel.join
+   :members:

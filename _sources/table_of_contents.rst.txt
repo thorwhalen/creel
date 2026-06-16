@@ -1,0 +1,28 @@
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   module_docs/creel
+   module_docs/creel/bindings
+   module_docs/creel/evaluation
+   module_docs/creel/evidence
+   module_docs/creel/extract
+   module_docs/creel/extract/cache
+   module_docs/creel/extract/pattern
+   module_docs/creel/extract/protocol
+   module_docs/creel/extract/registry
+   module_docs/creel/facade
+   module_docs/creel/graph
+   module_docs/creel/graph/canonical
+   module_docs/creel/graph/model
+   module_docs/creel/join
+   module_docs/creel/sources
+   module_docs/creel/spec
+   module_docs/creel/spec/model
+   module_docs/creel/spec/validate
+   module_docs/creel/verify
+   module_docs/creel/verify/graph_match
+   module_docs/creel/verify/kinds
+   module_docs/creel/verify/protocol
+   module_docs/creel/verify/registry
+   module_docs/creel/verify/rubric

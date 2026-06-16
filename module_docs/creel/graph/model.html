@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.graph.model &mdash; creel 0.0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=e3a6060d"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="creel.join" href="../join.html" />
+    <link rel="prev" title="creel.graph.canonical" href="canonical.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extract/pattern.html">creel.extract.pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">creel.graph.model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creel.graph.model.Edge"><code class="docutils literal notranslate"><span class="pre">Edge</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.graph.model.Graph"><code class="docutils literal notranslate"><span class="pre">Graph</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.add_edge"><code class="docutils literal notranslate"><span class="pre">Graph.add_edge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.add_node"><code class="docutils literal notranslate"><span class="pre">Graph.add_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.edge"><code class="docutils literal notranslate"><span class="pre">Graph.edge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.edges"><code class="docutils literal notranslate"><span class="pre">Graph.edges()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.edges_between"><code class="docutils literal notranslate"><span class="pre">Graph.edges_between()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.edges_of_type"><code class="docutils literal notranslate"><span class="pre">Graph.edges_of_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.evidence"><code class="docutils literal notranslate"><span class="pre">Graph.evidence</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.has_edge"><code class="docutils literal notranslate"><span class="pre">Graph.has_edge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.has_node"><code class="docutils literal notranslate"><span class="pre">Graph.has_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.node"><code class="docutils literal notranslate"><span class="pre">Graph.node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.nodes"><code class="docutils literal notranslate"><span class="pre">Graph.nodes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.nodes_of_type"><code class="docutils literal notranslate"><span class="pre">Graph.nodes_of_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.number_of_edges"><code class="docutils literal notranslate"><span class="pre">Graph.number_of_edges</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.number_of_nodes"><code class="docutils literal notranslate"><span class="pre">Graph.number_of_nodes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.report"><code class="docutils literal notranslate"><span class="pre">Graph.report</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.graph.model.Graph.to_networkx"><code class="docutils literal notranslate"><span class="pre">Graph.to_networkx()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.graph.model.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../verify/rubric.html">creel.verify.rubric</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">creel.graph.model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/module_docs/creel/graph/model.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-creel.graph.model">
+<span id="creel-graph-model"></span><h1>creel.graph.model<a class="headerlink" href="#module-creel.graph.model" title="Link to this heading"></a></h1>
+<p>The in-memory Labeled Property Graph (LPG) — creel’s runtime source of truth.</p>
+<p>Per decision D1 the model is an LPG: nodes and edges each have a <strong>stable string
+id</strong>, one or more type labels, and a typed attribute bag. Edges are first-class —
+they carry their own identity and attributes, so parallel edges of the same type
+between the same endpoints (two distinct fundings) stay distinguishable.</p>
+<p><a class="reference internal" href="#creel.graph.model.Graph" title="creel.graph.model.Graph"><code class="xref py py-class docutils literal notranslate"><span class="pre">Graph</span></code></a> is a thin, ergonomic wrapper over <code class="docutils literal notranslate"><span class="pre">networkx.MultiDiGraph</span></code>: the
+MultiDiGraph gives us multi-edges and per-edge attribute dicts for free, while the
+wrapper enforces creel’s invariants (globally-unique edge ids, typed accessors).</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;d:gov-x&quot;</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;donor&quot;</span><span class="p">,),</span> <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Government X&quot;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;p:wash&quot;</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;project&quot;</span><span class="p">,),</span> <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WASH&quot;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;f:1&quot;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;d:gov-x&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;p:wash&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;funds&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1_000_000</span><span class="p">,</span> <span class="s2">&quot;currency&quot;</span><span class="p">:</span> <span class="s2">&quot;USD&quot;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;f:2&quot;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;d:gov-x&quot;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;p:wash&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;funds&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">500_000</span><span class="p">,</span> <span class="s2">&quot;currency&quot;</span><span class="p">:</span> <span class="s2">&quot;USD&quot;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">edges_between</span><span class="p">(</span><span class="s2">&quot;d:gov-x&quot;</span><span class="p">,</span> <span class="s2">&quot;p:wash&quot;</span><span class="p">))</span>   <span class="c1"># parallel edges kept</span>
+<span class="go">[&#39;f:1&#39;, &#39;f:2&#39;]</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.graph.model.Edge">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.graph.model.</span></span><span class="sig-name descname"><span class="pre">Edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Edge" title="Link to this definition"></a></dt>
+<dd><p>An immutable view of a graph edge: a first-class, identity-bearing relation.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.graph.model.Graph">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.graph.model.</span></span><span class="sig-name descname"><span class="pre">Graph</span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph" title="Link to this definition"></a></dt>
+<dd><p>A labeled property (multi-)graph with stable ids on nodes and edges.</p>
+<p>Edge ids are unique across the whole graph (not merely per node pair); this is
+what makes the canonical JSON edge-by-id map and per-element provenance possible
+(decision D4/D8).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#creel.graph.model.Edge" title="creel.graph.model.Edge"><span class="pre">Edge</span></a></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.add_edge" title="Link to this definition"></a></dt>
+<dd><p>Add a typed edge with an explicit, globally-unique id.</p>
+<p>Raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if <code class="docutils literal notranslate"><span class="pre">edge_id</span></code> already exists (edge identity is
+sacred) or if an endpoint is missing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.add_node" title="Link to this definition"></a></dt>
+<dd><p>Add (or merge into) a node. Re-adding an id merges types/attributes.</p>
+<p>Merging makes extraction idempotent: the same entity surfaced by two
+extractors lands on one node rather than duplicating.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.edge">
+<span class="sig-name descname"><span class="pre">edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#creel.graph.model.Edge" title="creel.graph.model.Edge"><span class="pre">Edge</span></a></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.edge" title="Link to this definition"></a></dt>
+<dd><p>Return the <a class="reference internal" href="#creel.graph.model.Edge" title="creel.graph.model.Edge"><code class="xref py py-class docutils literal notranslate"><span class="pre">Edge</span></code></a> view, or raise <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.edges">
+<span class="sig-name descname"><span class="pre">edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#creel.graph.model.Edge" title="creel.graph.model.Edge"><span class="pre">Edge</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.edges" title="Link to this definition"></a></dt>
+<dd><p>Iterate over all edges.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.edges_between">
+<span class="sig-name descname"><span class="pre">edges_between</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#creel.graph.model.Edge" title="creel.graph.model.Edge"><span class="pre">Edge</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.edges_between"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.edges_between" title="Link to this definition"></a></dt>
+<dd><p>Iterate over all (parallel) edges from <code class="docutils literal notranslate"><span class="pre">source</span></code> to <code class="docutils literal notranslate"><span class="pre">target</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.edges_of_type">
+<span class="sig-name descname"><span class="pre">edges_of_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#creel.graph.model.Edge" title="creel.graph.model.Edge"><span class="pre">Edge</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.edges_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.edges_of_type" title="Link to this definition"></a></dt>
+<dd><p>Iterate over edges of relation type <code class="docutils literal notranslate"><span class="pre">type_id</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.evidence">
+<span class="sig-name descname"><span class="pre">evidence</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#creel.graph.model.Graph.evidence" title="Link to this definition"></a></dt>
+<dd><p>element id -&gt; evidence record (D8). Populated by
+the facade; deliberately NOT part of the canonical JSON (joined on demand).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Separable audit sidecar</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.has_edge">
+<span class="sig-name descname"><span class="pre">has_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.has_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.has_edge" title="Link to this definition"></a></dt>
+<dd><p>True if an edge with this id exists.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.has_node">
+<span class="sig-name descname"><span class="pre">has_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.has_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.has_node" title="Link to this definition"></a></dt>
+<dd><p>True if a node with this id exists.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.node">
+<span class="sig-name descname"><span class="pre">node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.node" title="Link to this definition"></a></dt>
+<dd><p>Return the <a class="reference internal" href="#creel.graph.model.Node" title="creel.graph.model.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a> view, or raise <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.nodes">
+<span class="sig-name descname"><span class="pre">nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.nodes" title="Link to this definition"></a></dt>
+<dd><p>Iterate over all nodes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.nodes_of_type">
+<span class="sig-name descname"><span class="pre">nodes_of_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.nodes_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.nodes_of_type" title="Link to this definition"></a></dt>
+<dd><p>Iterate over nodes carrying <code class="docutils literal notranslate"><span class="pre">type_id</span></code> as one of their labels.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.number_of_edges">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">number_of_edges</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#creel.graph.model.Graph.number_of_edges" title="Link to this definition"></a></dt>
+<dd><p>Count of edges.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.number_of_nodes">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">number_of_nodes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#creel.graph.model.Graph.number_of_nodes" title="Link to this definition"></a></dt>
+<dd><p>Count of nodes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.report">
+<span class="sig-name descname"><span class="pre">report</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#creel.graph.model.Graph.report" title="Link to this definition"></a></dt>
+<dd><p>Free-form run report (e.g. skipped edges, unbound elements) attached by
+the facade; also excluded from canonical JSON.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.graph.model.Graph.to_networkx">
+<span class="sig-name descname"><span class="pre">to_networkx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MultiDiGraph</span></span></span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Graph.to_networkx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Graph.to_networkx" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of the underlying <code class="docutils literal notranslate"><span class="pre">networkx.MultiDiGraph</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.graph.model.Node">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.graph.model.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">id:</span> <span class="pre">str,</span> <span class="pre">types:</span> <span class="pre">tuple[str,</span> <span class="pre">...],</span> <span class="pre">attributes:</span> <span class="pre">~typing.Mapping[str,</span> <span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/creel/graph/model.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.graph.model.Node" title="Link to this definition"></a></dt>
+<dd><p>An immutable view of a graph node: its id, type label(s), and attributes.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="canonical.html" class="btn btn-neutral float-left" title="creel.graph.canonical" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../join.html" class="btn btn-neutral float-right" title="creel.join" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
