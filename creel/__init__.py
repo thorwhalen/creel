@@ -40,6 +40,23 @@ from creel.extract import (
 )
 from creel.facade import extract
 from creel.sources import Source, SourceBundle, coerce_sources
+from creel.verify import (
+    Composite,
+    ExactMatch,
+    LLMRubric,
+    NormalizedMatch,
+    NumericTolerance,
+    SchemaConstraint,
+    SemanticSimilarity,
+    SetMatch,
+    Verdict,
+    VerificationContext,
+    Verifier,
+    available_verifiers,
+    build_verifier,
+    register_verifier,
+    schema_description_verifier,
+)
 from creel.graph import (
     CANONICAL_SCHEMA_URL,
     CANONICAL_VERSION,
@@ -117,5 +134,21 @@ __all__ = [
     "Confidence",
     "TextQuoteSelector",
     "TextPositionSelector",
+    # evaluation / verifiers
+    "Verifier",
+    "Verdict",
+    "VerificationContext",
+    "ExactMatch",
+    "NormalizedMatch",
+    "NumericTolerance",
+    "SetMatch",
+    "SchemaConstraint",
+    "SemanticSimilarity",
+    "Composite",
+    "LLMRubric",
+    "schema_description_verifier",
+    "build_verifier",
+    "register_verifier",
+    "available_verifiers",
     "__version__",
 ]
