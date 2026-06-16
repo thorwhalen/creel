@@ -1,0 +1,218 @@
+{
+  "$schema": "https://creel.dev/schema/graph/v1",
+  "directed": true,
+  "edges": [
+    {
+      "attributes": {
+        "marker": 1
+      },
+      "id": "addresses:project-prj-001->cross-cutting-area-environment:1",
+      "source": "project:prj-001",
+      "target": "cross_cutting_area:environment",
+      "type": "addresses"
+    },
+    {
+      "attributes": {
+        "marker": 2
+      },
+      "id": "addresses:project-prj-002->cross-cutting-area-gender-equality:0",
+      "source": "project:prj-002",
+      "target": "cross_cutting_area:gender-equality",
+      "type": "addresses"
+    },
+    {
+      "attributes": {},
+      "id": "contributes_to:0",
+      "source": "output:op-1-1",
+      "target": "outcome:oc-1",
+      "type": "contributes_to"
+    },
+    {
+      "attributes": {},
+      "id": "contributes_to:1",
+      "source": "output:op-2-1",
+      "target": "outcome:oc-2",
+      "type": "contributes_to"
+    },
+    {
+      "attributes": {},
+      "id": "delivers:0",
+      "source": "project:prj-001",
+      "target": "output:op-1-1",
+      "type": "delivers"
+    },
+    {
+      "attributes": {},
+      "id": "delivers:1",
+      "source": "project:prj-002",
+      "target": "output:op-2-1",
+      "type": "delivers"
+    },
+    {
+      "attributes": {
+        "amount": 2500000,
+        "currency": "EUR",
+        "transaction_type": "disbursement"
+      },
+      "id": "funds:donor-european-commission->project-prj-002:1",
+      "source": "donor:european-commission",
+      "target": "project:prj-002",
+      "type": "funds"
+    },
+    {
+      "attributes": {
+        "amount": 3000000,
+        "currency": "USD",
+        "transaction_type": "commitment"
+      },
+      "id": "funds:donor-government-of-norway->project-prj-001:0",
+      "source": "donor:government-of-norway",
+      "target": "project:prj-001",
+      "type": "funds"
+    },
+    {
+      "attributes": {
+        "amount": 1500000,
+        "currency": "USD",
+        "transaction_type": "commitment"
+      },
+      "id": "funds:donor-government-of-norway->project-prj-002:2",
+      "source": "donor:government-of-norway",
+      "target": "project:prj-002",
+      "type": "funds"
+    },
+    {
+      "attributes": {
+        "actual": 4200,
+        "baseline": 1000,
+        "period": "2026-Q2",
+        "target": 5000
+      },
+      "id": "measured_by:0",
+      "source": "output:op-1-1",
+      "target": "indicator:ind-1",
+      "type": "measured_by"
+    },
+    {
+      "attributes": {
+        "actual": 65,
+        "baseline": 20,
+        "period": "2026-Q2",
+        "target": 80
+      },
+      "id": "measured_by:1",
+      "source": "output:op-2-1",
+      "target": "indicator:ind-2",
+      "type": "measured_by"
+    }
+  ],
+  "nodes": {
+    "cross_cutting_area:environment": {
+      "attributes": {
+        "name": "Environment"
+      },
+      "types": [
+        "cross_cutting_area"
+      ]
+    },
+    "cross_cutting_area:gender-equality": {
+      "attributes": {
+        "name": "Gender Equality"
+      },
+      "types": [
+        "cross_cutting_area"
+      ]
+    },
+    "donor:european-commission": {
+      "attributes": {
+        "dac_code": "918",
+        "name": "European Commission"
+      },
+      "types": [
+        "donor"
+      ]
+    },
+    "donor:government-of-norway": {
+      "attributes": {
+        "dac_code": "301",
+        "name": "Government of Norway"
+      },
+      "types": [
+        "donor"
+      ]
+    },
+    "indicator:ind-1": {
+      "attributes": {
+        "measure": "number",
+        "name": "Number of people with access to clean water"
+      },
+      "types": [
+        "indicator"
+      ]
+    },
+    "indicator:ind-2": {
+      "attributes": {
+        "measure": "percentage",
+        "name": "Percentage of households with adequate shelter"
+      },
+      "types": [
+        "indicator"
+      ]
+    },
+    "outcome:oc-1": {
+      "attributes": {
+        "statement": "Communities have sustained access to clean water"
+      },
+      "types": [
+        "outcome"
+      ]
+    },
+    "outcome:oc-2": {
+      "attributes": {
+        "statement": "Displaced families live in adequate and dignified shelter"
+      },
+      "types": [
+        "outcome"
+      ]
+    },
+    "output:op-1-1": {
+      "attributes": {
+        "statement": "Water systems rehabilitated and operational"
+      },
+      "types": [
+        "output"
+      ]
+    },
+    "output:op-2-1": {
+      "attributes": {
+        "statement": "Emergency shelter kits distributed to households"
+      },
+      "types": [
+        "output"
+      ]
+    },
+    "project:prj-001": {
+      "attributes": {
+        "code": "PRJ-001",
+        "title": "WASH Strengthening"
+      },
+      "types": [
+        "project"
+      ]
+    },
+    "project:prj-002": {
+      "attributes": {
+        "code": "PRJ-002",
+        "title": "Protection and Shelter"
+      },
+      "types": [
+        "project"
+      ]
+    }
+  },
+  "spec": {
+    "id": "unhcr-rbm",
+    "version": "0.1.0"
+  },
+  "version": "1.0"
+}

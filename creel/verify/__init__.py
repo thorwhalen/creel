@@ -5,6 +5,7 @@ Re-exports the verifier contract (:mod:`creel.verify.protocol`), the kind taxono
 and the registry. Importing this package registers the built-in verifier kinds.
 """
 
+from creel.verify.graph_match import GraphMatch
 from creel.verify.kinds import (
     Composite,
     ExactMatch,
@@ -33,6 +34,7 @@ __all__ = [
     "SchemaConstraint",
     "SemanticSimilarity",
     "Composite",
+    "GraphMatch",
     "LLMRubric",
     "schema_description_verifier",
     "available_verifiers",
