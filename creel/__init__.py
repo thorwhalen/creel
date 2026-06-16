@@ -38,11 +38,19 @@ from creel.extract import (
     available_extractors,
     register_extractor,
 )
+from creel.evaluation import (
+    CaseResult,
+    CorpusCase,
+    CorpusResult,
+    evaluate_case,
+    evaluate_corpus,
+)
 from creel.facade import extract
 from creel.sources import Source, SourceBundle, coerce_sources
 from creel.verify import (
     Composite,
     ExactMatch,
+    GraphMatch,
     LLMRubric,
     NormalizedMatch,
     NumericTolerance,
@@ -145,10 +153,17 @@ __all__ = [
     "SchemaConstraint",
     "SemanticSimilarity",
     "Composite",
+    "GraphMatch",
     "LLMRubric",
     "schema_description_verifier",
     "build_verifier",
     "register_verifier",
     "available_verifiers",
+    # evaluation runner
+    "CorpusCase",
+    "CaseResult",
+    "CorpusResult",
+    "evaluate_case",
+    "evaluate_corpus",
     "__version__",
 ]
