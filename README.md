@@ -3,95 +3,107 @@
 **Extract a typed graph from a mess of sources.**
 
 creel is a general, AI-powered **source-to-graph extraction engine**. You give it
-(a) **sources** — freeform prose, tables, JSON, schema specs; (b) a **grammar** of
-the graph you want — its node-types and edge-types and the typed values they carry;
-and (c) **extractors** — pluggable strategies that know how to find each element.
-creel returns a clean, auditable, typed **property graph** as a single source of
-truth, canonically a JSON graph specification:
+(a) **sources** — freeform prose, tables, JSON, PDFs; (b) a **grammar** of the graph
+you want — its node-types and edge-types and the typed values they carry; and (c)
+**extractors** — pluggable strategies that know how to find each element. creel returns
+a clean, auditable, typed **property graph** as a single source of truth, canonically a
+JSON graph specification:
 
 ```python
 extract(sources, graph_spec, extractors) -> graph
 ```
 
 Everything downstream — persistence, query, graph-RAG, annotation, rendering to
-slides/reports/video — is a *projection* of that one graph.
-
-> **Status — early development.** The `v0.1` **data layer** (grammar, the in-memory
-> Labeled Property Graph, and deterministic canonical JSON) is implemented and
-> tested. The `extract()` facade and the extractor/verifier strategy layers are
-> being built next — see [`misc/docs/design/ROADMAP.md`](misc/docs/design/ROADMAP.md).
+slides/reports — is a *projection* of that one graph.
 
 ## Install
 
 ```bash
 pip install creel                 # core: pydantic, jsonschema, networkx
-pip install "creel[llm]"          # + the default LLM-extraction adapter
-pip install "creel[query]"        # + SQL/JSON query extractors (duckdb, jmespath)
-pip install "creel[eval]"         # + the verifier/evaluation backend
+pip install "creel[query]"        # SQL/JSON query extractors (duckdb, jmespath)
+pip install "creel[ingest]"       # document loaders (docling, trafilatura, openpyxl, python-docx)
+pip install "creel[aix]"          # real LLM extraction/judging/embedding via aix
 ```
 
-## A first taste (the data layer, today)
+## A first taste
 
-Declare a grammar, build a graph against it, validate it, and emit canonical JSON:
+Declare a grammar, extract a graph from prose, validate it, emit canonical JSON:
 
 ```python
 from creel import (
     GraphSpec, NodeType, EdgeType, AttrSchema, EnumDef,
-    Graph, validate_graph, to_canonical_json,
+    extract, validate_graph, to_canonical_json,
 )
 
 spec = GraphSpec(
-    enums=(EnumDef("Currency", ("USD", "EUR", "CHF")),),
+    enums=(EnumDef("Currency", ("USD", "EUR")),),
     node_types=(
         NodeType("donor", attributes=(AttrSchema("name", required=True),)),
         NodeType("project", attributes=(AttrSchema("title", required=True),)),
     ),
     edge_types=(
-        EdgeType(
-            "funds", subject_type="donor", object_type="project",
-            attributes=(
-                AttrSchema("amount", range="decimal", required=True, minimum=0),
-                AttrSchema("currency", range="Currency", required=True),
-            ),
-        ),
+        EdgeType("funds", subject_type="donor", object_type="project",
+                 attributes=(AttrSchema("amount", range="integer", required=True, minimum=0),
+                             AttrSchema("currency", range="Currency", required=True))),
     ),
 )
 
-g = Graph()
-g.add_node("d:gov-x", types=("donor",), attributes={"name": "Government X"})
-g.add_node("p:wash", types=("project",), attributes={"title": "WASH programme"})
-# Edges are first-class: attributes (funding amounts!) live ON the edge, and each
-# edge has its own id, so two distinct fundings are distinguishable.
-g.add_edge("f:1", source="d:gov-x", target="p:wash", type="funds",
-           attributes={"amount": 1_000_000, "currency": "USD"})
+# Deterministic pattern extractors (no LLM): regex over prose.
+bindings = {
+    "donor": ("regex_node", {"pattern": r"Donor:\s*(?P<name>.+)", "id_attribute": "name"}),
+    "project": ("regex_node", {"pattern": r"Project:\s*(?P<title>.+)", "id_attribute": "title"}),
+    "funds": ("regex_edge", {
+        "pattern": r"(?P<donor>[\w ]+?) funds (?P<project>[\w ]+?) with (?P<currency>[A-Z]{3}) (?P<amount>\d+)",
+        "source_id_template": "donor:{donor}", "target_id_template": "project:{project}",
+        "casts": {"amount": "int"}, "exclude_groups": ("donor", "project")}),
+}
+src = "Donor: Gov X\nProject: WASH\nGov X funds WASH with USD 1000000"
 
-assert validate_graph(g, spec) == []          # conforms to the grammar
-print(to_canonical_json(g, spec=spec))         # deterministic, git-diffable JSON
+g = extract(src, spec, bindings, on_missing_binding="skip")
+assert validate_graph(g, spec) == []
+print(to_canonical_json(g))                 # deterministic, git-diffable JSON
+print(g.evidence)                            # every element traced back to its source span
 ```
 
-## Design at a glance
+### With a real LLM (schema-as-extractor)
 
-- **Labeled Property Graph** internal model — attributes live *on edges*, which have
-  their own identity (parallel edges stay distinguishable).
-- **Two physically separate layers, joined by id** — the *grammar* (what the graph
-  is) and the *extraction/verification metadata* (how to populate and check it) are
-  recombined on demand, so each is reused independently.
-- **Strategy pattern throughout** — extractors, verifiers, renderers are pluggable
-  `Protocol`s; new mechanisms slot in without touching old ones.
-- **Schema-as-extractor / schema-as-verifier defaults** — an attribute's
-  description doubles as the default extraction instruction and verification
-  criterion, so simple cases stay simple.
-- **Auditability over opaqueness** — every node, edge, and value will carry a
-  separable evidence record (provenance + grounding back to the source span +
-  confidence).
-- **Evaluation is verifier-based, not equality-based** — comparing extracted output
-  to expected output uses pluggable verifiers (numeric tolerance, set/graph
-  matching with partial credit, LLM rubrics), never a brittle `==`.
+The attribute `description`s become the extraction instruction; the LLM client is
+injected (no provider SDK in the core):
+
+```python
+from creel.extract.llm import aix_client
+g = extract(prose, spec, {"donor": ("llm", {})},
+            services={"llm": aix_client()}, on_missing_binding="skip")
+```
+
+## What you get
+
+- **Labeled Property Graph** — attributes (funding amounts, indicator values) live *on
+  edges*, which have their own identity; deterministic, git-diffable canonical JSON.
+- **Three extractor families** behind one `Extractor` protocol: deterministic
+  **pattern/function**, **query** (DuckDB SQL / JMESPath over structured sources), and
+  **LLM** (schema-as-extractor, validate-retry, faithfulness gate) — plus **cluster-pass**
+  (extract several coupled types in one LLM call).
+- **Ingestion** (`ingest()`): route-by-format file loaders (md/csv/json/txt built-in;
+  PDF/DOCX/XLSX/HTML via extras).
+- **Auditability**: every node/edge/value carries a separable **evidence** record
+  (provenance + grounding selector back to the exact source span + confidence). A
+  **reverse-trace index** answers "which elements did this passage produce?", and a
+  re-anchoring resolver keeps highlights valid across re-ingestion.
+- **Evaluation by pluggable verifiers, not `==`**: `numeric_tolerance`, `set_match`,
+  `graph_match` (partial credit), `llm_rubric` (NL-defined, G-Eval), … with a corpus runner.
+- **Entity resolution** cascade (normalize → registry → LLM), the **reify** edge↔node
+  toggle, **views** (DOT/Mermaid/Cytoscape/tables), and **export** adapters (JGF, GraphML,
+  parameterized Cypher, RDF-star).
+
+## Design & docs
 
 The full reasoning lives in the research + design docs: start with the
 [synthesis](misc/docs/research/00-synthesis-and-design-implications.md) (decisions
-D1–D15), then the [roadmap](misc/docs/design/ROADMAP.md) and
-[decision log](misc/docs/design/DECISIONS.md).
+D1–D15), then the [roadmap](misc/docs/design/ROADMAP.md), the
+[decision log](misc/docs/design/DECISIONS.md), and the
+[progress log](misc/docs/design/PROGRESS.md). A worked example is in
+[`examples/`](examples/).
 
 ## License
 
