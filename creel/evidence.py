@@ -168,8 +168,14 @@ class Provenance:
     def to_dict(self) -> dict[str, Any]:
         """Serialise to a plain dict, omitting unset optional keys."""
         d = {"derived_from": self.derived_from, "generated_by": self.generated_by}
-        for k in ("attributed_to", "attributed_kind", "coded_by", "was_revision_of",
-                  "generated_at", "version"):
+        for k in (
+            "attributed_to",
+            "attributed_kind",
+            "coded_by",
+            "was_revision_of",
+            "generated_at",
+            "version",
+        ):
             v = getattr(self, k)
             if v is not None:
                 d[k] = v

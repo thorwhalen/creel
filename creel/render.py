@@ -48,6 +48,8 @@ class GraphRenderer(Protocol):
     name: str
     output_media_type: str
 
-    def render(self, graph: AnnotatedGraph, *, options: Optional[Mapping[str, Any]] = None) -> RenderArtifact:
+    def render(
+        self, graph: AnnotatedGraph, *, options: Optional[Mapping[str, Any]] = None
+    ) -> RenderArtifact:
         """Produce the rendered artifact."""
         ...

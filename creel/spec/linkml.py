@@ -30,10 +30,24 @@ from creel.spec.model import (
     effective_attributes,
 )
 
-_JSON_TYPE = {"string": "string", "integer": "integer", "decimal": "number",
-              "float": "number", "boolean": "boolean", "date": "string", "datetime": "string"}
-_PY_TYPE = {"string": str, "integer": int, "decimal": float, "float": float,
-            "boolean": bool, "date": str, "datetime": str}
+_JSON_TYPE = {
+    "string": "string",
+    "integer": "integer",
+    "decimal": "number",
+    "float": "number",
+    "boolean": "boolean",
+    "date": "string",
+    "datetime": "string",
+}
+_PY_TYPE = {
+    "string": str,
+    "integer": int,
+    "decimal": float,
+    "float": float,
+    "boolean": bool,
+    "date": str,
+    "datetime": str,
+}
 
 
 # --- GraphSpec -> LinkML ------------------------------------------------------
@@ -53,14 +67,18 @@ def to_linkml(spec: GraphSpec) -> dict[str, Any]:
     return {
         "id": spec.id or "https://creel.dev/schema/grammar",
         "name": (spec.id or "creel_grammar").replace("-", "_"),
-        "enums": {e.name: {"permissible_values": {v: {} for v in e.permissible_values}}
-                  for e in spec.enums},
+        "enums": {
+            e.name: {"permissible_values": {v: {} for v in e.permissible_values}}
+            for e in spec.enums
+        },
         "classes": classes,
     }
 
 
 def _linkml_class(element) -> dict[str, Any]:
-    cls: dict[str, Any] = {"attributes": {a.name: _linkml_slot(a) for a in element.attributes}}
+    cls: dict[str, Any] = {
+        "attributes": {a.name: _linkml_slot(a) for a in element.attributes}
+    }
     if element.description:
         cls["description"] = element.description
     if element.is_a:
@@ -106,26 +124,49 @@ def load_linkml(schema: Union[dict, str, Path]) -> GraphSpec:
     edge_types: list[EdgeType] = []
     for cname, cbody in (schema.get("classes") or {}).items():
         cbody = cbody or {}
-        attrs = tuple(_attr_from_slot(n, s or {}) for n, s in (cbody.get("attributes") or {}).items())
-        common = dict(description=cbody.get("description"), is_a=cbody.get("is_a"),
-                      mixins=tuple(cbody.get("mixins", ())), attributes=attrs,
-                      abstract=bool(cbody.get("abstract", False)))
+        attrs = tuple(
+            _attr_from_slot(n, s or {})
+            for n, s in (cbody.get("attributes") or {}).items()
+        )
+        common = dict(
+            description=cbody.get("description"),
+            is_a=cbody.get("is_a"),
+            mixins=tuple(cbody.get("mixins", ())),
+            attributes=attrs,
+            abstract=bool(cbody.get("abstract", False)),
+        )
         if cbody.get("represents_relationship"):
-            edge_types.append(EdgeType(cname, subject_type=cbody.get("subject_type"),
-                                       object_type=cbody.get("object_type"), **common))
+            edge_types.append(
+                EdgeType(
+                    cname,
+                    subject_type=cbody.get("subject_type"),
+                    object_type=cbody.get("object_type"),
+                    **common,
+                )
+            )
         else:
             node_types.append(NodeType(cname, **common))
-    return GraphSpec(id=schema.get("id"), node_types=tuple(node_types),
-                     edge_types=tuple(edge_types), enums=enums)
+    return GraphSpec(
+        id=schema.get("id"),
+        node_types=tuple(node_types),
+        edge_types=tuple(edge_types),
+        enums=enums,
+    )
 
 
 def _attr_from_slot(name: str, slot: dict[str, Any]) -> AttrSchema:
     return AttrSchema(
-        name=name, range=slot.get("range", "string"), required=bool(slot.get("required", False)),
+        name=name,
+        range=slot.get("range", "string"),
+        required=bool(slot.get("required", False)),
         multivalued=bool(slot.get("multivalued", False)),
-        enum=tuple(slot["permissible_values"]) if slot.get("permissible_values") else None,
-        minimum=slot.get("minimum_value"), maximum=slot.get("maximum_value"),
-        pattern=slot.get("pattern"), description=slot.get("description"),
+        enum=tuple(slot["permissible_values"])
+        if slot.get("permissible_values")
+        else None,
+        minimum=slot.get("minimum_value"),
+        maximum=slot.get("maximum_value"),
+        pattern=slot.get("pattern"),
+        description=slot.get("description"),
     )
 
 
@@ -147,8 +188,14 @@ def generate_json_schema(spec: GraphSpec) -> dict[str, Any]:
 
 
 def _json_attr(attr: AttrSchema, spec: GraphSpec) -> dict[str, Any]:
-    permissible = attr.enum or (spec.enum(attr.range).permissible_values if spec.enum(attr.range) else None)
-    base: dict[str, Any] = {"enum": list(permissible)} if permissible else {"type": _JSON_TYPE.get(attr.range, "string")}
+    permissible = attr.enum or (
+        spec.enum(attr.range).permissible_values if spec.enum(attr.range) else None
+    )
+    base: dict[str, Any] = (
+        {"enum": list(permissible)}
+        if permissible
+        else {"type": _JSON_TYPE.get(attr.range, "string")}
+    )
     # Unlike the LLM decode schema, a *validation* schema DOES carry value bounds.
     if attr.minimum is not None:
         base["minimum"] = attr.minimum
@@ -179,9 +226,13 @@ def generate_pydantic(spec: GraphSpec) -> dict[str, type]:
             if attr.pattern is not None:
                 constraints["pattern"] = attr.pattern
             default = ... if attr.required else None
-            fields[name] = (annotation if attr.required else Optional[annotation],
-                            Field(default, **constraints))
-        models[et.id] = create_model(et.id.replace(".", "_").title().replace("_", ""), **fields)
+            fields[name] = (
+                annotation if attr.required else Optional[annotation],
+                Field(default, **constraints),
+            )
+        models[et.id] = create_model(
+            et.id.replace(".", "_").title().replace("_", ""), **fields
+        )
     return models
 
 

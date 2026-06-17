@@ -52,36 +52,54 @@ def supported_extensions() -> list[str]:
 @register_loader(".txt", ".text")
 def load_text(path: Path, *, source_id: str) -> Source:
     """Load plain text as a ``text`` source."""
-    return Source(source_id, path.read_text(encoding="utf-8"), kind=TEXT,
-                  metadata={"filename": path.name, "format": "text"})
+    return Source(
+        source_id,
+        path.read_text(encoding="utf-8"),
+        kind=TEXT,
+        metadata={"filename": path.name, "format": "text"},
+    )
 
 
 @register_loader(".md", ".markdown")
 def load_markdown(path: Path, *, source_id: str) -> Source:
     """Load Markdown as-is (it is already LLM-native and structure-preserving)."""
-    return Source(source_id, path.read_text(encoding="utf-8"), kind=TEXT,
-                  metadata={"filename": path.name, "format": "markdown"})
+    return Source(
+        source_id,
+        path.read_text(encoding="utf-8"),
+        kind=TEXT,
+        metadata={"filename": path.name, "format": "markdown"},
+    )
 
 
 @register_loader(".csv")
 def load_csv(path: Path, *, source_id: str) -> Source:
     """Load CSV into a ``table`` source (``list[dict]`` rows; cell-addressable)."""
     rows = list(csv.DictReader(io.StringIO(path.read_text(encoding="utf-8"))))
-    return Source(source_id, rows, kind=TABLE, metadata={"filename": path.name, "format": "csv"})
+    return Source(
+        source_id, rows, kind=TABLE, metadata={"filename": path.name, "format": "csv"}
+    )
 
 
 @register_loader(".tsv")
 def load_tsv(path: Path, *, source_id: str) -> Source:
     """Load TSV into a ``table`` source."""
-    rows = list(csv.DictReader(io.StringIO(path.read_text(encoding="utf-8")), delimiter="\t"))
-    return Source(source_id, rows, kind=TABLE, metadata={"filename": path.name, "format": "tsv"})
+    rows = list(
+        csv.DictReader(io.StringIO(path.read_text(encoding="utf-8")), delimiter="\t")
+    )
+    return Source(
+        source_id, rows, kind=TABLE, metadata={"filename": path.name, "format": "tsv"}
+    )
 
 
 @register_loader(".json")
 def load_json(path: Path, *, source_id: str) -> Source:
     """Load JSON into a ``json`` source (parsed object)."""
-    return Source(source_id, json.loads(path.read_text(encoding="utf-8")), kind=JSON,
-                  metadata={"filename": path.name, "format": "json"})
+    return Source(
+        source_id,
+        json.loads(path.read_text(encoding="utf-8")),
+        kind=JSON,
+        metadata={"filename": path.name, "format": "json"},
+    )
 
 
 # --- optional-backend loaders ([ingest] extra) -------------------------------
@@ -96,18 +114,30 @@ def load_xlsx(path: Path, *, source_id: str) -> Source:
     wb = openpyxl.load_workbook(path, data_only=True, read_only=True)
     ws = wb.active
     rows_iter = ws.iter_rows(values_only=True)
-    header = [str(c) if c is not None else f"col{i}" for i, c in enumerate(next(rows_iter, ()))]
+    header = [
+        str(c) if c is not None else f"col{i}"
+        for i, c in enumerate(next(rows_iter, ()))
+    ]
     rows = [dict(zip(header, row)) for row in rows_iter]
-    return Source(source_id, rows, kind=TABLE,
-                  metadata={"filename": path.name, "format": "xlsx", "sheet": ws.title})
+    return Source(
+        source_id,
+        rows,
+        kind=TABLE,
+        metadata={"filename": path.name, "format": "xlsx", "sheet": ws.title},
+    )
 
 
 @register_loader(".html", ".htm")
 def load_html(path: Path, *, source_id: str) -> Source:
     """Extract main content from HTML to Markdown (trafilatura; strips boilerplate)."""
     trafilatura = _require("trafilatura", "[ingest]")
-    text = trafilatura.extract(path.read_text(encoding="utf-8"), output_format="markdown") or ""
-    return Source(source_id, text, kind=TEXT, metadata={"filename": path.name, "format": "html"})
+    text = (
+        trafilatura.extract(path.read_text(encoding="utf-8"), output_format="markdown")
+        or ""
+    )
+    return Source(
+        source_id, text, kind=TEXT, metadata={"filename": path.name, "format": "html"}
+    )
 
 
 @register_loader(".pdf", ".docx", ".pptx")
@@ -121,8 +151,12 @@ def load_docling(path: Path, *, source_id: str) -> Source:
     dc = _require("docling.document_converter", "[ingest]")
     result = dc.DocumentConverter().convert(str(path))
     markdown = result.document.export_to_markdown()
-    return Source(source_id, markdown, kind=TEXT,
-                  metadata={"filename": path.name, "format": path.suffix.lower().lstrip(".")})
+    return Source(
+        source_id,
+        markdown,
+        kind=TEXT,
+        metadata={"filename": path.name, "format": path.suffix.lower().lstrip(".")},
+    )
 
 
 def _require(module: str, extra: str):

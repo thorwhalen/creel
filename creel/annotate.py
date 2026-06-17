@@ -38,7 +38,11 @@ class Selection:
 
     def to_dict(self) -> dict[str, Any]:
         """Serialise to a plain dict."""
-        return {"id": self.id, "source": self.source_id, "selector": self.selector.to_dict()}
+        return {
+            "id": self.id,
+            "source": self.source_id,
+            "selector": self.selector.to_dict(),
+        }
 
 
 @dataclass(frozen=True)
@@ -61,11 +65,17 @@ class Annotation:
 
     def to_dict(self) -> dict[str, Any]:
         """Serialise to a plain, JSON-ready dict."""
-        target = self.target.to_dict() if isinstance(self.target, Selection) else (
-            list(self.target) if isinstance(self.target, tuple) else self.target
+        target = (
+            self.target.to_dict()
+            if isinstance(self.target, Selection)
+            else (list(self.target) if isinstance(self.target, tuple) else self.target)
         )
-        out: dict[str, Any] = {"id": self.id, "target": target, "body": self.body,
-                               "motivation": self.motivation}
+        out: dict[str, Any] = {
+            "id": self.id,
+            "target": target,
+            "body": self.body,
+            "motivation": self.motivation,
+        }
         if self.provenance is not None:
             out["provenance"] = self.provenance.to_dict()
         if self.confidence is not None:

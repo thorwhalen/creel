@@ -38,13 +38,20 @@ def to_jgf(graph: Graph) -> dict[str, Any]:
         "graph": {
             "directed": True,
             "nodes": {
-                n.id: {"label": n.types[0] if n.types else "",
-                       "metadata": {"types": list(n.types), **dict(n.attributes)}}
+                n.id: {
+                    "label": n.types[0] if n.types else "",
+                    "metadata": {"types": list(n.types), **dict(n.attributes)},
+                }
                 for n in _nodes(graph)
             },
             "edges": [
-                {"id": e.id, "source": e.source, "target": e.target, "relation": e.type,
-                 "metadata": dict(e.attributes)}
+                {
+                    "id": e.id,
+                    "source": e.source,
+                    "target": e.target,
+                    "relation": e.type,
+                    "metadata": dict(e.attributes),
+                }
                 for e in _edges(graph)
             ],
         }
@@ -59,25 +66,38 @@ def to_graphml(graph: Graph) -> str:
     keys, kid = [], {}
     for attr in node_attrs:
         kid[("node", attr)] = f"nd_{attr}"
-        keys.append(f'  <key id="nd_{attr}" for="node" attr.name="{_x(attr)}" attr.type="string"/>')
+        keys.append(
+            f'  <key id="nd_{attr}" for="node" attr.name="{_x(attr)}" attr.type="string"/>'
+        )
     for attr in edge_attrs:
         kid[("edge", attr)] = f"ed_{attr}"
-        keys.append(f'  <key id="ed_{attr}" for="edge" attr.name="{_x(attr)}" attr.type="string"/>')
+        keys.append(
+            f'  <key id="ed_{attr}" for="edge" attr.name="{_x(attr)}" attr.type="string"/>'
+        )
 
-    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
-             '<graphml xmlns="http://graphml.graphdrawing.org/xmlns">', *keys,
-             '  <graph edgedefault="directed">']
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<graphml xmlns="http://graphml.graphdrawing.org/xmlns">',
+        *keys,
+        '  <graph edgedefault="directed">',
+    ]
     for n in _nodes(graph):
         lines.append(f'    <node id="{_x(n.id)}">')
         lines.append(f'      <data key="nd_types">{_x(",".join(n.types))}</data>')
         for k in sorted(n.attributes):
-            lines.append(f'      <data key="{kid[("node", k)]}">{_x(str(n.attributes[k]))}</data>')
+            lines.append(
+                f'      <data key="{kid[("node", k)]}">{_x(str(n.attributes[k]))}</data>'
+            )
         lines.append("    </node>")
     for e in _edges(graph):
-        lines.append(f'    <edge id="{_x(e.id)}" source="{_x(e.source)}" target="{_x(e.target)}">')
+        lines.append(
+            f'    <edge id="{_x(e.id)}" source="{_x(e.source)}" target="{_x(e.target)}">'
+        )
         lines.append(f'      <data key="ed_type">{_x(e.type)}</data>')
         for k in sorted(e.attributes):
-            lines.append(f'      <data key="{kid[("edge", k)]}">{_x(str(e.attributes[k]))}</data>')
+            lines.append(
+                f'      <data key="{kid[("edge", k)]}">{_x(str(e.attributes[k]))}</data>'
+            )
         lines.append("    </edge>")
     lines += ["  </graph>", "</graphml>"]
     return "\n".join(lines)
@@ -92,17 +112,26 @@ def to_cypher(graph: Graph) -> list[tuple[str, dict[str, Any]]]:
     """
     statements: list[tuple[str, dict[str, Any]]] = []
     for n in _nodes(graph):
-        statements.append((
-            "MERGE (n {id: $id}) SET n += $props",
-            {"id": n.id, "props": {"types": list(n.types), **dict(n.attributes)}},
-        ))
+        statements.append(
+            (
+                "MERGE (n {id: $id}) SET n += $props",
+                {"id": n.id, "props": {"types": list(n.types), **dict(n.attributes)}},
+            )
+        )
     for e in _edges(graph):
-        statements.append((
-            "MATCH (a {id: $source}), (b {id: $target}) "
-            "MERGE (a)-[r:REL {id: $id}]->(b) SET r += $props, r.type = $type",
-            {"source": e.source, "target": e.target, "id": e.id, "type": e.type,
-             "props": dict(e.attributes)},
-        ))
+        statements.append(
+            (
+                "MATCH (a {id: $source}), (b {id: $target}) "
+                "MERGE (a)-[r:REL {id: $id}]->(b) SET r += $props, r.type = $type",
+                {
+                    "source": e.source,
+                    "target": e.target,
+                    "id": e.id,
+                    "type": e.type,
+                    "props": dict(e.attributes),
+                },
+            )
+        )
     return statements
 
 
@@ -114,8 +143,11 @@ def to_turtle(graph: Graph, *, base: str = CREEL_NS) -> str:
     the same ``(source, type, target)`` annotate the same quoted triple — distinguish
     them downstream by also reifying on the edge id if needed.
     """
-    lines = [f"@prefix creel: <{base}> .",
-             "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .", ""]
+    lines = [
+        f"@prefix creel: <{base}> .",
+        "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .",
+        "",
+    ]
     for n in _nodes(graph):
         subject = f"creel:{_iri(n.id)}"
         for t in n.types:
@@ -123,7 +155,11 @@ def to_turtle(graph: Graph, *, base: str = CREEL_NS) -> str:
         for k in sorted(n.attributes):
             lines.append(f"{subject} creel:{_iri(k)} {_lit(n.attributes[k])} .")
     for e in _edges(graph):
-        s, p, o = f"creel:{_iri(e.source)}", f"creel:{_iri(e.type)}", f"creel:{_iri(e.target)}"
+        s, p, o = (
+            f"creel:{_iri(e.source)}",
+            f"creel:{_iri(e.type)}",
+            f"creel:{_iri(e.target)}",
+        )
         lines.append(f"{s} {p} {o} .")
         for k in sorted(e.attributes):
             lines.append(f"<< {s} {p} {o} >> creel:{_iri(k)} {_lit(e.attributes[k])} .")
@@ -133,8 +169,13 @@ def to_turtle(graph: Graph, *, base: str = CREEL_NS) -> str:
 # --- helpers ------------------------------------------------------------------
 def _x(text: str) -> str:
     """XML-escape."""
-    return (str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-            .replace('"', "&quot;"))
+    return (
+        str(text)
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+    )
 
 
 def _iri(text: str) -> str:

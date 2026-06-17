@@ -34,9 +34,18 @@ def to_node_edge_records(graph: Graph) -> dict[str, list[dict[str, Any]]]:
     DataFrame, a table renderer, or a CSV export.
     """
     return {
-        "nodes": [{"id": n.id, "types": list(n.types), **dict(n.attributes)} for n in _nodes(graph)],
+        "nodes": [
+            {"id": n.id, "types": list(n.types), **dict(n.attributes)}
+            for n in _nodes(graph)
+        ],
         "edges": [
-            {"id": e.id, "type": e.type, "source": e.source, "target": e.target, **dict(e.attributes)}
+            {
+                "id": e.id,
+                "type": e.type,
+                "source": e.source,
+                "target": e.target,
+                **dict(e.attributes),
+            }
             for e in _edges(graph)
         ],
     }
@@ -48,7 +57,9 @@ def to_table(graph: Graph, type_id: str) -> list[dict[str, Any]]:
     Returns node rows if ``type_id`` is a node-type present in the graph, else edge
     rows for that edge-type (else an empty list).
     """
-    node_rows = [{"id": n.id, **dict(n.attributes)} for n in _nodes(graph) if type_id in n.types]
+    node_rows = [
+        {"id": n.id, **dict(n.attributes)} for n in _nodes(graph) if type_id in n.types
+    ]
     if node_rows:
         return node_rows
     return [
@@ -68,9 +79,13 @@ def to_dot(graph: Graph, *, label_attr: str | None = None) -> str:
     """Render the graph as Graphviz DOT (a directed multigraph)."""
     lines = ["digraph creel {", "  rankdir=LR;"]
     for node in _nodes(graph):
-        lines.append(f'  "{node.id}" [label="{_escape(_node_label(node, label_attr))}"];')
+        lines.append(
+            f'  "{node.id}" [label="{_escape(_node_label(node, label_attr))}"];'
+        )
     for edge in _edges(graph):
-        lines.append(f'  "{edge.source}" -> "{edge.target}" [label="{_escape(edge.type)}"];')
+        lines.append(
+            f'  "{edge.source}" -> "{edge.target}" [label="{_escape(edge.type)}"];'
+        )
     lines.append("}")
     return "\n".join(lines)
 
@@ -83,7 +98,9 @@ def to_mermaid(graph: Graph, *, label_attr: str | None = None) -> str:
         lines.append(f'  {alias[node.id]}["{_escape(_node_label(node, label_attr))}"]')
     for edge in _edges(graph):
         if edge.source in alias and edge.target in alias:
-            lines.append(f"  {alias[edge.source]} -->|{_escape(edge.type)}| {alias[edge.target]}")
+            lines.append(
+                f"  {alias[edge.source]} -->|{_escape(edge.type)}| {alias[edge.target]}"
+            )
     return "\n".join(lines)
 
 
@@ -96,13 +113,26 @@ def to_cytoscape(graph: Graph) -> dict[str, Any]:
     return {
         "elements": {
             "nodes": [
-                {"data": {"id": n.id, "label": n.types[0] if n.types else "",
-                          "types": list(n.types), **dict(n.attributes)}}
+                {
+                    "data": {
+                        "id": n.id,
+                        "label": n.types[0] if n.types else "",
+                        "types": list(n.types),
+                        **dict(n.attributes),
+                    }
+                }
                 for n in _nodes(graph)
             ],
             "edges": [
-                {"data": {"id": e.id, "source": e.source, "target": e.target, "type": e.type,
-                          **dict(e.attributes)}}
+                {
+                    "data": {
+                        "id": e.id,
+                        "source": e.source,
+                        "target": e.target,
+                        "type": e.type,
+                        **dict(e.attributes),
+                    }
+                }
                 for e in _edges(graph)
             ],
         }
@@ -120,13 +150,25 @@ def to_embedding_records(graph: Graph) -> list[dict[str, Any]]:
     for node in _nodes(graph):
         attrs = "; ".join(f"{k}={v}" for k, v in sorted(node.attributes.items()))
         type_label = node.types[0] if node.types else "node"
-        records.append({"id": node.id, "kind": "node", "type": type_label,
-                        "text": f"{type_label}: {attrs}".strip(": ").strip()})
+        records.append(
+            {
+                "id": node.id,
+                "kind": "node",
+                "type": type_label,
+                "text": f"{type_label}: {attrs}".strip(": ").strip(),
+            }
+        )
     for edge in _edges(graph):
         attrs = "; ".join(f"{k}={v}" for k, v in sorted(edge.attributes.items()))
         tail = f" ({attrs})" if attrs else ""
-        records.append({"id": edge.id, "kind": "edge", "type": edge.type,
-                        "text": f"{edge.source} {edge.type} {edge.target}{tail}"})
+        records.append(
+            {
+                "id": edge.id,
+                "kind": "edge",
+                "type": edge.type,
+                "text": f"{edge.source} {edge.type} {edge.target}{tail}",
+            }
+        )
     return records
 
 

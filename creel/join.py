@@ -67,13 +67,17 @@ def join(
     covered: set[str] = set()
 
     # 1) cluster bindings -> one step each, covering several element types
-    for binding in (bindings or ()):
+    for binding in bindings or ():
         if not getattr(binding, "elements", None):
             continue
-        cluster = tuple(spec.element_type(eid) for eid in binding.elements if spec.element_type(eid))
+        cluster = tuple(
+            spec.element_type(eid) for eid in binding.elements if spec.element_type(eid)
+        )
         if not cluster:
             continue
-        steps.append(ResolvedStep(cluster[0].id, cluster[0], binding.build(), "binding", cluster))
+        steps.append(
+            ResolvedStep(cluster[0].id, cluster[0], binding.build(), "binding", cluster)
+        )
         covered.update(et.id for et in cluster)
 
     # 2) remaining elements -> per-element binding or schema-as-extractor fallback
@@ -82,10 +86,18 @@ def join(
             continue
         binding = bindings.for_element(element_type.id) if bindings else None
         if binding is not None and not getattr(binding, "elements", None):
-            steps.append(ResolvedStep(element_type.id, element_type, binding.build(), "binding"))
+            steps.append(
+                ResolvedStep(element_type.id, element_type, binding.build(), "binding")
+            )
         elif schema_as_extractor is not None:
-            steps.append(ResolvedStep(element_type.id, element_type,
-                                      schema_as_extractor(element_type, spec), "schema_as_extractor"))
+            steps.append(
+                ResolvedStep(
+                    element_type.id,
+                    element_type,
+                    schema_as_extractor(element_type, spec),
+                    "schema_as_extractor",
+                )
+            )
         else:
             unbound.append(element_type.id)
     return ResolvedPlan(tuple(steps), tuple(unbound))

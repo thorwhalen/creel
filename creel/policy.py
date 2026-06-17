@@ -34,8 +34,12 @@ class ExtractionPolicy:
     review_below: float = 0.5
     overrides: Mapping[str, "ExtractionPolicy"] = field(default_factory=dict)
 
-    def for_element(self, element_id: str, type_id: Optional[str] = None) -> "ExtractionPolicy":
+    def for_element(
+        self, element_id: str, type_id: Optional[str] = None
+    ) -> "ExtractionPolicy":
         """Resolve the effective policy for an element (element-id → type-id → self)."""
-        return self.overrides.get(element_id) or (
-            self.overrides.get(type_id) if type_id else None
-        ) or self
+        return (
+            self.overrides.get(element_id)
+            or (self.overrides.get(type_id) if type_id else None)
+            or self
+        )

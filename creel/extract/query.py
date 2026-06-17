@@ -38,11 +38,17 @@ Grounder = Callable[[int, Mapping[str, Any]], Sequence[Any]]
 
 
 def _attrs(record: Mapping[str, Any], mapping: Mapping[str, Any]) -> dict[str, Any]:
-    picked = {a: record[col] for a, col in mapping.get("attributes", {}).items() if col in record}
+    picked = {
+        a: record[col]
+        for a, col in mapping.get("attributes", {}).items()
+        if col in record
+    }
     return apply_casts(picked, mapping.get("casts", {}))
 
 
-def _record_to_node(record, i, mapping, *, source_id, element_id, grounder) -> ExtractedNode:
+def _record_to_node(
+    record, i, mapping, *, source_id, element_id, grounder
+) -> ExtractedNode:
     el_type = mapping.get("type") or element_id
     if mapping.get("id_template"):
         node_id = fill_template(mapping["id_template"], record)
@@ -51,12 +57,16 @@ def _record_to_node(record, i, mapping, *, source_id, element_id, grounder) -> E
     else:
         node_id = f"{el_type}:{i}"
     evidence = deterministic_evidence(
-        source_id=source_id, generated_by=f"query:{element_id}", grounding=grounder(i, record)
+        source_id=source_id,
+        generated_by=f"query:{element_id}",
+        grounding=grounder(i, record),
     )
     return ExtractedNode(node_id, el_type, _attrs(record, mapping), evidence)
 
 
-def _record_to_edge(record, i, mapping, *, source_id, element_id, grounder) -> ExtractedEdge:
+def _record_to_edge(
+    record, i, mapping, *, source_id, element_id, grounder
+) -> ExtractedEdge:
     el_type = mapping.get("type") or element_id
     for key in ("source_template", "target_template"):
         if not mapping.get(key):
@@ -67,13 +77,17 @@ def _record_to_edge(record, i, mapping, *, source_id, element_id, grounder) -> E
         else f"{el_type}:{i}"
     )
     evidence = deterministic_evidence(
-        source_id=source_id, generated_by=f"query:{element_id}", grounding=grounder(i, record)
+        source_id=source_id,
+        generated_by=f"query:{element_id}",
+        grounding=grounder(i, record),
     )
     return ExtractedEdge(
-        edge_id, el_type,
+        edge_id,
+        el_type,
         fill_template(mapping["source_template"], record),
         fill_template(mapping["target_template"], record),
-        _attrs(record, mapping), evidence,
+        _attrs(record, mapping),
+        evidence,
     )
 
 
@@ -86,16 +100,34 @@ def _map_records(
     nodes, edges = [], []
     for i, record in enumerate(records):
         if kind == "edge":
-            edges.append(_record_to_edge(record, i, mapping, source_id=source_id,
-                                         element_id=element_id, grounder=grounder))
+            edges.append(
+                _record_to_edge(
+                    record,
+                    i,
+                    mapping,
+                    source_id=source_id,
+                    element_id=element_id,
+                    grounder=grounder,
+                )
+            )
         else:
-            nodes.append(_record_to_node(record, i, mapping, source_id=source_id,
-                                         element_id=element_id, grounder=grounder))
+            nodes.append(
+                _record_to_node(
+                    record,
+                    i,
+                    mapping,
+                    source_id=source_id,
+                    element_id=element_id,
+                    grounder=grounder,
+                )
+            )
     return Extraction(nodes=nodes, edges=edges)
 
 
 def _cell_grounder(source_id: str, mapping: Mapping[str, Any]) -> Grounder:
-    primary = mapping.get("id_from") or next(iter(mapping.get("attributes", {}).values()), "row")
+    primary = mapping.get("id_from") or next(
+        iter(mapping.get("attributes", {}).values()), "row"
+    )
     return lambda i, record: (CellSelector(source_id, i, str(primary)),)
 
 
@@ -103,22 +135,32 @@ def _cell_grounder(source_id: str, mapping: Mapping[str, Any]) -> Grounder:
 @register_extractor("table_map")
 def make_table_map_extractor(*, records_source: str, **mapping: Any):
     """Build an extractor that maps rows of the table source ``records_source``."""
+
     def extractor(ctx: ExtractionContext) -> Extraction:
         src = ctx.sources.get(records_source)
         records = list(src.content) if src is not None else []
-        return _map_records(records, mapping, source_id=records_source, element_id=ctx.element_id)
+        return _map_records(
+            records, mapping, source_id=records_source, element_id=ctx.element_id
+        )
+
     return extractor
 
 
 # --- sql: parameterized DuckDB over a table source (extra [query]) ------------
 @register_extractor("sql")
-def make_sql_extractor(*, records_source: str, sql: str, params: Sequence[Any] = (), **mapping: Any):
+def make_sql_extractor(
+    *, records_source: str, sql: str, params: Sequence[Any] = (), **mapping: Any
+):
     """Build an extractor that runs parameterized DuckDB ``sql`` over the table, then maps."""
+
     def extractor(ctx: ExtractionContext) -> Extraction:
         src = ctx.sources.get(records_source)
         rows = list(src.content) if src is not None else []
         result = _duckdb_query(rows, sql, list(params))
-        return _map_records(result, mapping, source_id=records_source, element_id=ctx.element_id)
+        return _map_records(
+            result, mapping, source_id=records_source, element_id=ctx.element_id
+        )
+
     return extractor
 
 
@@ -135,9 +177,11 @@ def _duckdb_query(rows: list[dict], sql: str, params: list) -> list[dict]:
         if rows:
             cols = list(rows[0].keys())
             quoted = ", ".join(f'"{c}"' for c in cols)
-            con.execute(f'CREATE TABLE t ({", ".join(f""""{c}" VARCHAR""" for c in cols)})')
+            con.execute(
+                f'CREATE TABLE t ({", ".join(f""""{c}" VARCHAR""" for c in cols)})'
+            )
             con.executemany(
-                f'INSERT INTO t ({quoted}) VALUES ({", ".join("?" for _ in cols)})',
+                f"INSERT INTO t ({quoted}) VALUES ({', '.join('?' for _ in cols)})",
                 [[_as_str(r.get(c)) for c in cols] for r in rows],
             )
         cur = con.execute(sql, params)
@@ -154,15 +198,26 @@ def _as_str(value: Any) -> Any:
 # --- json_query: JMESPath select + optional equality filter (extra [query]) --
 @register_extractor("json_query")
 def make_json_extractor(
-    *, records_source: str, select: Optional[str] = None, where: Optional[Mapping] = None, **mapping: Any
+    *,
+    records_source: str,
+    select: Optional[str] = None,
+    where: Optional[Mapping] = None,
+    **mapping: Any,
 ):
     """Build an extractor that selects records from a JSON source, then maps them."""
+
     def extractor(ctx: ExtractionContext) -> Extraction:
         src = ctx.sources.get(records_source)
         records = _json_select(src.content if src is not None else [], select, where)
         grounder = _jsonpath_grounder(records_source, select)
-        return _map_records(records, mapping, source_id=records_source,
-                            element_id=ctx.element_id, grounder=grounder)
+        return _map_records(
+            records,
+            mapping,
+            source_id=records_source,
+            element_id=ctx.element_id,
+            grounder=grounder,
+        )
+
     return extractor
 
 
@@ -172,7 +227,9 @@ def _json_select(content: Any, select: Optional[str], where: Optional[Mapping]) 
         import jmespath  # local import: optional [query] extra
 
         found = jmespath.search(select, content)
-        records = found if isinstance(found, list) else ([] if found is None else [found])
+        records = (
+            found if isinstance(found, list) else ([] if found is None else [found])
+        )
     if not isinstance(records, list):
         records = [records]
     if where:

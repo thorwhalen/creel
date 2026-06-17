@@ -86,7 +86,9 @@ class ExtractionContext:
     element_types: Sequence[ElementType] = ()
 
     def __post_init__(self) -> None:
-        types = tuple(self.element_types) if self.element_types else (self.element_type,)
+        types = (
+            tuple(self.element_types) if self.element_types else (self.element_type,)
+        )
         object.__setattr__(self, "element_types", types)
 
 

@@ -26,12 +26,16 @@ from creel.graph.model import Graph
 
 
 # --- A1: per-attribute grounding ----------------------------------------------
-def set_attribute_evidence(graph: Graph, element_id: str, attribute: str, evidence: Evidence) -> None:
+def set_attribute_evidence(
+    graph: Graph, element_id: str, attribute: str, evidence: Evidence
+) -> None:
     """Attach an evidence record to a specific attribute value (key ``(id, attribute)``)."""
     graph.evidence[(element_id, attribute)] = evidence
 
 
-def attribute_evidence(graph: Graph, element_id: str, attribute: str) -> Optional[Evidence]:
+def attribute_evidence(
+    graph: Graph, element_id: str, attribute: str
+) -> Optional[Evidence]:
     """Return the per-attribute evidence for ``(element_id, attribute)``, or the
     element-level evidence as a fallback, or ``None``."""
     return graph.evidence.get((element_id, attribute)) or graph.evidence.get(element_id)
@@ -56,7 +60,9 @@ class TraceIndex:
                     src = selector.source_id or "?"
                     self._spans[src].append((selector.start, selector.end, key))
                 elif kind == "CellSelector":
-                    self._cells[selector.source_id].append((selector.row, selector.column, key))
+                    self._cells[selector.source_id].append(
+                        (selector.row, selector.column, key)
+                    )
                 elif kind == "PageSelector":
                     self._pages[selector.source_id].append((selector.page, key))
 
@@ -66,11 +72,17 @@ class TraceIndex:
 
     def elements_overlapping(self, source_id: str, start: int, end: int) -> list[Any]:
         """Evidence keys whose text span overlaps ``[start, end)`` (range query)."""
-        return [k for (s, e, k) in self._spans.get(source_id, []) if s < end and start < e]
+        return [
+            k for (s, e, k) in self._spans.get(source_id, []) if s < end and start < e
+        ]
 
     def elements_in_cell(self, source_id: str, row: int, column: str) -> list[Any]:
         """Evidence keys grounded in table cell ``(row, column)``."""
-        return [k for (r, c, k) in self._cells.get(source_id, []) if r == row and c == column]
+        return [
+            k
+            for (r, c, k) in self._cells.get(source_id, [])
+            if r == row and c == column
+        ]
 
     def elements_on_page(self, source_id: str, page: int) -> list[Any]:
         """Evidence keys grounded on ``page``."""
@@ -84,8 +96,9 @@ def verify_anchor(selector: Any, text: str) -> bool:
     return bool(exact) and exact in text
 
 
-def reanchor(selector: Any, text: str, *, hint: Optional[int] = None,
-             fuzzy: bool = True) -> Optional[tuple[int, int]]:
+def reanchor(
+    selector: Any, text: str, *, hint: Optional[int] = None, fuzzy: bool = True
+) -> Optional[tuple[int, int]]:
     """Re-locate a ``TextQuoteSelector`` in (possibly changed) ``text``.
 
     Strategy (Hypothes.is-style): exact match → disambiguate multiple hits by
@@ -106,9 +119,11 @@ def reanchor(selector: Any, text: str, *, hint: Optional[int] = None,
         best, best_score = positions[0], float("-inf")
         for p in positions:
             score = 0.0
-            if prefix and text[max(0, p - len(prefix)):p].endswith(prefix):
+            if prefix and text[max(0, p - len(prefix)) : p].endswith(prefix):
                 score += 1
-            if suffix and text[p + len(exact):p + len(exact) + len(suffix)].startswith(suffix):
+            if suffix and text[
+                p + len(exact) : p + len(exact) + len(suffix)
+            ].startswith(suffix):
                 score += 1
             if hint is not None:
                 score -= abs(p - hint) * 1e-6

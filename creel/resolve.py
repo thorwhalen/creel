@@ -18,13 +18,34 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Any, Callable, Mapping, Optional, Protocol, Sequence, runtime_checkable
+from typing import (
+    Any,
+    Callable,
+    Mapping,
+    Optional,
+    Protocol,
+    Sequence,
+    runtime_checkable,
+)
 
 from creel.extract.transforms import slug
 from creel.graph.model import Graph, Node
 
 # Tokens stripped during entity normalization (legal forms + honorifics).
-_LEGAL = {"inc", "ltd", "llc", "corp", "co", "company", "gmbh", "plc", "sa", "ag", "srl", "bv"}
+_LEGAL = {
+    "inc",
+    "ltd",
+    "llc",
+    "corp",
+    "co",
+    "company",
+    "gmbh",
+    "plc",
+    "sa",
+    "ag",
+    "srl",
+    "bv",
+}
 _HONORIFIC = {"dr", "mr", "mrs", "ms", "prof", "mme", "m", "the"}
 
 
@@ -80,7 +101,9 @@ class RegistryResolver:
         value = node.attributes.get(self.key)
         if value is None:
             return None
-        return self.registry.get(str(value)) or self.registry.get(normalize_entity(str(value)))
+        return self.registry.get(str(value)) or self.registry.get(
+            normalize_entity(str(value))
+        )
 
     def same(self, a: Node, b: Node, *, context: Any = None) -> bool:
         ca = self._canon(a)
@@ -103,7 +126,11 @@ class LLMResolver:
     key: str = "name"
 
     def same(self, a: Node, b: Node, *, context: Any = None) -> bool:
-        return bool(self.judge(str(a.attributes.get(self.key, "")), str(b.attributes.get(self.key, ""))))
+        return bool(
+            self.judge(
+                str(a.attributes.get(self.key, "")), str(b.attributes.get(self.key, ""))
+            )
+        )
 
 
 @dataclass
@@ -154,15 +181,22 @@ def resolve_graph(graph: Graph, resolver: Resolver, *, context: Any = None) -> G
             elif cluster[0].id in graph.evidence:
                 merged.evidence[cid] = graph.evidence[cluster[0].id]
             if len(cluster) > 1:
-                merges.append({"canonical": cid, "merged": sorted(n.id for n in cluster)})
+                merges.append(
+                    {"canonical": cid, "merged": sorted(n.id for n in cluster)}
+                )
 
     for edge in graph.edges():
         source = canonical_of.get(edge.source, edge.source)
         target = canonical_of.get(edge.target, edge.target)
         if not (merged.has_node(source) and merged.has_node(target)):
             continue
-        merged.add_edge(edge.id, source=source, target=target, type=edge.type,
-                        attributes=edge.attributes)
+        merged.add_edge(
+            edge.id,
+            source=source,
+            target=target,
+            type=edge.type,
+            attributes=edge.attributes,
+        )
         if edge.id in graph.evidence:
             merged.evidence[edge.id] = graph.evidence[edge.id]
 
@@ -170,7 +204,9 @@ def resolve_graph(graph: Graph, resolver: Resolver, *, context: Any = None) -> G
     return merged
 
 
-def _cluster(nodes: Sequence[Node], resolver: Resolver, context: Any) -> list[list[Node]]:
+def _cluster(
+    nodes: Sequence[Node], resolver: Resolver, context: Any
+) -> list[list[Node]]:
     parent = {n.id: n.id for n in nodes}
 
     def find(x: str) -> str:

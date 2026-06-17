@@ -74,8 +74,13 @@ def reify(
 
     for edge in graph.edges():
         if edge.type != edge_type:
-            out.add_edge(edge.id, source=edge.source, target=edge.target, type=edge.type,
-                         attributes=edge.attributes)
+            out.add_edge(
+                edge.id,
+                source=edge.source,
+                target=edge.target,
+                type=edge.type,
+                attributes=edge.attributes,
+            )
             _carry_evidence(graph, out, edge.id)
             continue
         if out.has_node(edge.id):
@@ -84,7 +89,9 @@ def reify(
                 "(node/edge id collision)"
             )
         out.add_node(edge.id, types=(node_type,), attributes=edge.attributes)
-        _carry_evidence(graph, out, edge.id)  # the edge's evidence rides to the node (same id)
+        _carry_evidence(
+            graph, out, edge.id
+        )  # the edge's evidence rides to the node (same id)
         for cid, csrc, ctgt, ctype in (
             (f"{subject_edge_type}:{edge.id}", edge.source, edge.id, subject_edge_type),
             (f"{object_edge_type}:{edge.id}", edge.id, edge.target, object_edge_type),
@@ -117,18 +124,24 @@ def unreify(
         edge_type, node_type, subject_edge_type, object_edge_type
     )
     reified_ids = {n.id for n in graph.nodes_of_type(node_type)}
-    subject_conn: dict[str, tuple[str, str]] = {}  # reified id -> (connector edge id, source)
-    object_conn: dict[str, tuple[str, str]] = {}  # reified id -> (connector edge id, target)
+    subject_conn: dict[
+        str, tuple[str, str]
+    ] = {}  # reified id -> (connector edge id, source)
+    object_conn: dict[
+        str, tuple[str, str]
+    ] = {}  # reified id -> (connector edge id, target)
     for edge in graph.edges():
         if edge.type == subject_edge_type and edge.target in reified_ids:
             subject_conn[edge.target] = (edge.id, edge.source)
         elif edge.type == object_edge_type and edge.source in reified_ids:
             object_conn[edge.source] = (edge.id, edge.target)
 
-    collapse = {rid for rid in reified_ids if rid in subject_conn and rid in object_conn}
-    connectors_to_drop = (
-        {subject_conn[rid][0] for rid in collapse} | {object_conn[rid][0] for rid in collapse}
-    )
+    collapse = {
+        rid for rid in reified_ids if rid in subject_conn and rid in object_conn
+    }
+    connectors_to_drop = {subject_conn[rid][0] for rid in collapse} | {
+        object_conn[rid][0] for rid in collapse
+    }
 
     out = Graph()
     for node in graph.nodes():
@@ -140,8 +153,13 @@ def unreify(
     for edge in graph.edges():
         if edge.id in connectors_to_drop:
             continue  # only the connectors of collapsed nodes are removed
-        out.add_edge(edge.id, source=edge.source, target=edge.target, type=edge.type,
-                     attributes=edge.attributes)
+        out.add_edge(
+            edge.id,
+            source=edge.source,
+            target=edge.target,
+            type=edge.type,
+            attributes=edge.attributes,
+        )
         _carry_evidence(graph, out, edge.id)
 
     for reified_id in collapse:
@@ -150,9 +168,16 @@ def unreify(
             raise ValueError(
                 f"cannot unreify {reified_id!r}: an edge with that id already exists"
             )
-        out.add_edge(reified_id, source=subject_conn[reified_id][1],
-                     target=object_conn[reified_id][1], type=edge_type, attributes=node.attributes)
-        _carry_evidence(graph, out, reified_id)  # node evidence rides back to the edge (same id)
+        out.add_edge(
+            reified_id,
+            source=subject_conn[reified_id][1],
+            target=object_conn[reified_id][1],
+            type=edge_type,
+            attributes=node.attributes,
+        )
+        _carry_evidence(
+            graph, out, reified_id
+        )  # node evidence rides back to the edge (same id)
     return out
 
 

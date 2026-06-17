@@ -51,8 +51,13 @@ _SYSTEM = (
 )
 _CONTEXT_CHARS = 24
 _JSON_TYPE = {
-    "string": "string", "integer": "integer", "decimal": "number", "float": "number",
-    "boolean": "boolean", "date": "string", "datetime": "string",
+    "string": "string",
+    "integer": "integer",
+    "decimal": "number",
+    "float": "number",
+    "boolean": "boolean",
+    "date": "string",
+    "datetime": "string",
 }
 
 
@@ -71,7 +76,9 @@ def _attr_json_schema(attr, spec: GraphSpec) -> dict[str, Any]:
     # NB: numeric minimum/maximum are intentionally NOT emitted (D6 — the decoder
     # does not enforce ranges; they are checked post-decode in validate-retry).
     schema: dict[str, Any] = {}
-    permissible = attr.enum or (spec.enum(attr.range).permissible_values if spec.enum(attr.range) else None)
+    permissible = attr.enum or (
+        spec.enum(attr.range).permissible_values if spec.enum(attr.range) else None
+    )
     if permissible is not None:
         schema["enum"] = list(permissible)
     else:
@@ -92,19 +99,30 @@ def compile_output_schema(element_type: ElementType, spec: GraphSpec) -> dict[st
     }
     required = [n for n, a in attrs.items() if a.required]
     if isinstance(element_type, EdgeType):
-        item["properties"]["_source"] = {"type": "string", "description": "source node name/id"}
-        item["properties"]["_target"] = {"type": "string", "description": "target node name/id"}
+        item["properties"]["_source"] = {
+            "type": "string",
+            "description": "source node name/id",
+        }
+        item["properties"]["_target"] = {
+            "type": "string",
+            "description": "target node name/id",
+        }
     if required:
         item["required"] = required
-    return {"type": "object", "properties": {"items": {"type": "array", "items": item}},
-            "required": ["items"]}
+    return {
+        "type": "object",
+        "properties": {"items": {"type": "array", "items": item}},
+        "required": ["items"],
+    }
 
 
 def build_instruction(element_type: ElementType, spec: GraphSpec) -> str:
     """Turn the element + attribute descriptions into the extraction instruction."""
     desc = element_type.description or f"a {element_type.id}"
-    lines = [f"From the SOURCE, extract every {element_type.id} ({desc}).",
-             "For each, provide these attributes:"]
+    lines = [
+        f"From the SOURCE, extract every {element_type.id} ({desc}).",
+        "For each, provide these attributes:",
+    ]
     for name, attr in effective_attributes(spec, element_type.id).items():
         extra = []
         permissible = attr.enum or (
@@ -121,8 +139,12 @@ def build_instruction(element_type: ElementType, spec: GraphSpec) -> str:
         suffix = f" ({'; '.join(extra)})" if extra else ""
         lines.append(f"- {name}: {attr.description or name}{suffix}")
     if isinstance(element_type, EdgeType):
-        lines.append("- _source / _target: the names/ids of the two nodes this relation connects.")
-    lines.append("Only extract values explicitly supported by the source; do not invent.")
+        lines.append(
+            "- _source / _target: the names/ids of the two nodes this relation connects."
+        )
+    lines.append(
+        "Only extract values explicitly supported by the source; do not invent."
+    )
     return "\n".join(lines)
 
 
@@ -149,38 +171,61 @@ class LLMExtractor:
         out_schema = compile_output_schema(et, ctx.spec)
         instruction = self.instruction or build_instruction(et, ctx.spec)
         text = "\n\n".join(s.content for s in ctx.sources.texts())
-        items, confidence = self._extract(client, instruction, text, out_schema, et, ctx, policy)
-        return items_to_extraction(items, et, ctx, text, model=self.model,
-                                   id_attribute=self.id_attribute, base_confidence=confidence,
-                                   review_below=policy.review_below)
+        items, confidence = self._extract(
+            client, instruction, text, out_schema, et, ctx, policy
+        )
+        return items_to_extraction(
+            items,
+            et,
+            ctx,
+            text,
+            model=self.model,
+            id_attribute=self.id_attribute,
+            base_confidence=confidence,
+            review_below=policy.review_below,
+        )
 
     def _policy(self, ctx, et) -> ExtractionPolicy:
-        policy = (self.policy or ctx.config.get("policy") or ctx.services.get("policy")
-                  or ExtractionPolicy(max_retries=self.max_retries))
+        policy = (
+            self.policy
+            or ctx.config.get("policy")
+            or ctx.services.get("policy")
+            or ExtractionPolicy(max_retries=self.max_retries)
+        )
         return policy.for_element(ctx.element_id, et.id)
 
     def _extract(self, client, instruction, text, out_schema, et, ctx, policy):
         """Run extraction, with self-consistency voting if the policy asks for it."""
         n = max(1, policy.self_consistency_samples)
         if n == 1:
-            return self._extract_items(client, instruction, text, out_schema, et, ctx,
-                                       policy.max_retries), None
-        samples = [self._extract_items(client, instruction, text, out_schema, et, ctx,
-                                       policy.max_retries) for _ in range(n)]
+            return self._extract_items(
+                client, instruction, text, out_schema, et, ctx, policy.max_retries
+            ), None
+        samples = [
+            self._extract_items(
+                client, instruction, text, out_schema, et, ctx, policy.max_retries
+            )
+            for _ in range(n)
+        ]
         keyed = [json.dumps(s, sort_keys=True, default=str) for s in samples]
         top, count = Counter(keyed).most_common(1)[0]
         agreement = count / n
         confidence = Confidence(
-            method=SELF_CONSISTENCY, score=agreement,
+            method=SELF_CONSISTENCY,
+            score=agreement,
             review_status=NEEDS_REVIEW if agreement < policy.review_below else AUTO,
         )
         return json.loads(top), confidence
 
-    def _extract_items(self, client, instruction, text, out_schema, et, ctx, max_retries) -> list:
+    def _extract_items(
+        self, client, instruction, text, out_schema, et, ctx, max_retries
+    ) -> list:
         base = f'{instruction}\n\nReturn a JSON object {{"items": [...]}}.\n\nSOURCE:\n{text}'
         feedback, best = "", []
         for _ in range(max_retries + 1):
-            response = client.complete_json(prompt=base + feedback, schema=out_schema, system=_SYSTEM)
+            response = client.complete_json(
+                prompt=base + feedback, schema=out_schema, system=_SYSTEM
+            )
             items = list((response or {}).get("items", []))
             issues = []
             for item in items:
@@ -189,15 +234,23 @@ class LLMExtractor:
             if not issues:
                 return items
             best = items
-            feedback = "\n\nThe previous response had these problems — fix them:\n" + "\n".join(
-                f"- {i}" for i in issues[:20]
+            feedback = (
+                "\n\nThe previous response had these problems — fix them:\n"
+                + "\n".join(f"- {i}" for i in issues[:20])
             )
         return best  # best-effort after retries; the verify pass is the final gate
 
 
 def items_to_extraction(
-    items, element_type, ctx, text, *, model=None, id_attribute=None,
-    base_confidence: Optional[Confidence] = None, review_below: float = 0.5,
+    items,
+    element_type,
+    ctx,
+    text,
+    *,
+    model=None,
+    id_attribute=None,
+    base_confidence: Optional[Confidence] = None,
+    review_below: float = 0.5,
 ) -> Extraction:
     """Turn raw LLM ``items`` for one element type into an :class:`Extraction`.
 
@@ -211,22 +264,42 @@ def items_to_extraction(
         attrs = {k: v for k, v in item.items() if not str(k).startswith("_")}
         grounding, verified = _ground(attrs, text, source_id)
         evidence = Evidence(
-            provenance=Provenance(derived_from=derived, generated_by=f"llm:{element_type.id}",
-                                  attributed_to=model),
+            provenance=Provenance(
+                derived_from=derived,
+                generated_by=f"llm:{element_type.id}",
+                attributed_to=model,
+            ),
             grounding=grounding,
             confidence=_confidence(verified, base_confidence, review_below),
         )
         if isinstance(element_type, EdgeType):
-            edges.append(ExtractedEdge(f"{element_type.id}:{i}", element_type.id,
-                                       str(item.get("_source", "")), str(item.get("_target", "")),
-                                       attrs, evidence))
+            edges.append(
+                ExtractedEdge(
+                    f"{element_type.id}:{i}",
+                    element_type.id,
+                    str(item.get("_source", "")),
+                    str(item.get("_target", "")),
+                    attrs,
+                    evidence,
+                )
+            )
         else:
-            seed = attrs.get(id_attribute) if id_attribute else next(iter(attrs.values()), i)
-            nodes.append(ExtractedNode(f"{element_type.id}:{slug(seed)}", element_type.id, attrs, evidence))
+            seed = (
+                attrs.get(id_attribute)
+                if id_attribute
+                else next(iter(attrs.values()), i)
+            )
+            nodes.append(
+                ExtractedNode(
+                    f"{element_type.id}:{slug(seed)}", element_type.id, attrs, evidence
+                )
+            )
     return Extraction(nodes=nodes, edges=edges)
 
 
-def _confidence(verified: bool, base: Optional[Confidence], review_below: float) -> Confidence:
+def _confidence(
+    verified: bool, base: Optional[Confidence], review_below: float
+) -> Confidence:
     """Confidence for one extracted item, applying the policy's review threshold.
 
     With a ``base`` (e.g. a self-consistency agreement score) keep its method/score and
@@ -237,10 +310,17 @@ def _confidence(verified: bool, base: Optional[Confidence], review_below: float)
         review = base.review_status
         if not verified or base.score < review_below:
             review = NEEDS_REVIEW
-        return Confidence(method=base.method, score=base.score, verified=verified, review_status=review)
+        return Confidence(
+            method=base.method,
+            score=base.score,
+            verified=verified,
+            review_status=review,
+        )
     score = 1.0 if verified else 0.5
     review = AUTO if (verified and score >= review_below) else NEEDS_REVIEW
-    return Confidence(method=VERBALIZED, score=score, verified=verified, review_status=review)
+    return Confidence(
+        method=VERBALIZED, score=score, verified=verified, review_status=review
+    )
 
 
 def _ground(attrs: Mapping[str, Any], text: str, source_id: str):
@@ -250,8 +330,11 @@ def _ground(attrs: Mapping[str, Any], text: str, source_id: str):
             start = text.find(value)
             end = start + len(value)
             return (
-                TextQuoteSelector(exact=value, prefix=text[max(0, start - _CONTEXT_CHARS):start],
-                                  suffix=text[end:end + _CONTEXT_CHARS]),
+                TextQuoteSelector(
+                    exact=value,
+                    prefix=text[max(0, start - _CONTEXT_CHARS) : start],
+                    suffix=text[end : end + _CONTEXT_CHARS],
+                ),
                 TextPositionSelector(start=start, end=end, source_id=source_id),
             ), True
     return (), False
@@ -273,12 +356,16 @@ class ClusterLLMExtractor:
     def __call__(self, ctx: ExtractionContext) -> Extraction:
         client = ctx.services.get("llm")
         if client is None:
-            raise ValueError("ClusterLLMExtractor needs an LLM client at ctx.services['llm'].")
+            raise ValueError(
+                "ClusterLLMExtractor needs an LLM client at ctx.services['llm']."
+            )
         types = tuple(ctx.element_types)
         out_schema = {
             "type": "object",
-            "properties": {et.id: compile_output_schema(et, ctx.spec)["properties"]["items"]
-                           for et in types},
+            "properties": {
+                et.id: compile_output_schema(et, ctx.spec)["properties"]["items"]
+                for et in types
+            },
             "required": [et.id for et in types],
         }
         instruction = self._instruction(types, ctx.spec)
@@ -286,33 +373,52 @@ class ClusterLLMExtractor:
         response = self._extract(client, instruction, text, out_schema, types, ctx)
         nodes, edges = [], []
         for et in types:
-            extraction = items_to_extraction(list(response.get(et.id, [])), et, ctx, text, model=self.model)
+            extraction = items_to_extraction(
+                list(response.get(et.id, [])), et, ctx, text, model=self.model
+            )
             nodes.extend(extraction.nodes)
             edges.extend(extraction.edges)
         return Extraction(nodes=nodes, edges=edges)
 
     def _instruction(self, types, spec) -> str:
-        parts = ["Extract a graph from the SOURCE. Return a JSON object with one array per type below."]
+        parts = [
+            "Extract a graph from the SOURCE. Return a JSON object with one array per type below."
+        ]
         for et in types:
             parts.append(f"\n### {et.id}\n{build_instruction(et, spec)}")
-        parts.append('\nReturn JSON: {' + ", ".join(f'"{et.id}": [...]' for et in types) + "}.")
+        parts.append(
+            "\nReturn JSON: {" + ", ".join(f'"{et.id}": [...]' for et in types) + "}."
+        )
         return "\n".join(parts)
 
-    def _extract(self, client, instruction, text, out_schema, types, ctx) -> Mapping[str, Any]:
+    def _extract(
+        self, client, instruction, text, out_schema, types, ctx
+    ) -> Mapping[str, Any]:
         base = f"{instruction}\n\nSOURCE:\n{text}"
         feedback, best = "", {}
         for _ in range(self.max_retries + 1):
-            response = client.complete_json(prompt=base + feedback, schema=out_schema, system=_SYSTEM) or {}
+            response = (
+                client.complete_json(
+                    prompt=base + feedback, schema=out_schema, system=_SYSTEM
+                )
+                or {}
+            )
             issues = []
             for et in types:
                 for item in response.get(et.id, []):
-                    payload = {k: v for k, v in item.items() if not str(k).startswith("_")}
-                    issues.extend(f"[{et.id}] {i}" for i in validate_attributes(payload, et.id, ctx.spec))
+                    payload = {
+                        k: v for k, v in item.items() if not str(k).startswith("_")
+                    }
+                    issues.extend(
+                        f"[{et.id}] {i}"
+                        for i in validate_attributes(payload, et.id, ctx.spec)
+                    )
             if not issues:
                 return response
             best = response
-            feedback = "\n\nThe previous response had these problems — fix them:\n" + "\n".join(
-                f"- {i}" for i in issues[:20]
+            feedback = (
+                "\n\nThe previous response had these problems — fix them:\n"
+                + "\n".join(f"- {i}" for i in issues[:20])
             )
         return best
 
@@ -335,7 +441,9 @@ def make_cluster_llm_extractor(**config: Any) -> ClusterLLMExtractor:
 
 
 # --- default Anthropic adapter (extra [anthropic]; lazy; provider-agnostic seam) --
-def anthropic_client(*, model: str = "claude-sonnet-4-6", max_tokens: int = 4096) -> LLMClient:
+def anthropic_client(
+    *, model: str = "claude-sonnet-4-6", max_tokens: int = 4096
+) -> LLMClient:
     """A default :class:`LLMClient` backed by Anthropic Claude. Requires ``creel[anthropic]``.
 
     Kept deliberately thin — it requests JSON for the given schema and parses it. For
@@ -346,12 +454,19 @@ def anthropic_client(*, model: str = "claude-sonnet-4-6", max_tokens: int = 4096
 
     def complete_json(*, prompt, schema, system=None):
         message = client.messages.create(
-            model=model, max_tokens=max_tokens,
+            model=model,
+            max_tokens=max_tokens,
             system=(system or _SYSTEM),
-            messages=[{"role": "user",
-                       "content": f"{prompt}\n\nReturn JSON conforming to this schema:\n{json.dumps(schema)}"}],
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"{prompt}\n\nReturn JSON conforming to this schema:\n{json.dumps(schema)}",
+                }
+            ],
         )
-        text = "".join(b.text for b in message.content if getattr(b, "type", None) == "text")
+        text = "".join(
+            b.text for b in message.content if getattr(b, "type", None) == "text"
+        )
         return json.loads(_first_json_object(text))
 
     return _FuncClient(complete_json)
@@ -370,7 +485,7 @@ class _FuncClient:
 
 def _first_json_object(text: str) -> str:
     start, end = text.find("{"), text.rfind("}")
-    return text[start:end + 1] if start != -1 and end > start else text
+    return text[start : end + 1] if start != -1 and end > start else text
 
 
 # --- aix integration (extra [aix]; the user's provider-agnostic AI package) -------
