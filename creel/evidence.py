@@ -141,24 +141,54 @@ class BoundingBoxSelector:
 
 
 # --- provenance & confidence ---------------------------------------------------
+#: agent kinds for ``Provenance.attributed_kind`` (A5) — derive machine vs manual.
+SOFTWARE_AGENT = "software_agent"
+PERSON = "person"
+
+
 @dataclass(frozen=True)
 class Provenance:
-    """Where an element came from (PROV-lite + PAV as plain JSON keys)."""
+    """Where an element came from (PROV-lite + PAV as plain JSON keys).
+
+    ``attributed_kind`` (``software_agent`` | ``person``) + ``was_revision_of`` make
+    the machine-extracted / manually-coded / human-corrected distinction *derivable*
+    (decision A5): non-destructive correction records a new provenance pointing at the
+    superseded one, rather than overwriting.
+    """
 
     derived_from: str  # source id (optionally with a span suffix)
     generated_by: str  # strategy + extractor id, e.g. "pattern:RegexNodeExtractor"
     attributed_to: Optional[str] = None  # model id+version or human id
+    attributed_kind: Optional[str] = None  # software_agent | person
+    coded_by: Optional[str] = None  # human tool/UI id (for manual coding)
+    was_revision_of: Optional[str] = None  # id of the record this supersedes
     generated_at: Optional[str] = None  # ISO-8601; omitted by default for determinism
     version: Optional[str] = None
 
     def to_dict(self) -> dict[str, Any]:
         """Serialise to a plain dict, omitting unset optional keys."""
         d = {"derived_from": self.derived_from, "generated_by": self.generated_by}
-        for k in ("attributed_to", "generated_at", "version"):
+        for k in ("attributed_to", "attributed_kind", "coded_by", "was_revision_of",
+                  "generated_at", "version"):
             v = getattr(self, k)
             if v is not None:
                 d[k] = v
         return d
+
+    @property
+    def is_machine(self) -> bool:
+        """True if attributed to a software agent and not a human correction."""
+        return self.attributed_kind == SOFTWARE_AGENT and self.was_revision_of is None
+
+    @property
+    def is_manual(self) -> bool:
+        """True if attributed to a person with no machine antecedent (manual coding)."""
+        return self.attributed_kind == PERSON and self.was_revision_of is None
+
+    @property
+    def is_corrected(self) -> bool:
+        """True if this is a person's revision of an earlier (machine or human) record."""
+        return self.attributed_kind == PERSON and self.was_revision_of is not None
 
 
 @dataclass(frozen=True)

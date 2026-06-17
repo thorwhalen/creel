@@ -60,9 +60,12 @@ from creel.resolve import (
     resolve_graph,
 )
 from creel.sources import Source, SourceBundle, coerce_sources
+from creel.annotate import Annotation, Selection
+from creel.render import AnnotatedGraph, GraphRenderer, RenderArtifact
 from creel.view import (
     to_cytoscape,
     to_dot,
+    to_embedding_records,
     to_mermaid,
     to_node_edge_records,
     to_table,
@@ -176,6 +179,13 @@ __all__ = [
     "to_dot",
     "to_mermaid",
     "to_cytoscape",
+    "to_embedding_records",
+    # annotation overlay + render contract (D15 / D-OP9)
+    "Annotation",
+    "Selection",
+    "AnnotatedGraph",
+    "GraphRenderer",
+    "RenderArtifact",
     # export adapters (D2 / EPIC 3.4, 8.4)
     "to_jgf",
     "to_graphml",
