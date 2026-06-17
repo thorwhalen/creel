@@ -47,6 +47,7 @@ from creel.evaluation import (
 )
 from creel.facade import extract
 from creel.ingest import ingest, ingest_paths
+from creel.policy import ExtractionPolicy
 from creel.reify import reify, unreify
 from creel.resolve import (
     CascadeResolver,
@@ -153,9 +154,10 @@ __all__ = [
     "Cache",
     "NullCache",
     "DictCache",
-    # bindings
+    # bindings + policy
     "ExtractorBinding",
     "ExtractorBindings",
+    "ExtractionPolicy",
     # entity resolution
     "Resolver",
     "NormalizeResolver",
