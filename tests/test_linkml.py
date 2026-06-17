@@ -52,7 +52,7 @@ def test_generate_pydantic_models_validate(sample_spec):
 
 
 def test_load_linkml_from_yaml_path(sample_spec, tmp_path):
-    import yaml
+    yaml = pytest.importorskip("yaml")  # PyYAML (creel[semantic]); dict path is dep-free
 
     path = tmp_path / "grammar.yaml"
     path.write_text(yaml.safe_dump(to_linkml(sample_spec)))

@@ -47,6 +47,7 @@ query = [
     "jmespath>=1",
 ]
 semantic = [
+    "pyyaml>=6",
     "linkml>=1.7",
     "rdflib>=7",
     "pyshacl>=0.25",
