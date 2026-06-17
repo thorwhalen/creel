@@ -34,8 +34,9 @@
   numeric_tolerance / set_match / **graph_match** (decomposable partial credit) /
   schema_constraint / semantic_similarity / **llm_rubric** (NL-defined, injected
   judge) / composite — plus a thin corpus **eval runner**.
-- A faithful **UNHCR RBM corpus** (3 synthetic docs → 12 nodes / 11 edges) scored
-  at 1.0 by the verifiers; the integration test that guards schema-join regressions.
+- A faithful **UNHCR RBM corpus** (4 synthetic docs → 17 nodes incl. 5 AGD reading
+  nodes / 19 edges) scored at 1.0 by the verifiers; the integration test that guards
+  schema-join regressions across the whole engine.
 - **All three extractor families** now real: pattern/function, **query**
   (`table_map`/`sql`/`json_query`), and **LLM** (schema-as-extractor via an injected
   client, validate-retry, faithfulness gate). The UNHCR corpus loads via the
@@ -43,36 +44,52 @@
 - **Cluster-pass** extraction (one binding → a set of coupled types, one LLM pass)
   and a required **entity-resolution** cascade (normalize/registry/LLM, with a
   non-destructive `resolve_graph` merge pass) — both wired through the facade.
-- **103 tests green** locally (`PYTHONPATH=. python -m pytest`).
+
+## v0.2 → v0.3 complete (2026-06-17) — PRs #27–#38
+
+| PR | Delivered |
+|----|-----------|
+| #27 | Query extractor (`table_map`/`sql`/`json_query`) + shared transforms; UNHCR tables rewired |
+| #28 | Ingestion layer (`ingest()` route-by-format; stdlib + optional backends); UNHCR loads via it |
+| #29 | LLM extractor (schema-as-extractor, validate-retry, faithfulness gate, facade fallback) |
+| #30 | Cluster-pass binding model + `ClusterLLMExtractor` (D-OP8) |
+| #31 | Entity-resolution cascade + `resolve_graph` merge pass (#14) |
+| #33 | `reify()`⇄`unreify()` edge↔node toggle + reserved temporal vocab (#12) |
+| #34/#37 | **AGD-disaggregated reading nodes** in `unhcr-rbm` (sex/age/location) |
+| #35 | `creel.view` projections — records/table/DOT/Mermaid/Cytoscape (D15) |
+| #36 | **Real-AI via `aix`** (`aix_client`/`aix_judge`/`aix_embedder`/`aix_entity_judge`) + 3 gated live tests |
+| #38 | `ExtractionPolicy` — self-consistency + `needs_review` thresholds (EPIC 11.4 → **EPIC 11 done**) |
+
+**The engine is feature-complete for its core mission:**
+`ingest(files) → extract(sources, grammar, extractors) → graph → verify / resolve / reify / view`.
+**125 tests green** (`PYTHONPATH=. python -m pytest`), plus **3 gated live-LLM tests**
+that pass against a real model via `aix` (run when an API key is present).
+**Completed epics: 2*, 3*, 4, 5, 6, 7*, 10, 11** (\* = all but one deferred sub-item).
 
 ## Remaining (by milestone)
 
-**v0.2 — nearly complete; remaining**
-- `creel.extract.llm.ExtractionPolicy` (EPIC 11.4): validate-retry always +
-  self-consistency / `needs_review` thresholds (the *policy* home; mechanics exist).
-- Optional: a default real LLM/embedder client wired behind `[llm]`/`[er]` (the seams
-  + a thin Anthropic adapter exist; production hardening is a follow-up).
-
-**v0.1 carry-over**
+**v0.1/v0.2 carry-over (small, additive)**
 - `creel.spec.linkml` — LinkML ⇄ GraphSpec + generate JSON Schema/Pydantic
-  (EPIC 2.4, `[semantic]` extra; Open Q1).
-- Export adapters beyond the canonical/networkx basics: rdf-star, cypher params,
-  cytoscape/dot/mermaid (EPIC 3.4 / 8.4).
+  (EPIC 2.4, `[semantic]` extra; needs `pip install linkml`).
+- Heavier **export adapters**: RDF-star, Neo4j Cypher (params, not interpolation),
+  JGF/GraphML (EPIC 3.4 / 8.4). The view projections (DOT/Mermaid/Cytoscape) are done.
 
-**v0.4 — downstream contracts & package split**
-- RAG-readiness affordances; `render.py` `GraphRenderer` + `AnnotatedGraph`
-  contract; `view/` projections (EPIC 8).
+**v0.4 — downstream contracts & package split (EPIC 8, D-OP3)**
+- `render.py` `GraphRenderer` Protocol + `AnnotatedGraph` three-layer contract;
+  RAG-readiness affordances (`text_for_embedding`).
+- **A1–A5 traceability** (ADR D-OP9): per-attribute grounding; the `Annotation`
+  contract (machine insight + human coding, bidirectional); reverse-trace index;
+  anchor-robustness resolver; `attributed_to.kind` + `wasRevisionOf`.
 - uv-workspace split `creel-core` + `creel-unhcr`; graduate the corpus grammar
-  (D-OP3, EPIC 7.5).
+  (EPIC 7.5).
 
-**v0.5 — hardening**
+**v0.5 — hardening (EPIC 9) — NEEDS USER GO-AHEAD**
 - README polish + `examples/`; **activate wads CI** and cut the first intentional
-  release (D-OP1, EPIC 9).
+  PyPI release. CI is already live and auto-publishes on push (bumped to 0.0.3),
+  so a real release is a deliberate decision (D-OP1).
 
-**Open design questions:** #11/#13/#14/#15 resolved & closed (see DECISIONS.md
-"Resolutions 2026-06-17"); **#12 stays open** pending one fact — AGD-disaggregated
-vs aggregate indicator values in v1 (decides edge-vs-reified-`Reading` node, with
-#15 temporal). GRF codelist re-verification before production (Open Q10).
+**Open items:** all design questions resolved & closed (#11–#15; see DECISIONS.md
+"Resolutions"); GRF codelist re-verification before production (Open Q10).
 
 ## How to run the tests
 
