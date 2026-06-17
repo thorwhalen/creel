@@ -58,6 +58,13 @@ from creel.resolve import (
     resolve_graph,
 )
 from creel.sources import Source, SourceBundle, coerce_sources
+from creel.view import (
+    to_cytoscape,
+    to_dot,
+    to_mermaid,
+    to_node_edge_records,
+    to_table,
+)
 from creel.verify import (
     Composite,
     ExactMatch,
@@ -160,6 +167,12 @@ __all__ = [
     # reification toggle (D1 / #12)
     "reify",
     "unreify",
+    # projections / views (D15)
+    "to_node_edge_records",
+    "to_table",
+    "to_dot",
+    "to_mermaid",
+    "to_cytoscape",
     # evidence / auditability
     "Evidence",
     "Provenance",
