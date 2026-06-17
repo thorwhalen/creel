@@ -45,6 +45,7 @@ from creel.evaluation import (
     evaluate_case,
     evaluate_corpus,
 )
+from creel.export import to_cypher, to_graphml, to_jgf, to_turtle
 from creel.facade import extract
 from creel.ingest import ingest, ingest_paths
 from creel.policy import ExtractionPolicy
@@ -175,6 +176,11 @@ __all__ = [
     "to_dot",
     "to_mermaid",
     "to_cytoscape",
+    # export adapters (D2 / EPIC 3.4, 8.4)
+    "to_jgf",
+    "to_graphml",
+    "to_cypher",
+    "to_turtle",
     # evidence / auditability
     "Evidence",
     "Provenance",
