@@ -65,9 +65,15 @@ def extract(
     cache = cache or NullCache()
     services = dict(services or {})
 
-    fallback = (
-        schema_as_extractor if on_missing_binding == SCHEMA_AS_EXTRACTOR else None
-    )
+    fallback = None
+    if on_missing_binding == SCHEMA_AS_EXTRACTOR:
+        if schema_as_extractor is None:
+            # Default: the schema-as-extractor LLM strategy (raises at call time if no
+            # services["llm"] is provided). Lazy import to keep core import light.
+            from creel.extract.llm import schema_as_extractor as _llm_fallback
+
+            schema_as_extractor = _llm_fallback
+        fallback = schema_as_extractor
     plan = join(graph_spec, bindings, schema_as_extractor=fallback)
 
     if plan.unbound and on_missing_binding == ERROR:

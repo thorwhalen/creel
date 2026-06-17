@@ -66,6 +66,18 @@ def validate_graph(
     return issues
 
 
+def validate_attributes(
+    attributes: Any, type_id: str, spec: GraphSpec, *, element_id: str = ""
+) -> list[ValidationIssue]:
+    """Validate a single element's ``attributes`` against its type's effective schema.
+
+    Used by the LLM extractor's validate-retry loop (decision D6): the LLM emits
+    shape-valid JSON, and value-level constraints (enums, ranges, required) are
+    checked here so the model can be re-asked with the specific failures.
+    """
+    return _check_attributes("value", element_id, attributes, spec, type_id)
+
+
 def _check_node(node: Node, spec: GraphSpec) -> list[ValidationIssue]:
     issues: list[ValidationIssue] = []
     if not node.types:
