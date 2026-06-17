@@ -104,6 +104,7 @@ def _run_plan(
             spec=graph_spec,
             cache=cache,
             services=services,
+            element_types=step.element_types,
         )
         extraction = step.extractor(ctx)
         all_nodes.extend(extraction.nodes)

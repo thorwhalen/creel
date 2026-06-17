@@ -22,12 +22,22 @@ from creel.extract.registry import build_extractor
 
 @dataclass(frozen=True)
 class ExtractorBinding:
-    """Bind one grammar element to a strategy (by name + config) or a direct callable."""
+    """Bind one grammar element (or a cluster) to a strategy or a direct callable.
+
+    When ``elements`` is set, this is a **cluster binding** (D-OP8): the extractor is
+    invoked **once** for the whole set of element ids (one pass over several coupled
+    types), rather than once per element. ``element_id`` is then just a label.
+    """
 
     element_id: str
     strategy: Optional[str] = None
     config: Mapping[str, Any] = field(default_factory=dict)
     extractor: Optional[Callable[[ExtractionContext], Extraction]] = None
+    elements: Optional[tuple] = None
+
+    def __post_init__(self) -> None:
+        if self.elements is not None and not isinstance(self.elements, tuple):
+            object.__setattr__(self, "elements", tuple(self.elements))
 
     def build(self) -> Extractor:
         """Instantiate the bound extractor (direct callable wins over a named strategy)."""
@@ -91,6 +101,7 @@ def _coerce_binding(element_id: str, spec: Any) -> ExtractorBinding:
             strategy=spec.get("strategy"),
             config=spec.get("config", {}),
             extractor=spec.get("extractor"),
+            elements=spec.get("elements"),
         )
     raise TypeError(f"cannot interpret binding spec for {element_id!r}: {spec!r}")
 
