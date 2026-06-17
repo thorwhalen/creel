@@ -47,6 +47,15 @@ from creel.evaluation import (
 )
 from creel.facade import extract
 from creel.ingest import ingest, ingest_paths
+from creel.resolve import (
+    CascadeResolver,
+    LLMResolver,
+    NormalizeResolver,
+    RegistryResolver,
+    Resolver,
+    normalize_entity,
+    resolve_graph,
+)
 from creel.sources import Source, SourceBundle, coerce_sources
 from creel.verify import (
     Composite,
@@ -139,6 +148,14 @@ __all__ = [
     # bindings
     "ExtractorBinding",
     "ExtractorBindings",
+    # entity resolution
+    "Resolver",
+    "NormalizeResolver",
+    "RegistryResolver",
+    "LLMResolver",
+    "CascadeResolver",
+    "resolve_graph",
+    "normalize_entity",
     # evidence / auditability
     "Evidence",
     "Provenance",

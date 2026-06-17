@@ -44,6 +44,7 @@ def extract(
     services: Optional[Mapping[str, Any]] = None,
     on_missing_binding: str = SCHEMA_AS_EXTRACTOR,
     schema_as_extractor: Optional[SchemaAsExtractor] = None,
+    resolve: Any = None,
 ) -> Graph:
     """Read ``sources``, populate the graph described by ``graph_spec``, return it.
 
@@ -55,6 +56,9 @@ def extract(
             available, else skip), ``"skip"``, or ``"error"``.
         schema_as_extractor: factory ``(element_type, spec) -> Extractor`` used for
             unbound elements (provided by the LLM strategy layer; ``None`` here).
+        resolve: an optional :class:`~creel.resolve.Resolver`. If given, run entity
+            resolution (merge same-entity nodes + remap edges) as a post-extraction
+            pass — required for messy multi-source corpora (decision #14).
 
     Returns:
         A :class:`~creel.graph.model.Graph` (the SSOT). ``graph.evidence`` maps
@@ -82,6 +86,12 @@ def extract(
     graph = Graph()
     graph.report["unbound_elements"] = list(plan.unbound)
     _run_plan(plan, bundle, graph_spec, cache, services, graph)
+    if resolve is not None:
+        from creel.resolve import resolve_graph
+
+        unbound = graph.report.get("unbound_elements", [])
+        graph = resolve_graph(graph, resolve)
+        graph.report.setdefault("unbound_elements", unbound)
     return graph
 
 
