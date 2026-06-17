@@ -14,11 +14,13 @@ from creel.extract.pattern import (
     make_function_extractor,
 )
 from creel.extract.llm import (
+    ClusterLLMExtractor,
     LLMClient,
     LLMExtractor,
     anthropic_client,
     build_instruction,
     compile_output_schema,
+    make_cluster_llm_extractor,
     make_llm_extractor,
 )
 from creel.extract.query import (
@@ -52,7 +54,9 @@ __all__ = [
     "make_json_extractor",
     "LLMClient",
     "LLMExtractor",
+    "ClusterLLMExtractor",
     "make_llm_extractor",
+    "make_cluster_llm_extractor",
     "anthropic_client",
     "compile_output_schema",
     "build_instruction",

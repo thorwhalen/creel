@@ -166,27 +166,40 @@ class LLMExtractor:
         return best  # best-effort after retries; the verify pass is the final gate
 
     def _build(self, items, et, ctx, text) -> Extraction:
-        nodes, edges = [], []
-        source_id = next((s.id for s in ctx.sources.texts()), "source")
-        derived = ",".join(s.id for s in ctx.sources.texts()) or "source"
-        for i, item in enumerate(items):
-            attrs = {k: v for k, v in item.items() if not str(k).startswith("_")}
-            grounding, verified = _ground(attrs, text, source_id)
-            evidence = Evidence(
-                provenance=Provenance(derived_from=derived, generated_by=f"llm:{et.id}",
-                                      attributed_to=self.model),
-                grounding=grounding,
-                confidence=Confidence(method=VERBALIZED, score=1.0 if verified else 0.5,
-                                      verified=verified,
-                                      review_status=AUTO if verified else NEEDS_REVIEW),
-            )
-            if isinstance(et, EdgeType):
-                edges.append(ExtractedEdge(f"{et.id}:{i}", et.id, str(item.get("_source", "")),
-                                           str(item.get("_target", "")), attrs, evidence))
-            else:
-                seed = attrs.get(self.id_attribute) if self.id_attribute else next(iter(attrs.values()), i)
-                nodes.append(ExtractedNode(f"{et.id}:{slug(seed)}", et.id, attrs, evidence))
-        return Extraction(nodes=nodes, edges=edges)
+        return items_to_extraction(items, et, ctx, text, model=self.model,
+                                   id_attribute=self.id_attribute)
+
+
+def items_to_extraction(
+    items, element_type, ctx, text, *, model=None, id_attribute=None
+) -> Extraction:
+    """Turn raw LLM ``items`` for one element type into an :class:`Extraction`.
+
+    Each item is grounded (faithfulness gate) and gets an evidence record. Shared by
+    the single-element :class:`LLMExtractor` and the :class:`ClusterLLMExtractor`.
+    """
+    nodes, edges = [], []
+    source_id = next((s.id for s in ctx.sources.texts()), "source")
+    derived = ",".join(s.id for s in ctx.sources.texts()) or "source"
+    for i, item in enumerate(items):
+        attrs = {k: v for k, v in item.items() if not str(k).startswith("_")}
+        grounding, verified = _ground(attrs, text, source_id)
+        evidence = Evidence(
+            provenance=Provenance(derived_from=derived, generated_by=f"llm:{element_type.id}",
+                                  attributed_to=model),
+            grounding=grounding,
+            confidence=Confidence(method=VERBALIZED, score=1.0 if verified else 0.5,
+                                  verified=verified,
+                                  review_status=AUTO if verified else NEEDS_REVIEW),
+        )
+        if isinstance(element_type, EdgeType):
+            edges.append(ExtractedEdge(f"{element_type.id}:{i}", element_type.id,
+                                       str(item.get("_source", "")), str(item.get("_target", "")),
+                                       attrs, evidence))
+        else:
+            seed = attrs.get(id_attribute) if id_attribute else next(iter(attrs.values()), i)
+            nodes.append(ExtractedNode(f"{element_type.id}:{slug(seed)}", element_type.id, attrs, evidence))
+    return Extraction(nodes=nodes, edges=edges)
 
 
 def _ground(attrs: Mapping[str, Any], text: str, source_id: str):
@@ -203,6 +216,66 @@ def _ground(attrs: Mapping[str, Any], text: str, source_id: str):
     return (), False
 
 
+@dataclass
+class ClusterLLMExtractor:
+    """Extract a CLUSTER of coupled element types in ONE LLM pass (D-OP8).
+
+    Reads ``ctx.element_types`` (set by a cluster binding), asks for a JSON object
+    with one array per type, and emits instances of each. Grouping coupled types
+    (e.g. donor + project + funds) in one pass preserves cross-type consistency that
+    separate passes would break, while the document stays a single cacheable prefix.
+    """
+
+    max_retries: int = 2
+    model: Optional[str] = None
+
+    def __call__(self, ctx: ExtractionContext) -> Extraction:
+        client = ctx.services.get("llm")
+        if client is None:
+            raise ValueError("ClusterLLMExtractor needs an LLM client at ctx.services['llm'].")
+        types = tuple(ctx.element_types)
+        out_schema = {
+            "type": "object",
+            "properties": {et.id: compile_output_schema(et, ctx.spec)["properties"]["items"]
+                           for et in types},
+            "required": [et.id for et in types],
+        }
+        instruction = self._instruction(types, ctx.spec)
+        text = "\n\n".join(s.content for s in ctx.sources.texts())
+        response = self._extract(client, instruction, text, out_schema, types, ctx)
+        nodes, edges = [], []
+        for et in types:
+            extraction = items_to_extraction(list(response.get(et.id, [])), et, ctx, text, model=self.model)
+            nodes.extend(extraction.nodes)
+            edges.extend(extraction.edges)
+        return Extraction(nodes=nodes, edges=edges)
+
+    def _instruction(self, types, spec) -> str:
+        parts = ["Extract a graph from the SOURCE. Return a JSON object with one array per type below."]
+        for et in types:
+            parts.append(f"\n### {et.id}\n{build_instruction(et, spec)}")
+        parts.append('\nReturn JSON: {' + ", ".join(f'"{et.id}": [...]' for et in types) + "}.")
+        return "\n".join(parts)
+
+    def _extract(self, client, instruction, text, out_schema, types, ctx) -> Mapping[str, Any]:
+        base = f"{instruction}\n\nSOURCE:\n{text}"
+        feedback, best = "", {}
+        for _ in range(self.max_retries + 1):
+            response = client.complete_json(prompt=base + feedback, schema=out_schema, system=_SYSTEM) or {}
+            issues = []
+            for et in types:
+                for item in response.get(et.id, []):
+                    payload = {k: v for k, v in item.items() if not str(k).startswith("_")}
+                    issues.extend(f"[{et.id}] {i}" for i in validate_attributes(payload, et.id, ctx.spec))
+            if not issues:
+                return response
+            best = response
+            feedback = "\n\nThe previous response had these problems — fix them:\n" + "\n".join(
+                f"- {i}" for i in issues[:20]
+            )
+        return best
+
+
 def schema_as_extractor(element_type: ElementType, spec: GraphSpec) -> LLMExtractor:
     """Factory for the facade's ``on_missing_binding="schema_as_extractor"`` fallback."""
     return LLMExtractor()
@@ -212,6 +285,12 @@ def schema_as_extractor(element_type: ElementType, spec: GraphSpec) -> LLMExtrac
 def make_llm_extractor(**config: Any) -> LLMExtractor:
     """Registry factory for the ``"llm"`` strategy."""
     return LLMExtractor(**config)
+
+
+@register_extractor("cluster_llm")
+def make_cluster_llm_extractor(**config: Any) -> ClusterLLMExtractor:
+    """Registry factory for the ``"cluster_llm"`` strategy (one pass over a cluster)."""
+    return ClusterLLMExtractor(**config)
 
 
 # --- default Anthropic adapter (extra [anthropic]; lazy; provider-agnostic seam) --

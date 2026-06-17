@@ -24,12 +24,21 @@ SchemaAsExtractor = Callable[[ElementType, GraphSpec], Extractor]
 
 @dataclass(frozen=True)
 class ResolvedStep:
-    """One element of the plan: the element, its resolved extractor, and the source."""
+    """One element of the plan: the element(s), the resolved extractor, and the source.
+
+    ``element_types`` is the cluster this step covers (D-OP8); for an ordinary
+    per-element step it is just ``(element_type,)``.
+    """
 
     element_id: str
     element_type: ElementType
     extractor: Extractor
     binding_source: str  # "binding" | "schema_as_extractor"
+    element_types: tuple = ()
+
+    def __post_init__(self) -> None:
+        if not self.element_types:
+            object.__setattr__(self, "element_types", (self.element_type,))
 
 
 @dataclass(frozen=True)
@@ -48,26 +57,35 @@ def join(
 ) -> ResolvedPlan:
     """Equijoin ``spec`` with ``bindings`` by element id into a :class:`ResolvedPlan`.
 
-    Node-types are resolved before edge-types so that, when the facade runs the plan,
-    nodes are produced before the edges that reference them.
+    Cluster bindings (``binding.elements``) are resolved first into one multi-element
+    step each (invoked once). Remaining elements resolve per-element. Node-types are
+    produced before edge-types so the facade adds nodes before the edges that
+    reference them.
     """
     steps: list[ResolvedStep] = []
     unbound: list[str] = []
+    covered: set[str] = set()
+
+    # 1) cluster bindings -> one step each, covering several element types
+    for binding in (bindings or ()):
+        if not getattr(binding, "elements", None):
+            continue
+        cluster = tuple(spec.element_type(eid) for eid in binding.elements if spec.element_type(eid))
+        if not cluster:
+            continue
+        steps.append(ResolvedStep(cluster[0].id, cluster[0], binding.build(), "binding", cluster))
+        covered.update(et.id for et in cluster)
+
+    # 2) remaining elements -> per-element binding or schema-as-extractor fallback
     for element_type in spec.iter_element_types():
+        if element_type.id in covered:
+            continue
         binding = bindings.for_element(element_type.id) if bindings else None
-        if binding is not None:
-            steps.append(
-                ResolvedStep(element_type.id, element_type, binding.build(), "binding")
-            )
+        if binding is not None and not getattr(binding, "elements", None):
+            steps.append(ResolvedStep(element_type.id, element_type, binding.build(), "binding"))
         elif schema_as_extractor is not None:
-            steps.append(
-                ResolvedStep(
-                    element_type.id,
-                    element_type,
-                    schema_as_extractor(element_type, spec),
-                    "schema_as_extractor",
-                )
-            )
+            steps.append(ResolvedStep(element_type.id, element_type,
+                                      schema_as_extractor(element_type, spec), "schema_as_extractor"))
         else:
             unbound.append(element_type.id)
     return ResolvedPlan(tuple(steps), tuple(unbound))

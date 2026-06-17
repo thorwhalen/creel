@@ -79,6 +79,15 @@ class ExtractionContext:
     cache: Cache = field(default_factory=NullCache)
     services: Mapping[str, Any] = field(default_factory=dict)
     config: Mapping[str, Any] = field(default_factory=dict)
+    #: The cluster of element types this pass covers (D-OP8). Defaults to just
+    #: ``(element_type,)``; a cluster extractor reads all of them and emits instances
+    #: of each in a single LLM pass. ``element_id``/``element_type`` are the primary
+    #: (first) of the cluster, so single-element extractors are unaffected.
+    element_types: Sequence[ElementType] = ()
+
+    def __post_init__(self) -> None:
+        types = tuple(self.element_types) if self.element_types else (self.element_type,)
+        object.__setattr__(self, "element_types", types)
 
 
 @runtime_checkable
