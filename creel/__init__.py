@@ -62,6 +62,13 @@ from creel.resolve import (
 from creel.sources import Source, SourceBundle, coerce_sources
 from creel.annotate import Annotation, Selection
 from creel.render import AnnotatedGraph, GraphRenderer, RenderArtifact
+from creel.trace import (
+    TraceIndex,
+    attribute_evidence,
+    reanchor,
+    set_attribute_evidence,
+    verify_anchor,
+)
 from creel.view import (
     to_cytoscape,
     to_dot,
@@ -186,6 +193,12 @@ __all__ = [
     "AnnotatedGraph",
     "GraphRenderer",
     "RenderArtifact",
+    # traceability (D-OP9 A1/A3/A4)
+    "TraceIndex",
+    "reanchor",
+    "verify_anchor",
+    "set_attribute_evidence",
+    "attribute_evidence",
     # export adapters (D2 / EPIC 3.4, 8.4)
     "to_jgf",
     "to_graphml",
