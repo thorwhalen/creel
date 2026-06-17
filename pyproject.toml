@@ -77,6 +77,9 @@ ocr = [
 anthropic = [
     "anthropic>=0.40",
 ]
+aix = [
+    "aix>=0.1",
+]
 
 [tool.ruff]
 line-length = 88
@@ -124,6 +127,9 @@ testpaths = [
 doctest_optionflags = [
     "NORMALIZE_WHITESPACE",
     "ELLIPSIS",
+]
+markers = [
+    "llm: tests that call a real LLM via aix (skipped without API keys)",
 ]
 
 [tool.wads.ci]

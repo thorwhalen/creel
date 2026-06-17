@@ -330,3 +330,52 @@ class _FuncClient:
 def _first_json_object(text: str) -> str:
     start, end = text.find("{"), text.rfind("}")
     return text[start:end + 1] if start != -1 and end > start else text
+
+
+# --- aix integration (extra [aix]; the user's provider-agnostic AI package) -------
+def aix_client(*, model: Optional[str] = None) -> LLMClient:
+    """An :class:`LLMClient` backed by ``aix`` (uses aix's configured defaults).
+
+    aix returns text; creel's prompt already asks for the JSON shape and validate-retry
+    enforces value-level constraints, so the JSON is parsed out of the reply.
+    Requires ``creel[aix]``. Pass ``model=`` to override aix's default model.
+    """
+    aix = importlib.import_module("aix")
+
+    def complete_json(*, prompt, schema, system=None):
+        full = prompt if system is None else f"{system}\n\n{prompt}"
+        text = aix.ask(full, model=model)
+        return json.loads(_first_json_object(text))
+
+    return _FuncClient(complete_json)
+
+
+def aix_judge(*, model: Optional[str] = None) -> Callable[[str], str]:
+    """A judge callable for ``llm_rubric`` (returns the model's raw reply text).
+
+    The rubric prompt already instructs the judge to return ``{"score","reason"}``;
+    :class:`~creel.verify.rubric.LLMRubric` parses that out. Requires ``creel[aix]``.
+    Use a *different* model from the extractor to mitigate self-preference bias (D9).
+    """
+    aix = importlib.import_module("aix")
+    return lambda prompt: aix.ask(prompt, model=model)
+
+
+def aix_embedder(*, model: Optional[str] = None) -> Callable[[str], Any]:
+    """An embedder callable ``text -> vector`` (for ``semantic_similarity``). ``creel[aix]``."""
+    aix = importlib.import_module("aix")
+    return lambda text: aix.embed(text, model=model)
+
+
+def aix_entity_judge(*, model: Optional[str] = None) -> Callable[[str, str], bool]:
+    """An entity-resolution judge ``(a, b) -> bool`` for :class:`~creel.resolve.LLMResolver`."""
+    aix = importlib.import_module("aix")
+
+    def judge(a: str, b: str) -> bool:
+        reply = aix.ask(
+            f"Do '{a}' and '{b}' refer to the SAME real-world entity? Answer only yes or no.",
+            model=model,
+        )
+        return reply.strip().lower().startswith("y")
+
+    return judge
