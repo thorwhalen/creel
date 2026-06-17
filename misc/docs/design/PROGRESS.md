@@ -66,35 +66,45 @@
 that pass against a real model via `aix` (run when an API key is present).
 **Completed epics: 2*, 3*, 4, 5, 6, 7*, 10, 11** (\* = all but one deferred sub-item).
 
-## Remaining (by milestone)
+## Released — v0.4 / v0.5 complete (2026-06-17) — PRs #40–#45
 
-**v0.1/v0.2 carry-over (small, additive)**
-- `creel.spec.linkml` — LinkML ⇄ GraphSpec + generate JSON Schema/Pydantic
-  (EPIC 2.4, `[semantic]` extra; needs `pip install linkml`).
-- Heavier **export adapters**: RDF-star, Neo4j Cypher (params, not interpolation),
-  JGF/GraphML (EPIC 3.4 / 8.4). The view projections (DOT/Mermaid/Cytoscape) are done.
+| PR | Delivered |
+|----|-----------|
+| #40 | Export adapters: JGF / GraphML / parameterized Cypher / RDF-star Turtle (EPIC 3.4/8.4) |
+| #41 | Render contract (`AnnotatedGraph`/`GraphRenderer`) + `Annotation` overlay (machine + human coding) + RAG-readiness; A5 provenance kind/`wasRevisionOf` |
+| #42 | Traceability A1/A3/A4: per-attribute grounding, `TraceIndex` reverse index, `reanchor` |
+| #43 | LinkML bridge + JSON-Schema/Pydantic codegen (EPIC 2.4) |
+| #44 | README for the full engine + `examples/quickstart.py` + bump to 0.1.0 (EPIC 9.1/9.2) |
+| #45 | **Activated wads CI + first release** — published to PyPI + docs to GitHub Pages (EPIC 9.3) |
 
-**v0.4 — downstream contracts & package split (EPIC 8, D-OP3)**
-- `render.py` `GraphRenderer` Protocol + `AnnotatedGraph` three-layer contract;
-  RAG-readiness affordances (`text_for_embedding`).
-- **A1–A5 traceability** (ADR D-OP9): per-attribute grounding; the `Annotation`
-  contract (machine insight + human coding, bidirectional); reverse-trace index;
-  anchor-robustness resolver; `attributed_to.kind` + `wasRevisionOf`.
-- uv-workspace split `creel-core` + `creel-unhcr`; graduate the corpus grammar
-  (EPIC 7.5).
+**🎉 Released to PyPI** (`pip install creel`; CI auto-bumped to **0.1.1**) with docs on
+GitHub Pages. CI is live (tests on push/PR; publish-on-push-to-main). **Closed epics:
+1, 2, 3, 4, 5, 6, 8, 9, 11.**
 
-**v0.5 — hardening (EPIC 9) — NEEDS USER GO-AHEAD**
-- README polish + `examples/`; **activate wads CI** and cut the first intentional
-  PyPI release. CI is already live and auto-publishes on push (bumped to 0.0.3),
-  so a real release is a deliberate decision (D-OP1).
+## Remaining
 
-**Open items:** all design questions resolved & closed (#11–#15; see DECISIONS.md
-"Resolutions"); GRF codelist re-verification before production (Open Q10).
+**Deferred — `creel-core` / `creel-unhcr` workspace split (EPIC 7.5, D-OP3).**
+Intentionally NOT done: it restructures the just-published `creel` package (a
+breaking packaging change), and the layer separation it would prove is *already*
+true by construction (core has zero consumer imports; the UNHCR grammar lives only
+in `tests/`). The real consumer grammar is also confidential (loomun / ADR-0002), so
+there's nothing public to ship as `creel-unhcr` yet. **Recommend doing this as a
+deliberate 0.2.0 decision**, not a rushed post-release churn.
+
+**Consumer-package work (out of core, by design):** concrete renderers (PNG/PPTX/
+HTML on top of the `view`/`render` contracts).
+
+**Production chore:** GRF codelist re-verification before the `unhcr-rbm` grammar is
+used on real data (Open Q10).
+
+**Open items:** all design questions resolved & closed (#11–#15; DECISIONS.md
+"Resolutions").
 
 ## How to run the tests
 
 ```bash
-cd <repo> && PYTHONPATH="$PWD" python -m pytest -q          # 65 tests
+cd <repo> && PYTHONPATH="$PWD" python -m pytest -q -m "not llm"   # 144 offline tests
+# CI installs the package, so `import creel` works there without PYTHONPATH.
 PYTHONPATH="$PWD" python -m pytest --doctest-modules creel/spec/model.py creel/graph/model.py
 python -m ruff check creel/
 # regenerate the UNHCR expected graph after an intentional change:
