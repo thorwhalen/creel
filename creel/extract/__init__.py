@@ -13,6 +13,14 @@ from creel.extract.pattern import (
     RegexNodeExtractor,
     make_function_extractor,
 )
+from creel.extract.llm import (
+    LLMClient,
+    LLMExtractor,
+    anthropic_client,
+    build_instruction,
+    compile_output_schema,
+    make_llm_extractor,
+)
 from creel.extract.query import (
     make_json_extractor,
     make_sql_extractor,
@@ -42,6 +50,12 @@ __all__ = [
     "make_table_map_extractor",
     "make_sql_extractor",
     "make_json_extractor",
+    "LLMClient",
+    "LLMExtractor",
+    "make_llm_extractor",
+    "anthropic_client",
+    "compile_output_schema",
+    "build_instruction",
     "ExtractedNode",
     "ExtractedEdge",
     "Extraction",
