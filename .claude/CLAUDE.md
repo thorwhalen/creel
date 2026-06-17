@@ -111,11 +111,13 @@ live-LLM tests).** See `misc/docs/design/PROGRESS.md` for the per-PR log. Built:
 - **UNHCR corpus** (`tests/data/unhcr/`): 4 docs → 17 nodes incl. **AGD-disaggregated
   reading nodes**, scored 1.0 — D14.
 
-**Remaining** (see PROGRESS "Remaining"): LinkML codegen (`[semantic]`, EPIC 2.4);
-heavy export adapters (rdf-star/cypher, EPIC 3.4/8.4); downstream `render.py` +
-`AnnotatedGraph` + the **A1–A5 traceability** extensions (EPIC 8 / ADR D-OP9);
-`creel-core`/`creel-unhcr` workspace split (v0.4); README/examples + **CI
-activation & first release (v0.5 — needs the user's go-ahead; CI auto-publishes)**.
+**Released to PyPI** (`pip install creel`, 0.1.1) + docs on GitHub Pages; CI is live.
+Exports, render/annotation contract, A1–A5 traceability, and LinkML codegen are all
+in. **Remaining** (see PROGRESS "Remaining"): the `creel-core`/`creel-unhcr` workspace
+split (EPIC 7.5) is **deliberately deferred** to a future 0.2.0 (it would churn the
+published package; the layer separation is already true by construction; the real
+consumer grammar is confidential). Concrete renderers are consumer-package work; GRF
+codelist re-verification is a production chore.
 
 **Gotchas:** (1) commit test files explicitly — they live at `tests/test_*.py`, not
 under `tests/data/`, so `git add tests/data/...` misses them (this bit us on #34).
