@@ -91,21 +91,34 @@ working in that area.
 
 ## Status
 
-**Milestones v0.1–v0.3 implemented and tested (65 tests green locally).** See
-`misc/docs/design/PROGRESS.md` for the detailed log. In short, the engine works
-end-to-end:
+**The engine is feature-complete for its core mission (125 tests green; +3 gated
+live-LLM tests).** See `misc/docs/design/PROGRESS.md` for the per-PR log. Built:
 
 - **Grammar** (`creel.spec`), **LPG + canonical JSON** (`creel.graph`) — D1–D4.
-- **`extract()` facade** (`creel.facade`) with the **pattern/function** extractor
-  family, bindings/join, and the separable **evidence** sidecar — D5–D8.
-- **Verifier subsystem** (`creel.verify`): kinds + `graph_match` + `llm_rubric`
-  (G-Eval, injected judge) and the **eval runner** (`creel.evaluation`) — D9.
-- **UNHCR RBM end-to-end corpus** (`tests/data/unhcr/`): grammar + 3 synthetic
-  docs + expected graph, scored at 1.0 by verifiers — D14.
+- **`extract()` facade** + all **three extractor families**: pattern/function,
+  **query** (`table_map`/`sql`/`json_query`), **LLM** (`creel.extract.llm`:
+  schema-as-extractor, validate-retry, faithfulness gate). Bindings/join, the
+  **cluster-pass** model, and the separable **evidence** sidecar — D5–D8, D-OP8.
+- **Ingestion** (`creel.ingest`): route-by-format, stdlib + optional backends — D-OP7.
+- **Verifier subsystem** (`creel.verify`) + eval runner (`creel.evaluation`) — D9.
+- **Entity resolution** (`creel.resolve`), the **reify** toggle (`creel.reify`) +
+  reserved temporal vocab (`creel.temporal`), **views** (`creel.view`),
+  **ExtractionPolicy** (`creel.policy`).
+- **Real AI via `aix`**: `aix_client`/`aix_judge`/`aix_embedder`/`aix_entity_judge`
+  in `creel.extract.llm` (extra `[aix]`). Test with fakes by default; live tests are
+  `@pytest.mark.llm`-gated (skipped without an API key via `aix.check_keys`). You may
+  run real-LLM tests occasionally with aix defaults.
+- **UNHCR corpus** (`tests/data/unhcr/`): 4 docs → 17 nodes incl. **AGD-disaggregated
+  reading nodes**, scored 1.0 — D14.
 
-**Not yet built** (next up): the **query** (DuckDB/JMESPath) and **LLM**
-(`creel.extract.llm`) extractor strategies (EPIC 4.3/4.4); LinkML
-authoring/generation (`creel.spec.linkml`, EPIC 2.4); richer export adapters
-(rdf-star, cypher) and the downstream render/RAG contracts (EPIC 8); the
-uv-workspace `creel-core`/`creel-unhcr` split (v0.4, D-OP3); CI activation +
-first release (v0.5, D-OP1). The open design questions are issues #11–#15.
+**Remaining** (see PROGRESS "Remaining"): LinkML codegen (`[semantic]`, EPIC 2.4);
+heavy export adapters (rdf-star/cypher, EPIC 3.4/8.4); downstream `render.py` +
+`AnnotatedGraph` + the **A1–A5 traceability** extensions (EPIC 8 / ADR D-OP9);
+`creel-core`/`creel-unhcr` workspace split (v0.4); README/examples + **CI
+activation & first release (v0.5 — needs the user's go-ahead; CI auto-publishes)**.
+
+**Gotchas:** (1) commit test files explicitly — they live at `tests/test_*.py`, not
+under `tests/data/`, so `git add tests/data/...` misses them (this bit us on #34).
+(2) CI is live and auto-publishes on push to main; doc/planning commits carry
+`[skip ci]`; run `pytest` locally. (3) Run the offline suite with
+`pytest -m "not llm"`.
