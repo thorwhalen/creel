@@ -18,12 +18,14 @@ from __future__ import annotations
 
 import importlib
 import json
+from collections import Counter
 from dataclasses import dataclass
 from typing import Any, Callable, Mapping, Optional, Protocol, runtime_checkable
 
 from creel.evidence import (
     AUTO,
     NEEDS_REVIEW,
+    SELF_CONSISTENCY,
     VERBALIZED,
     Confidence,
     Evidence,
@@ -31,6 +33,7 @@ from creel.evidence import (
     TextPositionSelector,
     TextQuoteSelector,
 )
+from creel.policy import ExtractionPolicy
 from creel.extract.protocol import (
     ExtractedEdge,
     ExtractedNode,
@@ -132,6 +135,7 @@ class LLMExtractor:
     instruction: Optional[str] = None
     model: Optional[str] = None
     id_attribute: Optional[str] = None
+    policy: Optional[ExtractionPolicy] = None
 
     def __call__(self, ctx: ExtractionContext) -> Extraction:
         client = ctx.services.get("llm")
@@ -141,16 +145,41 @@ class LLMExtractor:
                 "or inject one)."
             )
         et = ctx.element_type
+        policy = self._policy(ctx, et)
         out_schema = compile_output_schema(et, ctx.spec)
         instruction = self.instruction or build_instruction(et, ctx.spec)
         text = "\n\n".join(s.content for s in ctx.sources.texts())
-        items = self._extract_items(client, instruction, text, out_schema, et, ctx)
-        return self._build(items, et, ctx, text)
+        items, confidence = self._extract(client, instruction, text, out_schema, et, ctx, policy)
+        return items_to_extraction(items, et, ctx, text, model=self.model,
+                                   id_attribute=self.id_attribute, base_confidence=confidence,
+                                   review_below=policy.review_below)
 
-    def _extract_items(self, client, instruction, text, out_schema, et, ctx) -> list:
+    def _policy(self, ctx, et) -> ExtractionPolicy:
+        policy = (self.policy or ctx.config.get("policy") or ctx.services.get("policy")
+                  or ExtractionPolicy(max_retries=self.max_retries))
+        return policy.for_element(ctx.element_id, et.id)
+
+    def _extract(self, client, instruction, text, out_schema, et, ctx, policy):
+        """Run extraction, with self-consistency voting if the policy asks for it."""
+        n = max(1, policy.self_consistency_samples)
+        if n == 1:
+            return self._extract_items(client, instruction, text, out_schema, et, ctx,
+                                       policy.max_retries), None
+        samples = [self._extract_items(client, instruction, text, out_schema, et, ctx,
+                                       policy.max_retries) for _ in range(n)]
+        keyed = [json.dumps(s, sort_keys=True, default=str) for s in samples]
+        top, count = Counter(keyed).most_common(1)[0]
+        agreement = count / n
+        confidence = Confidence(
+            method=SELF_CONSISTENCY, score=agreement,
+            review_status=NEEDS_REVIEW if agreement < policy.review_below else AUTO,
+        )
+        return json.loads(top), confidence
+
+    def _extract_items(self, client, instruction, text, out_schema, et, ctx, max_retries) -> list:
         base = f'{instruction}\n\nReturn a JSON object {{"items": [...]}}.\n\nSOURCE:\n{text}'
         feedback, best = "", []
-        for _ in range(self.max_retries + 1):
+        for _ in range(max_retries + 1):
             response = client.complete_json(prompt=base + feedback, schema=out_schema, system=_SYSTEM)
             items = list((response or {}).get("items", []))
             issues = []
@@ -165,13 +194,10 @@ class LLMExtractor:
             )
         return best  # best-effort after retries; the verify pass is the final gate
 
-    def _build(self, items, et, ctx, text) -> Extraction:
-        return items_to_extraction(items, et, ctx, text, model=self.model,
-                                   id_attribute=self.id_attribute)
-
 
 def items_to_extraction(
-    items, element_type, ctx, text, *, model=None, id_attribute=None
+    items, element_type, ctx, text, *, model=None, id_attribute=None,
+    base_confidence: Optional[Confidence] = None, review_below: float = 0.5,
 ) -> Extraction:
     """Turn raw LLM ``items`` for one element type into an :class:`Extraction`.
 
@@ -188,9 +214,7 @@ def items_to_extraction(
             provenance=Provenance(derived_from=derived, generated_by=f"llm:{element_type.id}",
                                   attributed_to=model),
             grounding=grounding,
-            confidence=Confidence(method=VERBALIZED, score=1.0 if verified else 0.5,
-                                  verified=verified,
-                                  review_status=AUTO if verified else NEEDS_REVIEW),
+            confidence=_confidence(verified, base_confidence, review_below),
         )
         if isinstance(element_type, EdgeType):
             edges.append(ExtractedEdge(f"{element_type.id}:{i}", element_type.id,
@@ -200,6 +224,23 @@ def items_to_extraction(
             seed = attrs.get(id_attribute) if id_attribute else next(iter(attrs.values()), i)
             nodes.append(ExtractedNode(f"{element_type.id}:{slug(seed)}", element_type.id, attrs, evidence))
     return Extraction(nodes=nodes, edges=edges)
+
+
+def _confidence(verified: bool, base: Optional[Confidence], review_below: float) -> Confidence:
+    """Confidence for one extracted item, applying the policy's review threshold.
+
+    With a ``base`` (e.g. a self-consistency agreement score) keep its method/score and
+    escalate to ``needs_review`` if ungrounded or below threshold; otherwise default to
+    verbalized confidence derived from the faithfulness gate.
+    """
+    if base is not None:
+        review = base.review_status
+        if not verified or base.score < review_below:
+            review = NEEDS_REVIEW
+        return Confidence(method=base.method, score=base.score, verified=verified, review_status=review)
+    score = 1.0 if verified else 0.5
+    review = AUTO if (verified and score >= review_below) else NEEDS_REVIEW
+    return Confidence(method=VERBALIZED, score=score, verified=verified, review_status=review)
 
 
 def _ground(attrs: Mapping[str, Any], text: str, source_id: str):
