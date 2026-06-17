@@ -22,6 +22,41 @@
     },
     {
       "attributes": {},
+      "id": "assesses:0",
+      "source": "reading:ind-1-total-total-national-2026-q2",
+      "target": "output:op-1-1",
+      "type": "assesses"
+    },
+    {
+      "attributes": {},
+      "id": "assesses:1",
+      "source": "reading:ind-1-female-total-national-2026-q2",
+      "target": "output:op-1-1",
+      "type": "assesses"
+    },
+    {
+      "attributes": {},
+      "id": "assesses:2",
+      "source": "reading:ind-1-male-total-national-2026-q2",
+      "target": "output:op-1-1",
+      "type": "assesses"
+    },
+    {
+      "attributes": {},
+      "id": "assesses:3",
+      "source": "reading:ind-2-total-total-national-2026-q2",
+      "target": "output:op-2-1",
+      "type": "assesses"
+    },
+    {
+      "attributes": {},
+      "id": "assesses:4",
+      "source": "reading:ind-2-female-total-national-2026-q2",
+      "target": "output:op-2-1",
+      "type": "assesses"
+    },
+    {
+      "attributes": {},
       "id": "contributes_to:0",
       "source": "output:op-1-1",
       "target": "outcome:oc-1",
@@ -82,28 +117,39 @@
       "type": "funds"
     },
     {
-      "attributes": {
-        "actual": 4200,
-        "baseline": 1000,
-        "period": "2026-Q2",
-        "target": 5000
-      },
-      "id": "measured_by:0",
-      "source": "output:op-1-1",
+      "attributes": {},
+      "id": "measures:0",
+      "source": "reading:ind-1-total-total-national-2026-q2",
       "target": "indicator:ind-1",
-      "type": "measured_by"
+      "type": "measures"
     },
     {
-      "attributes": {
-        "actual": 65,
-        "baseline": 20,
-        "period": "2026-Q2",
-        "target": 80
-      },
-      "id": "measured_by:1",
-      "source": "output:op-2-1",
+      "attributes": {},
+      "id": "measures:1",
+      "source": "reading:ind-1-female-total-national-2026-q2",
+      "target": "indicator:ind-1",
+      "type": "measures"
+    },
+    {
+      "attributes": {},
+      "id": "measures:2",
+      "source": "reading:ind-1-male-total-national-2026-q2",
+      "target": "indicator:ind-1",
+      "type": "measures"
+    },
+    {
+      "attributes": {},
+      "id": "measures:3",
+      "source": "reading:ind-2-total-total-national-2026-q2",
       "target": "indicator:ind-2",
-      "type": "measured_by"
+      "type": "measures"
+    },
+    {
+      "attributes": {},
+      "id": "measures:4",
+      "source": "reading:ind-2-female-total-national-2026-q2",
+      "target": "indicator:ind-2",
+      "type": "measures"
     }
   ],
   "nodes": {
@@ -207,6 +253,76 @@
       },
       "types": [
         "project"
+      ]
+    },
+    "reading:ind-1-female-total-national-2026-q2": {
+      "attributes": {
+        "actual": 2200,
+        "age_group": "total",
+        "baseline": 500,
+        "location": "national",
+        "period": "2026-Q2",
+        "sex": "female",
+        "target": 2500
+      },
+      "types": [
+        "reading"
+      ]
+    },
+    "reading:ind-1-male-total-national-2026-q2": {
+      "attributes": {
+        "actual": 2000,
+        "age_group": "total",
+        "baseline": 500,
+        "location": "national",
+        "period": "2026-Q2",
+        "sex": "male",
+        "target": 2500
+      },
+      "types": [
+        "reading"
+      ]
+    },
+    "reading:ind-1-total-total-national-2026-q2": {
+      "attributes": {
+        "actual": 4200,
+        "age_group": "total",
+        "baseline": 1000,
+        "location": "national",
+        "period": "2026-Q2",
+        "sex": "total",
+        "target": 5000
+      },
+      "types": [
+        "reading"
+      ]
+    },
+    "reading:ind-2-female-total-national-2026-q2": {
+      "attributes": {
+        "actual": 70,
+        "age_group": "total",
+        "baseline": 20,
+        "location": "national",
+        "period": "2026-Q2",
+        "sex": "female",
+        "target": 85
+      },
+      "types": [
+        "reading"
+      ]
+    },
+    "reading:ind-2-total-total-national-2026-q2": {
+      "attributes": {
+        "actual": 65,
+        "age_group": "total",
+        "baseline": 20,
+        "location": "national",
+        "period": "2026-Q2",
+        "sex": "total",
+        "target": 80
+      },
+      "types": [
+        "reading"
       ]
     }
   },

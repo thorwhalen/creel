@@ -1,0 +1,6 @@
+indicator_code,output_code,sex,age_group,location,baseline,target,actual,period
+IND-1,OP-1.1,total,total,national,1000,5000,4200,2026-Q2
+IND-1,OP-1.1,female,total,national,500,2500,2200,2026-Q2
+IND-1,OP-1.1,male,total,national,500,2500,2000,2026-Q2
+IND-2,OP-2.1,total,total,national,20,80,65,2026-Q2
+IND-2,OP-2.1,female,total,national,20,85,70,2026-Q2

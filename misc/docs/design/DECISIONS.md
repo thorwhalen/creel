@@ -194,7 +194,10 @@ OCR'd). Recorded here; GitHub issues updated accordingly.
   AGD/location-disaggregated readings** (a disaggregated reading is genuinely n-ary),
   **or (b) extraction merges across reporting periods** into one evolving graph
   (then the node-based `resolve_graph` dedups readings for free — readings-as-edges
-  would need bespoke edge-dedup). Neither holds for v1 yet, so the edge stays.
+  would need bespoke edge-dedup). **Update (2026-06-17): trigger (a) fired** — v1
+  needs AGD-disaggregation, so `unhcr-rbm` now models a native **`reading` node**
+  (sex/age_group/location enums) with `measures`/`assesses` edges; `funds` stays an
+  edge. The generic `reify()` toggle remains for graphs first extracted as edges.
 - **#13 (confidence escalation, Q7) — RESOLVED (lean).** A **separate
   `ExtractionPolicy`** object resolved by chain (element→type→global). Defaults:
   validate-retry always; self-consistency on high-value/low-confidence fields

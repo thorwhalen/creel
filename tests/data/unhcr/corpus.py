@@ -2,16 +2,19 @@
 
 This is creel's first-consumer integration fixture (decision D14, EPIC 7). It models
 a faithful slice of the UNHCR results model — donors, projects, cross-cutting areas,
-outputs, outcomes, indicators, with funding amounts and indicator values **on
-edges** — and extracts it from three synthetic-but-realistic sources using all the
+outputs, outcomes, indicators, and **AGD-disaggregated readings** — with funding
+amounts **on edges** and indicator values on reified **reading nodes** (decision #12:
+a disaggregated reading is n-ary, so it is promoted to a node sliceable by
+sex/age/location). It extracts from four synthetic-but-realistic sources using the
 deterministic strategy families available today:
 
 - a prose donor agreement  -> ``regex_node`` / ``regex_edge`` (donors, projects,
   cross-cutting areas; ``funds`` and ``addresses`` edges);
-- a results matrix CSV      -> a ``function`` extractor (outputs, outcomes;
-  ``delivers`` / ``contributes_to`` edges);
-- an indicators CSV         -> a ``function`` extractor (indicators; ``measured_by``
-  edges carrying baseline/target/actual values).
+- a results matrix CSV      -> ``table_map`` (outputs, outcomes; ``delivers`` /
+  ``contributes_to`` edges);
+- an indicators CSV         -> ``table_map`` (indicator definition nodes);
+- a readings CSV            -> ``table_map`` (AGD-disaggregated ``reading`` nodes +
+  ``measures`` / ``assesses`` edges to the indicator and output).
 
 It graduates to the ``creel-unhcr`` package at v0.4. The expected graph lives in
 ``expected_graph.json``; regenerate it with ``python -m tests.data.unhcr.corpus``
@@ -45,6 +48,9 @@ def build_spec() -> GraphSpec:
             EnumDef("Currency", ("USD", "EUR", "CHF")),
             EnumDef("TransactionType", ("commitment", "disbursement")),
             EnumDef("Measure", ("number", "percentage")),
+            # AGD disaggregation dimensions (age / gender / diversity) — UNHCR core.
+            EnumDef("Sex", ("total", "female", "male", "other")),
+            EnumDef("AgeGroup", ("total", "0-4", "5-11", "12-17", "18-59", "60plus")),
         ),
         node_types=(
             NodeType("result", abstract=True,
@@ -65,6 +71,21 @@ def build_spec() -> GraphSpec:
                 AttrSchema("measure", range="Measure"),
             )),
             NodeType("cross_cutting_area", attributes=(AttrSchema("name", required=True),)),
+            # A reified, AGD-disaggregated indicator READING (n-ary: indicator + output
+            # + value + period + disaggregation). Promoted to a node (decision #12) so
+            # readings can be sliced by sex/age/location and merged across periods.
+            NodeType("reading", description="A disaggregated measurement of an indicator.",
+                     attributes=(
+                         AttrSchema("actual", range="decimal", required=True,
+                                    description="The measured value for this disaggregation."),
+                         AttrSchema("baseline", range="decimal"),
+                         AttrSchema("target", range="decimal"),
+                         AttrSchema("period", range="string",
+                                    description="Reporting period, e.g. 2026-Q2."),
+                         AttrSchema("sex", range="Sex"),
+                         AttrSchema("age_group", range="AgeGroup"),
+                         AttrSchema("location", range="string"),
+                     )),
         ),
         edge_types=(
             EdgeType("funds", subject_type="donor", object_type="project", attributes=(
@@ -76,28 +97,26 @@ def build_spec() -> GraphSpec:
                      attributes=(AttrSchema("marker", range="integer", required=True, minimum=0, maximum=2),)),
             EdgeType("delivers", subject_type="project", object_type="output"),
             EdgeType("contributes_to", subject_type="output", object_type="outcome"),
-            EdgeType("measured_by", subject_type="result", object_type="indicator", attributes=(
-                AttrSchema("baseline", range="decimal"),
-                AttrSchema("target", range="decimal"),
-                AttrSchema("actual", range="decimal"),
-                AttrSchema("period", range="string"),
-            )),
+            # The reading's two participants (the n-ary relation, reified as a node):
+            EdgeType("measures", subject_type="reading", object_type="indicator"),
+            EdgeType("assesses", subject_type="reading", object_type="output"),
         ),
     )
 
 
 # --- sources ------------------------------------------------------------------
 def load_sources() -> SourceBundle:
-    """Load the three source docs via the ingestion layer (route-by-format).
+    """Load the four source docs via the ingestion layer (route-by-format).
 
-    ``ingest`` defaults each ``source_id`` to the file stem, so the bindings can
-    reference ``donor_agreement`` / ``results_matrix`` / ``indicators`` by name. The
-    ``.md`` becomes a text source; the ``.csv`` files become table sources.
+    ``ingest`` defaults each ``source_id`` to the file stem, so the bindings reference
+    ``donor_agreement`` / ``results_matrix`` / ``indicators`` / ``readings`` by name.
+    The ``.md`` becomes a text source; the ``.csv`` files become table sources.
     """
     return ingest_paths([
         SOURCES / "donor_agreement.md",
         SOURCES / "results_matrix.csv",
         SOURCES / "indicators.csv",
+        SOURCES / "readings.csv",
     ])
 
 
@@ -140,16 +159,27 @@ def build_bindings() -> dict:
         "contributes_to": ("table_map", {
             "records_source": "results_matrix", "kind": "edge", "type": "contributes_to",
             "source_template": "output:{output_code}", "target_template": "outcome:{outcome_code}"}),
-        # indicators CSV -> declarative table_map
+        # indicators CSV -> indicator definition nodes
         "indicator": ("table_map", {
             "records_source": "indicators", "kind": "node", "type": "indicator",
             "id_template": "indicator:{indicator_code}",
             "attributes": {"name": "indicator_name", "measure": "measure"}}),
-        "measured_by": ("table_map", {
-            "records_source": "indicators", "kind": "edge", "type": "measured_by",
-            "source_template": "output:{output_code}", "target_template": "indicator:{indicator_code}",
-            "attributes": {"baseline": "baseline", "target": "target", "actual": "actual", "period": "period"},
-            "casts": {"baseline": "int", "target": "int", "actual": "int"}}),
+        # readings CSV -> AGD-disaggregated reading nodes + their two relation edges
+        "reading": ("table_map", {
+            "records_source": "readings", "kind": "node", "type": "reading",
+            "id_template": "reading:{indicator_code}-{sex}-{age_group}-{location}-{period}",
+            "attributes": {"actual": "actual", "baseline": "baseline", "target": "target",
+                           "period": "period", "sex": "sex", "age_group": "age_group",
+                           "location": "location"},
+            "casts": {"actual": "int", "baseline": "int", "target": "int"}}),
+        "measures": ("table_map", {
+            "records_source": "readings", "kind": "edge", "type": "measures",
+            "source_template": "reading:{indicator_code}-{sex}-{age_group}-{location}-{period}",
+            "target_template": "indicator:{indicator_code}"}),
+        "assesses": ("table_map", {
+            "records_source": "readings", "kind": "edge", "type": "assesses",
+            "source_template": "reading:{indicator_code}-{sex}-{age_group}-{location}-{period}",
+            "target_template": "output:{output_code}"}),
     }
 
 
@@ -160,9 +190,9 @@ def attribute_verifiers() -> dict:
     return {
         ("funds", "amount"): num,
         ("addresses", "marker"): ExactMatch(),
-        ("measured_by", "baseline"): num,
-        ("measured_by", "target"): num,
-        ("measured_by", "actual"): num,
+        ("reading", "baseline"): num,
+        ("reading", "target"): num,
+        ("reading", "actual"): num,
         ("outcome", "statement"): NormalizedMatch(),
         ("output", "statement"): NormalizedMatch(),
     }
