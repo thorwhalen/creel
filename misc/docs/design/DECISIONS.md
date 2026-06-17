@@ -184,10 +184,17 @@ OCR'd). Recorded here; GitHub issues updated accordingly.
   authoring front-end**; the Python `GraphSpec` (plus a forthcoming JSON/YAML
   serialization) is the runtime SSOT. Refines D3 (LinkML is a generation
   convenience, not the spine). Commit only interface-contract artifacts.
-- **#12 (indicator readings, Q2) — RESOLVED (lean), one fact open.** Default to a
-  `measured_by` **attributed edge** for `unhcr-rbm` + build a **per-edge-type
-  `reify()` transform**. The *only* open fact: **AGD-disaggregated values in v1**
-  (→ reify `measured_by` now) vs **aggregate-only** (→ edge now). Decide with #15.
+- **#12 (indicator readings, Q2) — RESOLVED & closed (2026-06-17).** Default to a
+  `measured_by` **attributed edge** for `unhcr-rbm`; a time-series is carried as
+  **parallel `measured_by` edges** (creel's LPG supports them natively). The
+  per-edge-type **`reify()` ⇄ `unreify()` toggle is BUILT** (`creel/reify.py`,
+  lossless round-trip tested) and the **temporal vocabulary is reserved**
+  (`creel/temporal.py`: `valid_from`/`valid_to`/`observed_at`/`recorded_at`) — so
+  promotion to a `Reading` node is a non-breaking switch. **Reify when (a) v1 needs
+  AGD/location-disaggregated readings** (a disaggregated reading is genuinely n-ary),
+  **or (b) extraction merges across reporting periods** into one evolving graph
+  (then the node-based `resolve_graph` dedups readings for free — readings-as-edges
+  would need bespoke edge-dedup). Neither holds for v1 yet, so the edge stays.
 - **#13 (confidence escalation, Q7) — RESOLVED (lean).** A **separate
   `ExtractionPolicy`** object resolved by chain (element→type→global). Defaults:
   validate-retry always; self-consistency on high-value/low-confidence fields

@@ -47,6 +47,7 @@ from creel.evaluation import (
 )
 from creel.facade import extract
 from creel.ingest import ingest, ingest_paths
+from creel.reify import reify, unreify
 from creel.resolve import (
     CascadeResolver,
     LLMResolver,
@@ -156,6 +157,9 @@ __all__ = [
     "CascadeResolver",
     "resolve_graph",
     "normalize_entity",
+    # reification toggle (D1 / #12)
+    "reify",
+    "unreify",
     # evidence / auditability
     "Evidence",
     "Provenance",
