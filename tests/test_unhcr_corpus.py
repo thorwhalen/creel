@@ -42,24 +42,38 @@ def test_extracted_graph_conforms_to_grammar(case):
 def test_all_node_and_edge_families_present(case):
     g = evaluate_case(case).actual_graph
     counts = {t: len(list(g.nodes_of_type(t)))
-              for t in ("donor", "project", "cross_cutting_area", "output", "outcome", "indicator")}
-    assert counts == {"donor": 2, "project": 2, "cross_cutting_area": 2,
-                      "output": 2, "outcome": 2, "indicator": 2}
+              for t in ("donor", "project", "cross_cutting_area", "output", "outcome",
+                        "indicator", "reading")}
+    assert counts == {"donor": 2, "project": 2, "cross_cutting_area": 2, "output": 2,
+                      "outcome": 2, "indicator": 2, "reading": 5}
     edge_counts = {t: len(list(g.edges_of_type(t)))
-                   for t in ("funds", "addresses", "delivers", "contributes_to", "measured_by")}
+                   for t in ("funds", "addresses", "delivers", "contributes_to", "measures", "assesses")}
     assert edge_counts == {"funds": 3, "addresses": 2, "delivers": 2,
-                           "contributes_to": 2, "measured_by": 2}
+                           "contributes_to": 2, "measures": 5, "assesses": 5}
 
 
-def test_values_live_on_edges(case):
+def test_funding_amount_on_edge_indicator_value_on_reading_node(case):
     g = evaluate_case(case).actual_graph
-    # funding amount on a funds edge
+    # funding amount stays on the funds EDGE (donor -> project)
     funds = next(e for e in g.edges_of_type("funds") if e.source == "donor:government-of-norway"
                  and e.target == "project:prj-001")
     assert funds.attributes == {"amount": 3_000_000, "currency": "USD", "transaction_type": "commitment"}
-    # indicator value on a measured_by edge
-    measured = next(e for e in g.edges_of_type("measured_by") if e.target == "indicator:ind-1")
-    assert measured.attributes["baseline"] == 1000 and measured.attributes["actual"] == 4200
+    # indicator values live on the reified reading NODE (an n-ary, disaggregated reading)
+    total = g.node("reading:ind-1-total-total-national-2026-q2")
+    assert total.attributes["actual"] == 4200 and total.attributes["baseline"] == 1000
+
+
+def test_agd_disaggregation_by_sex(case):
+    g = evaluate_case(case).actual_graph
+    # IND-1 has total / female / male readings, and the disaggregation is consistent
+    ind1 = {r.attributes["sex"]: r.attributes["actual"]
+            for r in g.nodes_of_type("reading")
+            if any(e.target == "indicator:ind-1" for e in g.edges_of_type("measures") if e.source == r.id)}
+    assert ind1 == {"total": 4200, "female": 2200, "male": 2000}
+    assert ind1["female"] + ind1["male"] == ind1["total"]
+    # each reading links to its indicator (measures) and its output (assesses)
+    fem = g.node("reading:ind-1-female-total-national-2026-q2")
+    assert fem.attributes["sex"] == "female" and fem.attributes["age_group"] == "total"
 
 
 def test_every_element_has_evidence(case):
