@@ -46,6 +46,7 @@ from creel.evaluation import (
     evaluate_corpus,
 )
 from creel.facade import extract
+from creel.ingest import ingest, ingest_paths
 from creel.sources import Source, SourceBundle, coerce_sources
 from creel.verify import (
     Composite,
@@ -115,8 +116,10 @@ __all__ = [
     "validate_canonical",
     "CANONICAL_SCHEMA_URL",
     "CANONICAL_VERSION",
-    # facade + sources
+    # facade + sources + ingestion
     "extract",
+    "ingest",
+    "ingest_paths",
     "Source",
     "SourceBundle",
     "coerce_sources",

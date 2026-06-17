@@ -20,13 +20,12 @@ It graduates to the ``creel-unhcr`` package at v0.4. The expected graph lives in
 
 from __future__ import annotations
 
-import csv
-import io
 from pathlib import Path
 
 from creel.evaluation import CorpusCase
 from creel.graph.canonical import from_canonical_json
-from creel.sources import TABLE, TEXT, Source, SourceBundle
+from creel.ingest import ingest_paths
+from creel.sources import SourceBundle
 from creel.spec.model import AttrSchema, EdgeType, EnumDef, GraphSpec, NodeType
 from creel.verify.kinds import ExactMatch, NormalizedMatch, NumericTolerance
 
@@ -89,15 +88,17 @@ def build_spec() -> GraphSpec:
 
 # --- sources ------------------------------------------------------------------
 def load_sources() -> SourceBundle:
-    """Load the three source docs (prose kept as text; CSVs parsed into row dicts)."""
-    prose = Source("donor_agreement", (SOURCES / "donor_agreement.md").read_text(), kind=TEXT)
-    matrix = Source("results_matrix", _read_csv(SOURCES / "results_matrix.csv"), kind=TABLE)
-    indicators = Source("indicators", _read_csv(SOURCES / "indicators.csv"), kind=TABLE)
-    return SourceBundle([prose, matrix, indicators])
+    """Load the three source docs via the ingestion layer (route-by-format).
 
-
-def _read_csv(path: Path) -> list[dict]:
-    return list(csv.DictReader(io.StringIO(path.read_text())))
+    ``ingest`` defaults each ``source_id`` to the file stem, so the bindings can
+    reference ``donor_agreement`` / ``results_matrix`` / ``indicators`` by name. The
+    ``.md`` becomes a text source; the ``.csv`` files become table sources.
+    """
+    return ingest_paths([
+        SOURCES / "donor_agreement.md",
+        SOURCES / "results_matrix.csv",
+        SOURCES / "indicators.csv",
+    ])
 
 
 # --- bindings -----------------------------------------------------------------
