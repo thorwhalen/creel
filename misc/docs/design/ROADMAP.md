@@ -169,13 +169,25 @@ UNHCR corpus, then downstream *contracts* (not implementations).
 - **7.5** *(v0.4)* Graduate to `creel-unhcr` package member.
 
 ## EPIC 8 — Downstream contracts (enabled, not implemented)  `downstream`
-*Enable §6 of the vision without building consumers. (D8, D9 RAG-readiness, D15)*
+*Enable §6 of the vision without building consumers. (D8, D9 RAG-readiness, D15, D-OP9)*
 
 - **8.1** RAG-readiness affordances on canonical output: stable IDs, typed edges,
   per-element provenance, optional `text_for_embedding` projection.
 - **8.2** `render.py`: `GraphRenderer` Protocol + `AnnotatedGraph` three-layer
   contract (graph ≈ Cytoscape `data`; standoff annotation overlay keyed by element
   id; optional selector→style hints).
+- **8.5** *(D-OP9, R15)* **Per-attribute grounding** — evidence keyed by optional
+  `(element_id, attribute_path)`, not just element id (A1).
+- **8.6** *(D-OP9)* **`Annotation` contract** — one standoff record for machine
+  insight *and* human coding (`target`/`body`/`motivation`/`provenance`); reified
+  `Selection`; bidirectional (human highlights passage → links to node/edge/category) (A2).
+- **8.7** *(D-OP9)* **Reverse-trace index** (span → elements): rebuildable interval
+  index; `elements_at` / `elements_overlapping` (A3).
+- **8.8** *(D-OP9)* **Anchor robustness**: always emit quote+position+`cited_text`;
+  quote = system-of-record; ordered re-anchoring resolver (bounded diff-match-patch);
+  `RangeSelector`/CSS/XPath + `refinedBy`; `needs_review` on fuzzy-only (A4).
+- **8.9** *(D-OP9)* **Provenance kind + `wasRevisionOf`**: derive
+  machine/manual/corrected; non-destructive corrections; `coded_by` for humans (A5).
 - **8.3** `view/projections.py`: `to_dot`, `to_mermaid`, `to_node_edge_records`,
   `to_table`, `to_sections` — flattened views renderers/media want.
 - **8.4** Export adapters maturity (rdf-star, cypher params, llamaindex/graphrag
