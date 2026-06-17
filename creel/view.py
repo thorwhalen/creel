@@ -109,6 +109,27 @@ def to_cytoscape(graph: Graph) -> dict[str, Any]:
     }
 
 
+def to_embedding_records(graph: Graph) -> list[dict[str, Any]]:
+    """RAG-readiness: one ``{"id","kind","type","text"}`` record per element (EPIC 8.1).
+
+    ``text`` is a compact natural-language rendering of the element (type + attributes;
+    for edges, the relation and its endpoints) suitable for embedding into a vector
+    index, so the extracted graph flows into graph+vector RAG without coupling.
+    """
+    records: list[dict[str, Any]] = []
+    for node in _nodes(graph):
+        attrs = "; ".join(f"{k}={v}" for k, v in sorted(node.attributes.items()))
+        type_label = node.types[0] if node.types else "node"
+        records.append({"id": node.id, "kind": "node", "type": type_label,
+                        "text": f"{type_label}: {attrs}".strip(": ").strip()})
+    for edge in _edges(graph):
+        attrs = "; ".join(f"{k}={v}" for k, v in sorted(edge.attributes.items()))
+        tail = f" ({attrs})" if attrs else ""
+        records.append({"id": edge.id, "kind": "edge", "type": edge.type,
+                        "text": f"{edge.source} {edge.type} {edge.target}{tail}"})
+    return records
+
+
 def _escape(text: str) -> str:
     """Escape double-quotes and newlines for DOT/Mermaid string contexts."""
     return re.sub(r'[\n"]', " ", str(text))
