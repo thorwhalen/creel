@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.bindings &mdash; creel 0.0.2 documentation</title>
+  <title>creel.bindings &mdash; creel 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=e3a6060d"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -47,29 +47,45 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/annotate.html">creel.annotate</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/bindings.html">creel.bindings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/evaluation.html">creel.evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/export.html">creel.export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract.html">creel.extract</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/llm.html">creel.extract.llm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/pattern.html">creel.extract.pattern</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/query.html">creel.extract.query</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/transforms.html">creel.extract.transforms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/facade.html">creel.facade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph.html">creel.graph</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph/canonical.html">creel.graph.canonical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/resolve.html">creel.resolve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/sources.html">creel.sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/linkml.html">creel.spec.linkml</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/model.html">creel.spec.model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/trace.html">creel.trace</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify.html">creel.verify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/kinds.html">creel.verify.kinds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/protocol.html">creel.verify.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/registry.html">creel.verify.registry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/view.html">creel.view</a></li>
 </ul>
 
         </div>
@@ -123,12 +139,22 @@
 <a class="viewcode-back" href="../../module_docs/creel/bindings.html#creel.ExtractorBinding">[docs]</a>
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ExtractorBinding</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bind one grammar element to a strategy (by name + config) or a direct callable.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bind one grammar element (or a cluster) to a strategy or a direct callable.</span>
+
+<span class="sd">    When ``elements`` is set, this is a **cluster binding** (D-OP8): the extractor is</span>
+<span class="sd">    invoked **once** for the whole set of element ids (one pass over several coupled</span>
+<span class="sd">    types), rather than once per element. ``element_id`` is then just a label.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">element_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">strategy</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
     <span class="n">extractor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">ExtractionContext</span><span class="p">],</span> <span class="n">Extraction</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">elements</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;elements&quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">))</span>
 
 <div class="viewcode-block" id="ExtractorBinding.build">
 <a class="viewcode-back" href="../../module_docs/creel/bindings.html#creel.ExtractorBinding.build">[docs]</a>
@@ -205,6 +231,7 @@
             <span class="n">strategy</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;strategy&quot;</span><span class="p">),</span>
             <span class="n">config</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="p">{}),</span>
             <span class="n">extractor</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;extractor&quot;</span><span class="p">),</span>
+            <span class="n">elements</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;elements&quot;</span><span class="p">),</span>
         <span class="p">)</span>
     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cannot interpret binding spec for </span><span class="si">{</span><span class="n">element_id</span><span class="si">!r}</span><span class="s2">: </span><span class="si">{</span><span class="n">spec</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -212,7 +239,7 @@
 <div class="viewcode-block" id="coerce_bindings">
 <a class="viewcode-back" href="../../module_docs/creel/bindings.html#creel.coerce_bindings">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">coerce_bindings</span><span class="p">(</span>
-    <span class="n">extractors</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ExtractorBindings</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">ExtractorBinding</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">extractors</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ExtractorBindings</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">ExtractorBinding</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ExtractorBindings</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalise the facade&#39;s ``extractors`` argument into :class:`ExtractorBindings`.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">extractors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

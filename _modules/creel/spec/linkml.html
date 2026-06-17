@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.spec.linkml &mdash; creel 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/annotate.html">creel.annotate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/export.html">creel.export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/llm.html">creel.extract.llm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/pattern.html">creel.extract.pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/query.html">creel.extract.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/transforms.html">creel.extract.transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph/canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/resolve.html">creel.resolve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/linkml.html">creel.spec.linkml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/trace.html">creel.trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/view.html">creel.view</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">creel.spec.linkml</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for creel.spec.linkml</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;LinkML bridge + schema codegen for the grammar (EPIC 2.4, decision D3).</span>
+
+<span class="sd">LinkML is creel&#39;s optional **build-time authoring front-end**, not the runtime SSOT</span>
+<span class="sd">(the Python :class:`~creel.spec.model.GraphSpec` is). This module bridges the two and</span>
+<span class="sd">generates validation artifacts — all **dependency-free** for the common subset (a</span>
+<span class="sd">LinkML schema is YAML with ``classes`` / ``attributes`` / ``enums``), so it is fully</span>
+<span class="sd">testable without the heavy ``linkml`` package:</span>
+
+<span class="sd">- :func:`to_linkml` — ``GraphSpec`` → a LinkML schema dict (YAML-able).</span>
+<span class="sd">- :func:`load_linkml` — a LinkML schema (dict or YAML path) → ``GraphSpec``.</span>
+<span class="sd">- :func:`generate_json_schema` — ``GraphSpec`` → JSON Schema (a ``$def`` per type,</span>
+<span class="sd">  with enums/ranges/cardinality) for external validators.</span>
+<span class="sd">- :func:`generate_pydantic` — a Pydantic model per node/edge type for typed access.</span>
+
+<span class="sd">Edges are LinkML classes flagged ``represents_relationship: true`` (the LinkML idiom</span>
+<span class="sd">for first-class, attribute-bearing relations).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.spec.model</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AttrSchema</span><span class="p">,</span>
+    <span class="n">EdgeType</span><span class="p">,</span>
+    <span class="n">EnumDef</span><span class="p">,</span>
+    <span class="n">GraphSpec</span><span class="p">,</span>
+    <span class="n">NodeType</span><span class="p">,</span>
+    <span class="n">effective_attributes</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">_JSON_TYPE</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;string&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;decimal&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span> <span class="s2">&quot;boolean&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}</span>
+<span class="n">_PY_TYPE</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;string&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;decimal&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="s2">&quot;boolean&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">}</span>
+
+
+<span class="c1"># --- GraphSpec -&gt; LinkML ------------------------------------------------------</span>
+<div class="viewcode-block" id="to_linkml">
+<a class="viewcode-back" href="../../../module_docs/creel/spec/linkml.html#creel.spec.to_linkml">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_linkml</span><span class="p">(</span><span class="n">spec</span><span class="p">:</span> <span class="n">GraphSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit a LinkML schema dict (pass to ``yaml.safe_dump`` to write a ``.yaml``).&quot;&quot;&quot;</span>
+    <span class="n">classes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">nt</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">node_types</span><span class="p">:</span>
+        <span class="n">classes</span><span class="p">[</span><span class="n">nt</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">_linkml_class</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">et</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">edge_types</span><span class="p">:</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="n">_linkml_class</span><span class="p">(</span><span class="n">et</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="p">[</span><span class="s2">&quot;represents_relationship&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">et</span><span class="o">.</span><span class="n">subject_type</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="p">[</span><span class="s2">&quot;subject_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">et</span><span class="o">.</span><span class="n">subject_type</span>
+        <span class="k">if</span> <span class="n">et</span><span class="o">.</span><span class="n">object_type</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="p">[</span><span class="s2">&quot;object_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">et</span><span class="o">.</span><span class="n">object_type</span>
+        <span class="n">classes</span><span class="p">[</span><span class="n">et</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">spec</span><span class="o">.</span><span class="n">id</span> <span class="ow">or</span> <span class="s2">&quot;https://creel.dev/schema/grammar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">id</span> <span class="ow">or</span> <span class="s2">&quot;creel_grammar&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;enums&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;permissible_values&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="p">{}</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">permissible_values</span><span class="p">}}</span>
+                  <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">enums</span><span class="p">},</span>
+        <span class="s2">&quot;classes&quot;</span><span class="p">:</span> <span class="n">classes</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_linkml_class</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="bp">cls</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">a</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">_linkml_slot</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">attributes</span><span class="p">}}</span>
+    <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">description</span><span class="p">:</span>
+        <span class="bp">cls</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">description</span>
+    <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">is_a</span><span class="p">:</span>
+        <span class="bp">cls</span><span class="p">[</span><span class="s2">&quot;is_a&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">is_a</span>
+    <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">mixins</span><span class="p">:</span>
+        <span class="bp">cls</span><span class="p">[</span><span class="s2">&quot;mixins&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">mixins</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">abstract</span><span class="p">:</span>
+        <span class="bp">cls</span><span class="p">[</span><span class="s2">&quot;abstract&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="bp">cls</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_linkml_slot</span><span class="p">(</span><span class="n">attr</span><span class="p">:</span> <span class="n">AttrSchema</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="n">slot</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="n">attr</span><span class="o">.</span><span class="n">range</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">required</span><span class="p">:</span>
+        <span class="n">slot</span><span class="p">[</span><span class="s2">&quot;required&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">multivalued</span><span class="p">:</span>
+        <span class="n">slot</span><span class="p">[</span><span class="s2">&quot;multivalued&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">enum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">slot</span><span class="p">[</span><span class="s2">&quot;permissible_values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">enum</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">minimum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">slot</span><span class="p">[</span><span class="s2">&quot;minimum_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">minimum</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">maximum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">slot</span><span class="p">[</span><span class="s2">&quot;maximum_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">maximum</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">pattern</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">slot</span><span class="p">[</span><span class="s2">&quot;pattern&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">pattern</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">description</span><span class="p">:</span>
+        <span class="n">slot</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">description</span>
+    <span class="k">return</span> <span class="n">slot</span>
+
+
+<span class="c1"># --- LinkML -&gt; GraphSpec ------------------------------------------------------</span>
+<div class="viewcode-block" id="load_linkml">
+<a class="viewcode-back" href="../../../module_docs/creel/spec/linkml.html#creel.spec.load_linkml">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_linkml</span><span class="p">(</span><span class="n">schema</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">GraphSpec</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a LinkML schema (dict, or a path to a ``.yaml``) into a :class:`GraphSpec`.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>  <span class="c1"># PyYAML; only needed for path loading</span>
+
+        <span class="n">schema</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+    <span class="n">enums</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+        <span class="n">EnumDef</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">body</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;permissible_values&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">body</span> <span class="ow">in</span> <span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enums&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">node_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">NodeType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">edge_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">EdgeType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">cname</span><span class="p">,</span> <span class="n">cbody</span> <span class="ow">in</span> <span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;classes&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">cbody</span> <span class="o">=</span> <span class="n">cbody</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_attr_from_slot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span> <span class="ow">or</span> <span class="p">{})</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="n">cbody</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="n">common</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">cbody</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">),</span> <span class="n">is_a</span><span class="o">=</span><span class="n">cbody</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;is_a&quot;</span><span class="p">),</span>
+                      <span class="n">mixins</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">cbody</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mixins&quot;</span><span class="p">,</span> <span class="p">())),</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span>
+                      <span class="n">abstract</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">cbody</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;abstract&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">cbody</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;represents_relationship&quot;</span><span class="p">):</span>
+            <span class="n">edge_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">EdgeType</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">subject_type</span><span class="o">=</span><span class="n">cbody</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;subject_type&quot;</span><span class="p">),</span>
+                                       <span class="n">object_type</span><span class="o">=</span><span class="n">cbody</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;object_type&quot;</span><span class="p">),</span> <span class="o">**</span><span class="n">common</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NodeType</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="o">**</span><span class="n">common</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">GraphSpec</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span> <span class="n">node_types</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">node_types</span><span class="p">),</span>
+                     <span class="n">edge_types</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">edge_types</span><span class="p">),</span> <span class="n">enums</span><span class="o">=</span><span class="n">enums</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_attr_from_slot</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AttrSchema</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">AttrSchema</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="n">slot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;range&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span> <span class="n">required</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">slot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;required&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)),</span>
+        <span class="n">multivalued</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">slot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;multivalued&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)),</span>
+        <span class="n">enum</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">slot</span><span class="p">[</span><span class="s2">&quot;permissible_values&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="n">slot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;permissible_values&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">minimum</span><span class="o">=</span><span class="n">slot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;minimum_value&quot;</span><span class="p">),</span> <span class="n">maximum</span><span class="o">=</span><span class="n">slot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;maximum_value&quot;</span><span class="p">),</span>
+        <span class="n">pattern</span><span class="o">=</span><span class="n">slot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pattern&quot;</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="n">slot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># --- GraphSpec -&gt; JSON Schema -------------------------------------------------</span>
+<div class="viewcode-block" id="generate_json_schema">
+<a class="viewcode-back" href="../../../module_docs/creel/spec/linkml.html#creel.spec.generate_json_schema">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_json_schema</span><span class="p">(</span><span class="n">spec</span><span class="p">:</span> <span class="n">GraphSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a JSON Schema with a ``$def`` per node/edge type (for external validators).&quot;&quot;&quot;</span>
+    <span class="n">defs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">et</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">iter_element_types</span><span class="p">():</span>
+        <span class="n">props</span><span class="p">,</span> <span class="n">required</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">effective_attributes</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">et</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">props</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_json_attr</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">required</span><span class="p">:</span>
+                <span class="n">required</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">schema</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="n">props</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">required</span><span class="p">:</span>
+            <span class="n">schema</span><span class="p">[</span><span class="s2">&quot;required&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">required</span>
+        <span class="n">defs</span><span class="p">[</span><span class="n">et</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">schema</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="p">,</span> <span class="s2">&quot;$defs&quot;</span><span class="p">:</span> <span class="n">defs</span><span class="p">}</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_json_attr</span><span class="p">(</span><span class="n">attr</span><span class="p">:</span> <span class="n">AttrSchema</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="n">GraphSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="n">permissible</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">enum</span> <span class="ow">or</span> <span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">range</span><span class="p">)</span><span class="o">.</span><span class="n">permissible_values</span> <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">range</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">base</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">permissible</span><span class="p">)}</span> <span class="k">if</span> <span class="n">permissible</span> <span class="k">else</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">_JSON_TYPE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">range</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">)}</span>
+    <span class="c1"># Unlike the LLM decode schema, a *validation* schema DOES carry value bounds.</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">minimum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">base</span><span class="p">[</span><span class="s2">&quot;minimum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">minimum</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">maximum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">base</span><span class="p">[</span><span class="s2">&quot;maximum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">maximum</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">pattern</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">base</span><span class="p">[</span><span class="s2">&quot;pattern&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">pattern</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">description</span><span class="p">:</span>
+        <span class="n">base</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">description</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">base</span><span class="p">}</span> <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">multivalued</span> <span class="k">else</span> <span class="n">base</span>
+
+
+<span class="c1"># --- GraphSpec -&gt; Pydantic ----------------------------------------------------</span>
+<div class="viewcode-block" id="generate_pydantic">
+<a class="viewcode-back" href="../../../module_docs/creel/spec/linkml.html#creel.spec.generate_pydantic">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_pydantic</span><span class="p">(</span><span class="n">spec</span><span class="p">:</span> <span class="n">GraphSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate one Pydantic v2 model per node/edge type (typed access at the IO boundary).&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span><span class="p">,</span> <span class="n">create_model</span>
+
+    <span class="n">models</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">et</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">iter_element_types</span><span class="p">():</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">effective_attributes</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">et</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">annotation</span> <span class="o">=</span> <span class="n">_py_type</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
+            <span class="n">constraints</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">minimum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">constraints</span><span class="p">[</span><span class="s2">&quot;ge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">minimum</span>
+            <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">maximum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">constraints</span><span class="p">[</span><span class="s2">&quot;le&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">maximum</span>
+            <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">pattern</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">constraints</span><span class="p">[</span><span class="s2">&quot;pattern&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">pattern</span>
+            <span class="n">default</span> <span class="o">=</span> <span class="o">...</span> <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">required</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">fields</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">annotation</span> <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">required</span> <span class="k">else</span> <span class="n">Optional</span><span class="p">[</span><span class="n">annotation</span><span class="p">],</span>
+                            <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="o">**</span><span class="n">constraints</span><span class="p">))</span>
+        <span class="n">models</span><span class="p">[</span><span class="n">et</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">et</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="o">**</span><span class="n">fields</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">models</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_py_type</span><span class="p">(</span><span class="n">attr</span><span class="p">:</span> <span class="n">AttrSchema</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="n">GraphSpec</span><span class="p">):</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">_PY_TYPE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">range</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">List</span><span class="p">[</span><span class="n">base</span><span class="p">]</span> <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">multivalued</span> <span class="k">else</span> <span class="n">base</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;to_linkml&quot;</span><span class="p">,</span> <span class="s2">&quot;load_linkml&quot;</span><span class="p">,</span> <span class="s2">&quot;generate_json_schema&quot;</span><span class="p">,</span> <span class="s2">&quot;generate_pydantic&quot;</span><span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

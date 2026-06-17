@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.ingest.loaders &mdash; creel 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/annotate.html">creel.annotate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/export.html">creel.export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/llm.html">creel.extract.llm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/pattern.html">creel.extract.pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/query.html">creel.extract.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/transforms.html">creel.extract.transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph/canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/resolve.html">creel.resolve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/linkml.html">creel.spec.linkml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/trace.html">creel.trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/view.html">creel.view</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../ingest.html">creel.ingest</a></li>
+      <li class="breadcrumb-item active">creel.ingest.loaders</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for creel.ingest.loaders</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Built-in loaders + the route-by-format registry (decision D-OP7, report R13).</span>
+
+<span class="sd">The default set is **local, structure-preserving, permissively-licensed, and</span>
+<span class="sd">pure-stdlib** (text/Markdown/CSV/TSV/JSON). Richer formats (PDF/DOCX/XLSX/HTML) are</span>
+<span class="sd">handled by optional backends behind the ``[ingest]`` extra — lazily imported, with a</span>
+<span class="sd">clear error if the extra is missing. License discipline: no AGPL/GPL parsers</span>
+<span class="sd">(PyMuPDF4LLM, Marker) in the defaults.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">TABLE</span><span class="p">,</span> <span class="n">TEXT</span><span class="p">,</span> <span class="n">Source</span>
+
+<span class="c1">#: file extension (lowercased, incl. dot) -&gt; Loader</span>
+<span class="n">_LOADERS</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Source</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="register_loader">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.register_loader">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_loader</span><span class="p">(</span><span class="o">*</span><span class="n">extensions</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorator registering a loader for one or more file extensions.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">deco</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Source</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Source</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">:</span>
+            <span class="n">_LOADERS</span><span class="p">[</span><span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="k">return</span> <span class="n">fn</span>
+
+    <span class="k">return</span> <span class="n">deco</span></div>
+
+
+
+<div class="viewcode-block" id="loader_for">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.loader_for">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">loader_for</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Source</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the loader registered for ``path``&#39;s extension, or raise ``ValueError``.&quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_LOADERS</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;no loader for </span><span class="si">{</span><span class="n">ext</span><span class="si">!r}</span><span class="s2"> (known: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">_LOADERS</span><span class="p">)</span><span class="si">}</span><span class="s2">); pass loader=... explicitly&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">_LOADERS</span><span class="p">[</span><span class="n">ext</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="supported_extensions">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.supported_extensions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">supported_extensions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sorted list of registered file extensions.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_LOADERS</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># --- pure-stdlib default loaders ---------------------------------------------</span>
+<div class="viewcode-block" id="load_text">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.load_text">[docs]</a>
+<span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;.text&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_text</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load plain text as a ``text`` source.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span>
+                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="load_markdown">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.load_markdown">[docs]</a>
+<span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.md&quot;</span><span class="p">,</span> <span class="s2">&quot;.markdown&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_markdown</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load Markdown as-is (it is already LLM-native and structure-preserving).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span>
+                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;markdown&quot;</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="load_csv">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.load_csv">[docs]</a>
+<span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.csv&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_csv</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load CSV into a ``table`` source (``list[dict]`` rows; cell-addressable).&quot;&quot;&quot;</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;csv&quot;</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="load_tsv">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.load_tsv">[docs]</a>
+<span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.tsv&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_tsv</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load TSV into a ``table`` source.&quot;&quot;&quot;</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;tsv&quot;</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="load_json">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.load_json">[docs]</a>
+<span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.json&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_json</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load JSON into a ``json`` source (parsed object).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)),</span> <span class="n">kind</span><span class="o">=</span><span class="n">JSON</span><span class="p">,</span>
+                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;json&quot;</span><span class="p">})</span></div>
+
+
+
+<span class="c1"># --- optional-backend loaders ([ingest] extra) -------------------------------</span>
+<div class="viewcode-block" id="load_xlsx">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.load_xlsx">[docs]</a>
+<span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.xlsx&quot;</span><span class="p">,</span> <span class="s2">&quot;.xls&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_xlsx</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the first worksheet into a ``table`` source (openpyxl, ``data_only``).</span>
+
+<span class="sd">    Basic header-row mapping. Merged cells / multi-row headers / hidden rows are a</span>
+<span class="sd">    known limitation (R13) — escalate to a richer backend when needed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">openpyxl</span> <span class="o">=</span> <span class="n">_require</span><span class="p">(</span><span class="s2">&quot;openpyxl&quot;</span><span class="p">,</span> <span class="s2">&quot;[ingest]&quot;</span><span class="p">)</span>
+    <span class="n">wb</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">data_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">active</span>
+    <span class="n">rows_iter</span> <span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">(</span><span class="n">values_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;col</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">rows_iter</span><span class="p">,</span> <span class="p">()))]</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows_iter</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TABLE</span><span class="p">,</span>
+                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;xlsx&quot;</span><span class="p">,</span> <span class="s2">&quot;sheet&quot;</span><span class="p">:</span> <span class="n">ws</span><span class="o">.</span><span class="n">title</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="load_html">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.load_html">[docs]</a>
+<span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">,</span> <span class="s2">&quot;.htm&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_html</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract main content from HTML to Markdown (trafilatura; strips boilerplate).&quot;&quot;&quot;</span>
+    <span class="n">trafilatura</span> <span class="o">=</span> <span class="n">_require</span><span class="p">(</span><span class="s2">&quot;trafilatura&quot;</span><span class="p">,</span> <span class="s2">&quot;[ingest]&quot;</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">trafilatura</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;markdown&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;html&quot;</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="load_docling">
+<a class="viewcode-back" href="../../../module_docs/creel/ingest/loaders.html#creel.ingest.load_docling">[docs]</a>
+<span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;.docx&quot;</span><span class="p">,</span> <span class="s2">&quot;.pptx&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_docling</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert PDF/DOCX/PPTX to Markdown via Docling (structure + page provenance).</span>
+
+<span class="sd">    Docling is the structure-preserving default for rich formats; its</span>
+<span class="sd">    ``DoclingDocument`` carries page/bbox provenance that a later pass can attach to</span>
+<span class="sd">    grounding selectors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dc</span> <span class="o">=</span> <span class="n">_require</span><span class="p">(</span><span class="s2">&quot;docling.document_converter&quot;</span><span class="p">,</span> <span class="s2">&quot;[ingest]&quot;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">dc</span><span class="o">.</span><span class="n">DocumentConverter</span><span class="p">()</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="n">markdown</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">export_to_markdown</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">markdown</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span>
+                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)})</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_require</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import ``module`` or raise a clear error pointing at the ``creel[extra]`` install.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - exercised only without the extra</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;loading this format needs the </span><span class="si">{</span><span class="n">extra</span><span class="si">}</span><span class="s2"> extra (missing </span><span class="si">{</span><span class="n">module</span><span class="si">!r}</span><span class="s2">). &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Install with: pip install &#39;creel</span><span class="si">{</span><span class="n">extra</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

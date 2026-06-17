@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.resolve &mdash; creel 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/annotate.html">creel.annotate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/export.html">creel.export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/llm.html">creel.extract.llm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/pattern.html">creel.extract.pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/query.html">creel.extract.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/transforms.html">creel.extract.transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph/canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/resolve.html">creel.resolve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/linkml.html">creel.spec.linkml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/trace.html">creel.trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/view.html">creel.view</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">creel.resolve</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for creel.resolve</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Entity resolution — merge nodes that name the same real entity (decision #14 / D-OP8).</span>
+
+<span class="sd">Messy multi-source documents (field-written, non-native English, OCR&#39;d) name the</span>
+<span class="sd">same entity in different ways — &quot;Government of Norway&quot; / &quot;Norway (Govt.)&quot; /</span>
+<span class="sd">&quot;Norwegian MFA&quot;. Per the changed decision #14 (report R14 §5), resolution is a</span>
+<span class="sd">**required**, pluggable cascade — *blocking → matching → merging* — defaulting to</span>
+<span class="sd">cheap deterministic strategies (exact id → normalize-before-merge → registry) with</span>
+<span class="sd">hooks for embedding/LLM adjudication.</span>
+
+<span class="sd">A :class:`Resolver` decides whether two nodes are the same entity. :func:`resolve_graph`</span>
+<span class="sd">applies one as a post-extraction pass: it blocks by node type, clusters by transitive</span>
+<span class="sd">sameness (union-find), merges each cluster into one canonical node, and remaps every</span>
+<span class="sd">edge — non-destructively returning a new graph with a ``merges`` report.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">runtime_checkable</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.extract.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">slug</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.graph.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">Node</span>
+
+<span class="c1"># Tokens stripped during entity normalization (legal forms + honorifics).</span>
+<span class="n">_LEGAL</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;inc&quot;</span><span class="p">,</span> <span class="s2">&quot;ltd&quot;</span><span class="p">,</span> <span class="s2">&quot;llc&quot;</span><span class="p">,</span> <span class="s2">&quot;corp&quot;</span><span class="p">,</span> <span class="s2">&quot;co&quot;</span><span class="p">,</span> <span class="s2">&quot;company&quot;</span><span class="p">,</span> <span class="s2">&quot;gmbh&quot;</span><span class="p">,</span> <span class="s2">&quot;plc&quot;</span><span class="p">,</span> <span class="s2">&quot;sa&quot;</span><span class="p">,</span> <span class="s2">&quot;ag&quot;</span><span class="p">,</span> <span class="s2">&quot;srl&quot;</span><span class="p">,</span> <span class="s2">&quot;bv&quot;</span><span class="p">}</span>
+<span class="n">_HONORIFIC</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dr&quot;</span><span class="p">,</span> <span class="s2">&quot;mr&quot;</span><span class="p">,</span> <span class="s2">&quot;mrs&quot;</span><span class="p">,</span> <span class="s2">&quot;ms&quot;</span><span class="p">,</span> <span class="s2">&quot;prof&quot;</span><span class="p">,</span> <span class="s2">&quot;mme&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;the&quot;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="normalize_entity">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.normalize_entity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_entity</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize an entity mention for matching: casefold, strip punctuation/legal/honorific.&quot;&quot;&quot;</span>
+    <span class="n">cleaned</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^\w\s]&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_LEGAL</span> <span class="ow">and</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_HONORIFIC</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Resolver">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.Resolver">[docs]</a>
+<span class="nd">@runtime_checkable</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Resolver</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decide whether two nodes denote the same real entity.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Resolver.same">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.Resolver.same">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return ``True`` if ``a`` and ``b`` are the same entity.&quot;&quot;&quot;</span>
+        <span class="o">...</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="NormalizeResolver">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.NormalizeResolver">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NormalizeResolver</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Match by a normalized key attribute (+ an optional alias table). The cheap default.&quot;&quot;&quot;</span>
+
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
+    <span class="n">aliases</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">normalize_entity</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aliases</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">aliases</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">norm</span><span class="p">,</span> <span class="n">norm</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">ka</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ka</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ka</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<div class="viewcode-block" id="NormalizeResolver.canonical_id">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.NormalizeResolver.canonical_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">canonical_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Node</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A stable id from the normalized key + type.&quot;&quot;&quot;</span>
+        <span class="n">rep</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">type_label</span> <span class="o">=</span> <span class="n">rep</span><span class="o">.</span><span class="n">types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">rep</span><span class="o">.</span><span class="n">types</span> <span class="k">else</span> <span class="s2">&quot;node&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">type_label</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">slug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">rep</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RegistryResolver">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.RegistryResolver">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RegistryResolver</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve mentions to canonical ids via an authoritative lookup table (e.g. IATI/DAC).&quot;&quot;&quot;</span>
+
+    <span class="n">registry</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_canon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">normalize_entity</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">ca</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_canon</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ca</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ca</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_canon</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RegistryResolver.canonical_id">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.RegistryResolver.canonical_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">canonical_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Node</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The registry&#39;s canonical id for the cluster.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_canon</span><span class="p">(</span><span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="LLMResolver">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.LLMResolver">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LLMResolver</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adjudicate hard pairs with an injected judge ``(name_a, name_b) -&gt; bool``.</span>
+
+<span class="sd">    The judge is injected (testable with a fake; an LLM in production via ``creel[llm]``).</span>
+<span class="sd">    Reserve this for pairs the cheap resolvers leave ambiguous — it is the costly tail.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">judge</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">judge</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))))</span></div>
+
+
+
+<div class="viewcode-block" id="CascadeResolver">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.CascadeResolver">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CascadeResolver</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Try resolvers in order (cheapest first); two nodes match if ANY resolver matches.&quot;&quot;&quot;</span>
+
+    <span class="n">resolvers</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Resolver</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">same</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CascadeResolver.canonical_id">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.CascadeResolver.canonical_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">canonical_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Node</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use the first resolver that can name a canonical id; else the smallest id.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span><span class="p">:</span>
+            <span class="n">namer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;canonical_id&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">namer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">cid</span> <span class="o">=</span> <span class="n">namer</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">cid</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">cid</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">cluster</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="resolve_graph">
+<a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.resolve_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">resolve_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">resolver</span><span class="p">:</span> <span class="n">Resolver</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Graph</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a new graph with same-entity nodes merged and edges remapped.</span>
+
+<span class="sd">    Blocking (by node type-tuple) → matching (``resolver.same``) → merging (union-find;</span>
+<span class="sd">    one canonical node per cluster, attributes first-wins) → edge remap. The original</span>
+<span class="sd">    graph is untouched; the result&#39;s ``report[&quot;merges&quot;]`` lists each merge.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">canonical_of</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">merged</span><span class="p">:</span> <span class="n">Graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
+    <span class="n">merges</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">blocks</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+        <span class="n">blocks</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">types</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">block_nodes</span> <span class="ow">in</span> <span class="n">blocks</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="n">_cluster</span><span class="p">(</span><span class="n">block_nodes</span><span class="p">,</span> <span class="n">resolver</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+            <span class="n">cid</span> <span class="o">=</span> <span class="n">_canonical_id</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">resolver</span><span class="p">)</span>
+            <span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">cluster</span><span class="p">:</span>  <span class="c1"># first-wins merge of attributes</span>
+                <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">node</span><span class="o">.</span><span class="n">attributes</span><span class="p">,</span> <span class="o">**</span><span class="n">attributes</span><span class="p">}</span>
+                <span class="n">canonical_of</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">cid</span>
+            <span class="n">merged</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">cid</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">types</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cid</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">:</span>
+                <span class="n">merged</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">:</span>
+                <span class="n">merged</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">merges</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;canonical&quot;</span><span class="p">:</span> <span class="n">cid</span><span class="p">,</span> <span class="s2">&quot;merged&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">cluster</span><span class="p">)})</span>
+
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">canonical_of</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">canonical_of</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="ow">and</span> <span class="n">merged</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">target</span><span class="p">)):</span>
+            <span class="k">continue</span>
+        <span class="n">merged</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">edge</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+                        <span class="n">attributes</span><span class="o">=</span><span class="n">edge</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">edge</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">:</span>
+            <span class="n">merged</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+
+    <span class="n">merged</span><span class="o">.</span><span class="n">report</span><span class="p">[</span><span class="s2">&quot;merges&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">merges</span>
+    <span class="k">return</span> <span class="n">merged</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cluster</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Node</span><span class="p">],</span> <span class="n">resolver</span><span class="p">:</span> <span class="n">Resolver</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]]:</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">n</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">while</span> <span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="n">x</span><span class="p">:</span>
+            <span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]]</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">union</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">parent</span><span class="p">[</span><span class="n">find</span><span class="p">(</span><span class="n">a</span><span class="p">)]</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">resolver</span><span class="o">.</span><span class="n">same</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">):</span>
+                <span class="n">union</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+    <span class="n">groups</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="n">groups</span><span class="p">[</span><span class="n">find</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_canonical_id</span><span class="p">(</span><span class="n">cluster</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Node</span><span class="p">],</span> <span class="n">resolver</span><span class="p">:</span> <span class="n">Resolver</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">namer</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">resolver</span><span class="p">,</span> <span class="s2">&quot;canonical_id&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">namer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cid</span> <span class="o">=</span> <span class="n">namer</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cid</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cid</span>
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

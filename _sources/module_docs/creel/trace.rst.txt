@@ -1,0 +1,4 @@
+creel.trace
+===========
+.. automodule:: creel.trace
+   :members:

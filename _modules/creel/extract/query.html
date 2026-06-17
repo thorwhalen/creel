@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.extract.query &mdash; creel 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/annotate.html">creel.annotate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/export.html">creel.export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/llm.html">creel.extract.llm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/pattern.html">creel.extract.pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/query.html">creel.extract.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/transforms.html">creel.extract.transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph/canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/resolve.html">creel.resolve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/linkml.html">creel.spec.linkml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/trace.html">creel.trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/view.html">creel.view</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">creel.extract.query</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for creel.extract.query</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Query extractors — pull graph elements from STRUCTURED sources (tables, JSON).</span>
+
+<span class="sd">Per decision D5, when a source is structured, querying it is cheaper, faster, and</span>
+<span class="sd">more auditable than asking an LLM to transcribe values. Three strategies, all driven</span>
+<span class="sd">by **pure-data** specs (a record→element *mapping*, plus an optional query), never by</span>
+<span class="sd">raw engine strings interpolated from untrusted input:</span>
+
+<span class="sd">- ``table_map`` — declarative: map each row of a table source (``list[dict]``) to a</span>
+<span class="sd">  node or edge. Zero extra dependencies.</span>
+<span class="sd">- ``sql`` (extra ``[query]``) — run a **parameterized** DuckDB SQL query over a table</span>
+<span class="sd">  source, then map the result rows. For filtering/joins/aggregation.</span>
+<span class="sd">- ``json_query`` (extra ``[query]``) — select records from a JSON source via a</span>
+<span class="sd">  JMESPath expression (+ optional equality filter), then map them.</span>
+
+<span class="sd">The shared **mapping** spec keys (all optional unless noted):</span>
+<span class="sd">  kind: &quot;node&quot; | &quot;edge&quot; (default &quot;node&quot;);  type: element-type id (default = element id);</span>
+<span class="sd">  id_template: e.g. &quot;output:{output_code}&quot;  (node id; values are slugged);</span>
+<span class="sd">  id_from: column whose slugged value becomes the id (alt. to id_template);</span>
+<span class="sd">  source_template / target_template: endpoint node ids for an edge (required for edges);</span>
+<span class="sd">  attributes: { attr_name: column_name };  casts: { attr_name: &quot;int&quot;|&quot;float&quot;|&quot;number&quot; }.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.evidence</span><span class="w"> </span><span class="kn">import</span> <span class="n">CellSelector</span><span class="p">,</span> <span class="n">JsonPathSelector</span><span class="p">,</span> <span class="n">deterministic_evidence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.extract.protocol</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ExtractedEdge</span><span class="p">,</span>
+    <span class="n">ExtractedNode</span><span class="p">,</span>
+    <span class="n">Extraction</span><span class="p">,</span>
+    <span class="n">ExtractionContext</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.extract.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_extractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.extract.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_casts</span><span class="p">,</span> <span class="n">fill_template</span><span class="p">,</span> <span class="n">slug</span>
+
+<span class="n">Grounder</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_attrs</span><span class="p">(</span><span class="n">record</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">mapping</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="n">picked</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="n">record</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">record</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">apply_casts</span><span class="p">(</span><span class="n">picked</span><span class="p">,</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;casts&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_record_to_node</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExtractedNode</span><span class="p">:</span>
+    <span class="n">el_type</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">element_id</span>
+    <span class="k">if</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_template&quot;</span><span class="p">):</span>
+        <span class="n">node_id</span> <span class="o">=</span> <span class="n">fill_template</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;id_template&quot;</span><span class="p">],</span> <span class="n">record</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_from&quot;</span><span class="p">):</span>
+        <span class="n">node_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">el_type</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">slug</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;id_from&#39;</span><span class="p">]])</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">node_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">el_type</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">evidence</span> <span class="o">=</span> <span class="n">deterministic_evidence</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span> <span class="n">generated_by</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;query:</span><span class="si">{</span><span class="n">element_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">grounding</span><span class="o">=</span><span class="n">grounder</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">ExtractedNode</span><span class="p">(</span><span class="n">node_id</span><span class="p">,</span> <span class="n">el_type</span><span class="p">,</span> <span class="n">_attrs</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">mapping</span><span class="p">),</span> <span class="n">evidence</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_record_to_edge</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExtractedEdge</span><span class="p">:</span>
+    <span class="n">el_type</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">element_id</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;source_template&quot;</span><span class="p">,</span> <span class="s2">&quot;target_template&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;query edge mapping for </span><span class="si">{</span><span class="n">element_id</span><span class="si">!r}</span><span class="s2"> needs </span><span class="si">{</span><span class="n">key</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">edge_id</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">fill_template</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;id_template&quot;</span><span class="p">],</span> <span class="p">{</span><span class="o">**</span><span class="n">record</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_template&quot;</span><span class="p">)</span>
+        <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">el_type</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="n">evidence</span> <span class="o">=</span> <span class="n">deterministic_evidence</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span> <span class="n">generated_by</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;query:</span><span class="si">{</span><span class="n">element_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">grounding</span><span class="o">=</span><span class="n">grounder</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">ExtractedEdge</span><span class="p">(</span>
+        <span class="n">edge_id</span><span class="p">,</span> <span class="n">el_type</span><span class="p">,</span>
+        <span class="n">fill_template</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;source_template&quot;</span><span class="p">],</span> <span class="n">record</span><span class="p">),</span>
+        <span class="n">fill_template</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;target_template&quot;</span><span class="p">],</span> <span class="n">record</span><span class="p">),</span>
+        <span class="n">_attrs</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">mapping</span><span class="p">),</span> <span class="n">evidence</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_map_records</span><span class="p">(</span>
+    <span class="n">records</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Grounder</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Extraction</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Map an iterable of record dicts to an :class:`Extraction` per the mapping spec.&quot;&quot;&quot;</span>
+    <span class="n">grounder</span> <span class="o">=</span> <span class="n">grounder</span> <span class="ow">or</span> <span class="n">_cell_grounder</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">mapping</span><span class="p">)</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kind&quot;</span><span class="p">,</span> <span class="s2">&quot;node&quot;</span><span class="p">)</span>
+    <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">record</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">records</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;edge&quot;</span><span class="p">:</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_record_to_edge</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span>
+                                         <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="o">=</span><span class="n">grounder</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_record_to_node</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span>
+                                         <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="o">=</span><span class="n">grounder</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Extraction</span><span class="p">(</span><span class="n">nodes</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cell_grounder</span><span class="p">(</span><span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Grounder</span><span class="p">:</span>
+    <span class="n">primary</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_from&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="s2">&quot;row&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="p">(</span><span class="n">CellSelector</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">primary</span><span class="p">)),)</span>
+
+
+<span class="c1"># --- table_map: declarative, no extra deps -----------------------------------</span>
+<div class="viewcode-block" id="make_table_map_extractor">
+<a class="viewcode-back" href="../../../module_docs/creel/extract/query.html#creel.extract.make_table_map_extractor">[docs]</a>
+<span class="nd">@register_extractor</span><span class="p">(</span><span class="s2">&quot;table_map&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_table_map_extractor</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">records_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an extractor that maps rows of the table source ``records_source``.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extractor</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ExtractionContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Extraction</span><span class="p">:</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">records_source</span><span class="p">)</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="k">if</span> <span class="n">src</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">_map_records</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">records_source</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">element_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">extractor</span></div>
+
+
+
+<span class="c1"># --- sql: parameterized DuckDB over a table source (extra [query]) ------------</span>
+<div class="viewcode-block" id="make_sql_extractor">
+<a class="viewcode-back" href="../../../module_docs/creel/extract/query.html#creel.extract.make_sql_extractor">[docs]</a>
+<span class="nd">@register_extractor</span><span class="p">(</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_sql_extractor</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">records_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sql</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span> <span class="o">**</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an extractor that runs parameterized DuckDB ``sql`` over the table, then maps.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extractor</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ExtractionContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Extraction</span><span class="p">:</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">records_source</span><span class="p">)</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="k">if</span> <span class="n">src</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_duckdb_query</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">_map_records</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">records_source</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">element_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">extractor</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_duckdb_query</span><span class="p">(</span><span class="n">rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">sql</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run ``sql`` against ``rows`` registered as table ``t`` (all columns VARCHAR).</span>
+
+<span class="sd">    Uses only DuckDB (no pandas/pyarrow). The query is parameterized — never</span>
+<span class="sd">    string-interpolate untrusted values; bind them as ``params`` and reference ``?``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">duckdb</span>  <span class="c1"># local import: optional [query] extra</span>
+
+    <span class="n">con</span> <span class="o">=</span> <span class="n">duckdb</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rows</span><span class="p">:</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">quoted</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">)</span>
+            <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CREATE TABLE t (</span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&quot; VARCHAR&quot;&quot;&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">cols</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+            <span class="n">con</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;INSERT INTO t (</span><span class="si">{</span><span class="n">quoted</span><span class="si">}</span><span class="s1">) VALUES (</span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">cols</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span>
+                <span class="p">[[</span><span class="n">_as_str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_as_str</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="c1"># --- json_query: JMESPath select + optional equality filter (extra [query]) --</span>
+<div class="viewcode-block" id="make_json_extractor">
+<a class="viewcode-back" href="../../../module_docs/creel/extract/query.html#creel.extract.make_json_extractor">[docs]</a>
+<span class="nd">@register_extractor</span><span class="p">(</span><span class="s2">&quot;json_query&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_json_extractor</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span> <span class="n">records_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">select</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">where</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Mapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an extractor that selects records from a JSON source, then maps them.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extractor</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ExtractionContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Extraction</span><span class="p">:</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">records_source</span><span class="p">)</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">_json_select</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">content</span> <span class="k">if</span> <span class="n">src</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[],</span> <span class="n">select</span><span class="p">,</span> <span class="n">where</span><span class="p">)</span>
+        <span class="n">grounder</span> <span class="o">=</span> <span class="n">_jsonpath_grounder</span><span class="p">(</span><span class="n">records_source</span><span class="p">,</span> <span class="n">select</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_map_records</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">records_source</span><span class="p">,</span>
+                            <span class="n">element_id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="o">=</span><span class="n">grounder</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">extractor</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_json_select</span><span class="p">(</span><span class="n">content</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">select</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">where</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Mapping</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="n">records</span> <span class="o">=</span> <span class="n">content</span>
+    <span class="k">if</span> <span class="n">select</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">jmespath</span>  <span class="c1"># local import: optional [query] extra</span>
+
+        <span class="n">found</span> <span class="o">=</span> <span class="n">jmespath</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">found</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">([]</span> <span class="k">if</span> <span class="n">found</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[</span><span class="n">found</span><span class="p">])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="p">[</span><span class="n">records</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">where</span><span class="p">:</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records</span> <span class="k">if</span> <span class="n">_matches</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">where</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">records</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_matches</span><span class="p">(</span><span class="n">record</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">where</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">cond</span> <span class="ow">in</span> <span class="n">where</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">op</span><span class="p">,</span> <span class="n">operand</span> <span class="ow">in</span> <span class="n">cond</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$gt&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">operand</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$lt&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">operand</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$in&quot;</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">operand</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$ne&quot;</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">==</span> <span class="n">operand</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">cond</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_jsonpath_grounder</span><span class="p">(</span><span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">select</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Grounder</span><span class="p">:</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">select</span> <span class="ow">or</span> <span class="s2">&quot;$&quot;</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="p">(</span><span class="n">JsonPathSelector</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="n">source_id</span><span class="p">),)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

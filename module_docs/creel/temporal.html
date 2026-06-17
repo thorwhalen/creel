@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.temporal &mdash; creel 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="creel.trace" href="trace.html" />
+    <link rel="prev" title="creel.spec.validate" href="spec/validate.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annotate.html">creel.annotate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="export.html">creel.export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/llm.html">creel.extract.llm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/pattern.html">creel.extract.pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/query.html">creel.extract.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/transforms.html">creel.extract.transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph/canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/protocol.html">creel.ingest.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resolve.html">creel.resolve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/linkml.html">creel.spec.linkml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">creel.temporal</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creel.temporal.OBSERVED_AT"><code class="docutils literal notranslate"><span class="pre">OBSERVED_AT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.temporal.RECORDED_AT"><code class="docutils literal notranslate"><span class="pre">RECORDED_AT</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.temporal.RESERVED"><code class="docutils literal notranslate"><span class="pre">RESERVED</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.temporal.VALID_FROM"><code class="docutils literal notranslate"><span class="pre">VALID_FROM</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.temporal.VALID_TO"><code class="docutils literal notranslate"><span class="pre">VALID_TO</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.temporal.is_temporal_attribute"><code class="docutils literal notranslate"><span class="pre">is_temporal_attribute()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="trace.html">creel.trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="view.html">creel.view</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">creel.temporal</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/creel/temporal.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-creel.temporal">
+<span id="creel-temporal"></span><h1>creel.temporal<a class="headerlink" href="#module-creel.temporal" title="Link to this heading"></a></h1>
+<p>Reserved temporal vocabulary (decision #15 / D-OP9 — reserved, not yet enforced).</p>
+<p>Temporal modeling is deferred for v1, but the attribute names are <strong>reserved now</strong> so
+adding it later (validity intervals, ingestion timestamps, invalidate-don’t-delete)
+is purely additive — no schema migration. Extractors/consumers that want to stamp
+time should use exactly these keys.</p>
+<p>A time-series of indicator readings can be carried today as <strong>parallel `measured_by`
+edges</strong> distinguished by <code class="docutils literal notranslate"><span class="pre">period</span></code> (creel’s LPG supports parallel edges natively);
+when readings need shared Period/Source/dimension nodes or cross-period merging,
+promote them with <a class="reference internal" href="reify.html#creel.reify.reify" title="creel.reify.reify"><code class="xref py py-func docutils literal notranslate"><span class="pre">creel.reify.reify()</span></code></a> (decision #12).</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="creel.temporal.OBSERVED_AT">
+<span class="sig-prename descclassname"><span class="pre">creel.temporal.</span></span><span class="sig-name descname"><span class="pre">OBSERVED_AT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'observed_at'</span></span><a class="headerlink" href="#creel.temporal.OBSERVED_AT" title="Link to this definition"></a></dt>
+<dd><p>When the fact was observed/measured (e.g. an indicator reading’s period anchor).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="creel.temporal.RECORDED_AT">
+<span class="sig-prename descclassname"><span class="pre">creel.temporal.</span></span><span class="sig-name descname"><span class="pre">RECORDED_AT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'recorded_at'</span></span><a class="headerlink" href="#creel.temporal.RECORDED_AT" title="Link to this definition"></a></dt>
+<dd><p>When creel ingested/recorded the fact (transaction-time).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="creel.temporal.RESERVED">
+<span class="sig-prename descclassname"><span class="pre">creel.temporal.</span></span><span class="sig-name descname"><span class="pre">RESERVED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('valid_from',</span> <span class="pre">'valid_to',</span> <span class="pre">'observed_at',</span> <span class="pre">'recorded_at')</span></span><a class="headerlink" href="#creel.temporal.RESERVED" title="Link to this definition"></a></dt>
+<dd><p>The reserved temporal attribute names. Use these keys for any temporal stamping.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="creel.temporal.VALID_FROM">
+<span class="sig-prename descclassname"><span class="pre">creel.temporal.</span></span><span class="sig-name descname"><span class="pre">VALID_FROM</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'valid_from'</span></span><a class="headerlink" href="#creel.temporal.VALID_FROM" title="Link to this definition"></a></dt>
+<dd><p>Start of the validity interval for a fact (valid-time, ISO-8601 string).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="creel.temporal.VALID_TO">
+<span class="sig-prename descclassname"><span class="pre">creel.temporal.</span></span><span class="sig-name descname"><span class="pre">VALID_TO</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'valid_to'</span></span><a class="headerlink" href="#creel.temporal.VALID_TO" title="Link to this definition"></a></dt>
+<dd><p>End of the validity interval (open-ended if absent).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="creel.temporal.is_temporal_attribute">
+<span class="sig-prename descclassname"><span class="pre">creel.temporal.</span></span><span class="sig-name descname"><span class="pre">is_temporal_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../_modules/creel/temporal.html#is_temporal_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.temporal.is_temporal_attribute" title="Link to this definition"></a></dt>
+<dd><p>True if <code class="docutils literal notranslate"><span class="pre">name</span></code> is one of the reserved temporal attribute keys.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="spec/validate.html" class="btn btn-neutral float-left" title="creel.spec.validate" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="trace.html" class="btn btn-neutral float-right" title="creel.trace" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

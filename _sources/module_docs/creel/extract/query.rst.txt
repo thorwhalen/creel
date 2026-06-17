@@ -1,0 +1,4 @@
+creel.extract.query
+===================
+.. automodule:: creel.extract.query
+   :members:

@@ -1,0 +1,4 @@
+creel.ingest.loaders
+====================
+.. automodule:: creel.ingest.loaders
+   :members:

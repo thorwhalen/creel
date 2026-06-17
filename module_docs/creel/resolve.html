@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.resolve &mdash; creel 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="creel.sources" href="sources.html" />
+    <link rel="prev" title="creel.render" href="render.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annotate.html">creel.annotate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="export.html">creel.export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/llm.html">creel.extract.llm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/pattern.html">creel.extract.pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/query.html">creel.extract.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/transforms.html">creel.extract.transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph/canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/protocol.html">creel.ingest.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="render.html">creel.render</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">creel.resolve</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creel.resolve.CascadeResolver"><code class="docutils literal notranslate"><span class="pre">CascadeResolver</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creel.resolve.CascadeResolver.canonical_id"><code class="docutils literal notranslate"><span class="pre">CascadeResolver.canonical_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.resolve.LLMResolver"><code class="docutils literal notranslate"><span class="pre">LLMResolver</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.resolve.NormalizeResolver"><code class="docutils literal notranslate"><span class="pre">NormalizeResolver</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creel.resolve.NormalizeResolver.canonical_id"><code class="docutils literal notranslate"><span class="pre">NormalizeResolver.canonical_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.resolve.RegistryResolver"><code class="docutils literal notranslate"><span class="pre">RegistryResolver</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creel.resolve.RegistryResolver.canonical_id"><code class="docutils literal notranslate"><span class="pre">RegistryResolver.canonical_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.resolve.Resolver"><code class="docutils literal notranslate"><span class="pre">Resolver</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creel.resolve.Resolver.same"><code class="docutils literal notranslate"><span class="pre">Resolver.same()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.resolve.normalize_entity"><code class="docutils literal notranslate"><span class="pre">normalize_entity()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.resolve.resolve_graph"><code class="docutils literal notranslate"><span class="pre">resolve_graph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/linkml.html">creel.spec.linkml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trace.html">creel.trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="view.html">creel.view</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">creel.resolve</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/creel/resolve.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-creel.resolve">
+<span id="creel-resolve"></span><h1>creel.resolve<a class="headerlink" href="#module-creel.resolve" title="Link to this heading"></a></h1>
+<p>Entity resolution — merge nodes that name the same real entity (decision #14 / D-OP8).</p>
+<p>Messy multi-source documents (field-written, non-native English, OCR’d) name the
+same entity in different ways — “Government of Norway” / “Norway (Govt.)” /
+“Norwegian MFA”. Per the changed decision #14 (report R14 §5), resolution is a
+<strong>required</strong>, pluggable cascade — <em>blocking → matching → merging</em> — defaulting to
+cheap deterministic strategies (exact id → normalize-before-merge → registry) with
+hooks for embedding/LLM adjudication.</p>
+<p>A <a class="reference internal" href="#creel.resolve.Resolver" title="creel.resolve.Resolver"><code class="xref py py-class docutils literal notranslate"><span class="pre">Resolver</span></code></a> decides whether two nodes are the same entity. <a class="reference internal" href="#creel.resolve.resolve_graph" title="creel.resolve.resolve_graph"><code class="xref py py-func docutils literal notranslate"><span class="pre">resolve_graph()</span></code></a>
+applies one as a post-extraction pass: it blocks by node type, clusters by transitive
+sameness (union-find), merges each cluster into one canonical node, and remaps every
+edge — non-destructively returning a new graph with a <code class="docutils literal notranslate"><span class="pre">merges</span></code> report.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.resolve.CascadeResolver">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.resolve.</span></span><span class="sig-name descname"><span class="pre">CascadeResolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resolvers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#creel.resolve.Resolver" title="creel.resolve.Resolver"><span class="pre">Resolver</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/resolve.html#CascadeResolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.CascadeResolver" title="Link to this definition"></a></dt>
+<dd><p>Try resolvers in order (cheapest first); two nodes match if ANY resolver matches.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.resolve.CascadeResolver.canonical_id">
+<span class="sig-name descname"><span class="pre">canonical_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="graph/model.html#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/creel/resolve.html#CascadeResolver.canonical_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.CascadeResolver.canonical_id" title="Link to this definition"></a></dt>
+<dd><p>Use the first resolver that can name a canonical id; else the smallest id.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.resolve.LLMResolver">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.resolve.</span></span><span class="sig-name descname"><span class="pre">LLMResolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">judge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'name'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/resolve.html#LLMResolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.LLMResolver" title="Link to this definition"></a></dt>
+<dd><p>Adjudicate hard pairs with an injected judge <code class="docutils literal notranslate"><span class="pre">(name_a,</span> <span class="pre">name_b)</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></code>.</p>
+<p>The judge is injected (testable with a fake; an LLM in production via <code class="docutils literal notranslate"><span class="pre">creel[llm]</span></code>).
+Reserve this for pairs the cheap resolvers leave ambiguous — it is the costly tail.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.resolve.NormalizeResolver">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.resolve.</span></span><span class="sig-name descname"><span class="pre">NormalizeResolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/resolve.html#NormalizeResolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.NormalizeResolver" title="Link to this definition"></a></dt>
+<dd><p>Match by a normalized key attribute (+ an optional alias table). The cheap default.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.resolve.NormalizeResolver.canonical_id">
+<span class="sig-name descname"><span class="pre">canonical_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="graph/model.html#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/creel/resolve.html#NormalizeResolver.canonical_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.NormalizeResolver.canonical_id" title="Link to this definition"></a></dt>
+<dd><p>A stable id from the normalized key + type.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.resolve.RegistryResolver">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.resolve.</span></span><span class="sig-name descname"><span class="pre">RegistryResolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">registry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'name'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/resolve.html#RegistryResolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.RegistryResolver" title="Link to this definition"></a></dt>
+<dd><p>Resolve mentions to canonical ids via an authoritative lookup table (e.g. IATI/DAC).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.resolve.RegistryResolver.canonical_id">
+<span class="sig-name descname"><span class="pre">canonical_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="graph/model.html#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/creel/resolve.html#RegistryResolver.canonical_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.RegistryResolver.canonical_id" title="Link to this definition"></a></dt>
+<dd><p>The registry’s canonical id for the cluster.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.resolve.Resolver">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.resolve.</span></span><span class="sig-name descname"><span class="pre">Resolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/resolve.html#Resolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.Resolver" title="Link to this definition"></a></dt>
+<dd><p>Decide whether two nodes denote the same real entity.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.resolve.Resolver.same">
+<span class="sig-name descname"><span class="pre">same</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="graph/model.html#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="graph/model.html#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../_modules/creel/resolve.html#Resolver.same"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.Resolver.same" title="Link to this definition"></a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are the same entity.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="creel.resolve.normalize_entity">
+<span class="sig-prename descclassname"><span class="pre">creel.resolve.</span></span><span class="sig-name descname"><span class="pre">normalize_entity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/creel/resolve.html#normalize_entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.normalize_entity" title="Link to this definition"></a></dt>
+<dd><p>Normalize an entity mention for matching: casefold, strip punctuation/legal/honorific.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="creel.resolve.resolve_graph">
+<span class="sig-prename descclassname"><span class="pre">creel.resolve.</span></span><span class="sig-name descname"><span class="pre">resolve_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="graph/model.html#creel.graph.model.Graph" title="creel.graph.model.Graph"><span class="pre">Graph</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#creel.resolve.Resolver" title="creel.resolve.Resolver"><span class="pre">Resolver</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="graph/model.html#creel.graph.model.Graph" title="creel.graph.model.Graph"><span class="pre">Graph</span></a></span></span><a class="reference internal" href="../../_modules/creel/resolve.html#resolve_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.resolve_graph" title="Link to this definition"></a></dt>
+<dd><p>Return a new graph with same-entity nodes merged and edges remapped.</p>
+<p>Blocking (by node type-tuple) → matching (<code class="docutils literal notranslate"><span class="pre">resolver.same</span></code>) → merging (union-find;
+one canonical node per cluster, attributes first-wins) → edge remap. The original
+graph is untouched; the result’s <code class="docutils literal notranslate"><span class="pre">report[&quot;merges&quot;]</span></code> lists each merge.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="render.html" class="btn btn-neutral float-left" title="creel.render" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sources.html" class="btn btn-neutral float-right" title="creel.sources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

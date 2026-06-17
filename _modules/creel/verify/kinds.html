@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.verify.kinds &mdash; creel 0.0.2 documentation</title>
+  <title>creel.verify.kinds &mdash; creel 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=e3a6060d"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -47,29 +47,45 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/annotate.html">creel.annotate</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/bindings.html">creel.bindings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/evaluation.html">creel.evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/export.html">creel.export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract.html">creel.extract</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/llm.html">creel.extract.llm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/pattern.html">creel.extract.pattern</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/query.html">creel.extract.query</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/extract/transforms.html">creel.extract.transforms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/facade.html">creel.facade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph.html">creel.graph</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph/canonical.html">creel.graph.canonical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/resolve.html">creel.resolve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/sources.html">creel.sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/linkml.html">creel.spec.linkml</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/model.html">creel.spec.model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/trace.html">creel.trace</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify.html">creel.verify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/kinds.html">creel.verify.kinds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/protocol.html">creel.verify.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/registry.html">creel.verify.registry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/creel/view.html">creel.view</a></li>
 </ul>
 
         </div>
@@ -132,7 +148,11 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Verdict</span><span class="p">:</span>
         <span class="n">ok</span> <span class="o">=</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">expected</span>
-        <span class="k">return</span> <span class="n">Verdict</span><span class="p">(</span><span class="mf">1.0</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ok</span><span class="p">,</span> <span class="s2">&quot;exact match&quot;</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">actual</span><span class="si">!r}</span><span class="s2"> != </span><span class="si">{</span><span class="n">expected</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Verdict</span><span class="p">(</span>
+            <span class="mf">1.0</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">ok</span><span class="p">,</span>
+            <span class="s2">&quot;exact match&quot;</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">actual</span><span class="si">!r}</span><span class="s2"> != </span><span class="si">{</span><span class="n">expected</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 
 
@@ -161,7 +181,8 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Verdict</span><span class="p">:</span>
         <span class="n">ok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_norm</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Verdict</span><span class="p">(</span>
-            <span class="mf">1.0</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ok</span><span class="p">,</span>
+            <span class="mf">1.0</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">ok</span><span class="p">,</span>
             <span class="s2">&quot;normalized match&quot;</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;normalized </span><span class="si">{</span><span class="n">actual</span><span class="si">!r}</span><span class="s2"> != </span><span class="si">{</span><span class="n">expected</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
@@ -191,7 +212,8 @@
         <span class="n">allowed</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abs_tol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rel_tol</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="n">ok</span> <span class="o">=</span> <span class="n">diff</span> <span class="o">&lt;=</span> <span class="n">allowed</span>
         <span class="k">return</span> <span class="n">Verdict</span><span class="p">(</span>
-            <span class="mf">1.0</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ok</span><span class="p">,</span>
+            <span class="mf">1.0</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">ok</span><span class="p">,</span>
             <span class="sa">f</span><span class="s2">&quot;|</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">| = </span><span class="si">{</span><span class="n">diff</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;&lt;=&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&gt;&#39;</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">allowed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="p">{</span><span class="s2">&quot;diff&quot;</span><span class="p">:</span> <span class="n">diff</span><span class="p">,</span> <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="n">allowed</span><span class="p">},</span>
         <span class="p">)</span></div>
@@ -228,13 +250,21 @@
         <span class="n">tp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
         <span class="n">precision</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">if</span> <span class="n">a</span> <span class="k">else</span> <span class="p">(</span><span class="mf">1.0</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">e</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="n">recall</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span> <span class="k">else</span> <span class="p">(</span><span class="mf">1.0</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
-        <span class="n">f1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">precision</span> <span class="o">*</span> <span class="n">recall</span> <span class="o">/</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">f1</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">precision</span> <span class="o">*</span> <span class="n">recall</span> <span class="o">/</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span><span class="p">)</span>
+            <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">Verdict</span><span class="p">(</span>
-            <span class="n">f1</span><span class="p">,</span> <span class="n">passed_at</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">),</span>
+            <span class="n">f1</span><span class="p">,</span>
+            <span class="n">passed_at</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">),</span>
             <span class="sa">f</span><span class="s2">&quot;set F1=</span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (P=</span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> R=</span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
             <span class="p">{</span>
-                <span class="s2">&quot;precision&quot;</span><span class="p">:</span> <span class="n">precision</span><span class="p">,</span> <span class="s2">&quot;recall&quot;</span><span class="p">:</span> <span class="n">recall</span><span class="p">,</span> <span class="s2">&quot;f1&quot;</span><span class="p">:</span> <span class="n">f1</span><span class="p">,</span>
-                <span class="s2">&quot;missing&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">e</span> <span class="o">-</span> <span class="n">a</span><span class="p">)),</span> <span class="s2">&quot;extra&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">e</span><span class="p">)),</span>
+                <span class="s2">&quot;precision&quot;</span><span class="p">:</span> <span class="n">precision</span><span class="p">,</span>
+                <span class="s2">&quot;recall&quot;</span><span class="p">:</span> <span class="n">recall</span><span class="p">,</span>
+                <span class="s2">&quot;f1&quot;</span><span class="p">:</span> <span class="n">f1</span><span class="p">,</span>
+                <span class="s2">&quot;missing&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">e</span> <span class="o">-</span> <span class="n">a</span><span class="p">)),</span>
+                <span class="s2">&quot;extra&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">e</span><span class="p">)),</span>
             <span class="p">},</span>
         <span class="p">)</span></div>
 
@@ -269,7 +299,8 @@
         <span class="n">n</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">actual</span><span class="o">.</span><span class="n">number_of_nodes</span> <span class="o">+</span> <span class="n">actual</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">)</span>
         <span class="n">score</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Verdict</span><span class="p">(</span>
-            <span class="n">score</span><span class="p">,</span> <span class="ow">not</span> <span class="n">issues</span><span class="p">,</span>
+            <span class="n">score</span><span class="p">,</span>
+            <span class="ow">not</span> <span class="n">issues</span><span class="p">,</span>
             <span class="s2">&quot;conforms to grammar&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">issues</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span><span class="si">}</span><span class="s2"> grammar issue(s)&quot;</span><span class="p">,</span>
             <span class="p">{</span><span class="s2">&quot;issues&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">issues</span><span class="p">]},</span>
         <span class="p">)</span></div>
@@ -290,7 +321,7 @@
     <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Verdict</span><span class="p">:</span>
-        <span class="n">embedder</span> <span class="o">=</span> <span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">services</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;embedder&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">context</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">embedder</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">services</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;embedder&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">context</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">embedder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">sim</span> <span class="o">=</span> <span class="n">_cosine</span><span class="p">(</span><span class="n">embedder</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">actual</span><span class="p">)),</span> <span class="n">embedder</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">expected</span><span class="p">)))</span>
             <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;embedding cosine&quot;</span>
@@ -317,7 +348,9 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Composite</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Weighted combination of named sub-verifiers (promptfoo-style).&quot;&quot;&quot;</span>
 
-    <span class="n">components</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">tuple</span><span class="p">)</span>  <span class="c1"># (name, verifier, weight)</span>
+    <span class="n">components</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">tuple</span>
+    <span class="p">)</span>  <span class="c1"># (name, verifier, weight)</span>
     <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Verdict</span><span class="p">:</span>
@@ -329,13 +362,20 @@
             <span class="n">sub</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
             <span class="n">score</span> <span class="o">+=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">v</span><span class="o">.</span><span class="n">score</span>
         <span class="n">score</span> <span class="o">/=</span> <span class="n">total_w</span>
-        <span class="k">return</span> <span class="n">Verdict</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">passed_at</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;composite=</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;components&quot;</span><span class="p">:</span> <span class="n">sub</span><span class="p">})</span></div>
+        <span class="k">return</span> <span class="n">Verdict</span><span class="p">(</span>
+            <span class="n">score</span><span class="p">,</span>
+            <span class="n">passed_at</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">),</span>
+            <span class="sa">f</span><span class="s2">&quot;composite=</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;components&quot;</span><span class="p">:</span> <span class="n">sub</span><span class="p">},</span>
+        <span class="p">)</span></div>
 
 
 
 <span class="c1"># --- registry factories -------------------------------------------------------</span>
 <span class="nd">@register_verifier</span><span class="p">(</span><span class="s2">&quot;predicate&quot;</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_predicate_factory</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">predicate</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">bool</span><span class="p">],</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;predicate&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Verifier</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_predicate_factory</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span> <span class="n">predicate</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">bool</span><span class="p">],</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;predicate&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Verifier</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">SchemaConstraint</span><span class="p">(</span><span class="n">predicate</span><span class="o">=</span><span class="n">predicate</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
 </pre></div>
 

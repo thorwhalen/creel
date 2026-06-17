@@ -1,0 +1,208 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.annotate &mdash; creel 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="creel.bindings" href="bindings.html" />
+    <link rel="prev" title="creel" href="../creel.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../creel.html">creel</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">creel.annotate</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creel.annotate.Annotation"><code class="docutils literal notranslate"><span class="pre">Annotation</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creel.annotate.Annotation.target_element_id"><code class="docutils literal notranslate"><span class="pre">Annotation.target_element_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creel.annotate.Annotation.to_dict"><code class="docutils literal notranslate"><span class="pre">Annotation.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.annotate.Selection"><code class="docutils literal notranslate"><span class="pre">Selection</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creel.annotate.Selection.to_dict"><code class="docutils literal notranslate"><span class="pre">Selection.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="export.html">creel.export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/llm.html">creel.extract.llm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/pattern.html">creel.extract.pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/query.html">creel.extract.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/transforms.html">creel.extract.transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph/canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/protocol.html">creel.ingest.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resolve.html">creel.resolve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/linkml.html">creel.spec.linkml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trace.html">creel.trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="view.html">creel.view</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">creel.annotate</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/creel/annotate.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-creel.annotate">
+<span id="creel-annotate"></span><h1>creel.annotate<a class="headerlink" href="#module-creel.annotate" title="Link to this heading"></a></h1>
+<p>Annotations — the standoff overlay for machine insight AND human coding (D-OP9 / A2).</p>
+<p>A single <a class="reference internal" href="#creel.annotate.Annotation" title="creel.annotate.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a> record serves both directions of authorship: an LLM/
+analysis laying an insight over the graph (decision D15) and a human highlighting a
+source passage and linking it to a node/edge/category (the manual-“coding” workflow).
+They differ only by <code class="docutils literal notranslate"><span class="pre">motivation</span></code> + the provenance agent <code class="docutils literal notranslate"><span class="pre">kind</span></code> — never two
+schemas. The overlay is standoff (kept separate from the graph; joined by target).</p>
+<p>A <a class="reference internal" href="#creel.annotate.Selection" title="creel.annotate.Selection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selection</span></code></a> reifies a region of a source (id + selector) so several
+annotations can share one highlighted span. Targets may be a graph element id, an
+<code class="docutils literal notranslate"><span class="pre">(element_id,</span> <span class="pre">attribute)</span></code> pair (per-attribute, A1), or a <a class="reference internal" href="#creel.annotate.Selection" title="creel.annotate.Selection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selection</span></code></a>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.annotate.Annotation">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.annotate.</span></span><span class="sig-name descname"><span class="pre">Annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">motivation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'commenting'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">provenance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="evidence.html#creel.evidence.Provenance" title="creel.evidence.Provenance"><span class="pre">Provenance</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="evidence.html#creel.evidence.Confidence" title="creel.evidence.Confidence"><span class="pre">Confidence</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/annotate.html#Annotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.annotate.Annotation" title="Link to this definition"></a></dt>
+<dd><p>A standoff annotation linking a <code class="docutils literal notranslate"><span class="pre">target</span></code> to a <code class="docutils literal notranslate"><span class="pre">body</span></code> with a <code class="docutils literal notranslate"><span class="pre">motivation</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">target</span></code>: an element id (str), an <code class="docutils literal notranslate"><span class="pre">(element_id,</span> <span class="pre">attribute)</span></code> tuple, or a
+<a class="reference internal" href="#creel.annotate.Selection" title="creel.annotate.Selection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selection</span></code></a> (a source span). <code class="docutils literal notranslate"><span class="pre">body</span></code>: a graph-element/category ref (str),
+a free-text comment, or any structured insight. <code class="docutils literal notranslate"><span class="pre">provenance</span></code>/<code class="docutils literal notranslate"><span class="pre">confidence</span></code> reuse
+the evidence vocabulary; <code class="docutils literal notranslate"><span class="pre">provenance.attributed_kind</span></code> distinguishes a
+<code class="docutils literal notranslate"><span class="pre">software_agent</span></code> annotation (machine insight) from a <code class="docutils literal notranslate"><span class="pre">person</span></code> one (human coding).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.annotate.Annotation.target_element_id">
+<span class="sig-name descname"><span class="pre">target_element_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/creel/annotate.html#Annotation.target_element_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.annotate.Annotation.target_element_id" title="Link to this definition"></a></dt>
+<dd><p>The graph element id this annotation targets, if any (else <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.annotate.Annotation.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/creel/annotate.html#Annotation.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.annotate.Annotation.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Serialise to a plain, JSON-ready dict.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="creel.annotate.Selection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.annotate.</span></span><span class="sig-name descname"><span class="pre">Selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/annotate.html#Selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.annotate.Selection" title="Link to this definition"></a></dt>
+<dd><p>A reified, shareable selection of a source region (id + a grounding selector).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="creel.annotate.Selection.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/creel/annotate.html#Selection.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.annotate.Selection.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Serialise to a plain dict.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../creel.html" class="btn btn-neutral float-left" title="creel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bindings.html" class="btn btn-neutral float-right" title="creel.bindings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

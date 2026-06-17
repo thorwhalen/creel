@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.graph &mdash; creel 0.0.2 documentation</title>
+  <title>creel.graph &mdash; creel 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=e3a6060d"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -50,14 +50,19 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annotate.html">creel.annotate</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bindings.html">creel.bindings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation.html">creel.evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="export.html">creel.export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract.html">creel.extract</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/llm.html">creel.extract.llm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract/pattern.html">creel.extract.pattern</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/query.html">creel.extract.query</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/transforms.html">creel.extract.transforms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="facade.html">creel.facade</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">creel.graph</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#creel.graph.Edge"><code class="docutils literal notranslate"><span class="pre">Edge</span></code></a></li>
@@ -90,17 +95,28 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="graph/canonical.html">creel.graph.canonical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/protocol.html">creel.ingest.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resolve.html">creel.resolve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sources.html">creel.sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/linkml.html">creel.spec.linkml</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spec/model.html">creel.spec.model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trace.html">creel.trace</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify.html">creel.verify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/graph_match.html">creel.verify.graph_match</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/kinds.html">creel.verify.kinds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/protocol.html">creel.verify.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/registry.html">creel.verify.registry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="view.html">creel.view</a></li>
 </ul>
 
         </div>

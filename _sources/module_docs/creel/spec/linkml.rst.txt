@@ -1,0 +1,4 @@
+creel.spec.linkml
+=================
+.. automodule:: creel.spec.linkml
+   :members:

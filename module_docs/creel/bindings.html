@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.bindings &mdash; creel 0.0.2 documentation</title>
+  <title>creel.bindings &mdash; creel 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=e3a6060d"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -25,7 +25,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="creel.evaluation" href="evaluation.html" />
-    <link rel="prev" title="creel" href="../creel.html" /> 
+    <link rel="prev" title="creel.annotate" href="annotate.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,6 +50,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annotate.html">creel.annotate</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">creel.bindings</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#creel.bindings.ExtractorBinding"><code class="docutils literal notranslate"><span class="pre">ExtractorBinding</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#creel.bindings.ExtractorBinding.build"><code class="docutils literal notranslate"><span class="pre">ExtractorBinding.build()</span></code></a></li>
@@ -66,26 +67,41 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation.html">creel.evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="export.html">creel.export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract.html">creel.extract</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/llm.html">creel.extract.llm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract/pattern.html">creel.extract.pattern</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/query.html">creel.extract.query</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract/transforms.html">creel.extract.transforms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="facade.html">creel.facade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="graph.html">creel.graph</a></li>
 <li class="toctree-l1"><a class="reference internal" href="graph/canonical.html">creel.graph.canonical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest/protocol.html">creel.ingest.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resolve.html">creel.resolve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sources.html">creel.sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec/linkml.html">creel.spec.linkml</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spec/model.html">creel.spec.model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trace.html">creel.trace</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify.html">creel.verify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/graph_match.html">creel.verify.graph_match</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/kinds.html">creel.verify.kinds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/protocol.html">creel.verify.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/registry.html">creel.verify.registry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="view.html">creel.view</a></li>
 </ul>
 
         </div>
@@ -125,8 +141,11 @@ duplication.</p>
 default); unresolved elements fall back to schema-as-extractor at join time.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="creel.bindings.ExtractorBinding">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.bindings.</span></span><span class="sig-name descname"><span class="pre">ExtractorBinding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">element_id:</span> <span class="pre">str,</span> <span class="pre">strategy:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">config:</span> <span class="pre">~typing.Mapping[str,</span> <span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">extractor:</span> <span class="pre">~typing.Callable[[~creel.extract.protocol.ExtractionContext],</span> <span class="pre">~creel.extract.protocol.Extraction]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/bindings.html#ExtractorBinding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.bindings.ExtractorBinding" title="Link to this definition"></a></dt>
-<dd><p>Bind one grammar element to a strategy (by name + config) or a direct callable.</p>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.bindings.</span></span><span class="sig-name descname"><span class="pre">ExtractorBinding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">element_id:</span> <span class="pre">str,</span> <span class="pre">strategy:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">config:</span> <span class="pre">~typing.Mapping[str,</span> <span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;,</span> <span class="pre">extractor:</span> <span class="pre">~typing.Callable[[~creel.extract.protocol.ExtractionContext],</span> <span class="pre">~creel.extract.protocol.Extraction]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">elements:</span> <span class="pre">tuple</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/bindings.html#ExtractorBinding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.bindings.ExtractorBinding" title="Link to this definition"></a></dt>
+<dd><p>Bind one grammar element (or a cluster) to a strategy or a direct callable.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">elements</span></code> is set, this is a <strong>cluster binding</strong> (D-OP8): the extractor is
+invoked <strong>once</strong> for the whole set of element ids (one pass over several coupled
+types), rather than once per element. <code class="docutils literal notranslate"><span class="pre">element_id</span></code> is then just a label.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="creel.bindings.ExtractorBinding.build">
 <span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="extract/protocol.html#creel.extract.protocol.Extractor" title="creel.extract.protocol.Extractor"><span class="pre">Extractor</span></a></span></span><a class="reference internal" href="../../_modules/creel/bindings.html#ExtractorBinding.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.bindings.ExtractorBinding.build" title="Link to this definition"></a></dt>
@@ -173,7 +192,7 @@ a <code class="docutils literal notranslate"><span class="pre">{&quot;strategy&q
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../creel.html" class="btn btn-neutral float-left" title="creel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="annotate.html" class="btn btn-neutral float-left" title="creel.annotate" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="evaluation.html" class="btn btn-neutral float-right" title="creel.evaluation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.evidence &mdash; creel 0.0.2 documentation</title>
+  <title>creel.evidence &mdash; creel 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=e3a6060d"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -47,29 +47,45 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/annotate.html">creel.annotate</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/bindings.html">creel.bindings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/evaluation.html">creel.evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/export.html">creel.export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract.html">creel.extract</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/llm.html">creel.extract.llm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/pattern.html">creel.extract.pattern</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/query.html">creel.extract.query</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/transforms.html">creel.extract.transforms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/facade.html">creel.facade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph.html">creel.graph</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph/canonical.html">creel.graph.canonical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/resolve.html">creel.resolve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/sources.html">creel.sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/linkml.html">creel.spec.linkml</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/model.html">creel.spec.model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/trace.html">creel.trace</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify.html">creel.verify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/kinds.html">creel.verify.kinds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/protocol.html">creel.verify.protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/registry.html">creel.verify.registry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/view.html">creel.view</a></li>
 </ul>
 
         </div>
@@ -145,7 +161,12 @@
 <a class="viewcode-back" href="../../module_docs/creel/evidence.html#creel.TextQuoteSelector.to_dict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialise to a plain dict with a ``type`` discriminator.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">,</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">exact</span><span class="p">,</span> <span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;suffix&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">suffix</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">,</span>
+            <span class="s2">&quot;exact&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">exact</span><span class="p">,</span>
+            <span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span>
+            <span class="s2">&quot;suffix&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">suffix</span><span class="p">,</span>
+        <span class="p">}</span></div>
 </div>
 
 
@@ -188,7 +209,12 @@
 <a class="viewcode-back" href="../../module_docs/creel/evidence.html#creel.CellSelector.to_dict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialise to a plain dict with a ``type`` discriminator.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_id</span><span class="p">,</span> <span class="s2">&quot;row&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">,</span>
+            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_id</span><span class="p">,</span>
+            <span class="s2">&quot;row&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">,</span>
+            <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="p">,</span>
+        <span class="p">}</span></div>
 </div>
 
 
@@ -215,16 +241,80 @@
 
 
 
+<div class="viewcode-block" id="PageSelector">
+<a class="viewcode-back" href="../../module_docs/creel/evidence.html#creel.PageSelector">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PageSelector</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Anchor a value to a page (coarsest locator for PDF/scanned sources).&quot;&quot;&quot;</span>
+
+    <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">page</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;PageSelector&quot;</span>
+
+<div class="viewcode-block" id="PageSelector.to_dict">
+<a class="viewcode-back" href="../../module_docs/creel/evidence.html#creel.PageSelector.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialise to a plain dict with a ``type`` discriminator.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_id</span><span class="p">,</span> <span class="s2">&quot;page&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="p">}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BoundingBoxSelector">
+<a class="viewcode-back" href="../../module_docs/creel/evidence.html#creel.BoundingBoxSelector">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BoundingBoxSelector</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Anchor a value to a bounding box on a page (visual grounding for PDF/images).</span>
+
+<span class="sd">    Coordinates are ``[x0, y0, x1, y1]``; ``normalized`` indicates 0..1 fractions of</span>
+<span class="sd">    the page (recommended, since rasterisation DPI varies) vs absolute pixels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">page</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">bbox</span><span class="p">:</span> <span class="nb">tuple</span>
+    <span class="n">normalized</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;BoundingBoxSelector&quot;</span>
+
+<div class="viewcode-block" id="BoundingBoxSelector.to_dict">
+<a class="viewcode-back" href="../../module_docs/creel/evidence.html#creel.BoundingBoxSelector.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialise to a plain dict with a ``type`` discriminator.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">,</span>
+            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_id</span><span class="p">,</span>
+            <span class="s2">&quot;page&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="p">,</span>
+            <span class="s2">&quot;bbox&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bbox</span><span class="p">),</span>
+            <span class="s2">&quot;normalized&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalized</span><span class="p">,</span>
+        <span class="p">}</span></div>
+</div>
+
+
+
 <span class="c1"># --- provenance &amp; confidence ---------------------------------------------------</span>
+<span class="c1">#: agent kinds for ``Provenance.attributed_kind`` (A5) — derive machine vs manual.</span>
+<span class="n">SOFTWARE_AGENT</span> <span class="o">=</span> <span class="s2">&quot;software_agent&quot;</span>
+<span class="n">PERSON</span> <span class="o">=</span> <span class="s2">&quot;person&quot;</span>
+
+
 <div class="viewcode-block" id="Provenance">
 <a class="viewcode-back" href="../../module_docs/creel/evidence.html#creel.Provenance">[docs]</a>
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Provenance</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Where an element came from (PROV-lite + PAV as plain JSON keys).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Where an element came from (PROV-lite + PAV as plain JSON keys).</span>
+
+<span class="sd">    ``attributed_kind`` (``software_agent`` | ``person``) + ``was_revision_of`` make</span>
+<span class="sd">    the machine-extracted / manually-coded / human-corrected distinction *derivable*</span>
+<span class="sd">    (decision A5): non-destructive correction records a new provenance pointing at the</span>
+<span class="sd">    superseded one, rather than overwriting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">derived_from</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># source id (optionally with a span suffix)</span>
     <span class="n">generated_by</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># strategy + extractor id, e.g. &quot;pattern:RegexNodeExtractor&quot;</span>
     <span class="n">attributed_to</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># model id+version or human id</span>
+    <span class="n">attributed_kind</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># software_agent | person</span>
+    <span class="n">coded_by</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># human tool/UI id (for manual coding)</span>
+    <span class="n">was_revision_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># id of the record this supersedes</span>
     <span class="n">generated_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># ISO-8601; omitted by default for determinism</span>
     <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -233,12 +323,28 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialise to a plain dict, omitting unset optional keys.&quot;&quot;&quot;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;derived_from&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">derived_from</span><span class="p">,</span> <span class="s2">&quot;generated_by&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">generated_by</span><span class="p">}</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;attributed_to&quot;</span><span class="p">,</span> <span class="s2">&quot;generated_at&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;attributed_to&quot;</span><span class="p">,</span> <span class="s2">&quot;attributed_kind&quot;</span><span class="p">,</span> <span class="s2">&quot;coded_by&quot;</span><span class="p">,</span> <span class="s2">&quot;was_revision_of&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;generated_at&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">):</span>
             <span class="n">v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
         <span class="k">return</span> <span class="n">d</span></div>
-</div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_machine</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;True if attributed to a software agent and not a human correction.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributed_kind</span> <span class="o">==</span> <span class="n">SOFTWARE_AGENT</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">was_revision_of</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_manual</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;True if attributed to a person with no machine antecedent (manual coding).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributed_kind</span> <span class="o">==</span> <span class="n">PERSON</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">was_revision_of</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_corrected</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;True if this is a person&#39;s revision of an earlier (machine or human) record.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributed_kind</span> <span class="o">==</span> <span class="n">PERSON</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">was_revision_of</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
 
 
 

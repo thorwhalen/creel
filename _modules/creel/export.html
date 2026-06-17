@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>creel.export &mdash; creel 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            creel
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel.html">creel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/annotate.html">creel.annotate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/bindings.html">creel.bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/evidence.html">creel.evidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/export.html">creel.export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract.html">creel.extract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/cache.html">creel.extract.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/llm.html">creel.extract.llm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/pattern.html">creel.extract.pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/protocol.html">creel.extract.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/query.html">creel.extract.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/registry.html">creel.extract.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/extract/transforms.html">creel.extract.transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/facade.html">creel.facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph.html">creel.graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph/canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/graph/model.html">creel.graph.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest.html">creel.ingest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/join.html">creel.join</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/policy.html">creel.policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/reify.html">creel.reify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/render.html">creel.render</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/resolve.html">creel.resolve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/sources.html">creel.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec.html">creel.spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/linkml.html">creel.spec.linkml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/model.html">creel.spec.model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/spec/validate.html">creel.spec.validate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/temporal.html">creel.temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/trace.html">creel.trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify.html">creel.verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/registry.html">creel.verify.registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/verify/rubric.html">creel.verify.rubric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/creel/view.html">creel.view</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">creel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">creel.export</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for creel.export</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Export adapters — interchange formats for the canonical graph (EPIC 3.4 / 8.4).</span>
+
+<span class="sd">Deterministic, **dependency-free** emitters that let the extracted graph flow into the</span>
+<span class="sd">wider ecosystem without coupling the core to any DB/library (decision D2/D10):</span>
+
+<span class="sd">- :func:`to_jgf` — JSON Graph Format (the de-facto JSON interchange).</span>
+<span class="sd">- :func:`to_graphml` — GraphML (XML; Gephi/yEd/NetworkX).</span>
+<span class="sd">- :func:`to_cypher` — **parameterized** Cypher statements as *data* (never string</span>
+<span class="sd">  interpolation — injection-safe; bind the params with a Neo4j driver).</span>
+<span class="sd">- :func:`to_turtle` — RDF-star Turtle; attributes-on-edges become annotations on</span>
+<span class="sd">  quoted triples (``&lt;&lt; s p o &gt;&gt;``), the lossless LPG↔RDF-star mapping (report R01).</span>
+
+<span class="sd">All outputs are id-sorted → stable and git-diffable.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.graph.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Edge</span><span class="p">,</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">Node</span>
+
+<span class="n">CREEL_NS</span> <span class="o">=</span> <span class="s2">&quot;https://creel.dev/ns/&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_nodes</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Edge</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+
+<span class="c1"># --- JSON Graph Format --------------------------------------------------------</span>
+<div class="viewcode-block" id="to_jgf">
+<a class="viewcode-back" href="../../module_docs/creel/export.html#creel.to_jgf">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_jgf</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Project to JSON Graph Format (v2-style: nodes as an id→object map).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;graph&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;directed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">n</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">n</span><span class="o">.</span><span class="n">types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">types</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">types</span><span class="p">),</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">attributes</span><span class="p">)}}</span>
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">_nodes</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;edges&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;relation&quot;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+                 <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">attributes</span><span class="p">)}</span>
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+            <span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">}</span></div>
+
+
+
+<span class="c1"># --- GraphML (XML) ------------------------------------------------------------</span>
+<div class="viewcode-block" id="to_graphml">
+<a class="viewcode-back" href="../../module_docs/creel/export.html#creel.to_graphml">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_graphml</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit GraphML XML (string attributes; one ``&lt;key&gt;`` per attribute, id-sorted).&quot;&quot;&quot;</span>
+    <span class="n">node_attrs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">k</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">n</span><span class="o">.</span><span class="n">attributes</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;types&quot;</span><span class="p">})</span>
+    <span class="n">edge_attrs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">k</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">attributes</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">})</span>
+    <span class="n">keys</span><span class="p">,</span> <span class="n">kid</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">node_attrs</span><span class="p">:</span>
+        <span class="n">kid</span><span class="p">[(</span><span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="n">attr</span><span class="p">)]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;nd_</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  &lt;key id=&quot;nd_</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s1">&quot; for=&quot;node&quot; attr.name=&quot;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; attr.type=&quot;string&quot;/&gt;&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">edge_attrs</span><span class="p">:</span>
+        <span class="n">kid</span><span class="p">[(</span><span class="s2">&quot;edge&quot;</span><span class="p">,</span> <span class="n">attr</span><span class="p">)]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ed_</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  &lt;key id=&quot;ed_</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s1">&quot; for=&quot;edge&quot; attr.name=&quot;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; attr.type=&quot;string&quot;/&gt;&#39;</span><span class="p">)</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;&lt;graphml xmlns=&quot;http://graphml.graphdrawing.org/xmlns&quot;&gt;&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">,</span>
+             <span class="s1">&#39;  &lt;graph edgedefault=&quot;directed&quot;&gt;&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">_nodes</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    &lt;node id=&quot;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot;&gt;&#39;</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;      &lt;data key=&quot;nd_types&quot;&gt;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">types</span><span class="p">))</span><span class="si">}</span><span class="s1">&lt;/data&gt;&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">attributes</span><span class="p">):</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;      &lt;data key=&quot;</span><span class="si">{</span><span class="n">kid</span><span class="p">[(</span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">)]</span><span class="si">}</span><span class="s1">&quot;&gt;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span><span class="si">}</span><span class="s1">&lt;/data&gt;&#39;</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;    &lt;/node&gt;&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    &lt;edge id=&quot;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; source=&quot;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; target=&quot;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot;&gt;&#39;</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;      &lt;data key=&quot;ed_type&quot;&gt;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">type</span><span class="p">)</span><span class="si">}</span><span class="s1">&lt;/data&gt;&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">attributes</span><span class="p">):</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;      &lt;data key=&quot;</span><span class="si">{</span><span class="n">kid</span><span class="p">[(</span><span class="s2">&quot;edge&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">)]</span><span class="si">}</span><span class="s1">&quot;&gt;</span><span class="si">{</span><span class="n">_x</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span><span class="si">}</span><span class="s1">&lt;/data&gt;&#39;</span><span class="p">)</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;    &lt;/edge&gt;&quot;</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;  &lt;/graph&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;/graphml&gt;&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># --- Cypher (parameterized, as data) -----------------------------------------</span>
+<div class="viewcode-block" id="to_cypher">
+<a class="viewcode-back" href="../../module_docs/creel/export.html#creel.to_cypher">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_cypher</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``(statement, params)`` pairs to load the graph into Neo4j safely.</span>
+
+<span class="sd">    Relationship *types* cannot be parameterized in Cypher, so a generic ``:REL`` is</span>
+<span class="sd">    used with a ``type`` property. Bind ``params`` via the driver — never interpolate.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">statements</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">_nodes</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="n">statements</span><span class="o">.</span><span class="n">append</span><span class="p">((</span>
+            <span class="s2">&quot;MERGE (n {id: $id}) SET n += $props&quot;</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">n</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;props&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">types</span><span class="p">),</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">attributes</span><span class="p">)}},</span>
+        <span class="p">))</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="n">statements</span><span class="o">.</span><span class="n">append</span><span class="p">((</span>
+            <span class="s2">&quot;MATCH (a {id: $source}), (b {id: $target}) &quot;</span>
+            <span class="s2">&quot;MERGE (a)-[r:REL {id: $id}]-&gt;(b) SET r += $props, r.type = $type&quot;</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+             <span class="s2">&quot;props&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">attributes</span><span class="p">)},</span>
+        <span class="p">))</span>
+    <span class="k">return</span> <span class="n">statements</span></div>
+
+
+
+<span class="c1"># --- RDF-star Turtle ----------------------------------------------------------</span>
+<div class="viewcode-block" id="to_turtle">
+<a class="viewcode-back" href="../../module_docs/creel/export.html#creel.to_turtle">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_turtle</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CREEL_NS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit RDF-star Turtle; edge attributes annotate quoted triples ``&lt;&lt; s p o &gt;&gt;``.</span>
+
+<span class="sd">    This is the lossless LPG↔RDF-star export (report R01). Caveat: parallel edges of</span>
+<span class="sd">    the same ``(source, type, target)`` annotate the same quoted triple — distinguish</span>
+<span class="sd">    them downstream by also reifying on the edge id if needed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;@prefix creel: &lt;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">&gt; .&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">_nodes</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;creel:</span><span class="si">{</span><span class="n">_iri</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">n</span><span class="o">.</span><span class="n">types</span><span class="p">:</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s2"> rdf:type creel:</span><span class="si">{</span><span class="n">_iri</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="si">}</span><span class="s2"> .&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">attributes</span><span class="p">):</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s2"> creel:</span><span class="si">{</span><span class="n">_iri</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_lit</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="si">}</span><span class="s2"> .&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;creel:</span><span class="si">{</span><span class="n">_iri</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;creel:</span><span class="si">{</span><span class="n">_iri</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">type</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;creel:</span><span class="si">{</span><span class="n">_iri</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">o</span><span class="si">}</span><span class="s2"> .&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">attributes</span><span class="p">):</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;&lt; </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">o</span><span class="si">}</span><span class="s2"> &gt;&gt; creel:</span><span class="si">{</span><span class="n">_iri</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_lit</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="si">}</span><span class="s2"> .&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span></div>
+
+
+
+<span class="c1"># --- helpers ------------------------------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_x</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;XML-escape.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;amp;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;lt;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;gt;&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&amp;quot;&quot;</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_iri</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a safe IRI local name (replace anything outside [A-Za-z0-9_-]).&quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^A-Za-z0-9_-]&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">))</span> <span class="ow">or</span> <span class="s2">&quot;x&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_lit</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render a Turtle literal (numbers/bools bare; everything else a JSON string).&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;true&quot;</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="s2">&quot;false&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;to_jgf&quot;</span><span class="p">,</span> <span class="s2">&quot;to_graphml&quot;</span><span class="p">,</span> <span class="s2">&quot;to_cypher&quot;</span><span class="p">,</span> <span class="s2">&quot;to_turtle&quot;</span><span class="p">,</span> <span class="s2">&quot;CREEL_NS&quot;</span><span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
