@@ -33,36 +33,9 @@ from creel.extract.protocol import (
     ExtractionContext,
 )
 from creel.extract.registry import register_extractor
+from creel.extract.transforms import apply_casts, fill_template, slug
 
 _CONTEXT_CHARS = 24  # chars of prefix/suffix kept for a TextQuoteSelector
-
-
-def _slug(value: str) -> str:
-    """Lowercase, collapse non-alphanumerics to single dashes — for stable ids."""
-    return re.sub(r"[^a-z0-9]+", "-", str(value).strip().lower()).strip("-") or "x"
-
-
-def _cast(value: str, to: str) -> Any:
-    """Cast a captured string to ``to`` (``int``/``float``/``number``/``string``).
-
-    Numeric casts tolerate thousands separators and surrounding currency symbols.
-    """
-    if to in ("int", "float", "number"):
-        cleaned = re.sub(r"[^0-9.\-]", "", value)
-        if cleaned in ("", "-", ".", "-."):
-            return value
-        number = float(cleaned)
-        if to == "int" or (to == "number" and number.is_integer()):
-            return int(number)
-        return number
-    return value
-
-
-def _apply_casts(attrs: dict[str, Any], casts: Mapping[str, str]) -> dict[str, Any]:
-    return {
-        k: (_cast(v, casts[k]) if k in casts and isinstance(v, str) else v)
-        for k, v in attrs.items()
-    }
 
 
 def _grounding(text: str, match: "re.Match[str]", source_id: str):
@@ -99,7 +72,7 @@ class RegexNodeExtractor:
         for src in ctx.sources.texts():
             text = src.content
             for match in regex.finditer(text):
-                attrs = _apply_casts(
+                attrs = apply_casts(
                     {k: v for k, v in match.groupdict().items() if v is not None},
                     self.casts,
                 )
@@ -108,7 +81,7 @@ class RegexNodeExtractor:
                     if self.id_attribute
                     else match.group(0)
                 )
-                node_id = f"{node_type}:{_slug(seed)}"
+                node_id = f"{node_type}:{slug(seed)}"
                 evidence = deterministic_evidence(
                     source_id=src.id,
                     generated_by=f"pattern:RegexNodeExtractor:{ctx.element_id}",
@@ -143,13 +116,13 @@ class RegexEdgeExtractor:
             text = src.content
             for i, match in enumerate(regex.finditer(text)):
                 groups = {k: v for k, v in match.groupdict().items() if v is not None}
-                source_id = _format_template(self.source_id_template, groups)
-                target_id = _format_template(self.target_id_template, groups)
+                source_id = fill_template(self.source_id_template, groups)
+                target_id = fill_template(self.target_id_template, groups)
                 attr_groups = {
                     k: v for k, v in groups.items() if k not in self.exclude_groups
                 }
-                attrs = _apply_casts(attr_groups, self.casts)
-                edge_id = f"{edge_type}:{_slug(source_id)}->{_slug(target_id)}:{i}"
+                attrs = apply_casts(attr_groups, self.casts)
+                edge_id = f"{edge_type}:{slug(source_id)}->{slug(target_id)}:{i}"
                 evidence = deterministic_evidence(
                     source_id=src.id,
                     generated_by=f"pattern:RegexEdgeExtractor:{ctx.element_id}",
@@ -161,11 +134,6 @@ class RegexEdgeExtractor:
                     )
                 )
         return Extraction(edges=edges)
-
-
-def _format_template(template: str, groups: Mapping[str, Any]) -> str:
-    slug_groups = {k: _slug(str(v)) for k, v in groups.items()}
-    return template.format(**slug_groups)
 
 
 def make_function_extractor(func: Callable[[ExtractionContext], Extraction]):
