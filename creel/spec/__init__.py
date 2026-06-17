@@ -14,6 +14,12 @@ from creel.spec.model import (
     NodeType,
     effective_attributes,
 )
+from creel.spec.linkml import (
+    generate_json_schema,
+    generate_pydantic,
+    load_linkml,
+    to_linkml,
+)
 from creel.spec.validate import (
     GraphValidationError,
     ValidationIssue,
@@ -32,4 +38,8 @@ __all__ = [
     "GraphValidationError",
     "ValidationIssue",
     "validate_graph",
+    "to_linkml",
+    "load_linkml",
+    "generate_json_schema",
+    "generate_pydantic",
 ]
