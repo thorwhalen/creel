@@ -108,6 +108,11 @@ UNHCR corpus, then downstream *contracts* (not implementations).
   key `hash(prompt, model, params, element_id, source_fingerprint)`.
 - **4.7** Range/constraint enforcement is a **post-decode verify step**, not the
   decoder's job (D6) — wire into the facade's verify pass.
+- **4.8** *(D-OP8, R14)* The LLM extractor uses **hybrid class-cluster passes**
+  (group coupled types; split weakly-coupled; class-by-class for big schemas),
+  document-first **prompt caching**, validate-retry always, ground-to-IDs early.
+  Requires the **cluster-pass binding model** (a binding can cover a *set* of
+  elements, invoked once) — see EPIC 11.
 
 ## EPIC 5 — Bindings, join & the facade  `core`
 *Wire the two layers together. (D7, D11)*
@@ -182,11 +187,48 @@ UNHCR corpus, then downstream *contracts* (not implementations).
 - **9.2** `examples/` worked notebooks/scripts: minimal, query, UNHCR.
 - **9.3** Activate wads CI; first intentional release; epythet docs.
 
+## EPIC 10 — Document ingestion layer  `extraction` `provenance`
+*Files → Sources. (D-OP7, report R13)*
+
+- **10.1** `ingest/protocol.py`: `Ingestor` Protocol (file → `Source`(s) with
+  Markdown content + a structured provenance sidecar); `LoaderRegistry` route-by-
+  format.
+- **10.2** Local default backends `[ingest]`: Docling (PDF/DOCX/XLSX/HTML/image +
+  page/bbox provenance), trafilatura (HTML), openpyxl (XLSX, merged-cell aware),
+  python-docx (DOCX); Markdown/text pass-through.
+- **10.3** Quality-gate escalation ladder: cheap local → quality check (empty/
+  garbled text, table-detect failure) → `[ocr]` (pytesseract) / VLM → multimodal
+  model (`[anthropic]` Claude native PDF + Citations grounding provider).
+- **10.4** Grounding selectors wired through to evidence: `PageSelector`,
+  `BoundingBoxSelector`, `CellSelector`, `TextPositionSelector`. Grounding mandatory
+  in the data model, coarsest-available in weak backends.
+- **10.5** Tests: per-format ingestion + provenance fidelity on small fixtures.
+
+## EPIC 11 — Extraction granularity & entity resolution  `extraction` `core`
+*The LLM-era extraction shape. (D-OP8, #14, report R14)*
+
+- **11.1** **Cluster-pass binding model**: a binding may cover a *set* of grammar
+  elements and be invoked **once**; the facade groups elements into passes.
+- **11.2** Granularity planner: hybrid class-cluster default (group coupled,
+  split weakly-coupled, class-by-class for big schemas); document-first prompt
+  caching; parallel independent passes; gleanings for recall.
+- **11.3** `Resolver` Protocol + cascade (registry/exact → normalize-before-merge →
+  embedding blocking/similarity → LLM adjudication); consolidation stage; `[er]`
+  extra (Splink). Required whenever we chunk/split.
+- **11.4** `ExtractionPolicy` (#13): validate-retry always; self-consistency on
+  high-value/low-confidence fields; `needs_review` thresholds; resolution chain.
+- **11.5** Tests: cluster-pass invocation; ER cascade on messy variant names.
+
 ---
 
 ## Critical path (suggested order)
 
-`EPIC1 → EPIC2 → EPIC3 → EPIC5(skeleton w/ pattern extractor) → EPIC4 → EPIC6 → EPIC7 → EPIC8 → EPIC9`
+`EPIC1 → EPIC2 → EPIC3 → EPIC5(skeleton w/ pattern extractor) → EPIC4 → EPIC6 → EPIC7`
+(**all done through here as of v0.3**) `→ EPIC10 (ingestion) → EPIC4.4+EPIC11 (LLM
+extractor, granularity, ER) → EPIC8 → EPIC9`
 
-The facade should come up **early** (after a trivial pattern extractor) so every
-later strategy and verifier plugs into a working end-to-end pipe.
+The facade came up **early** (after a trivial pattern extractor) so every later
+strategy and verifier plugs into a working end-to-end pipe. Round-2 research (R13
+ingestion, R14 granularity) reorders the *remaining* work: **ingestion (EPIC 10)
+and the granularity/ER-aware LLM extractor (EPIC 4.4 + EPIC 11)** now precede the
+downstream contracts, because the real (messy, multi-format) corpus needs them.

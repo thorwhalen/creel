@@ -102,6 +102,44 @@ class JsonPathSelector:
         return d
 
 
+@dataclass(frozen=True)
+class PageSelector:
+    """Anchor a value to a page (coarsest locator for PDF/scanned sources)."""
+
+    source_id: str
+    page: int
+    kind: ClassVar[str] = "PageSelector"
+
+    def to_dict(self) -> dict[str, Any]:
+        """Serialise to a plain dict with a ``type`` discriminator."""
+        return {"type": self.kind, "source": self.source_id, "page": self.page}
+
+
+@dataclass(frozen=True)
+class BoundingBoxSelector:
+    """Anchor a value to a bounding box on a page (visual grounding for PDF/images).
+
+    Coordinates are ``[x0, y0, x1, y1]``; ``normalized`` indicates 0..1 fractions of
+    the page (recommended, since rasterisation DPI varies) vs absolute pixels.
+    """
+
+    source_id: str
+    page: int
+    bbox: tuple
+    normalized: bool = True
+    kind: ClassVar[str] = "BoundingBoxSelector"
+
+    def to_dict(self) -> dict[str, Any]:
+        """Serialise to a plain dict with a ``type`` discriminator."""
+        return {
+            "type": self.kind,
+            "source": self.source_id,
+            "page": self.page,
+            "bbox": list(self.bbox),
+            "normalized": self.normalized,
+        }
+
+
 # --- provenance & confidence ---------------------------------------------------
 @dataclass(frozen=True)
 class Provenance:
