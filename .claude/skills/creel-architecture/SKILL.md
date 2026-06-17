@@ -10,9 +10,11 @@ Property Graph** (LPG) is the single source of truth; everything downstream is a
 projection. Authoritative design: `misc/docs/research/00-synthesis-and-design-implications.md`
 (decisions D1–D15). Roadmap: `misc/docs/design/ROADMAP.md`. Decision log:
 `misc/docs/design/DECISIONS.md` — which now includes **D-OP7** (ingestion layer,
-report R13) and **D-OP8** (extraction granularity = hybrid class-cluster passes,
-report R14), and the 2026-06-17 resolutions of the open questions (notably **#14
-entity resolution = full cascade**, required because the real corpus is very messy).
+report R13), **D-OP8** (extraction granularity = hybrid class-cluster passes,
+report R14), **D-OP9** (bidirectional traceability + human annotation/coding as a
+first-class contract; 5 additive extensions A1–A5, report R15), and the 2026-06-17
+resolutions of the open questions (notably **#14 entity resolution = full cascade**,
+required because the real corpus is very messy).
 
 ## Module map (single-package spike; uv-workspace split at v0.4 — D-OP3)
 

@@ -129,6 +129,51 @@ everything is recorded here so it can be challenged and changed.
   extractor (EPIC 4.4). The deterministic pattern/function extractors keep the
   cheap per-element model.
 
+### D-OP9 — Bidirectional traceability & human annotation/coding as a first-class contract (from report R15)
+- **Decision.** Record bidirectional source↔graph traceability and human
+  annotation/"coding" as a **committed forward-compatibility requirement** that the
+  evidence/annotation layers must honor. The current model (D7/D8) is well-positioned
+  and needs **no schema fork** — only five **additive** extensions, all reserved now
+  and built with EPIC 8 / the LLM extractor (not before):
+  - **A1 — Per-attribute grounding.** Allow evidence to key on an optional finer id
+    `(element_id, attribute_path)` (JSONPath-style) in addition to `element_id`, so a
+    single *property* (not just the node/edge) traces to its source span. D8 always
+    promised "node, edge, **and value**"; this closes the gap. Don't mandate it
+    everywhere — only where an extractor can actually attribute a value.
+  - **A2 — One `Annotation` contract for output *and* human input.** A standoff
+    record `Annotation{ id, target (element_id | (element_id, attr) | source span),
+    body (node/edge/category ref | insight | comment), motivation, provenance,
+    confidence }`. Machine insight (D15) and manual coding are the **same object**,
+    differing only by `motivation` + `attributed_to.kind`. Reify the **Selection**
+    (id + selector + source_id) so several codings can share one highlighted span.
+  - **A3 — Derived reverse-trace index (span → elements).** A *rebuildable cache*
+    (interval tree over text spans; parallel structures for cell/page/bbox) exposing
+    `elements_at(source_id, offset)` and `elements_overlapping(...)`. Not canonical
+    state — rebuilt from the sidecar.
+  - **A4 — Anchor robustness for re-ingestion.** Policy: every text grounding emits
+    **both** a `TextQuoteSelector` (exact + ~32-char prefix/suffix) and a
+    `TextPositionSelector`, plus a `cited_text` snapshot. **Quote = system of record;
+    position = disposable hint recomputed on every re-ingest.** Add an ordered
+    re-anchoring resolver (structural/position fast-path → verify quote → **bounded**
+    diff-match-patch fuzzy search near the position → whole-doc quote search), and
+    downgrade `review_status` to `needs_review` on fuzzy-only resolution. Most robust
+    anchor = a structural id (block/cell/JSONPath/page) **`refinedBy`** a quote — which
+    needs the small schema additions `RangeSelector` + CSS/XPath selectors + `refinedBy`.
+  - **A5 — Machine/manual/corrected provenance, *derived* not hardcoded.** Add an
+    agent `kind` (`software_agent | person`) to `attributed_to`; record corrections
+    **non-destructively** as a new record with `wasRevisionOf → superseded_id`; keep a
+    parallel `coded_by` for human tools. The three-way state becomes a query, not an
+    `entry_kind` enum.
+- **Rationale.** R15: the W3C Web Annotation multi-selector + `refinedBy` model and
+  Hypothes.is fuzzy anchoring are the proven recipe; char-offsets must be treated as a
+  disposable cache (PDF draw-order ≠ reading order; re-OCR shifts offsets); value-level
+  provenance needs a finer addressable id (the non-RDF analogue of RDF-star reification).
+  Everything aligns with existing D7/D8 separability — no migration.
+- **Reserved, explicitly NOT built now.** Front-end linked-view UI; RDF-star/PROV-O/
+  JSON-LD export; per-annotator layers / IAA / adjudication; REFI-QDA round-trip;
+  active-learning retraining; editable graph-spec UI. (R15 §"Explicitly NOT yet".)
+- **Tracking.** Seeds **EPIC 8** (annotated-graph contract); see `misc/docs/research/15-traceability-annotation.md`.
+
 ## Resolutions — 2026-06-17 (open questions Q1/Q2/Q7/Q8/Q9 after research round 2)
 
 User accepted my leans on #11/#12/#13/#15; **#14 changed** because the real source
