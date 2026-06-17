@@ -65,7 +65,9 @@ def extract(
     cache = cache or NullCache()
     services = dict(services or {})
 
-    fallback = schema_as_extractor if on_missing_binding == SCHEMA_AS_EXTRACTOR else None
+    fallback = (
+        schema_as_extractor if on_missing_binding == SCHEMA_AS_EXTRACTOR else None
+    )
     plan = join(graph_spec, bindings, schema_as_extractor=fallback)
 
     if plan.unbound and on_missing_binding == ERROR:

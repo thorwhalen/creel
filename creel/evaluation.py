@@ -72,14 +72,20 @@ class CorpusResult:
     @property
     def pass_rate(self) -> float:
         """Fraction of cases that passed."""
-        return sum(1 for c in self.cases if c.passed) / len(self.cases) if self.cases else 1.0
+        return (
+            sum(1 for c in self.cases if c.passed) / len(self.cases)
+            if self.cases
+            else 1.0
+        )
 
     def summary(self) -> dict[str, Any]:
         """A compact, JSON-ready summary (mean score, pass rate, per-case scores)."""
         return {
             "mean_score": self.mean_score,
             "pass_rate": self.pass_rate,
-            "cases": {c.name: {"score": c.score, "passed": c.passed} for c in self.cases},
+            "cases": {
+                c.name: {"score": c.score, "passed": c.passed} for c in self.cases
+            },
         }
 
 

@@ -40,8 +40,12 @@ class LLMRubric:
     reference_free: bool = False
     instructions: Optional[str] = None  # extra eval steps; auto-built if None
 
-    def __call__(self, actual, expected=None, *, context: Optional[VerificationContext] = None) -> Verdict:
-        judge = context.services.get("judge") if (context and context.services) else None
+    def __call__(
+        self, actual, expected=None, *, context: Optional[VerificationContext] = None
+    ) -> Verdict:
+        judge = (
+            context.services.get("judge") if (context and context.services) else None
+        )
         if judge is None:
             raise ValueError(
                 "llm_rubric needs a judge: pass context.services={'judge': callable}. "
@@ -54,13 +58,18 @@ class LLMRubric:
             score,
             passed_at(score, self.threshold),
             reason or "(no reason returned)",
-            {"criterion": self.criterion, "judge_raw": raw if isinstance(raw, str) else dict(raw)},
+            {
+                "criterion": self.criterion,
+                "judge_raw": raw if isinstance(raw, str) else dict(raw),
+            },
         )
 
     def _build_prompt(self, actual: Any, expected: Any) -> str:
         steps = self.instructions or _default_steps(self.criterion)
-        ref = "" if self.reference_free or expected is None else (
-            f"\nReference (expected) answer:\n{_fmt(expected)}\n"
+        ref = (
+            ""
+            if self.reference_free or expected is None
+            else (f"\nReference (expected) answer:\n{_fmt(expected)}\n")
         )
         return (
             "You are a careful evaluator. Apply the criterion below and return ONLY a JSON "
@@ -74,7 +83,9 @@ class LLMRubric:
         )
 
 
-def schema_description_verifier(element_type: Any, *, threshold: float = 0.5) -> LLMRubric:
+def schema_description_verifier(
+    element_type: Any, *, threshold: float = 0.5
+) -> LLMRubric:
     """Build the default ``llm_rubric`` for an element, seeded from its ``description``.
 
     This is the schema-as-verifier default: the same ``description`` that drives the

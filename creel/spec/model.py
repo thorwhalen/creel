@@ -208,9 +208,7 @@ class GraphSpec:
 # --- inheritance resolution ----------------------------------------------------
 
 
-def effective_attributes(
-    spec: GraphSpec, type_id: str
-) -> "dict[str, AttrSchema]":
+def effective_attributes(spec: GraphSpec, type_id: str) -> "dict[str, AttrSchema]":
     """Resolve the full attribute set for a type, including inherited attributes.
 
     Walks ``is_a`` then ``mixins`` (depth-first), with a subtype's own attributes

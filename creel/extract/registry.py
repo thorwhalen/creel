@@ -22,7 +22,9 @@ _ENTRY_POINT_GROUP = "creel.extractors"
 _entry_points_loaded = False
 
 
-def register_extractor(name: str) -> Callable[[Callable[..., Extractor]], Callable[..., Extractor]]:
+def register_extractor(
+    name: str,
+) -> Callable[[Callable[..., Extractor]], Callable[..., Extractor]]:
     """Decorator registering an extractor *factory* under ``name``.
 
     The decorated object is a factory ``(**config) -> Extractor``. A plain extractor
@@ -43,7 +45,9 @@ def get_extractor_factory(name: str) -> Callable[..., Extractor]:
     if name not in _REGISTRY:
         _load_entry_points()
     if name not in _REGISTRY:
-        raise KeyError(f"no extractor registered as {name!r}; known: {sorted(_REGISTRY)}")
+        raise KeyError(
+            f"no extractor registered as {name!r}; known: {sorted(_REGISTRY)}"
+        )
     return _REGISTRY[name]
 
 

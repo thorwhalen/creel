@@ -31,7 +31,11 @@ class ExactMatch:
 
     def __call__(self, actual, expected, *, context=None) -> Verdict:
         ok = actual == expected
-        return Verdict(1.0 if ok else 0.0, ok, "exact match" if ok else f"{actual!r} != {expected!r}")
+        return Verdict(
+            1.0 if ok else 0.0,
+            ok,
+            "exact match" if ok else f"{actual!r} != {expected!r}",
+        )
 
 
 @register_verifier("normalized")
@@ -57,7 +61,8 @@ class NormalizedMatch:
     def __call__(self, actual, expected, *, context=None) -> Verdict:
         ok = self._norm(actual) == self._norm(expected)
         return Verdict(
-            1.0 if ok else 0.0, ok,
+            1.0 if ok else 0.0,
+            ok,
             "normalized match" if ok else f"normalized {actual!r} != {expected!r}",
         )
 
@@ -84,7 +89,8 @@ class NumericTolerance:
         allowed = max(self.abs_tol, self.rel_tol * abs(e))
         ok = diff <= allowed
         return Verdict(
-            1.0 if ok else 0.0, ok,
+            1.0 if ok else 0.0,
+            ok,
             f"|{a} - {e}| = {diff} {'<=' if ok else '>'} {allowed}",
             {"diff": diff, "allowed": allowed},
         )
@@ -118,13 +124,21 @@ class SetMatch:
         tp = len(a & e)
         precision = tp / len(a) if a else (1.0 if not e else 0.0)
         recall = tp / len(e) if e else (1.0 if not a else 0.0)
-        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
+        f1 = (
+            2 * precision * recall / (precision + recall)
+            if (precision + recall)
+            else 0.0
+        )
         return Verdict(
-            f1, passed_at(f1, self.threshold),
+            f1,
+            passed_at(f1, self.threshold),
             f"set F1={f1:.3f} (P={precision:.3f} R={recall:.3f})",
             {
-                "precision": precision, "recall": recall, "f1": f1,
-                "missing": sorted(map(str, e - a)), "extra": sorted(map(str, a - e)),
+                "precision": precision,
+                "recall": recall,
+                "f1": f1,
+                "missing": sorted(map(str, e - a)),
+                "extra": sorted(map(str, a - e)),
             },
         )
 
@@ -156,7 +170,8 @@ class SchemaConstraint:
         n = max(1, actual.number_of_nodes + actual.number_of_edges)
         score = max(0.0, 1.0 - len(issues) / n)
         return Verdict(
-            score, not issues,
+            score,
+            not issues,
             "conforms to grammar" if not issues else f"{len(issues)} grammar issue(s)",
             {"issues": [str(i) for i in issues]},
         )
@@ -174,7 +189,7 @@ class SemanticSimilarity:
     threshold: float = 0.8
 
     def __call__(self, actual, expected, *, context=None) -> Verdict:
-        embedder = (context.services.get("embedder") if context else None)
+        embedder = context.services.get("embedder") if context else None
         if embedder is not None:
             sim = _cosine(embedder(str(actual)), embedder(str(expected)))
             method = "embedding cosine"
@@ -198,7 +213,9 @@ def _cosine(u: Sequence[float], v: Sequence[float]) -> float:
 class Composite:
     """Weighted combination of named sub-verifiers (promptfoo-style)."""
 
-    components: Sequence[tuple] = field(default_factory=tuple)  # (name, verifier, weight)
+    components: Sequence[tuple] = field(
+        default_factory=tuple
+    )  # (name, verifier, weight)
     threshold: float = 0.5
 
     def __call__(self, actual, expected, *, context=None) -> Verdict:
@@ -210,10 +227,17 @@ class Composite:
             sub[name] = v.to_dict()
             score += weight * v.score
         score /= total_w
-        return Verdict(score, passed_at(score, self.threshold), f"composite={score:.3f}", {"components": sub})
+        return Verdict(
+            score,
+            passed_at(score, self.threshold),
+            f"composite={score:.3f}",
+            {"components": sub},
+        )
 
 
 # --- registry factories -------------------------------------------------------
 @register_verifier("predicate")
-def _predicate_factory(*, predicate: Callable[[Any], bool], description: str = "predicate") -> Verifier:
+def _predicate_factory(
+    *, predicate: Callable[[Any], bool], description: str = "predicate"
+) -> Verifier:
     return SchemaConstraint(predicate=predicate, description=description)

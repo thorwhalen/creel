@@ -96,7 +96,7 @@ def _coerce_binding(element_id: str, spec: Any) -> ExtractorBinding:
 
 
 def coerce_bindings(
-    extractors: Union[ExtractorBindings, Mapping, Iterable[ExtractorBinding], None]
+    extractors: Union[ExtractorBindings, Mapping, Iterable[ExtractorBinding], None],
 ) -> Optional[ExtractorBindings]:
     """Normalise the facade's ``extractors`` argument into :class:`ExtractorBindings`."""
     if extractors is None:

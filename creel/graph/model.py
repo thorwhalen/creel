@@ -139,7 +139,9 @@ class Graph:
         if not self._g.has_node(node_id):
             raise KeyError(node_id)
         data = self._g.nodes[node_id]
-        return Node(node_id, tuple(data.get("types", ())), dict(data.get("attributes", {})))
+        return Node(
+            node_id, tuple(data.get("types", ())), dict(data.get("attributes", {}))
+        )
 
     def edge(self, edge_id: str) -> Edge:
         """Return the :class:`Edge` view, or raise ``KeyError``."""

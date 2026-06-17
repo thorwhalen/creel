@@ -42,7 +42,12 @@ class TextQuoteSelector:
 
     def to_dict(self) -> dict[str, Any]:
         """Serialise to a plain dict with a ``type`` discriminator."""
-        return {"type": self.kind, "exact": self.exact, "prefix": self.prefix, "suffix": self.suffix}
+        return {
+            "type": self.kind,
+            "exact": self.exact,
+            "prefix": self.prefix,
+            "suffix": self.suffix,
+        }
 
 
 @dataclass(frozen=True)
@@ -73,7 +78,12 @@ class CellSelector:
 
     def to_dict(self) -> dict[str, Any]:
         """Serialise to a plain dict with a ``type`` discriminator."""
-        return {"type": self.kind, "source": self.source_id, "row": self.row, "column": self.column}
+        return {
+            "type": self.kind,
+            "source": self.source_id,
+            "row": self.row,
+            "column": self.column,
+        }
 
 
 @dataclass(frozen=True)

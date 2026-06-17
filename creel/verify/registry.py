@@ -17,7 +17,9 @@ _ENTRY_POINT_GROUP = "creel.verifiers"
 _entry_points_loaded = False
 
 
-def register_verifier(name: str) -> Callable[[Callable[..., Verifier]], Callable[..., Verifier]]:
+def register_verifier(
+    name: str,
+) -> Callable[[Callable[..., Verifier]], Callable[..., Verifier]]:
     """Decorator registering a verifier *factory* under ``name``."""
 
     def deco(factory: Callable[..., Verifier]) -> Callable[..., Verifier]:
@@ -34,7 +36,9 @@ def get_verifier_factory(name: str) -> Callable[..., Verifier]:
     if name not in _REGISTRY:
         _load_entry_points()
     if name not in _REGISTRY:
-        raise KeyError(f"no verifier registered as {name!r}; known: {sorted(_REGISTRY)}")
+        raise KeyError(
+            f"no verifier registered as {name!r}; known: {sorted(_REGISTRY)}"
+        )
     return _REGISTRY[name]
 
 

@@ -59,7 +59,10 @@ def _cast(value: str, to: str) -> Any:
 
 
 def _apply_casts(attrs: dict[str, Any], casts: Mapping[str, str]) -> dict[str, Any]:
-    return {k: (_cast(v, casts[k]) if k in casts and isinstance(v, str) else v) for k, v in attrs.items()}
+    return {
+        k: (_cast(v, casts[k]) if k in casts and isinstance(v, str) else v)
+        for k, v in attrs.items()
+    }
 
 
 def _grounding(text: str, match: "re.Match[str]", source_id: str):
@@ -67,8 +70,8 @@ def _grounding(text: str, match: "re.Match[str]", source_id: str):
     return (
         TextQuoteSelector(
             exact=match.group(0),
-            prefix=text[max(0, start - _CONTEXT_CHARS):start],
-            suffix=text[end:end + _CONTEXT_CHARS],
+            prefix=text[max(0, start - _CONTEXT_CHARS) : start],
+            suffix=text[end : end + _CONTEXT_CHARS],
         ),
         TextPositionSelector(start=start, end=end, source_id=source_id),
     )
@@ -97,9 +100,14 @@ class RegexNodeExtractor:
             text = src.content
             for match in regex.finditer(text):
                 attrs = _apply_casts(
-                    {k: v for k, v in match.groupdict().items() if v is not None}, self.casts
+                    {k: v for k, v in match.groupdict().items() if v is not None},
+                    self.casts,
                 )
-                seed = attrs.get(self.id_attribute) if self.id_attribute else match.group(0)
+                seed = (
+                    attrs.get(self.id_attribute)
+                    if self.id_attribute
+                    else match.group(0)
+                )
                 node_id = f"{node_type}:{_slug(seed)}"
                 evidence = deterministic_evidence(
                     source_id=src.id,
@@ -137,7 +145,9 @@ class RegexEdgeExtractor:
                 groups = {k: v for k, v in match.groupdict().items() if v is not None}
                 source_id = _format_template(self.source_id_template, groups)
                 target_id = _format_template(self.target_id_template, groups)
-                attr_groups = {k: v for k, v in groups.items() if k not in self.exclude_groups}
+                attr_groups = {
+                    k: v for k, v in groups.items() if k not in self.exclude_groups
+                }
                 attrs = _apply_casts(attr_groups, self.casts)
                 edge_id = f"{edge_type}:{_slug(source_id)}->{_slug(target_id)}:{i}"
                 evidence = deterministic_evidence(
@@ -146,7 +156,9 @@ class RegexEdgeExtractor:
                     grounding=_grounding(text, match, src.id),
                 )
                 edges.append(
-                    ExtractedEdge(edge_id, edge_type, source_id, target_id, attrs, evidence)
+                    ExtractedEdge(
+                        edge_id, edge_type, source_id, target_id, attrs, evidence
+                    )
                 )
         return Extraction(edges=edges)
 

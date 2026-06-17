@@ -69,12 +69,16 @@ def validate_graph(
 def _check_node(node: Node, spec: GraphSpec) -> list[ValidationIssue]:
     issues: list[ValidationIssue] = []
     if not node.types:
-        issues.append(ValidationIssue("node", node.id, "untyped", "node has no type label"))
+        issues.append(
+            ValidationIssue("node", node.id, "untyped", "node has no type label")
+        )
         return issues
     for t in node.types:
         if spec.node_type(t) is None:
             issues.append(
-                ValidationIssue("node", node.id, "unknown-type", f"unknown node-type {t!r}")
+                ValidationIssue(
+                    "node", node.id, "unknown-type", f"unknown node-type {t!r}"
+                )
             )
     # Validate attributes against the (most specific) declared type's effective schema.
     for t in node.types:
@@ -88,7 +92,9 @@ def _check_edge(edge: Edge, graph: Graph, spec: GraphSpec) -> list[ValidationIss
     et = spec.edge_type(edge.type)
     if et is None:
         issues.append(
-            ValidationIssue("edge", edge.id, "unknown-type", f"unknown edge-type {edge.type!r}")
+            ValidationIssue(
+                "edge", edge.id, "unknown-type", f"unknown edge-type {edge.type!r}"
+            )
         )
         return issues
     issues.extend(_check_endpoint(edge, graph, spec, et, "subject"))
@@ -106,7 +112,9 @@ def _check_endpoint(
         return []
     if not graph.has_node(endpoint_id):
         return [
-            ValidationIssue("edge", edge.id, "missing-endpoint", f"{role} {endpoint_id!r} absent")
+            ValidationIssue(
+                "edge", edge.id, "missing-endpoint", f"{role} {endpoint_id!r} absent"
+            )
         ]
     node = graph.node(endpoint_id)
     if not any(spec.is_subtype(t, expected) for t in node.types):
@@ -129,7 +137,9 @@ def _check_attributes(
     for name, attr in schema.items():
         if attr.required and name not in attributes:
             issues.append(
-                ValidationIssue(element, element_id, "missing-required", f"missing {name!r}")
+                ValidationIssue(
+                    element, element_id, "missing-required", f"missing {name!r}"
+                )
             )
     for name, value in attributes.items():
         attr = schema.get(name)
@@ -148,7 +158,10 @@ def _check_value(
         if not isinstance(value, (list, tuple)):
             return [
                 ValidationIssue(
-                    element, element_id, "not-multivalued", f"{attr.name!r} must be a list"
+                    element,
+                    element_id,
+                    "not-multivalued",
+                    f"{attr.name!r} must be a list",
                 )
             ]
         issues: list[ValidationIssue] = []
@@ -167,28 +180,59 @@ def _check_scalar(
         if value not in permissible:
             issues.append(
                 ValidationIssue(
-                    element, element_id, "enum", f"{attr.name!r}={value!r} not in {permissible}"
+                    element,
+                    element_id,
+                    "enum",
+                    f"{attr.name!r}={value!r} not in {permissible}",
                 )
             )
         return issues  # enum value need not also pass a primitive type check
     if attr.range in PRIMITIVE_RANGES and not _is_range(value, attr.range):
         issues.append(
             ValidationIssue(
-                element, element_id, "range-type", f"{attr.name!r}={value!r} is not a {attr.range}"
+                element,
+                element_id,
+                "range-type",
+                f"{attr.name!r}={value!r} is not a {attr.range}",
             )
         )
-    if attr.minimum is not None and isinstance(value, (int, float)) and value < attr.minimum:
-        issues.append(
-            ValidationIssue(element, element_id, "minimum", f"{attr.name!r}={value} < {attr.minimum}")
-        )
-    if attr.maximum is not None and isinstance(value, (int, float)) and value > attr.maximum:
-        issues.append(
-            ValidationIssue(element, element_id, "maximum", f"{attr.name!r}={value} > {attr.maximum}")
-        )
-    if attr.pattern is not None and isinstance(value, str) and re.search(attr.pattern, value) is None:
+    if (
+        attr.minimum is not None
+        and isinstance(value, (int, float))
+        and value < attr.minimum
+    ):
         issues.append(
             ValidationIssue(
-                element, element_id, "pattern", f"{attr.name!r}={value!r} !~ /{attr.pattern}/"
+                element,
+                element_id,
+                "minimum",
+                f"{attr.name!r}={value} < {attr.minimum}",
+            )
+        )
+    if (
+        attr.maximum is not None
+        and isinstance(value, (int, float))
+        and value > attr.maximum
+    ):
+        issues.append(
+            ValidationIssue(
+                element,
+                element_id,
+                "maximum",
+                f"{attr.name!r}={value} > {attr.maximum}",
+            )
+        )
+    if (
+        attr.pattern is not None
+        and isinstance(value, str)
+        and re.search(attr.pattern, value) is None
+    ):
+        issues.append(
+            ValidationIssue(
+                element,
+                element_id,
+                "pattern",
+                f"{attr.name!r}={value!r} !~ /{attr.pattern}/",
             )
         )
     return issues
@@ -215,5 +259,7 @@ def _is_range(value: Any, range_name: str) -> bool:
     if range_name == "boolean":
         return isinstance(value, bool)
     if range_name in ("date", "datetime"):
-        return isinstance(value, str)  # ISO-8601 string; deeper parsing is a verifier's job
+        return isinstance(
+            value, str
+        )  # ISO-8601 string; deeper parsing is a verifier's job
     return True

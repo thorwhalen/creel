@@ -75,7 +75,9 @@ CANONICAL_GRAPH_SCHEMA: dict[str, Any] = {
 }
 
 
-def to_canonical_dict(graph: Graph, *, spec: Optional[GraphSpec] = None) -> dict[str, Any]:
+def to_canonical_dict(
+    graph: Graph, *, spec: Optional[GraphSpec] = None
+) -> dict[str, Any]:
     """Build the canonical dict for ``graph`` (edges id-sorted; ready to serialise).
 
     If ``spec`` is given, a lightweight ``{"id", "version"}`` reference is recorded

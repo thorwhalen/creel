@@ -63,7 +63,11 @@ class Verifier(Protocol):
     """A strategy that scores an ``actual`` value against an ``expected`` one."""
 
     def __call__(
-        self, actual: Any, expected: Any, *, context: Optional[VerificationContext] = None
+        self,
+        actual: Any,
+        expected: Any,
+        *,
+        context: Optional[VerificationContext] = None,
     ) -> Verdict:
         """Return a :class:`Verdict` scoring ``actual`` against ``expected``."""
         ...

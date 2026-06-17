@@ -40,7 +40,9 @@ class GraphMatch:
     def __call__(self, actual: Graph, expected: Graph, *, context=None) -> Verdict:
         spec = self.spec or (context.spec if context else None)
 
-        node_pr = _set_prf({n.id for n in actual.nodes()}, {n.id for n in expected.nodes()})
+        node_pr = _set_prf(
+            {n.id for n in actual.nodes()}, {n.id for n in expected.nodes()}
+        )
         edge_pr = _edge_prf(actual, expected)
         attr = self._attribute_score(actual, expected, spec, context)
 
@@ -65,18 +67,28 @@ class GraphMatch:
             if not actual.has_node(exp_node.id):
                 continue
             self._score_element(
-                actual.node(exp_node.id), exp_node, exp_node.types[0] if exp_node.types else None,
-                spec, context, scores, mismatches, "node",
+                actual.node(exp_node.id),
+                exp_node,
+                exp_node.types[0] if exp_node.types else None,
+                spec,
+                context,
+                scores,
+                mismatches,
+                "node",
             )
         for exp_edge in expected.edges():
             act = _find_matching_edge(actual, exp_edge)
             if act is None:
                 continue
-            self._score_element(act, exp_edge, exp_edge.type, spec, context, scores, mismatches, "edge")
+            self._score_element(
+                act, exp_edge, exp_edge.type, spec, context, scores, mismatches, "edge"
+            )
         score = sum(scores) / len(scores) if scores else 1.0
         return {"score": score, "compared": len(scores), "mismatches": mismatches}
 
-    def _score_element(self, act, exp, type_id, spec, context, scores, mismatches, kind) -> None:
+    def _score_element(
+        self, act, exp, type_id, spec, context, scores, mismatches, kind
+    ) -> None:
         exp_attrs = exp.attributes
         if not exp_attrs:
             return
@@ -88,12 +100,20 @@ class GraphMatch:
             scores.append(verdict.score)
             if not verdict.passed:
                 mismatches.append(
-                    {"kind": kind, "id": exp.id, "attr": name, "expected": exp_val,
-                     "actual": act_val, "reason": verdict.reason}
+                    {
+                        "kind": kind,
+                        "id": exp.id,
+                        "attr": name,
+                        "expected": exp_val,
+                        "actual": act_val,
+                        "reason": verdict.reason,
+                    }
                 )
 
     def _verifier_for(self, type_id, name, attr_schema) -> Verifier:
-        override = self.attribute_verifiers.get((type_id, name)) or self.attribute_verifiers.get(name)
+        override = self.attribute_verifiers.get(
+            (type_id, name)
+        ) or self.attribute_verifiers.get(name)
         if override is not None:
             return override
         if attr_schema is not None and attr_schema.range in _NUMERIC_RANGES:
@@ -107,8 +127,11 @@ def _set_prf(actual: set, expected: set) -> dict[str, Any]:
     recall = tp / len(expected) if expected else (1.0 if not actual else 0.0)
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
     return {
-        "precision": precision, "recall": recall, "f1": f1,
-        "missing": sorted(expected - actual), "extra": sorted(actual - expected),
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+        "missing": sorted(expected - actual),
+        "extra": sorted(actual - expected),
     }
 
 
@@ -126,21 +149,34 @@ def _edge_prf(actual: Graph, expected: Graph) -> dict[str, Any]:
     precision = tp / a_total if a_total else (1.0 if not e_total else 0.0)
     recall = tp / e_total if e_total else (1.0 if not a_total else 0.0)
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
-    return {"precision": precision, "recall": recall, "f1": f1, "matched": tp,
-            "expected_total": e_total, "actual_total": a_total}
+    return {
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+        "matched": tp,
+        "expected_total": e_total,
+        "actual_total": a_total,
+    }
 
 
 def _find_matching_edge(actual: Graph, expected_edge: Edge) -> Optional[Edge]:
     """Find an actual edge with the same (type, source, target); for parallels, the
     one whose attributes best match (most equal values)."""
     candidates = [
-        e for e in actual.edges_between(expected_edge.source, expected_edge.target)
+        e
+        for e in actual.edges_between(expected_edge.source, expected_edge.target)
         if e.type == expected_edge.type
     ]
     if not candidates:
         return None
     if len(candidates) == 1:
         return candidates[0]
+
     def overlap(edge: Edge) -> int:
-        return sum(1 for k, v in expected_edge.attributes.items() if edge.attributes.get(k) == v)
+        return sum(
+            1
+            for k, v in expected_edge.attributes.items()
+            if edge.attributes.get(k) == v
+        )
+
     return max(candidates, key=overlap)
