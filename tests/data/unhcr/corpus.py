@@ -25,9 +25,6 @@ import io
 from pathlib import Path
 
 from creel.evaluation import CorpusCase
-from creel.evidence import CellSelector, deterministic_evidence
-from creel.extract.pattern import _slug
-from creel.extract.protocol import ExtractedEdge, ExtractedNode, Extraction
 from creel.graph.canonical import from_canonical_json
 from creel.sources import TABLE, TEXT, Source, SourceBundle
 from creel.spec.model import AttrSchema, EdgeType, EnumDef, GraphSpec, NodeType
@@ -103,53 +100,13 @@ def _read_csv(path: Path) -> list[dict]:
     return list(csv.DictReader(io.StringIO(path.read_text())))
 
 
-# --- function extractors for the two tables -----------------------------------
-def _results_matrix_extractor(ctx) -> Extraction:
-    """Emit outputs/outcomes (nodes) and delivers/contributes_to (edges) per element."""
-    rows = ctx.sources.get("results_matrix").content
-    nodes, edges = [], []
-    for i, row in enumerate(rows):
-        proj = f"project:{_slug(row['project_code'])}"
-        outp = f"output:{_slug(row['output_code'])}"
-        outc = f"outcome:{_slug(row['outcome_code'])}"
-        ev = lambda col: deterministic_evidence(
-            source_id="results_matrix", generated_by=f"function:results_matrix:{ctx.element_id}",
-            grounding=(CellSelector("results_matrix", i, col),))
-        if ctx.element_id == "output":
-            nodes.append(ExtractedNode(outp, "output", {"statement": row["output_statement"]}, ev("output_statement")))
-        elif ctx.element_id == "outcome":
-            nodes.append(ExtractedNode(outc, "outcome", {"statement": row["outcome_statement"]}, ev("outcome_statement")))
-        elif ctx.element_id == "delivers":
-            edges.append(ExtractedEdge(f"delivers:{i}", "delivers", proj, outp, {}, ev("project_code")))
-        elif ctx.element_id == "contributes_to":
-            edges.append(ExtractedEdge(f"contributes_to:{i}", "contributes_to", outp, outc, {}, ev("outcome_code")))
-    return Extraction(nodes=nodes, edges=edges)
-
-
-def _indicators_extractor(ctx) -> Extraction:
-    """Emit indicator nodes and measured_by edges (with baseline/target/actual values)."""
-    rows = ctx.sources.get("indicators").content
-    nodes, edges = [], []
-    for i, row in enumerate(rows):
-        ind = f"indicator:{_slug(row['indicator_code'])}"
-        outp = f"output:{_slug(row['output_code'])}"
-        ev = lambda col: deterministic_evidence(
-            source_id="indicators", generated_by=f"function:indicators:{ctx.element_id}",
-            grounding=(CellSelector("indicators", i, col),))
-        if ctx.element_id == "indicator":
-            nodes.append(ExtractedNode(ind, "indicator",
-                                       {"name": row["indicator_name"], "measure": row["measure"]}, ev("indicator_name")))
-        elif ctx.element_id == "measured_by":
-            edges.append(ExtractedEdge(f"measured_by:{i}", "measured_by", outp, ind, {
-                "baseline": int(row["baseline"]), "target": int(row["target"]),
-                "actual": int(row["actual"]), "period": row["period"],
-            }, ev("actual")))
-    return Extraction(nodes=nodes, edges=edges)
-
-
 # --- bindings -----------------------------------------------------------------
 def build_bindings() -> dict:
-    """Map each grammar element to its extractor strategy (the metadata layer)."""
+    """Map each grammar element to its extractor strategy (the metadata layer).
+
+    Prose elements use the pattern (regex) family; the two CSV tables use the
+    declarative ``table_map`` query extractor — each binding is a pure-data spec.
+    """
     return {
         # prose -> pattern extractors
         "donor": ("regex_node", {
@@ -169,14 +126,29 @@ def build_bindings() -> dict:
             "pattern": r"(?P<project>PRJ-\d+) addresses (?P<cca>[A-Za-z ]+?) \(marker (?P<marker>[0-2])\)",
             "source_id_template": "project:{project}", "target_id_template": "cross_cutting_area:{cca}",
             "casts": {"marker": "int"}, "exclude_groups": ("project", "cca")}),
-        # results matrix -> one function extractor bound to each element it produces
-        "output": _results_matrix_extractor,
-        "outcome": _results_matrix_extractor,
-        "delivers": _results_matrix_extractor,
-        "contributes_to": _results_matrix_extractor,
-        # indicators -> one function extractor bound to each element it produces
-        "indicator": _indicators_extractor,
-        "measured_by": _indicators_extractor,
+        # results matrix CSV -> declarative table_map (pure-data specs)
+        "output": ("table_map", {
+            "records_source": "results_matrix", "kind": "node", "type": "output",
+            "id_template": "output:{output_code}", "attributes": {"statement": "output_statement"}}),
+        "outcome": ("table_map", {
+            "records_source": "results_matrix", "kind": "node", "type": "outcome",
+            "id_template": "outcome:{outcome_code}", "attributes": {"statement": "outcome_statement"}}),
+        "delivers": ("table_map", {
+            "records_source": "results_matrix", "kind": "edge", "type": "delivers",
+            "source_template": "project:{project_code}", "target_template": "output:{output_code}"}),
+        "contributes_to": ("table_map", {
+            "records_source": "results_matrix", "kind": "edge", "type": "contributes_to",
+            "source_template": "output:{output_code}", "target_template": "outcome:{outcome_code}"}),
+        # indicators CSV -> declarative table_map
+        "indicator": ("table_map", {
+            "records_source": "indicators", "kind": "node", "type": "indicator",
+            "id_template": "indicator:{indicator_code}",
+            "attributes": {"name": "indicator_name", "measure": "measure"}}),
+        "measured_by": ("table_map", {
+            "records_source": "indicators", "kind": "edge", "type": "measured_by",
+            "source_template": "output:{output_code}", "target_template": "indicator:{indicator_code}",
+            "attributes": {"baseline": "baseline", "target": "target", "actual": "actual", "period": "period"},
+            "casts": {"baseline": "int", "target": "int", "actual": "int"}}),
     }
 
 

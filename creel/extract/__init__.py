@@ -13,6 +13,11 @@ from creel.extract.pattern import (
     RegexNodeExtractor,
     make_function_extractor,
 )
+from creel.extract.query import (
+    make_json_extractor,
+    make_sql_extractor,
+    make_table_map_extractor,
+)
 from creel.extract.protocol import (
     ExtractedEdge,
     ExtractedNode,
@@ -34,6 +39,9 @@ __all__ = [
     "RegexNodeExtractor",
     "RegexEdgeExtractor",
     "make_function_extractor",
+    "make_table_map_extractor",
+    "make_sql_extractor",
+    "make_json_extractor",
     "ExtractedNode",
     "ExtractedEdge",
     "Extraction",
