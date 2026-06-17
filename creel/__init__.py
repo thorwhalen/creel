@@ -120,7 +120,7 @@ from creel.spec import (
     validate_graph,
 )
 
-__version__ = "0.0.2"
+__version__ = "0.1.0"
 
 __all__ = [
     # grammar
