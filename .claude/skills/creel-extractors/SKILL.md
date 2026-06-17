@@ -90,4 +90,45 @@ resolved span?) doubles as a verifier and downgrades confidence + flags
 
 Wrap expensive LLM calls with the `Cache` Protocol (no-op default) keyed on
 `hash(prompt, model, params, element_id, source_fingerprint)`. Exact-match only —
-semantic caches break reproducibility/auditability.
+semantic caches break reproducibility/auditability. (This is creel-side
+memoisation; it is *separate* from provider-side **prompt caching** — see below.)
+
+## Extraction granularity — the LLM extractor (D-OP8, report R14)
+
+How many LLM passes to split extraction into is a separation-of-concerns problem.
+The default is **hybrid class-cluster passes**, NOT one giant prompt:
+
+- **Group** tightly-coupled node+edge+attribute types into one pass (co-dependent
+  attributes, shared coreference, small schema).
+- **Split** weakly-coupled classes into their own **parallel** passes; go
+  **class-by-class** (SPIRES-style) for large/deep schemas (structured-output
+  accuracy degrades with schema size; "lost in the middle" hurts long single prompts).
+- **Cost:** put the **document first as a cacheable prefix**, enable provider
+  **prompt caching** (Anthropic ~90% off cache reads), vary only the trailing class
+  instruction, fire passes in a burst, optionally use the Batch API (50% off). This
+  makes "many narrow passes ≈ one big pass" in cost — the historical objection to
+  decomposition is gone.
+- **Accuracy ladder:** validate-retry (Instructor) **always**; **ground reference/
+  enum fields to stable IDs early** (fixes precision *and* cross-pass identity);
+  gleanings / self-consistency only for **high-value/low-confidence** fields; skip
+  reflection loops for bulk low-stakes fields.
+- **Binding-model implication:** a binding may cover a **cluster** of grammar
+  elements and be invoked **once** (not once-per-element). Implement this cluster
+  model when building `extract/llm.py`; the deterministic pattern/function family
+  keeps the cheap per-element model.
+
+## Consolidation / entity resolution is REQUIRED when you chunk or split (D-OP8/#14)
+
+Messy multi-source docs (field-written, non-native English, OCR'd) guarantee
+duplicate/variant entities. A **`Resolver`** runs the cascade **blocking →
+matching → merging**: registry/exact-ID (where codes exist) → **normalize-before-
+merge** → embedding similarity → **LLM adjudication** for hard clusters. Ground to
+canonical IDs during extraction to shrink the burden. `[er]` extra (Splink) + LLM
+adjudication via `[llm]`. This is a first-class stage, not an afterthought.
+
+## Sources come from the ingestion layer (D-OP7)
+
+Extractors consume `Source`s produced by `creel.ingest` (files → Markdown for the
+LLM + a structured sidecar with page/cell/char-span/bbox provenance). Route by
+format; prefer structured table parsing over prose flattening. See the
+**`creel-ingestion`** skill.

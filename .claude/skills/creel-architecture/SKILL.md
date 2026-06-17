@@ -9,13 +9,19 @@ creel = `extract(sources, graph_spec, extractors) -> graph`. A typed **Labeled
 Property Graph** (LPG) is the single source of truth; everything downstream is a
 projection. Authoritative design: `misc/docs/research/00-synthesis-and-design-implications.md`
 (decisions D1–D15). Roadmap: `misc/docs/design/ROADMAP.md`. Decision log:
-`misc/docs/design/DECISIONS.md`.
+`misc/docs/design/DECISIONS.md` — which now includes **D-OP7** (ingestion layer,
+report R13) and **D-OP8** (extraction granularity = hybrid class-cluster passes,
+report R14), and the 2026-06-17 resolutions of the open questions (notably **#14
+entity resolution = full cascade**, required because the real corpus is very messy).
 
 ## Module map (single-package spike; uv-workspace split at v0.4 — D-OP3)
 
 ```
 creel/
   facade.py          # extract() — the only public entry point
+  ingest/            # INGESTION layer: files -> Source(s) (D-OP7, R13) [planned]
+                     #   route-by-format + quality-gate; Docling default; markdown +
+                     #   provenance sidecar (page/cell/char-span/bbox). See creel-ingestion.
   spec/              # GRAMMAR layer = graph-definition / SSOT (D1,D3,D7)
     model.py         #   GraphSpec, NodeType, EdgeType, AttrSchema (frozen dataclasses)
     validate.py      #   validate an instance graph against a GraphSpec

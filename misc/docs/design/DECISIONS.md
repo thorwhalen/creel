@@ -89,6 +89,77 @@ everything is recorded here so it can be challenged and changed.
   an `Extractor` ABC (heavier than a Protocol/callable); storing evidence inside
   node/edge attributes (would pollute the canonical graph and break separation).
 
+### D-OP7 — Document ingestion strategy (from research round 2, report R13)
+- **Decision.** creel gains an **ingestion layer** (`creel.ingest`) that turns raw
+  files into `Source`s. Default = **local, structure-preserving,
+  permissively-licensed** extraction (Docling/MIT primary; trafilatura HTML;
+  openpyxl XLSX; python-docx DOCX), emitting **Markdown for the LLM + a structured
+  sidecar carrying page/cell/char-span/bbox provenance**. **Route by format** with a
+  **quality-gate escalation ladder**: cheap local → quality check → OCR/VLM →
+  multimodal model (Claude native PDF + Citations) behind a provider-agnostic
+  `Ingestor`/grounding interface. **Grounding is mandatory in the data model**
+  (every produced unit carries a locator), optional in the backend (coarsest
+  available locator if a backend can't supply coordinates). **License discipline:**
+  no AGPL/GPL (PyMuPDF4LLM, Marker) in the default set.
+- **Rationale.** R13: no single best parser; structured table parsing beats prose
+  flattening for typed-graph extraction; grounding is the cheap audit layer.
+  Reinforces D8 (auditability) and D10 (tiny core; heavy backends are extras).
+- **Rejected.** Single-parser hammer; markitdown as the default (no OCR, no
+  provenance); flattening tables to prose; PyMuPDF4LLM in core (AGPL).
+
+### D-OP8 — Extraction granularity = hybrid class-cluster passes (from R14)
+- **Decision.** The LLM extractor defaults to **hybrid class-cluster passes**:
+  group tightly-coupled node+edge+attribute types into **one** pass; split
+  weakly-coupled classes into their own (parallel) passes; **class-by-class**
+  (SPIRES-style) for large/deep schemas. Mechanics: put the **document first as a
+  cacheable prefix** (enable provider prompt caching), vary only the trailing class
+  instruction, fire passes in a burst, optionally batch; **validate-retry**
+  (Instructor) always; **ground reference/enum fields to stable IDs early**;
+  gleanings/self-consistency only for high-value/low-confidence fields; a
+  **consolidation/entity-resolution stage is REQUIRED** whenever we chunk or split.
+  This requires extending the **binding model so one binding can cover a *cluster*
+  of elements** (invoked once), not strictly one element per invocation.
+- **Rationale.** R14: "lost in the middle" + structured-output schema-complexity
+  degradation favor focused passes; **prompt caching neutralizes the multi-pass
+  cost** (≈"1× document + N× tiny deltas"); SPIRES/GraphRAG/LangExtract precedent.
+- **Rejected.** One giant holistic prompt as the default for non-trivial schemas;
+  the naive "N passes = N× document cost" assumption; reflection loops for bulk
+  low-stakes fields.
+- **Implementation note.** Build the cluster-pass binding model **with** the LLM
+  extractor (EPIC 4.4). The deterministic pattern/function extractors keep the
+  cheap per-element model.
+
+## Resolutions — 2026-06-17 (open questions Q1/Q2/Q7/Q8/Q9 after research round 2)
+
+User accepted my leans on #11/#12/#13/#15; **#14 changed** because the real source
+corpus is confirmed *very messy* (multi-source, field-written, non-native English,
+OCR'd). Recorded here; GitHub issues updated accordingly.
+
+- **#11 (LinkML, Q1) — RESOLVED (lean).** LinkML is an **optional, build-time
+  authoring front-end**; the Python `GraphSpec` (plus a forthcoming JSON/YAML
+  serialization) is the runtime SSOT. Refines D3 (LinkML is a generation
+  convenience, not the spine). Commit only interface-contract artifacts.
+- **#12 (indicator readings, Q2) — RESOLVED (lean), one fact open.** Default to a
+  `measured_by` **attributed edge** for `unhcr-rbm` + build a **per-edge-type
+  `reify()` transform**. The *only* open fact: **AGD-disaggregated values in v1**
+  (→ reify `measured_by` now) vs **aggregate-only** (→ edge now). Decide with #15.
+- **#13 (confidence escalation, Q7) — RESOLVED (lean).** A **separate
+  `ExtractionPolicy`** object resolved by chain (element→type→global). Defaults:
+  validate-retry always; self-consistency on high-value/low-confidence fields
+  (amounts, indicator values); `needs_review` thresholds. Built with the LLM
+  extractor.
+- **#14 (entity resolution, Q8) — CHANGED.** Because docs are very messy,
+  exact-ID/registry resolution alone is insufficient. New decision: a **pluggable
+  `Resolver`** with the **full cascade** — registry/exact-ID (where codes exist) →
+  **normalize-before-merge** → embedding **blocking + similarity** → **LLM
+  adjudication** for hard clusters; **ER/consolidation is a REQUIRED stage**, not
+  optional (R14 §5: blocking→matching→merging). **Ground-to-IDs early** during
+  extraction to shrink the ER burden. `[er]` extra (Splink) + LLM adjudication via
+  `[llm]`. **No longer deferrable** — needed for v1's real corpus.
+- **#15 (temporal, Q9) — RESOLVED (lean).** Defer; **reserve** the
+  `valid_from`/`valid_to`/`observed_at` names + convention. Revisit if extraction
+  **merges across reporting periods** (then it becomes load-bearing; decide with #12).
+
 ## Open questions for the user (from the synthesis §"Open questions")
 
 These are recorded in GitHub as `question`-labelled issues and summarized here:
