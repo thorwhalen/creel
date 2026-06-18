@@ -1,6 +1,19 @@
 ---
 name: creel-extract
-description: Extract a typed property graph from messy sources with creel. Use when the user wants to turn prose, tables, JSON, or PDFs/documents into a clean, typed graph — i.e. run extract(), build a property graph, go sources->graph, use the creel facade, or get started with creel. Triggers on "extract a graph from documents", "build a knowledge/property graph with creel", "creel quickstart", "how do I call extract()", "sources to graph", "turn this prose/table/JSON into a typed graph", "the one-call creel workflow". This is the ENTRY/orchestrator skill: it covers the end-to-end extract(sources, graph_spec, extractors) -> graph call, its keyword args (services, on_missing_binding, resolve, cache), and how to read the returned Graph (nodes, edges, evidence, report, validate_graph, to_canonical_json). Hand off to creel-grammar, creel-bindings, creel-ai, creel-evaluation, creel-projections for the deeper pieces.
+description: >-
+  Extract a typed property graph from messy sources with creel. Use when the user
+  wants to turn prose, tables, JSON, or PDFs/documents into a clean, typed graph —
+  i.e. run extract(), build a property graph, go sources->graph, use the creel
+  facade, or get started with creel. Triggers on "extract a graph from documents",
+  "build a knowledge/property graph with creel", "creel quickstart", "how do I call
+  extract()", "sources to graph", "turn this prose/table/JSON into a typed graph",
+  "ingest a folder of files/PDFs into a graph", "the one-call creel workflow". This
+  is the ENTRY/orchestrator skill: it covers the end-to-end extract(sources,
+  graph_spec, extractors) -> graph call, its keyword args (services,
+  on_missing_binding, resolve, cache), and how to read the returned Graph (nodes,
+  edges, evidence, report, validate_graph, to_canonical_json). Hand off to
+  creel-grammar, creel-bindings, creel-ai, creel-evaluation, creel-projections for
+  the deeper pieces.
 metadata:
   audience: users
 ---
@@ -29,6 +42,40 @@ extract(sources, graph_spec, extractors) -> graph
 3. **`extractors`** — bindings: `{element_id: (strategy, config)}` (or a callable, or
    `ExtractorBindings`). Says *how* to find each node/edge type. **→ skill
    `creel-bindings`** for the strategy catalogue.
+
+## Ingesting files into sources
+
+Handed a folder of files? Turn them into sources first — `ingest` routes by file
+extension to a loader and tags each `Source` with the right `kind`:
+
+```python
+from creel import ingest, ingest_paths
+src    = ingest("report.pdf")                  # one file -> Source(id="report", kind="text", ...)
+bundle = ingest_paths(["a.md", "data.csv"])    # many -> SourceBundle (md->text, csv->table)
+g = extract(bundle, spec, bindings)
+```
+
+`source_id` defaults to the file **stem** (so a `table_map` binding can name it via
+`records_source="data"`); pass `source_id=`/`loader=` to override. Tabular formats
+(`.csv`/`.tsv`/`.xls`/`.xlsx`) load as `table` sources, `.json` as `json`, the rest
+as `text`.
+
+| Extensions | Loader | Needs |
+|---|---|---|
+| `.md` `.txt` `.csv` `.tsv` `.json` | stdlib | core (no extra) |
+| `.pdf` `.docx` `.pptx` | docling | `pip install "creel[ingest]"` |
+| `.html` `.htm` | trafilatura | `creel[ingest]` |
+| `.xls` `.xlsx` | openpyxl | `creel[ingest]` |
+
+```python
+from creel.ingest.loaders import supported_extensions, register_loader
+supported_extensions()        # every routed extension (regardless of backend installed)
+```
+
+A file whose extension routes to an uninstalled backend raises a clear `ImportError`
+("Install with: `pip install 'creel[ingest]'`"); an unknown extension raises
+`ValueError` (pass an explicit `loader=`). Register a custom format with
+`@register_loader(".ext")` over a `(path, *, source_id) -> Source` function.
 
 ## Facade keyword args (all optional, keyword-only past the 3rd)
 

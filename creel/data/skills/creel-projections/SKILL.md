@@ -83,6 +83,13 @@ original = unreify(reified, "funds", node_type="funding")   # back, byte-identic
 Per-edge-type: other edges are untouched. `node_type`/connector names must be fresh
 (it raises otherwise, so `unreify` can tell reified structure from real data).
 
+**Time series:** carry a measurement over time as **parallel period-keyed edges**
+(one edge per period), and `reify` an edge into a node only when it goes n-ary
+(needs its own `Period`/`Source`/disaggregation nodes). For timestamps, use the
+reserved keys in `creel.temporal` — `valid_from`/`valid_to`/`observed_at`/
+`recorded_at` (exposed as `RESERVED`; `is_temporal_attribute(name)` tests
+membership). They are a **convention, not enforced** by the grammar.
+
 ## view — projections for tables, DataFrames, and zero-config visualisation
 
 `creel.view` projects to the shapes downstream tools want. These are **not**
@@ -142,7 +149,7 @@ attr  = Annotation("a3", target=("f:1", "amount"), body="verified")    # per-att
 
 `AnnotatedGraph(graph, annotations=..., presentation=...)` is the three-layer render
 **contract**; a `GraphRenderer` is a `runtime_checkable` Protocol
-(`render(annotated, *, options=None) -> RenderArtifact`). creel ships the contract;
+(`render(graph: AnnotatedGraph, *, options=None) -> RenderArtifact`). creel ships the contract;
 concrete renderers are consumer-package work — build them on the `view` projections.
 
 ## trace — source ↔ graph, both ways

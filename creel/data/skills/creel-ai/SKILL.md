@@ -1,6 +1,17 @@
 ---
 name: creel-ai
-description: Use a real LLM with creel — wire an injected LLM client, run AI-powered graph extraction, and judge/resolve with a model. Use when the user wants schema-as-extractor extraction, to inject an LLM client (services={'llm': aix_client()} or anthropic_client()), the ('llm', {}) binding, an LLM judge for llm_rubric verification, LLM entity resolution, self-consistency policy, or to test LLM code with a fake client. Triggers on "use a real LLM with creel", "extract with an LLM / GPT / Claude", "schema-as-extractor", "inject an LLM client", "aix_client / anthropic_client", "services={'llm':...}", "the ('llm',{}) binding", "LLM as a judge", "LLM entity resolution", "self-consistency voting", "ExtractionPolicy", "AI-powered graph extraction", "fake LLM client for tests". The LLM is a swappable strategy — no provider SDK lives in creel's core.
+description: >-
+  Use a real LLM with creel — wire an injected LLM client, run AI-powered graph
+  extraction, and judge/resolve with a model. Use when the user wants
+  schema-as-extractor extraction, to inject an LLM client (services={'llm':
+  aix_client()} or anthropic_client()), the ('llm', {}) binding, an LLM judge for
+  llm_rubric verification, LLM entity resolution, self-consistency policy, or to
+  test LLM code with a fake client. Triggers on "use a real LLM with creel",
+  "extract with an LLM / GPT / Claude", "schema-as-extractor", "inject an LLM
+  client", "aix_client / anthropic_client", "services={'llm':...}", "the
+  ('llm',{}) binding", "LLM as a judge", "LLM entity resolution", "self-consistency
+  voting", "ExtractionPolicy", "AI-powered graph extraction", "fake LLM client for
+  tests". The LLM is a swappable strategy — no provider SDK lives in creel's core.
 metadata:
   audience: users
 ---
@@ -15,6 +26,7 @@ client through `services={"llm": ...}`. The extractor is fully testable with a f
 
 ```python
 pip install creel[aix]        # default provider client (uses aix's configured model)
+# creel[llm] is an alias for creel[aix] (the default provider)
 # or: pip install creel[anthropic]   # a thin direct-SDK Anthropic client
 ```
 
@@ -36,7 +48,10 @@ g = extract(
 )
 ```
 
-`("llm", {})` selects the `LLMExtractor`. (See **creel-bindings** for the strategy
+`("llm", {})` selects the `LLMExtractor` (one element type per call). To pull
+several **coupled** types out of one LLM pass (e.g. donors *and* their funding
+edges, keeping them consistent), use the `cluster_llm` strategy with a cluster
+binding instead — see **creel-bindings**. (See **creel-bindings** for the strategy
 slot, **creel-extract** for the facade `services=` arg.) Unbound elements with
 `on_missing_binding="schema_as_extractor"` (the default) route to the *same* LLM
 strategy automatically — but still need `services={"llm": ...}`.
@@ -98,10 +113,13 @@ policy = ExtractionPolicy(
     max_retries=2,                # validate-retry attempts
 )
 g = extract(src, spec, {"donor": ("llm", {})},
-            services={"llm": client, "policy": policy})   # or config={"policy": policy}
+            services={"llm": client, "policy": policy})   # global policy for the run
 ```
 
-Per-element / per-type overrides resolve most-specific-first:
+Inject the policy one of two ways: globally via `services={"policy": policy}` (above),
+or per-binding via the strategy config — `("llm", {"policy": policy})` — which wins
+for that element. (There is no `config=` argument on `extract()`.) Per-element /
+per-type overrides inside one policy resolve most-specific-first:
 `ExtractionPolicy(overrides={"donor": ExtractionPolicy(self_consistency_samples=5)})`.
 
 ## 6. An LLM as a judge (verification)

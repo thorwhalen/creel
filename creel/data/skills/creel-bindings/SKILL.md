@@ -7,9 +7,11 @@ description: >-
   prose, or table_map/sql/json_query over structured sources. Covers the binding
   mental model ({element_id: (strategy, params)} or a bare callable), id
   templates and casts, endpoint templates for edges, exclude_groups, cluster
-  bindings, and how unbound elements behave. Trigger on: map grammar elements to
+  bindings (cluster_llm), registering a custom extractor strategy, and how unbound
+  elements behave (on_missing_binding). Trigger on: map grammar elements to
   extractors, route prose to regex and tables to query, bind a funds/measures
-  edge, derive node ids, id_template/id_from, fix a binding error.
+  edge, derive node ids, id_template/id_from, register_extractor a custom strategy,
+  cluster_llm one-pass extraction, on_missing_binding, fix a binding error.
 metadata:
   audience: users
 ---
@@ -39,12 +41,16 @@ bindings = {
   config as **pure data** (no engine internals interpolated from untrusted input).
 - A **bare callable** `(ExtractionContext) -> Extraction` is used directly — your
   escape hatch when no declarative strategy fits.
-- `params` are exactly the strategy's keyword arguments. A malformed config raises
-  an informative `ValueError` **naming the element and strategy**, e.g.
-  `binding for 'donor' ('regex_node') has invalid params {...}`.
+- `params` are exactly the strategy's keyword arguments. The **pattern** strategies
+  validate them strictly: a malformed config raises an informative `ValueError`
+  **naming the element and strategy**, e.g. `binding for 'donor' ('regex_node') has
+  invalid params {...}`. The **query** strategies are more permissive — they ignore
+  unrecognised keys, so a typo in an `attributes`/column key fails *silently* (no
+  error, just a missing attribute). Double-check query mappings.
 
 `available_extractors()` lists registered strategy names; built-ins are
-`regex_node`, `regex_edge`, `function`, `table_map`, `sql`, `json_query`, `llm`.
+`regex_node`, `regex_edge`, `function`, `table_map`, `sql`, `json_query`, `llm`,
+and `cluster_llm` (one LLM pass over several coupled types — see *Cluster binding*).
 
 **Route by source shape (decision D5 — cheapest strategy that fits):**
 
@@ -62,7 +68,9 @@ casefolded, Unicode alphanumerics kept, the rest collapsed to single dashes
 (`"Foundation Alpha"` → `foundation-alpha`). Same input → same id → one-line
 diffs. Three ways to get a node id: `id_template="output:{output_code}"` (format
 over record/groups), `id_from="code"` (slug one column — table strategies only),
-or neither (falls back to `type:<index>` for tables, a content hash for regex).
+or neither — the fallback is `type:<row-index>` for table/query strategies and a
+slug of the **whole matched text** for regex (no hashing anywhere; ids stay
+human-readable and stable).
 
 ## Pattern family — prose → regex (no extra deps)
 
@@ -72,13 +80,13 @@ attributes**.
 ```python
 "donor": ("regex_node", {
     "pattern": r"Donor:\s*(?P<name>[A-Za-z ]+?)\s*\(ref\s*(?P<org_code>\d+)\)",
-    "id_attribute": "name",          # slug of this group is the id; else hash(match)
+    "id_attribute": "name",          # slug of this group is the id; else slug the whole match
     "casts": {"org_code": "int"},    # cast captured strings where the grammar wants numbers
 })
 ```
 
 - `node_type` defaults to the element id; `flags` passes `re.IGNORECASE` etc.
-- `id_attribute` picks which group seeds the id; omit it to hash the whole match.
+- `id_attribute` picks which group seeds the id; omit it to slug the whole matched text.
 
 **`regex_edge`** — each match becomes a first-class edge. Endpoint node ids are
 built from **templates over the captured groups**; groups consumed only as
@@ -151,15 +159,48 @@ expression, optional `where` equality/comparison filter
 When several types come out of **one** extractor call (e.g. an LLM returning
 donors *and* their funding edges together), bind them as a cluster via the dict
 form with `elements` so the extractor runs **once** for the whole set, not per
-element (D-OP8). `element_id` is then just a label.
+element (D-OP8). The dict's `element_id` key is then just a label.
+
+Use the **`cluster_llm`** strategy: it reads the whole `elements` set, asks for one
+JSON array per type, and emits instances of *each* in a single pass — preserving
+the cross-type consistency that separate passes would break. (Plain `("llm", {})`
+only emits its *one* element type, so it is the wrong choice for a cluster.)
 
 ```python
-"donors_and_funds": {"strategy": "llm", "config": {...},
-                     "elements": ("donor", "funds")},  # one pass populates both
+"donors_and_funds": {"strategy": "cluster_llm", "config": {},
+                     "elements": ("donor", "funds")},  # emits BOTH in one pass
 ```
 
 Most pattern/table bindings stay per-element; reach for a cluster only when the
-types are genuinely produced together.
+types are genuinely produced together (needs `services={"llm": ...}` — see `creel-ai`).
+
+## Custom strategies — register once, name everywhere
+
+A one-off needs no registration: pass a bare `(ExtractionContext) -> Extraction`
+callable as the binding value (the escape hatch). When a strategy is **reusable**
+across bindings, register a factory `(**config) -> Extractor` under a name and then
+refer to it by string like any built-in (open-closed — new mechanisms plug in
+without touching old ones):
+
+```python
+from creel import register_extractor, Extraction, ExtractedNode
+
+@register_extractor("upper_words")          # factory: (**config) -> Extractor
+def make_upper_words(*, min_len=2):
+    def extract_upper(ctx):                  # an Extractor: (ExtractionContext) -> Extraction
+        text = "\n".join(s.content for s in ctx.sources.texts())
+        return Extraction(nodes=[
+            ExtractedNode(id=f"{ctx.element_type.id}:{w.lower()}",
+                          type=ctx.element_type.id, attributes={"name": w})
+            for w in text.split() if w.isupper() and len(w) >= min_len])
+    return extract_upper
+
+bindings = {"org": ("upper_words", {"min_len": 2})}   # now usable by name; in available_extractors()
+```
+
+Third-party packages can ship strategies via the `creel.extractors` entry-point
+group — they auto-register on import, so `available_extractors()` picks them up with
+no wiring. (Custom *verifiers* register the same way — see `creel-evaluation`.)
 
 ## Unbound elements — `on_missing_binding`
 

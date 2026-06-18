@@ -21,15 +21,17 @@ slides/reports — is a *projection* of that one graph.
 ```bash
 pip install creel                 # core: pydantic, jsonschema, networkx
 pip install "creel[query]"        # SQL/JSON query extractors (duckdb, jmespath)
-pip install "creel[ingest]"       # document loaders (docling, trafilatura, openpyxl, python-docx)
+pip install "creel[ingest]"       # file loaders: PDF/DOCX/PPTX via docling, HTML via trafilatura, XLSX via openpyxl
 pip install "creel[aix]"          # real LLM extraction/judging/embedding via aix (default)
 pip install "creel[anthropic]"    # real LLM extraction via the Anthropic SDK directly
-pip install "creel[semantic]"     # LinkML authoring + RDF-star/Turtle export (linkml, rdflib)
+pip install "creel[semantic]"     # LinkML .yaml round-trip + RDF/SHACL validation (pyyaml, linkml, rdflib, pyshacl)
 ```
 
-Other extras: `graphdb` (Neo4j/Oxigraph), `er` (Splink entity resolution), `eval`
-(DeepEval), `ocr`. The headline ones above cover most use; `pip install "creel[llm]"`
-is an alias for the default provider (`aix`).
+LinkML *dict* authoring and RDF-star/Turtle *export* are pure-Python and need no
+extra — `[semantic]` only adds `.yaml`-file authoring and downstream validators.
+Other extras reserve optional backends: `graphdb` (Neo4j/Oxigraph), `er` (Splink),
+`eval` (DeepEval), `ocr` (Tesseract). The headline ones above cover most use;
+`pip install "creel[llm]"` is an alias for the default provider (`aix`).
 
 ## A first taste
 

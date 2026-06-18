@@ -111,8 +111,8 @@ taxonomy.
 ## Validate the grammar, then an instance
 
 `validate_spec(spec)` checks the grammar's own integrity (every edge endpoint and
-every `is_a` parent resolves to a declared node-type). It returns a list of issues
-— empty means sound:
+every node-type's `is_a` parent resolves to a declared node-type). It returns a
+list of issues — empty means sound:
 
 ```python
 from creel.spec.validate import validate_spec, validate_graph

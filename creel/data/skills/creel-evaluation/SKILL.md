@@ -64,8 +64,9 @@ evaluation. It is **decomposable partial credit, not all-or-nothing**:
   only the components that actually measured something — an empty extraction scores
   `0`, not a vacuous `0.667`.
 
-`verdict.details` carries the full breakdown: `details["nodes"]` and
-`details["edges"]` (P/R/F1 plus `missing`/`extra` ids), and
+`verdict.details` carries the full breakdown: `details["nodes"]` (P/R/F1 plus the
+`missing`/`extra` id lists), `details["edges"]` (P/R/F1 plus
+`matched`/`expected_total`/`actual_total` counts), and
 `details["attributes"]["mismatches"]` — a list of
 `{kind, id, attr, expected, actual, reason}` for every attribute that failed its
 sub-verifier. That is your debugging report: it tells you *which* edge's *which*
@@ -94,6 +95,37 @@ D9), and tests stay deterministic with a fake judge. A judge is any callable
 **raises** if no judge is in `context.services`. (`schema_description_verifier`
 builds the default rubric seeded from an element's schema `description` — the dual
 of schema-as-extractor.) For a real judge, see **creel-ai**.
+
+## Name a verifier by string; register your own
+
+Every kind is registered, so you can build one **by name** instead of importing the
+class — handy when the choice travels as data (a corpus case, a binding, config):
+
+```python
+from creel import build_verifier, available_verifiers
+available_verifiers()                                  # the registered kind names
+v = build_verifier("numeric_tolerance", abs_tol=1.0)   # == NumericTolerance(abs_tol=1.0)
+```
+
+When no built-in kind is *right*, register your own — a `Verifier` is just a callable
+`(actual, expected, *, context) -> Verdict`, and `register_verifier` makes it
+name-addressable (the dual of `register_extractor` in **creel-bindings**):
+
+```python
+from creel import register_verifier
+from creel.verify.protocol import Verdict
+
+@register_verifier("startswith")           # factory: (**config) -> Verifier
+def make_startswith(*, n=3):
+    def verify(actual, expected, *, context=None):
+        ok = str(actual)[:n] == str(expected)[:n]
+        return Verdict(score=1.0 if ok else 0.0, passed=ok, reason=f"first {n} chars")
+    return verify
+```
+
+Now `"startswith"` works wherever a kind string does — including a `GraphMatch`
+`attribute_verifiers` entry built via `build_verifier("startswith", n=4)`. (The
+built-in `predicate` kind is the registered form of `SchemaConstraint(predicate=...)`.)
 
 ## Building a test corpus case
 

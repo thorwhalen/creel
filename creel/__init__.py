@@ -9,11 +9,16 @@ Conceptually the package is one parameterised facade::
 
     extract(sources, graph_spec, extractors) -> graph
 
-This ``v0.1`` exposes the grammar (:mod:`creel.spec`), the graph model + canonical
-JSON (:mod:`creel.graph`), and the ``extract`` facade with the deterministic
-pattern/function extractor family (:mod:`creel.extract`). The query and LLM
-strategies and the verifier subsystem arrive in subsequent milestones — see
-``misc/docs/design/ROADMAP.md``.
+It exposes the grammar (:mod:`creel.spec`), the graph model + canonical JSON
+(:mod:`creel.graph`), and the ``extract`` facade with all three extractor families:
+deterministic pattern/function (:mod:`creel.extract`), query
+(:mod:`creel.extract.query` — ``table_map``/``sql``/``json_query``), and
+LLM/schema-as-extractor (:mod:`creel.extract.llm`). Around the facade sit the
+pluggable verifier subsystem (:mod:`creel.verify`) and its corpus runner
+(:mod:`creel.evaluation`), file ingestion (:mod:`creel.ingest`), entity resolution
+(:mod:`creel.resolve`), the reify edge⇄node toggle (:mod:`creel.reify`), and the
+downstream view/export projections (:mod:`creel.view`, :mod:`creel.export`). See
+``misc/docs/design/ROADMAP.md`` for the design history.
 """
 
 from creel.bindings import ExtractorBinding, ExtractorBindings
