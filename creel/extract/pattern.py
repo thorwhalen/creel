@@ -112,7 +112,9 @@ class RegexEdgeExtractor:
         edge_type = self.edge_type or ctx.element_id
         regex = re.compile(self.pattern, self.flags)
         edges: list[ExtractedEdge] = []
-        i = -1  # global across sources: identical matches in two sources must not collide
+        i = (
+            -1
+        )  # global across sources: identical matches in two sources must not collide
         for src in ctx.sources.texts():
             text = src.content
             for match in regex.finditer(text):

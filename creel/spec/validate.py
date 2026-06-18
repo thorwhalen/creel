@@ -76,11 +76,16 @@ def validate_spec(spec: GraphSpec) -> list[ValidationIssue]:
     issues: list[ValidationIssue] = []
     node_ids = {nt.id for nt in spec.node_types}
     for et in spec.edge_types:
-        for role, expected in (("subject", et.subject_type), ("object", et.object_type)):
+        for role, expected in (
+            ("subject", et.subject_type),
+            ("object", et.object_type),
+        ):
             if expected is not None and expected not in node_ids:
                 issues.append(
                     ValidationIssue(
-                        "spec", et.id, "unknown-endpoint-type",
+                        "spec",
+                        et.id,
+                        "unknown-endpoint-type",
                         f"{role}_type {expected!r} is not a declared node type",
                     )
                 )
@@ -88,7 +93,9 @@ def validate_spec(spec: GraphSpec) -> list[ValidationIssue]:
         if nt.is_a is not None and nt.is_a not in node_ids:
             issues.append(
                 ValidationIssue(
-                    "spec", nt.id, "unknown-parent-type",
+                    "spec",
+                    nt.id,
+                    "unknown-parent-type",
                     f"is_a {nt.is_a!r} is not a declared node type",
                 )
             )

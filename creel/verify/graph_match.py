@@ -111,8 +111,14 @@ class GraphMatch:
                 used_exp.add(ei)
                 used_act.add(ai)
                 self._score_element(
-                    cands[ai], exp_edges[ei], type_id, spec, context,
-                    scores, mismatches, "edge",
+                    cands[ai],
+                    exp_edges[ei],
+                    type_id,
+                    spec,
+                    context,
+                    scores,
+                    mismatches,
+                    "edge",
                 )
         score = sum(scores) / len(scores) if scores else 1.0
         return {"score": score, "compared": len(scores), "mismatches": mismatches}

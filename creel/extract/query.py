@@ -184,7 +184,7 @@ def _duckdb_query(rows: list[dict], sql: str, params: list) -> list[dict]:
             cols = list(rows[0].keys())
             quoted = ", ".join(_qident(c) for c in cols)
             con.execute(
-                f'CREATE TABLE t ({", ".join(f"{_qident(c)} VARCHAR" for c in cols)})'
+                f"CREATE TABLE t ({', '.join(f'{_qident(c)} VARCHAR' for c in cols)})"
             )
             con.executemany(
                 f"INSERT INTO t ({quoted}) VALUES ({', '.join('?' for _ in cols)})",

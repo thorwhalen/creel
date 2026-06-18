@@ -212,7 +212,9 @@ def resolve_graph(graph: Graph, resolver: Resolver, *, context: Any = None) -> G
         )
         if edge.id in graph.evidence:
             merged.evidence[edge.id] = graph.evidence[edge.id]
-        for attr, ev in attr_evidence.get(edge.id, ()):  # per-attribute edge evidence (A1)
+        for attr, ev in attr_evidence.get(
+            edge.id, ()
+        ):  # per-attribute edge evidence (A1)
             merged.evidence[(edge.id, attr)] = ev
 
     merged.report["merges"] = merges

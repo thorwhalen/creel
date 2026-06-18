@@ -87,7 +87,11 @@ def extract(
     if default_llm_fallback and "llm" not in services:
         # Elements routed to the default schema-as-extractor LLM fallback need a
         # client; fail early and actionably rather than deep inside the extractor.
-        routed = [s.element_id for s in plan.steps if s.binding_source == "schema_as_extractor"]
+        routed = [
+            s.element_id
+            for s in plan.steps
+            if s.binding_source == "schema_as_extractor"
+        ]
         if routed:
             raise ValueError(
                 f"elements {routed} have no extractor binding, and the default "
