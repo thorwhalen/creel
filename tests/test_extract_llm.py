@@ -35,12 +35,12 @@ DONOR_SPEC = GraphSpec(
     node_types=(
         NodeType("donor", description="An entity that provides funding.", attributes=(
             AttrSchema("name", required=True, description="The donor's official name."),
-            AttrSchema("dac_code", pattern=r"^\d{3,5}$"),
+            AttrSchema("org_code", pattern=r"^\d{3,5}$"),
             AttrSchema("preferred_currency", range="Currency"),
         )),
     ),
 )
-SOURCE = "Donor: Government of Norway (DAC 301), prefers USD."
+SOURCE = "Donor: Foundation Alpha (ref 301), prefers USD."
 
 
 def _ctx(element_id, spec, source, services):
@@ -72,22 +72,22 @@ def test_build_instruction_mentions_descriptions_and_constraints():
 
 def test_llm_extractor_schema_as_extractor():
     llm = FakeLLM(by_element={"donor": [
-        {"name": "Government of Norway", "dac_code": "301", "preferred_currency": "USD"}]})
+        {"name": "Foundation Alpha", "org_code": "301", "preferred_currency": "USD"}]})
     out = LLMExtractor()(_ctx("donor", DONOR_SPEC, SOURCE, {"llm": llm}))
     assert len(out.nodes) == 1
     node = out.nodes[0]
-    assert node.id == "donor:government-of-norway"
-    assert node.attributes["dac_code"] == "301"
+    assert node.id == "donor:foundation-alpha"
+    assert node.attributes["org_code"] == "301"
     # grounded: the name appears verbatim in the source -> verified, confidence recorded
     assert node.evidence.confidence.verified is True
     assert node.evidence.grounding[0].kind == "TextQuoteSelector"
 
 
 def test_validate_retry_reasks_then_succeeds():
-    bad = {"items": [{"name": "Norway", "preferred_currency": "GBP"}]}   # GBP not in Currency
-    good = {"items": [{"name": "Norway", "preferred_currency": "USD"}]}
+    bad = {"items": [{"name": "Foundation Alpha", "preferred_currency": "GBP"}]}   # GBP not in Currency
+    good = {"items": [{"name": "Foundation Alpha", "preferred_currency": "USD"}]}
     llm = FakeLLM(sequence=[bad, good])
-    out = LLMExtractor(max_retries=2)(_ctx("donor", DONOR_SPEC, "Norway prefers USD.", {"llm": llm}))
+    out = LLMExtractor(max_retries=2)(_ctx("donor", DONOR_SPEC, "Foundation Alpha prefers USD.", {"llm": llm}))
     assert out.nodes[0].attributes["preferred_currency"] == "USD"
     assert len(llm.calls) == 2  # retried once
     assert "fix them" in llm.calls[1]  # feedback included the validation problem
@@ -114,9 +114,9 @@ def test_facade_uses_schema_as_extractor_fallback_with_injected_llm():
     ))
     llm = FakeLLM(by_element={
         "donor": [{"name": "Gov X"}],
-        "project": [{"title": "WASH"}],
+        "project": [{"title": "Water"}],
     })
     # No bindings: every element falls back to the schema-as-extractor LLM strategy.
-    g = extract("Gov X funds WASH.", spec, None, services={"llm": llm},
+    g = extract("Gov X funds Water.", spec, None, services={"llm": llm},
                 on_missing_binding="schema_as_extractor")
-    assert {n.id for n in g.nodes()} == {"donor:gov-x", "project:wash"}
+    assert {n.id for n in g.nodes()} == {"donor:gov-x", "project:water"}

@@ -48,7 +48,7 @@ def test_range_type_violation(sample_spec):
 
 def test_pattern_violation(sample_spec):
     g = Graph()
-    g.add_node("d:1", types=("donor",), attributes={"name": "D", "dac_code": "XX"})
+    g.add_node("d:1", types=("donor",), attributes={"name": "D", "org_code": "XX"})
     assert "pattern" in _codes(validate_graph(g, sample_spec))
 
 

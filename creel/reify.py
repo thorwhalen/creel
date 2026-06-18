@@ -7,7 +7,7 @@ two connector edges; :func:`unreify` inverts it. The pair is **lossless** — a
 round-trip reproduces the original graph (a tested invariant).
 
 Use it per-edge-type, on demand, when a relation becomes genuinely n-ary — e.g. an
-indicator reading that needs shared ``Period``/``Source``/AGD-dimension nodes, or that
+indicator reading that needs shared ``Period``/``Source``/disaggregation-dimension nodes, or that
 will be merged across reporting periods (the node-based resolver then dedups it; see
 :mod:`creel.resolve`). Until then, keep the simpler attributed edge (decision #12).
 

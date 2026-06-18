@@ -36,8 +36,8 @@ spec = GraphSpec(
 )
 
 # 2) Heterogeneous sources: prose (regex) + a table (declarative query).
-prose = Source("agreement", "Donor: Gov X\nProject: WASH\nGov X funds WASH with USD 1000000")
-table = Source("outputs", [{"project": "WASH", "code": "OP-1", "statement": "Water delivered"}],
+prose = Source("agreement", "Donor: Gov X\nProject: Water\nGov X funds Water with USD 1000000")
+table = Source("outputs", [{"project": "Water", "code": "OP-1", "statement": "Water delivered"}],
                kind="table")
 
 bindings = {

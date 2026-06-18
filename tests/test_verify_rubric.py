@@ -21,7 +21,7 @@ def _judge_returning(score, reason="because"):
 def test_llm_rubric_uses_injected_judge():
     ctx = VerificationContext(services={"judge": _judge_returning(1.0, "matches intent")})
     v = LLMRubric(criterion="The statement expresses an outcome about protection.")
-    verdict = v("Refugees access protection services", "...", context=ctx)
+    verdict = v("Beneficiaries access protection services", "...", context=ctx)
     assert verdict.passed and verdict.score == 1.0
     assert verdict.reason == "matches intent"  # reason is mandatory and retained
 
@@ -57,7 +57,7 @@ def test_llm_rubric_prompt_contains_criterion_and_candidate():
 
 
 def test_schema_as_verifier_default_seeds_from_description():
-    et = NodeType("outcome", description="A measurable change in the lives of people of concern.")
+    et = NodeType("outcome", description="A measurable change in the lives of the served population.")
     v = schema_description_verifier(et)
     assert isinstance(v, LLMRubric)
     assert "measurable change" in v.criterion

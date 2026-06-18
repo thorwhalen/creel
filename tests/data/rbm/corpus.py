@@ -1,24 +1,25 @@
-"""The UNHCR RBM mini-corpus: grammar, extractors, expected graph & verifiers.
+"""The RBM mini-corpus: grammar, extractors, expected graph & verifiers.
 
-This is creel's first-consumer integration fixture (decision D14, EPIC 7). It models
-a faithful slice of the UNHCR results model — donors, projects, cross-cutting areas,
-outputs, outcomes, indicators, and **AGD-disaggregated readings** — with funding
+This is creel's reference integration fixture (decision D14, EPIC 7). It models a
+synthetic results-based-management (RBM) domain — donors, projects, cross-cutting
+areas, outputs, outcomes, indicators, and **disaggregated readings** — with funding
 amounts **on edges** and indicator values on reified **reading nodes** (decision #12:
 a disaggregated reading is n-ary, so it is promoted to a node sliceable by
-sex/age/location). It extracts from four synthetic-but-realistic sources using the
-deterministic strategy families available today:
+sex/age/location). It extracts from four synthetic sources using the deterministic
+strategy families available today:
 
 - a prose donor agreement  -> ``regex_node`` / ``regex_edge`` (donors, projects,
   cross-cutting areas; ``funds`` and ``addresses`` edges);
 - a results matrix CSV      -> ``table_map`` (outputs, outcomes; ``delivers`` /
   ``contributes_to`` edges);
 - an indicators CSV         -> ``table_map`` (indicator definition nodes);
-- a readings CSV            -> ``table_map`` (AGD-disaggregated ``reading`` nodes +
+- a readings CSV            -> ``table_map`` (disaggregated ``reading`` nodes +
   ``measures`` / ``assesses`` edges to the indicator and output).
 
-It graduates to the ``creel-unhcr`` package at v0.4. The expected graph lives in
-``expected_graph.json``; regenerate it with ``python -m tests.data.unhcr.corpus``
-(or by running this file) after an intentional grammar/extractor change.
+The entities here are invented; the corpus exists only to exercise the engine
+end-to-end. The expected graph lives in ``expected_graph.json``; regenerate it with
+``python -m tests.data.rbm.corpus`` (or by running this file) after an intentional
+grammar/extractor change.
 """
 
 from __future__ import annotations
@@ -39,16 +40,16 @@ EXPECTED = DIR / "expected_graph.json"
 
 # --- grammar ------------------------------------------------------------------
 def build_spec() -> GraphSpec:
-    """The ``unhcr-rbm`` mini grammar (COMPASS-flavoured taxonomy + IATI-shaped edges)."""
+    """The ``rbm`` mini grammar (results-framework taxonomy + standard-shaped edges)."""
     return GraphSpec(
-        id="unhcr-rbm",
+        id="rbm",
         version="0.1.0",
-        description="UNHCR results-based-management mini grammar (synthetic).",
+        description="RBM results-based-management mini grammar (synthetic).",
         enums=(
             EnumDef("Currency", ("USD", "EUR", "CHF")),
             EnumDef("TransactionType", ("commitment", "disbursement")),
             EnumDef("Measure", ("number", "percentage")),
-            # AGD disaggregation dimensions (age / gender / diversity) — UNHCR core.
+            # disaggregation dimensions (age / sex / location) — core to RBM reporting.
             EnumDef("Sex", ("total", "female", "male", "other")),
             EnumDef("AgeGroup", ("total", "0-4", "5-11", "12-17", "18-59", "60plus")),
         ),
@@ -56,11 +57,11 @@ def build_spec() -> GraphSpec:
             NodeType("result", abstract=True,
                      attributes=(AttrSchema("statement", required=True,
                                             description="The results statement (a measurable change)."),)),
-            NodeType("outcome", is_a="result", description="A change in the lives of people of concern."),
+            NodeType("outcome", is_a="result", description="A change in the lives of the served population."),
             NodeType("output", is_a="result", description="A product or service delivered by a project."),
             NodeType("donor", attributes=(
                 AttrSchema("name", required=True),
-                AttrSchema("dac_code", pattern=r"^\d{3,5}$"),
+                AttrSchema("org_code", pattern=r"^\d{3,5}$"),
             )),
             NodeType("project", attributes=(
                 AttrSchema("title", required=True),
@@ -71,7 +72,7 @@ def build_spec() -> GraphSpec:
                 AttrSchema("measure", range="Measure"),
             )),
             NodeType("cross_cutting_area", attributes=(AttrSchema("name", required=True),)),
-            # A reified, AGD-disaggregated indicator READING (n-ary: indicator + output
+            # A reified, disaggregated indicator READING (n-ary: indicator + output
             # + value + period + disaggregation). Promoted to a node (decision #12) so
             # readings can be sliced by sex/age/location and merged across periods.
             NodeType("reading", description="A disaggregated measurement of an indicator.",
@@ -130,7 +131,7 @@ def build_bindings() -> dict:
     return {
         # prose -> pattern extractors
         "donor": ("regex_node", {
-            "pattern": r"Donor:\s*(?P<name>[A-Za-z ]+?)\s*\(DAC\s*(?P<dac_code>\d+)\)",
+            "pattern": r"Donor:\s*(?P<name>[A-Za-z ]+?)\s*\(ref\s*(?P<org_code>\d+)\)",
             "id_attribute": "name"}),
         "project": ("regex_node", {
             "pattern": r"Project:\s*(?P<title>[A-Za-z ]+?)\s*\((?P<code>PRJ-\d+)\)",
@@ -164,7 +165,7 @@ def build_bindings() -> dict:
             "records_source": "indicators", "kind": "node", "type": "indicator",
             "id_template": "indicator:{indicator_code}",
             "attributes": {"name": "indicator_name", "measure": "measure"}}),
-        # readings CSV -> AGD-disaggregated reading nodes + their two relation edges
+        # readings CSV -> disaggregated reading nodes + their two relation edges
         "reading": ("table_map", {
             "records_source": "readings", "kind": "node", "type": "reading",
             "id_template": "reading:{indicator_code}-{sex}-{age_group}-{location}-{period}",
@@ -203,7 +204,7 @@ def build_case() -> CorpusCase:
     """Assemble the full :class:`CorpusCase` (loads the committed expected graph)."""
     expected = from_canonical_json(EXPECTED.read_text()) if EXPECTED.exists() else None
     return CorpusCase(
-        name="unhcr-rbm",
+        name="rbm",
         sources=load_sources(),
         spec=build_spec(),
         bindings=build_bindings(),

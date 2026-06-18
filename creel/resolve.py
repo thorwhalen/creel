@@ -1,8 +1,8 @@
 """Entity resolution — merge nodes that name the same real entity (decision #14 / D-OP8).
 
 Messy multi-source documents (field-written, non-native English, OCR'd) name the
-same entity in different ways — "Government of Norway" / "Norway (Govt.)" /
-"Norwegian MFA". Per the changed decision #14 (report R14 §5), resolution is a
+same entity in different ways — "Foundation Alpha" / "Alpha Fnd. (MFA)" /
+"the Alpha foundation". Per the changed decision #14 (report R14 §5), resolution is a
 **required**, pluggable cascade — *blocking → matching → merging* — defaulting to
 cheap deterministic strategies (exact id → normalize-before-merge → registry) with
 hooks for embedding/LLM adjudication.
@@ -92,7 +92,7 @@ class NormalizeResolver:
 
 @dataclass
 class RegistryResolver:
-    """Resolve mentions to canonical ids via an authoritative lookup table (e.g. IATI/DAC)."""
+    """Resolve mentions to canonical ids via an authoritative lookup table (an org registry)."""
 
     registry: Mapping[str, str]
     key: str = "name"

@@ -70,14 +70,14 @@ def test_semantic_similarity_lexical_fallback():
 
 def test_semantic_similarity_with_injected_embedder():
     # tiny fake embedder: bag-of-words vector over a fixed vocab
-    vocab = ["clean", "water", "shelter"]
+    vocab = ["clean", "water", "housing"]
     def embed(text):
         words = text.lower().split()
         return [float(words.count(w)) for w in vocab]
     ctx = VerificationContext(services={"embedder": embed})
     v = SemanticSimilarity(threshold=0.99)
     assert v("clean water", "water clean", context=ctx).passed  # same bag → cosine 1
-    assert not v("clean water", "shelter shelter", context=ctx).passed
+    assert not v("clean water", "housing housing", context=ctx).passed
 
 
 def test_composite_weighted():

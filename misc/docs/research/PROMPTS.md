@@ -16,7 +16,7 @@ graph from heterogeneous sources, **(with what)** the existing open-source
 landscape we should build on, **(persist/query)** graph databases and query
 languages, **(trust)** provenance/auditability, **(evaluate)** verification and
 LLM-as-judge evaluation, **(consume)** downstream RAG and rendering, **(domain)**
-the first UNHCR results-based-management use case, and **(architecture)** the
+the first results-based-management consumer use case, and **(architecture)** the
 pluggable strategy-based software design.
 
 ---
@@ -35,7 +35,7 @@ pluggable strategy-based software design.
 | 08 | `extraction-evaluation-verifiers` | Evaluation, verifiers & LLM-as-judge | Creel's evaluation system (user-emphasized) |
 | 09 | `graphrag-knowledge-bases` | GraphRAG & graph knowledge bases | Downstream consumer §6.1 |
 | 10 | `graph-rendering-media` | Graph rendering, annotation & media generation | Downstream consumer §6.2 ("one model, many views") |
-| 11 | `rbm-logframe-domain` | Results-based management & logframe domain (UNHCR) | First use case's domain ontology + test data |
+| 11 | `rbm-logframe-domain` | Results-based management & logframe domain | First use case's domain ontology + test data |
 | 12 | `pluggable-extraction-architecture` | Pluggable strategy-based extraction architecture | The package's software design posture |
 
 ---
@@ -215,25 +215,26 @@ input shape it expects and how a typed graph + annotation overlay would map onto
 it. Recommend a renderer-plugin interface for creel's consumer packages and the
 minimal "annotated graph" contract renderers consume. Vancouver references.
 
-## 11 — Results-based management & logframe domain (UNHCR first use case)
+## 11 — Results-based management & logframe domain (first use case)
 
-**Prompt.** Creel's first concrete consumer is **UNHCR ESA Bureau use case #3**:
-extracting, from project and donor documents, a graph of **donors, objectives,
-cross-cutting areas, projects, outputs, outcomes, and indicators**, with
-**funding amounts** and **indicator values** on edges. Research the domain so we
-can model it faithfully and build realistic test data. Cover: **Results-Based
+**Prompt.** Creel's first concrete consumer is a **results-based-management (RBM)
+use case**: extracting, from project and donor documents, a graph of **donors,
+objectives, cross-cutting areas, projects, outputs, outcomes, and indicators**,
+with **funding amounts** and **indicator values** on edges. Research the domain so
+we can model it faithfully and build realistic test data. Cover: **Results-Based
 Management (RBM)** and the **logical framework (logframe)**; the **results chain**
 (inputs→activities→outputs→outcomes→impact) and **Theory of Change**; **SMART
-indicators**, baselines/targets/means-of-verification; **UNHCR's results
-framework** and **COMPASS** terminology (impact/outcome/output statements,
-objectives, enabling areas) where publicly documented; the **IATI** standard and
-**OECD-DAC** markers for donor/funding data; and how cross-cutting areas (e.g.
-gender, environment, protection, AGD) are typically represented. Produce a
-candidate **node/edge taxonomy** (with typical attributes and edge types like
-*funds*, *delivers*, *contributes-to*, *advances*, *addresses*, *measured-by*)
-and 2–3 short **synthetic but realistic example documents** (a donor agreement
-excerpt, a project results matrix, an indicator table) that can seed creel's test
-corpus. Vancouver references; cite public UNHCR/IATI/OECD sources.
+indicators**, baselines/targets/means-of-verification; typical **results-framework**
+terminology (impact/outcome/output statements, objectives, enabling areas) where
+publicly documented; standard **funding/results data models** and **policy
+markers** for donor/funding data; and how cross-cutting areas (e.g. gender,
+environment, protection, with disaggregation by sex, age, and location) are
+typically represented. Produce a candidate **node/edge taxonomy** (with typical
+attributes and edge types like *funds*, *delivers*, *contributes-to*, *advances*,
+*addresses*, *measured-by*) and 2–3 short **synthetic but realistic example
+documents** (a donor agreement excerpt, a project results matrix, an indicator
+table) that can seed creel's test corpus. Vancouver references; cite public
+RBM/logframe/funding-data sources.
 
 ## 12 — Pluggable strategy-based extraction architecture
 

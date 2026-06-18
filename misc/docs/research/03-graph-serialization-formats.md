@@ -193,19 +193,19 @@ other format as an export adapter.** Concretely:
   "version": "1.0",
   "graph": {
     "directed": true,
-    "spec_ref": "esa-strategic-frame@1.2",
+    "spec_ref": "results-framework@1.2",
     "nodes": {
-      "obj:protection": {
+      "obj:o1": {
         "type": "objective",
-        "attributes": { "title": "Protection", "priority": "high" }
+        "attributes": { "title": "Objective One", "priority": "high" }
       },
-      "donor:eu": { "type": "donor", "attributes": { "name": "EU" } }
+      "donor:a": { "type": "donor", "attributes": { "name": "Foundation Alpha" } }
     },
     "edges": [
       {
         "id": "e:fund:001",
-        "source": "donor:eu",
-        "target": "obj:protection",
+        "source": "donor:a",
+        "target": "obj:o1",
         "relation": "funds",
         "type": "funding",
         "attributes": { "amount_usd": 4200000, "year": 2025 }

@@ -13,11 +13,11 @@
 | #18 | v0.1 data layer | `creel.spec` grammar + `creel.graph` LPG + deterministic canonical JSON (EPICs 2,3) |
 | #19 | facade + extractors | `extract()` + pattern/function strategies + bindings/join + evidence (EPICs 4*,5) |
 | #20 | verifier subsystem | `Verifier` protocol + kind taxonomy + `llm_rubric` (G-Eval) (EPIC 6.1–6.3) |
-| #21 | graph_match + runner + UNHCR | `GraphMatch` partial credit + eval runner + end-to-end `unhcr-rbm` corpus (EPICs 6.4–6.7, 7.1–7.4) |
+| #21 | graph_match + runner + RBM | `GraphMatch` partial credit + eval runner + end-to-end `rbm` corpus (EPICs 6.4–6.7, 7.1–7.4) |
 | #23 | research round 2 | reports R13/R14 + D-OP7/D-OP8 + EPIC 10/11 + ingestion skill + evidence selectors |
 | #26 | traceability research | report R15 + ADR D-OP9 (A1–A5 reserved for EPIC 8) |
-| #27 | query extractor | `table_map` / `sql` (DuckDB) / `json_query` (JMESPath) + shared transforms; UNHCR rewired (EPIC 4.3) |
-| #28 | ingestion layer | `ingest()` route-by-format; stdlib loaders + optional backends; UNHCR loads via ingest (EPIC 10) |
+| #27 | query extractor | `table_map` / `sql` (DuckDB) / `json_query` (JMESPath) + shared transforms; RBM corpus rewired (EPIC 4.3) |
+| #28 | ingestion layer | `ingest()` route-by-format; stdlib loaders + optional backends; RBM corpus loads via ingest (EPIC 10) |
 | #29 | LLM extractor | schema-as-extractor via injected client; validate-retry; faithfulness gate; facade fallback (EPIC 4.4) |
 | #30 | cluster-pass | one binding covers a set of elements, invoked once; `ClusterLLMExtractor` (EPIC 11.1/11.2) |
 | #31 | entity resolution | Normalize/Registry/LLM/Cascade resolvers + `resolve_graph` merge pass + facade `resolve=` (EPIC 11.3, #14) |
@@ -34,12 +34,13 @@
   numeric_tolerance / set_match / **graph_match** (decomposable partial credit) /
   schema_constraint / semantic_similarity / **llm_rubric** (NL-defined, injected
   judge) / composite — plus a thin corpus **eval runner**.
-- A faithful **UNHCR RBM corpus** (4 synthetic docs → 17 nodes incl. 5 AGD reading
-  nodes / 19 edges) scored at 1.0 by the verifiers; the integration test that guards
-  schema-join regressions across the whole engine.
+- A faithful **RBM corpus** (4 synthetic docs → 17 nodes incl. 5 disaggregated
+  reading nodes (e.g. by sex, age, location) / 19 edges) scored at 1.0 by the
+  verifiers; the integration test that guards schema-join regressions across the
+  whole engine.
 - **All three extractor families** now real: pattern/function, **query**
   (`table_map`/`sql`/`json_query`), and **LLM** (schema-as-extractor via an injected
-  client, validate-retry, faithfulness gate). The UNHCR corpus loads via the
+  client, validate-retry, faithfulness gate). The RBM corpus loads via the
   **ingestion layer** and its tables extract via declarative `table_map` specs.
 - **Cluster-pass** extraction (one binding → a set of coupled types, one LLM pass)
   and a required **entity-resolution** cascade (normalize/registry/LLM, with a
@@ -49,13 +50,13 @@
 
 | PR | Delivered |
 |----|-----------|
-| #27 | Query extractor (`table_map`/`sql`/`json_query`) + shared transforms; UNHCR tables rewired |
-| #28 | Ingestion layer (`ingest()` route-by-format; stdlib + optional backends); UNHCR loads via it |
+| #27 | Query extractor (`table_map`/`sql`/`json_query`) + shared transforms; RBM corpus tables rewired |
+| #28 | Ingestion layer (`ingest()` route-by-format; stdlib + optional backends); RBM corpus loads via it |
 | #29 | LLM extractor (schema-as-extractor, validate-retry, faithfulness gate, facade fallback) |
 | #30 | Cluster-pass binding model + `ClusterLLMExtractor` (D-OP8) |
 | #31 | Entity-resolution cascade + `resolve_graph` merge pass (#14) |
 | #33 | `reify()`⇄`unreify()` edge↔node toggle + reserved temporal vocab (#12) |
-| #34/#37 | **AGD-disaggregated reading nodes** in `unhcr-rbm` (sex/age/location) |
+| #34/#37 | **Disaggregated reading nodes** in `rbm` (e.g. by sex, age, location) |
 | #35 | `creel.view` projections — records/table/DOT/Mermaid/Cytoscape (D15) |
 | #36 | **Real-AI via `aix`** (`aix_client`/`aix_judge`/`aix_embedder`/`aix_entity_judge`) + 3 gated live tests |
 | #38 | `ExtractionPolicy` — self-consistency + `needs_review` thresholds (EPIC 11.4 → **EPIC 11 done**) |
@@ -83,19 +84,19 @@ GitHub Pages. CI is live (tests on push/PR; publish-on-push-to-main). **Closed e
 
 ## Remaining
 
-**Deferred — `creel-core` / `creel-unhcr` workspace split (EPIC 7.5, D-OP3).**
+**Deferred — `creel-core` / consumer-package workspace split (EPIC 7.5, D-OP3).**
 Intentionally NOT done: it restructures the just-published `creel` package (a
 breaking packaging change), and the layer separation it would prove is *already*
-true by construction (core has zero consumer imports; the UNHCR grammar lives only
-in `tests/`). The real consumer grammar is also confidential (loomun / ADR-0002), so
-there's nothing public to ship as `creel-unhcr` yet. **Recommend doing this as a
-deliberate 0.2.0 decision**, not a rushed post-release churn.
+true by construction (core has zero consumer imports; the RBM grammar lives only
+in `tests/`). Real consumer grammars live in separate downstream repos, so
+there's nothing public to ship as a dedicated consumer package yet. **Recommend
+doing this as a deliberate 0.2.0 decision**, not a rushed post-release churn.
 
 **Consumer-package work (out of core, by design):** concrete renderers (PNG/PPTX/
 HTML on top of the `view`/`render` contracts).
 
-**Production chore:** GRF codelist re-verification before the `unhcr-rbm` grammar is
-used on real data (Open Q10).
+**Production chore:** results-framework codelist re-verification before the `rbm`
+grammar is used on real data (Open Q10).
 
 **Open items:** all design questions resolved & closed (#11–#15; DECISIONS.md
 "Resolutions").
@@ -107,6 +108,6 @@ cd <repo> && PYTHONPATH="$PWD" python -m pytest -q -m "not llm"   # 144 offline 
 # CI installs the package, so `import creel` works there without PYTHONPATH.
 PYTHONPATH="$PWD" python -m pytest --doctest-modules creel/spec/model.py creel/graph/model.py
 python -m ruff check creel/
-# regenerate the UNHCR expected graph after an intentional change:
-PYTHONPATH="$PWD" python -c "import sys; sys.path.insert(0,'tests/data/unhcr'); import corpus; corpus.regenerate_expected()"
+# regenerate the RBM expected graph after an intentional change:
+PYTHONPATH="$PWD" python -c "import sys; sys.path.insert(0,'tests/data/rbm'); import corpus; corpus.regenerate_expected()"
 ```

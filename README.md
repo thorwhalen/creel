@@ -57,7 +57,7 @@ bindings = {
         "source_id_template": "donor:{donor}", "target_id_template": "project:{project}",
         "casts": {"amount": "int"}, "exclude_groups": ("donor", "project")}),
 }
-src = "Donor: Gov X\nProject: WASH\nGov X funds WASH with USD 1000000"
+src = "Donor: Gov X\nProject: Water\nGov X funds Water with USD 1000000"
 
 g = extract(src, spec, bindings, on_missing_binding="skip")
 assert validate_graph(g, spec) == []

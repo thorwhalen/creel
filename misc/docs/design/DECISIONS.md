@@ -26,8 +26,8 @@ everything is recorded here so it can be challenged and changed.
 | D10 | Tiny core (`pydantic`, `jsonschema`, `networkx`, thin LLM seam); everything else optional extras |
 | D11 | Orchestration = thin hand-composed callables (map + join); frameworks are downstream adapters |
 | D12 | Plugin discovery: decorator registry + `importlib.metadata` entry points; pluggy deferred |
-| D13 | Monorepo: uv workspace, `creel-core` separate from `creel-unhcr` |
-| D14 | Bundle `unhcr-rbm` as first grammar: reuse COMPASS taxonomy + IATI indicator/transaction model verbatim |
+| D13 | Monorepo: uv workspace, `creel-core` separate from a consumer-grammar package (superseded — see D-OP10) |
+| D14 | Bundle `rbm` as the reference grammar: a synthetic results-framework taxonomy + standard funding/indicator data model |
 | D15 | Rendering: three-layer annotated-graph contract + one `Renderer` Protocol; no renderers in core |
 
 ## Operational decisions (made during build)
@@ -51,10 +51,12 @@ everything is recorded here so it can be challenged and changed.
 - **Revisit.** Open Q4 — confirm before the first public release.
 
 ### D-OP3 — Start single-package; split to uv-workspace at v0.4
-- **Decision.** D13 calls for a `creel-core` + `creel-unhcr` uv-workspace
+- **Decision.** D13 calls for a `creel-core` + consumer-grammar uv-workspace
   monorepo. To keep early iteration fast we **spike as one flat `creel/` package**
   with the synthesis module tree, and perform the workspace split at v0.4 once the
   layer boundaries are proven by working code. (Open Q3.)
+- **Superseded by D-OP10** (the split is not done — creel stays a single engine
+  package; consumer grammars live in separate downstream repos).
 
 ### D-OP4 — Canonical `$schema` / namespace hosting deferred; use a stable placeholder
 - **Decision.** Canonical JSON references a creel-owned `$schema` URL. Until a
@@ -174,6 +176,37 @@ everything is recorded here so it can be challenged and changed.
   active-learning retraining; editable graph-spec UI. (R15 §"Explicitly NOT yet".)
 - **Tracking.** Seeds **EPIC 8** (annotated-graph contract); see `misc/docs/research/15-traceability-annotation.md`.
 
+### D-OP10 — No `creel-core`/consumer package split; creel ships as one layered engine (resolves #8 / EPIC 7.5; supersedes D13, D-OP3)
+- **Decision.** creel stays **one engine package**. We **do not** perform the
+  `creel-core` + consumer-grammar uv-workspace split that D13/D-OP3 reserved.
+  Consumers compose creel from their **own** repositories — their grammar
+  (`GraphSpec`/LinkML), their bindings, their renderers — as ordinary downstream
+  code that imports `creel`. The `rbm` corpus stays in `tests/` as the reference
+  example, not as a shipped consumer package.
+- **Rationale.**
+  1. **The boundary is already proven by construction.** `creel/` has *zero*
+     imports of any consumer grammar; the only consumer grammar (`rbm`) lives in
+     `tests/data/rbm/`, never in the shipped wheel. The split's purpose — proving
+     core/consumer separation — is already met without it.
+  2. **A split would churn a published package** for no functional gain: `creel`
+     is on PyPI; carving it into two distributions is a breaking packaging change
+     that buys nothing the seams (Protocols + optional extras) don't already give.
+  3. **There is no public consumer package to ship.** Real consumer grammars are
+     confidential and live in separate downstream repos. `creel-consumer` would be
+     an empty shell.
+  4. **Open-closed is delivered by seams, not by package count.** Extractors,
+     verifiers, renderers, resolvers, ingestors are `runtime_checkable` Protocols;
+     new mechanisms plug in without touching core. Packaging granularity is
+     orthogonal to that extensibility (D5/D9/D11/D12).
+- **Consequences.** 7.1–7.4 (the `rbm` reference corpus) **done** — it exercises
+  all three extractor families against one shared grammar and guards schema-join
+  regressions. **7.5 (the split) is closed as superseded** by this decision. **7.6
+  (domain-codelist re-verification) is a consumer-side production chore**, out of
+  creel-core scope (a consumer re-verifies its own codelists before going live).
+- **Revisit if** a *public, reusable, non-confidential* consumer grammar ever
+  emerges that's worth distributing on its own cadence — then publish it as a
+  separate package that depends on `creel`, still without splitting the core.
+
 ## Resolutions — 2026-06-17 (open questions Q1/Q2/Q7/Q8/Q9 after research round 2)
 
 User accepted my leans on #11/#12/#13/#15; **#14 changed** because the real source
@@ -185,17 +218,17 @@ OCR'd). Recorded here; GitHub issues updated accordingly.
   serialization) is the runtime SSOT. Refines D3 (LinkML is a generation
   convenience, not the spine). Commit only interface-contract artifacts.
 - **#12 (indicator readings, Q2) — RESOLVED & closed (2026-06-17).** Default to a
-  `measured_by` **attributed edge** for `unhcr-rbm`; a time-series is carried as
+  `measured_by` **attributed edge** for `rbm`; a time-series is carried as
   **parallel `measured_by` edges** (creel's LPG supports them natively). The
   per-edge-type **`reify()` ⇄ `unreify()` toggle is BUILT** (`creel/reify.py`,
   lossless round-trip tested) and the **temporal vocabulary is reserved**
   (`creel/temporal.py`: `valid_from`/`valid_to`/`observed_at`/`recorded_at`) — so
   promotion to a `Reading` node is a non-breaking switch. **Reify when (a) v1 needs
-  AGD/location-disaggregated readings** (a disaggregated reading is genuinely n-ary),
+  disaggregated readings** (a reading sliced by sex/age/location is genuinely n-ary),
   **or (b) extraction merges across reporting periods** into one evolving graph
   (then the node-based `resolve_graph` dedups readings for free — readings-as-edges
   would need bespoke edge-dedup). **Update (2026-06-17): trigger (a) fired** — v1
-  needs AGD-disaggregation, so `unhcr-rbm` now models a native **`reading` node**
+  needs disaggregation, so `rbm` now models a native **`reading` node**
   (sex/age_group/location enums) with `measures`/`assesses` edges; `funds` stays an
   edge. The generic `reify()` toggle remains for graphs first extracted as edges.
 - **#13 (confidence escalation, Q7) — RESOLVED (lean).** A **separate
@@ -230,8 +263,8 @@ These are recorded in GitHub as `question`-labelled issues and summarized here:
    review — grammar vs bindings vs separate policy file.
 8. **Entity resolution / grounding resolver**: default impl + dedup cascade.
 9. **Temporal modeling depth**: ship `valid_from`/`valid_to` in v1 or defer.
-10. **GRF codelist verification**: re-verify the 16 outcome / 5 enabling-area
-    wording/codes before `unhcr-rbm` production use.
+10. **Domain codelist verification**: re-verify the reference grammar's
+    outcome/enabling-area wording/codes before the `rbm` grammar is used on real data.
 
 Items 1, 2, 7, 8, 9 are genuinely open; 3, 4, 5, 6 have provisional answers above;
 10 is a data-verification chore before production.

@@ -14,7 +14,7 @@ report R13), **D-OP8** (extraction granularity = hybrid class-cluster passes,
 report R14), **D-OP9** (bidirectional traceability + human annotation/coding as a
 first-class contract; 5 additive extensions A1–A5, report R15), and the 2026-06-17
 resolutions of the open questions (notably **#14 entity resolution = full cascade**,
-required because the real corpus is very messy).
+required because the real consumer corpus is very messy).
 
 ## Module map (single-package spike; uv-workspace split at v0.4 — D-OP3)
 

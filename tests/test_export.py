@@ -9,7 +9,7 @@ from creel.graph.model import Graph
 def _graph():
     g = Graph()
     g.add_node("d:1", types=("donor",), attributes={"name": "Gov X"})
-    g.add_node("p:1", types=("project",), attributes={"title": "WASH"})
+    g.add_node("p:1", types=("project",), attributes={"title": "Water"})
     g.add_edge("f:1", source="d:1", target="p:1", type="funds", attributes={"amount": 100})
     return g
 

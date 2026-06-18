@@ -1,9 +1,9 @@
 """Shared pytest fixtures: a small grammar + a conforming instance graph.
 
-The fixture grammar is a miniature of the UNHCR results model — donors fund
+The fixture grammar is a miniature of the RBM results model — donors fund
 projects, projects deliver outputs, and ``result`` is an abstract supertype of
 ``outcome``/``output`` — so it exercises inheritance, enums, ranges, edge
-endpoints, and parallel edges without the full ``unhcr-rbm`` grammar.
+endpoints, and parallel edges without the full ``rbm`` grammar.
 """
 
 import pytest
@@ -37,7 +37,7 @@ def sample_spec() -> GraphSpec:
                 "donor",
                 attributes=(
                     AttrSchema("name", required=True),
-                    AttrSchema("dac_code", pattern=r"^\d{3,5}$"),
+                    AttrSchema("org_code", pattern=r"^\d{3,5}$"),
                 ),
             ),
             NodeType("project", attributes=(AttrSchema("title", required=True),)),
@@ -61,12 +61,12 @@ def sample_spec() -> GraphSpec:
 def sample_graph() -> Graph:
     """A conforming instance with two parallel ``funds`` edges (distinct fundings)."""
     g = Graph()
-    g.add_node("d:gov-x", types=("donor",), attributes={"name": "Government X", "dac_code": "302"})
-    g.add_node("p:wash", types=("project",), attributes={"title": "WASH programme"})
+    g.add_node("d:gov-x", types=("donor",), attributes={"name": "Government X", "org_code": "302"})
+    g.add_node("p:water", types=("project",), attributes={"title": "Water programme"})
     g.add_node("o:clean-water", types=("output",), attributes={"statement": "Clean water delivered"})
-    g.add_edge("f:1", source="d:gov-x", target="p:wash", type="funds",
+    g.add_edge("f:1", source="d:gov-x", target="p:water", type="funds",
                attributes={"amount": 1_000_000, "currency": "USD"})
-    g.add_edge("f:2", source="d:gov-x", target="p:wash", type="funds",
+    g.add_edge("f:2", source="d:gov-x", target="p:water", type="funds",
                attributes={"amount": 500_000, "currency": "EUR"})
-    g.add_edge("e:delivers-1", source="p:wash", target="o:clean-water", type="delivers")
+    g.add_edge("e:delivers-1", source="p:water", target="o:clean-water", type="delivers")
     return g

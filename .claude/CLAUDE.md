@@ -64,7 +64,7 @@ working in that area.
 
 - **Build inside-out**, facade early. Order: structure → grammar/spec → graph +
   canonical JSON → facade skeleton with the trivial *pattern* extractor → real
-  extractor strategies → verifier/eval harness → UNHCR corpus → downstream
+  extractor strategies → verifier/eval harness → RBM corpus → downstream
   contracts. (See `ROADMAP.md` critical path.)
 - **Tests are first-class and verifier-based.** A test corpus item is
   `{sources, expected_graph, verifier_overrides?}`. The comparison of actual vs
@@ -108,16 +108,16 @@ live-LLM tests).** See `misc/docs/design/PROGRESS.md` for the per-PR log. Built:
   in `creel.extract.llm` (extra `[aix]`). Test with fakes by default; live tests are
   `@pytest.mark.llm`-gated (skipped without an API key via `aix.check_keys`). You may
   run real-LLM tests occasionally with aix defaults.
-- **UNHCR corpus** (`tests/data/unhcr/`): 4 docs → 17 nodes incl. **AGD-disaggregated
-  reading nodes**, scored 1.0 — D14.
+- **RBM corpus** (`tests/data/rbm/`): 4 docs → 17 nodes incl. **disaggregated
+  reading nodes** (e.g. by sex, age, location), scored 1.0 — D14.
 
 **Released to PyPI** (`pip install creel`, 0.1.1) + docs on GitHub Pages; CI is live.
 Exports, render/annotation contract, A1–A5 traceability, and LinkML codegen are all
-in. **Remaining** (see PROGRESS "Remaining"): the `creel-core`/`creel-unhcr` workspace
+in. **Remaining** (see PROGRESS "Remaining"): the `creel-core`/`creel-consumer` workspace
 split (EPIC 7.5) is **deliberately deferred** to a future 0.2.0 (it would churn the
 published package; the layer separation is already true by construction; the real
-consumer grammar is confidential). Concrete renderers are consumer-package work; GRF
-codelist re-verification is a production chore.
+consumer grammar is confidential). Concrete renderers are consumer-package work;
+results-framework codelist re-verification is a production chore.
 
 **Gotchas:** (1) commit test files explicitly — they live at `tests/test_*.py`, not
 under `tests/data/`, so `git add tests/data/...` misses them (this bit us on #34).

@@ -41,14 +41,14 @@ def test_join_collapses_a_cluster_into_one_step():
 def test_cluster_llm_extracts_all_types_in_one_pass():
     llm = FakeLLM({
         "donor": [{"name": "Gov X"}],
-        "project": [{"title": "WASH"}],
-        "funds": [{"amount": 100, "_source": "donor:gov-x", "_target": "project:wash"}],
+        "project": [{"title": "Water"}],
+        "funds": [{"amount": 100, "_source": "donor:gov-x", "_target": "project:water"}],
     })
     bindings = {"rbm": {"strategy": "cluster_llm", "elements": ("donor", "project", "funds")}}
-    g = extract("Gov X funds WASH with 100.", SPEC, bindings,
+    g = extract("Gov X funds Water with 100.", SPEC, bindings,
                 services={"llm": llm}, on_missing_binding="skip")
     assert len(llm.calls) == 1                        # exactly ONE LLM call for the cluster
-    assert {n.id for n in g.nodes()} == {"donor:gov-x", "project:wash"}
+    assert {n.id for n in g.nodes()} == {"donor:gov-x", "project:water"}
     funds = list(g.edges_of_type("funds"))
     assert len(funds) == 1 and funds[0].attributes["amount"] == 100
 

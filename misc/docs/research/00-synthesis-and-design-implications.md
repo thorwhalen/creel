@@ -64,12 +64,13 @@ The twelve reports converge, with very little tension, on one coherent architect
    `[R05][R06]`.
 
 8. **uv-workspace monorepo**: `creel-core` (facade, Protocols, registry, join) separate
-   from `creel-unhcr` (the ESA taxonomy + bindings as data), proving the layer-separation
-   design by construction `[R12]`.
+   from `creel-rbm` (the results-based-management taxonomy + bindings as data), proving the
+   layer-separation design by construction `[R12]`.
 
-The first consumer, **UNHCR ESA**, ships as a bundled `unhcr-rbm` grammar that reuses the
-COMPASS results taxonomy and the IATI indicator/transaction data model attribute-for-attribute
-`[R11]`, so the bundled schema is faithful and interoperable out of the box.
+The first consumer, a **results-based-management (RBM) grammar**, ships bundled as `rbm`,
+reusing a generic results framework taxonomy and a standard funding/results data model
+attribute-for-attribute `[R11]`, so the bundled schema is faithful and interoperable out
+of the box.
 
 ---
 
@@ -192,7 +193,8 @@ rejected**. They are deliberately concrete so they can become issues and be revi
 - **Rationale.** Cross-verified across XGrammar-class backends and Anthropic Structured
   Outputs: grammars explicitly do NOT enforce numeric ranges or string length `[R04]`.
   Funding amounts and indicator values on edges are range-constrained and central to the
-  UNHCR case — trusting the grammar for them would be a silent correctness bug `[R04]`.
+  first-consumer RBM case — trusting the grammar for them would be a silent correctness
+  bug `[R04]`.
 - **Rejected.** *Assuming JSON Schema `minimum`/`maximum` are honored by the decoder*
   (they are not) `[R04]`.
 
@@ -207,7 +209,7 @@ rejected**. They are deliberately concrete so they can become issues and be revi
 - **Rationale.** This is creel's most consequential, most posture-specific decision; the
   Entity-Component-System / data-oriented model (entities as ids, components stored
   separately, joined by equijoin) is the precise formalization `[R12]`. It delivers reuse
-  without duplication (author the UNHCR taxonomy once; a new source set ships only a new
+  without duplication (author the RBM taxonomy once; a new source set ships only a new
   binding table), progressive disclosure (bindings are additive overrides), and a lean
   canonical output (heavy metadata is a sidecar) `[R12]`. The nanopublication pattern
   independently validates physical-separation-with-join-by-id `[R07]`.
@@ -305,16 +307,16 @@ rejected**. They are deliberately concrete so they can become issues and be revi
   verifiers may weigh in on one element `[R12]`.
 - **Rejected.** *pluggy in core now* (premature complexity) `[R12]`.
 
-### D13 — Monorepo: uv workspace, core separate from the UNHCR consumer
+### D13 — Monorepo: uv workspace, core separate from the first consumer
 
 - **Decision.** Lay out the repo as a uv-workspace monorepo with `src/` layout:
   `creel-core` (facade, Protocols, registry, join, dataclasses, canonical JSON,
-  generated-validation glue) separate from `creel-unhcr` (the ESA/COMPASS taxonomy + IATI
-  bindings as data + a thin package). Optionally split the default LLM strategy into its
-  own member. Graduate downstream examples (persistence, render) into their own consumer
-  packages as they mature.
+  generated-validation glue) separate from `creel-rbm` (the results-framework taxonomy +
+  funding/results bindings as data + a thin package). Optionally split the default LLM
+  strategy into its own member. Graduate downstream examples (persistence, render) into
+  their own consumer packages as they mature.
 - **Rationale.** A uv workspace gives one repo / one lockfile / one venv with editable
-  internal deps, ideal for co-locating core and the UNHCR consumer while keeping them
+  internal deps, ideal for co-locating core and the first consumer while keeping them
   separately versioned `[R12]`. Keeping consumer-specific taxonomies out of core *proves*
   the layer-separation design by construction `[R12]`. (The starter's packaging strategy
   asks for exactly this: monorepo now, graduate consumers later.)
@@ -322,28 +324,27 @@ rejected**. They are deliberately concrete so they can become issues and be revi
   demonstrate the core/consumer separation that is creel's whole thesis). *Polyrepo from
   day one* (premature; loses the single-lockfile editable-dev ergonomics) `[R12]`.
 
-### D14 — Bundle `unhcr-rbm` as the first grammar: reuse COMPASS + IATI verbatim
+### D14 — Bundle a results-based-management (RBM) grammar as the first consumer: reuse standard models verbatim
 
-- **Decision.** Ship a bundled `unhcr-rbm` grammar in `creel-unhcr` whose node/edge spine is
-  the COMPASS results taxonomy (4 impact / 16 outcome / 5 enabling areas; impact/outcome/output
-  levels; donors, projects, cross-cutting areas) and whose indicator-bearing and funding-bearing
-  **edges** adopt the IATI Activity Standard data model attribute-for-attribute: `measured-by`
-  carries `(measure, ascending, baseline{value,year}, target{value,date}, actual{value,period},
-  dimensions[])`; `funds` carries IATI transaction shape (amount, currency, commitment vs
+- **Decision.** Ship a bundled `rbm` grammar in `creel-rbm` whose node/edge spine is a generic
+  results framework taxonomy (impact / outcome / enabling areas; impact/outcome/output levels;
+  donors, projects, cross-cutting areas) and whose indicator-bearing and funding-bearing **edges**
+  adopt a standard funding/results data model attribute-for-attribute: `measured-by` carries
+  `(measure, ascending, baseline{value,year}, target{value,date}, actual{value,period},
+  dimensions[])`; `funds` carries a standard transaction shape (amount, currency, commitment vs
   disbursement, value_date). Cross-cutting areas are a dual-idiom node + a scored `addresses`
-  edge carrying both the OECD-DAC `0/1/2` marker and a categorical AGD/protection tag. Make
+  edge carrying both a `0/1/2` policy marker and a categorical cross-cutting tag. Make
   `target` optional and level-aware (impact indicators have no target by design).
-- **Rationale.** These are the de facto/de jure standards the UNHCR ESA documents are written
-  against; reuse guarantees a faithful, auditable schema and free interoperability with the
-  IATI/OECD donor-data ecosystem `[R11]`. The three synthetic test docs (prose donor agreement,
+- **Rationale.** These are the de facto/de jure standards that RBM results documents are written
+  against; reuse guarantees a faithful, auditable schema and free interoperability with the wider
+  funding/results data ecosystem `[R11]`. The three synthetic test docs (prose donor agreement,
   results matrix table, indicator table) exercise all three extractor families against one
   shared spec and catch schema-join regressions early `[R11]`.
-- **Rejected.** *Hand-rolling a bespoke UNHCR schema* (loses interoperability and faithfulness)
-  `[R11]`. *Requiring a target on every indicator* (would reject valid COMPASS impact data)
+- **Rejected.** *Hand-rolling a bespoke schema* (loses interoperability and faithfulness)
+  `[R11]`. *Requiring a target on every indicator* (would reject valid impact-level results data)
   `[R11]`.
-- **Caveat.** Re-verify the exact wording/numbering of the 16 outcome and 5 enabling areas
-  against the current official GRF codelist before production (the UNHCR site blocks automated
-  fetch) `[R11]`.
+- **Caveat.** Re-verify the exact wording/numbering of the outcome and enabling areas against the
+  current official codelist of the chosen results framework before production `[R11]`.
 
 ### D15 — Rendering: a three-layer annotated-graph contract + one Renderer Protocol; no renderers in core
 
@@ -631,11 +632,11 @@ implementation.
 
 2. **n-ary indicator readings: edge vs reified node.** An indicator reading is arguably 4-ary
    (output, outcome, value, period/source). D1 makes attributed-edge ↔ reified-relation-node a
-   normalization toggle. Decide the *default* rendering for `unhcr-rbm` (`measured-by` edge vs
-   a `Reading` node) and whether the toggle is per-spec or per-element `[R01]`.
+   normalization toggle. Decide the *default* rendering for the `rbm` grammar (`measured-by` edge
+   vs a `Reading` node) and whether the toggle is per-spec or per-element `[R01]`.
 
 3. **Repo restructure timing.** The repo is currently a single flat `creel/` package (v0.0.2,
-   zero deps). Decide *when* to convert to the uv-workspace `creel-core` + `creel-unhcr` split
+   zero deps). Decide *when* to convert to the uv-workspace `creel-core` + `creel-rbm` split
    (now, or after a single-package spike) `[R12][D13]`.
 
 4. **Working name.** The vision brief lists candidate names (*Prism*, *Loom*, *Lattice*); the
@@ -656,16 +657,17 @@ implementation.
 
 8. **Entity resolution / grounding resolver.** Grounding to canonical IDs (lookup table /
    embedding index / annotator) is named as a strategy but its default implementation and the
-   dedup cascade (Jaccard → embedding → LLM-adjudication) are unspecified for the UNHCR case
-   `[R04][R09]`.
+   dedup cascade (Jaccard → embedding → LLM-adjudication) are unspecified for the first-consumer
+   case `[R04][R09]`.
 
 9. **Temporal modeling depth.** Optional `valid_from`/`valid_to` + ingestion timestamps on
-   edges and invalidate-don't-delete semantics are flagged for the UNHCR multi-cycle reality.
-   Decide whether v1 ships the temporal affordance or defers it `[R09][R11]`.
+   edges and invalidate-don't-delete semantics are flagged for the multi-cycle reality of a
+   results-reporting consumer. Decide whether v1 ships the temporal affordance or defers it
+   `[R09][R11]`.
 
-10. **GRF codelist verification.** Re-verify the 16 outcome / 5 enabling area wording and codes
-    against the current official GRF codelist before the `unhcr-rbm` grammar is used in
-    production `[R11]`.
+10. **Codelist verification.** Re-verify the outcome / enabling area wording and codes against
+    the current official codelist of the chosen results framework before the `rbm` grammar is
+    used in production `[R11]`.
 
 ---
 
@@ -683,5 +685,5 @@ implementation.
 | `08-extraction-evaluation-verifiers.md` | one Verifier protocol; kind taxonomy; `llm_rubric`/G-Eval default; judge≠extractor; chance-corrected κ → **D9** |
 | `09-graphrag-knowledge-bases.md` | emit LPG JSON with stable IDs + provenance per element; optional `text_for_embedding`; thin downstream adapters → **D4, D8, D10** |
 | `10-graph-rendering-media.md` | three-layer annotated-graph contract; standoff annotation by element id; `creel.view` projections; renderers out of core → **D15** |
-| `11-rbm-logframe-domain.md` | bundle `unhcr-rbm` reusing COMPASS taxonomy + IATI indicator/transaction model + DAC markers; optional level-aware target → **D14** |
+| `11-rbm-logframe-domain.md` | bundle the `rbm` grammar reusing a generic results-framework taxonomy + a standard indicator/transaction model + policy markers; optional level-aware target → **D14** |
 | `12-pluggable-extraction-architecture.md` | Protocol-typed callable strategies; ECS two-table join; registry+entry points (pluggy deferred); thin orchestration; uv-workspace monorepo → **D5, D7, D11, D12, D13** |

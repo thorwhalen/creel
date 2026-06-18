@@ -1,6 +1,6 @@
 # 12 — Pluggable strategy-based extraction architecture
 
-> **TL;DR.** Creel's design posture maps cleanly onto a small, well-understood set of Python idioms: model extraction mechanisms as **Protocol-typed callables** (strategy pattern via composition, not inheritance); discover and swap them through a **decorator registry** for in-tree strategies plus **`importlib.metadata` entry points** for third-party plugins (reserve `pluggy` for the day creel needs *multiple* cooperating hooks per extension point — it doesn't yet); express the public surface as a single **facade function** `extract(sources, graph_spec, extractors) -> graph`; keep the **graph-definition layer physically separate** from the **extraction/verification metadata** using a data-oriented / entity-component "schema join" so the same taxonomy can be reused with different extractor bindings; carry records as **`dataclasses` internally, Pydantic at the LLM/IO boundary**; orchestrate with **thin hand-composed callables** (or Hamilton if/when lineage and auto-DAG resolution earn their keep) rather than a macro-orchestrator like Prefect; and cache expensive LLM calls on a **deterministic key of (prompt, model params, element spec)**. Package it as a **uv workspace monorepo** with an `src/` layout, core and consumer (UNHCR) packages co-located but separately versioned.
+> **TL;DR.** Creel's design posture maps cleanly onto a small, well-understood set of Python idioms: model extraction mechanisms as **Protocol-typed callables** (strategy pattern via composition, not inheritance); discover and swap them through a **decorator registry** for in-tree strategies plus **`importlib.metadata` entry points** for third-party plugins (reserve `pluggy` for the day creel needs *multiple* cooperating hooks per extension point — it doesn't yet); express the public surface as a single **facade function** `extract(sources, graph_spec, extractors) -> graph`; keep the **graph-definition layer physically separate** from the **extraction/verification metadata** using a data-oriented / entity-component "schema join" so the same taxonomy can be reused with different extractor bindings; carry records as **`dataclasses` internally, Pydantic at the LLM/IO boundary**; orchestrate with **thin hand-composed callables** (or Hamilton if/when lineage and auto-DAG resolution earn their keep) rather than a macro-orchestrator like Prefect; and cache expensive LLM calls on a **deterministic key of (prompt, model params, element spec)**. Package it as a **uv workspace monorepo** with an `src/` layout, core and consumer packages co-located but separately versioned.
 
 ## Background / landscape
 
@@ -62,7 +62,7 @@ Translate that to creel:
 
 Why physical separation (two tables joined on demand) beats one fat object per element:
 
-1. **Reuse without duplication** — the UNHCR taxonomy (donors, objectives, cross-cutting areas, projects, outputs, outcomes, indicators) is authored once; a new source set ships only a new binding table.
+1. **Reuse without duplication** — the consumer taxonomy (donors, objectives, cross-cutting areas, projects, outputs, outcomes, indicators) is authored once; a new source set ships only a new binding table.
 2. **Progressive disclosure** — if an element has *no* binding, fall back to the default "schema-as-extractor": synthesise an NL description from the attribute schema and hand it to the LLM. Bindings are purely additive overrides.
 3. **Auditability** — verification metadata lives beside extraction metadata, separate from the canonical grammar, so the SSOT (the graph) stays clean while provenance and verification are joinable on demand.
 4. **Canonical JSON output stays minimal** — the emitted graph references element ids; the (heavy) extractor/verifier metadata is a side-car, not inlined into every node/edge.
@@ -145,11 +145,11 @@ creel/                      # repo root = workspace
     creel-core/             # the engine (src layout)
       src/creel/...         # facade, Protocols, registry, join, dataclasses
     creel-extractors-llm/   # default NL/LLM strategy (optional split)
-    creel-unhcr/            # FIRST CONSUMER: ESA strategic-frame use case
-      src/creel_unhcr/...   # taxonomy + bindings, NOT in core
+    creel-consumer/         # FIRST CONSUMER: results-framework use case
+      src/creel_consumer/...   # taxonomy + bindings, NOT in core
 ```
 
-Keep core free of consumer-specific taxonomies. The UNHCR grammar and its extractor bindings are *data + a thin package* in `creel-unhcr`, proving the separation-of-layers design by construction.
+Keep core free of consumer-specific taxonomies. The consumer grammar and its extractor bindings are *data + a thin package* in `creel-consumer`, proving the separation-of-layers design by construction.
 
 ## Design implications for creel
 
@@ -162,7 +162,7 @@ Keep core free of consumer-specific taxonomies. The UNHCR grammar and its extrac
 
 ## Recommendation
 
-**Build creel's core as a single facade function over Protocol-typed callable strategies, with a physically separated two-layer data model (graph-definition vs extraction/verification metadata) joined on demand, discovered via a decorator registry plus `importlib.metadata` entry points — and explicitly defer pluggy, Hamilton, and any macro-orchestrator until a concrete need forces them.** Rationale: this is the smallest design that fully honours creel's stated posture — strategy pattern throughout, DI/functions-over-inheritance, SSOT, progressive disclosure (schema-as-extractor default when a binding is absent), and auditability (provenance on every `Extraction`, exact-match caching for reproducibility). It adds zero heavyweight dependencies to core, keeps "simple things simple" (one `extract()` call, sensible defaults) while leaving every advanced seam — third-party extractors, alternative renderers, DAG orchestration, graph-DB persistence — open for extension without modification (Open/Closed) [5][6]. Package it as a uv workspace so `creel-core` and the UNHCR consumer live together yet stay independently versioned and dependency-isolated by intent [21][22].
+**Build creel's core as a single facade function over Protocol-typed callable strategies, with a physically separated two-layer data model (graph-definition vs extraction/verification metadata) joined on demand, discovered via a decorator registry plus `importlib.metadata` entry points — and explicitly defer pluggy, Hamilton, and any macro-orchestrator until a concrete need forces them.** Rationale: this is the smallest design that fully honours creel's stated posture — strategy pattern throughout, DI/functions-over-inheritance, SSOT, progressive disclosure (schema-as-extractor default when a binding is absent), and auditability (provenance on every `Extraction`, exact-match caching for reproducibility). It adds zero heavyweight dependencies to core, keeps "simple things simple" (one `extract()` call, sensible defaults) while leaving every advanced seam — third-party extractors, alternative renderers, DAG orchestration, graph-DB persistence — open for extension without modification (Open/Closed) [5][6]. Package it as a uv workspace so `creel-core` and the first consumer live together yet stay independently versioned and dependency-isolated by intent [21][22].
 
 ## References
 

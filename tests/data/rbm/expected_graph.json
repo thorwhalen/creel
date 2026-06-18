@@ -89,8 +89,8 @@
         "currency": "EUR",
         "transaction_type": "disbursement"
       },
-      "id": "funds:donor-european-commission->project-prj-002:1",
-      "source": "donor:european-commission",
+      "id": "funds:donor-agency-beta->project-prj-002:1",
+      "source": "donor:agency-beta",
       "target": "project:prj-002",
       "type": "funds"
     },
@@ -100,8 +100,8 @@
         "currency": "USD",
         "transaction_type": "commitment"
       },
-      "id": "funds:donor-government-of-norway->project-prj-001:0",
-      "source": "donor:government-of-norway",
+      "id": "funds:donor-foundation-alpha->project-prj-001:0",
+      "source": "donor:foundation-alpha",
       "target": "project:prj-001",
       "type": "funds"
     },
@@ -111,8 +111,8 @@
         "currency": "USD",
         "transaction_type": "commitment"
       },
-      "id": "funds:donor-government-of-norway->project-prj-002:2",
-      "source": "donor:government-of-norway",
+      "id": "funds:donor-foundation-alpha->project-prj-002:2",
+      "source": "donor:foundation-alpha",
       "target": "project:prj-002",
       "type": "funds"
     },
@@ -169,19 +169,19 @@
         "cross_cutting_area"
       ]
     },
-    "donor:european-commission": {
+    "donor:agency-beta": {
       "attributes": {
-        "dac_code": "918",
-        "name": "European Commission"
+        "name": "Agency Beta",
+        "org_code": "918"
       },
       "types": [
         "donor"
       ]
     },
-    "donor:government-of-norway": {
+    "donor:foundation-alpha": {
       "attributes": {
-        "dac_code": "301",
-        "name": "Government of Norway"
+        "name": "Foundation Alpha",
+        "org_code": "301"
       },
       "types": [
         "donor"
@@ -199,7 +199,7 @@
     "indicator:ind-2": {
       "attributes": {
         "measure": "percentage",
-        "name": "Percentage of households with adequate shelter"
+        "name": "Percentage of households with adequate housing"
       },
       "types": [
         "indicator"
@@ -215,7 +215,7 @@
     },
     "outcome:oc-2": {
       "attributes": {
-        "statement": "Displaced families live in adequate and dignified shelter"
+        "statement": "Households live in adequate and dignified housing"
       },
       "types": [
         "outcome"
@@ -231,7 +231,7 @@
     },
     "output:op-2-1": {
       "attributes": {
-        "statement": "Emergency shelter kits distributed to households"
+        "statement": "Housing kits distributed to households"
       },
       "types": [
         "output"
@@ -240,7 +240,7 @@
     "project:prj-001": {
       "attributes": {
         "code": "PRJ-001",
-        "title": "WASH Strengthening"
+        "title": "Water Access"
       },
       "types": [
         "project"
@@ -249,7 +249,7 @@
     "project:prj-002": {
       "attributes": {
         "code": "PRJ-002",
-        "title": "Protection and Shelter"
+        "title": "Housing Support"
       },
       "types": [
         "project"
@@ -327,7 +327,7 @@
     }
   },
   "spec": {
-    "id": "unhcr-rbm",
+    "id": "rbm",
     "version": "0.1.0"
   },
   "version": "1.0"

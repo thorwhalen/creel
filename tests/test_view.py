@@ -13,7 +13,7 @@ from creel.view import (
 def _graph():
     g = Graph()
     g.add_node("d:1", types=("donor",), attributes={"name": "Gov X"})
-    g.add_node("p:1", types=("project",), attributes={"title": "WASH"})
+    g.add_node("p:1", types=("project",), attributes={"title": "Water"})
     g.add_edge("f:1", source="d:1", target="p:1", type="funds", attributes={"amount": 100})
     return g
 
@@ -57,12 +57,12 @@ def test_cytoscape_elements_shape():
     assert edge == {"id": "f:1", "source": "d:1", "target": "p:1", "type": "funds", "amount": 100}
 
 
-def test_projections_round_on_unhcr_graph():
-    # Smoke: the projections run on a richer graph (the AGD corpus) without error.
+def test_projections_round_on_rbm_graph():
+    # Smoke: the projections run on a richer graph (the disaggregation corpus) without error.
     import sys
     from pathlib import Path
 
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "data" / "unhcr"))
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "data" / "rbm"))
     import corpus  # noqa: E402
 
     from creel.evaluation import evaluate_case

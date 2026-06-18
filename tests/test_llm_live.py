@@ -35,14 +35,14 @@ def test_real_llm_extraction():
                  attributes=(AttrSchema("name", required=True, description="The donor's official name."),)),
     ))
     g = extract(
-        "Donor: Government of Norway (DAC 301). Donor: European Commission (DAC 918).",
+        "Donor: Foundation Alpha (ref 301). Donor: Agency Beta (ref 918).",
         spec,
         {"donor": ("llm", {})},
         services={"llm": aix_client()},
         on_missing_binding="skip",
     )
     names = " ".join(n.attributes.get("name", "") for n in g.nodes_of_type("donor"))
-    assert "Norway" in names and ("Commission" in names or "European" in names)
+    assert "Alpha" in names and "Beta" in names
     # every extracted donor carries an evidence record with a confidence method
     for node in g.nodes_of_type("donor"):
         assert node.id in g.evidence and g.evidence[node.id].confidence is not None
@@ -69,9 +69,9 @@ def test_real_llm_entity_resolution():
     from creel.resolve import LLMResolver, resolve_graph
 
     g = Graph()
-    g.add_node("d:a", types=("donor",), attributes={"name": "Government of Norway"})
-    g.add_node("d:b", types=("donor",), attributes={"name": "the Norwegian government"})
-    g.add_node("d:c", types=("donor",), attributes={"name": "European Commission"})
+    g.add_node("d:a", types=("donor",), attributes={"name": "Foundation Alpha"})
+    g.add_node("d:b", types=("donor",), attributes={"name": "the Alpha foundation"})
+    g.add_node("d:c", types=("donor",), attributes={"name": "Agency Beta"})
     merged = resolve_graph(g, LLMResolver(judge=aix_entity_judge(), key="name"))
-    # the two Norway variants merge; the EC stays separate
+    # the two Alpha variants merge; Agency Beta stays separate
     assert len(list(merged.nodes_of_type("donor"))) == 2

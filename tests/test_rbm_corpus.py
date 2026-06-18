@@ -1,4 +1,4 @@
-"""End-to-end UNHCR RBM corpus test (EPIC 7): extract -> verify against expected.
+"""End-to-end RBM corpus test (EPIC 7): extract -> verify against expected.
 
 Exercises all available deterministic extractor families against ONE shared grammar
 and scores the result with the verifier subsystem (not hardcoded equality). This is
@@ -10,8 +10,8 @@ from pathlib import Path
 
 import pytest
 
-_UNHCR_DIR = Path(__file__).resolve().parent / "data" / "unhcr"
-sys.path.insert(0, str(_UNHCR_DIR))
+_RBM_DIR = Path(__file__).resolve().parent / "data" / "rbm"
+sys.path.insert(0, str(_RBM_DIR))
 
 import corpus  # noqa: E402  (loaded from the corpus dir)
 
@@ -55,7 +55,7 @@ def test_all_node_and_edge_families_present(case):
 def test_funding_amount_on_edge_indicator_value_on_reading_node(case):
     g = evaluate_case(case).actual_graph
     # funding amount stays on the funds EDGE (donor -> project)
-    funds = next(e for e in g.edges_of_type("funds") if e.source == "donor:government-of-norway"
+    funds = next(e for e in g.edges_of_type("funds") if e.source == "donor:foundation-alpha"
                  and e.target == "project:prj-001")
     assert funds.attributes == {"amount": 3_000_000, "currency": "USD", "transaction_type": "commitment"}
     # indicator values live on the reified reading NODE (an n-ary, disaggregated reading)
@@ -63,7 +63,7 @@ def test_funding_amount_on_edge_indicator_value_on_reading_node(case):
     assert total.attributes["actual"] == 4200 and total.attributes["baseline"] == 1000
 
 
-def test_agd_disaggregation_by_sex(case):
+def test_disaggregation_by_sex(case):
     g = evaluate_case(case).actual_graph
     # IND-1 has total / female / male readings, and the disaggregation is consistent
     ind1 = {r.attributes["sex"]: r.attributes["actual"]
@@ -89,7 +89,7 @@ def test_verifier_catches_a_wrong_funding_amount(case):
     # AND surface as a structured mismatch (decomposable partial credit, not all-or-nothing).
     doc = to_canonical_dict(case.expected_graph)
     for edge in doc["edges"]:
-        if edge["type"] == "funds" and edge["source"] == "donor:government-of-norway" \
+        if edge["type"] == "funds" and edge["source"] == "donor:foundation-alpha" \
                 and edge["target"] == "project:prj-001":
             edge["attributes"]["amount"] = 9_999_999  # wrong
     perturbed = from_canonical_dict(doc)
@@ -134,4 +134,4 @@ def test_corpus_runner_summary(case):
     summary = evaluate_corpus([case]).summary()
     assert summary["pass_rate"] == 1.0
     assert summary["mean_score"] == pytest.approx(1.0)
-    assert "unhcr-rbm" in summary["cases"]
+    assert "rbm" in summary["cases"]

@@ -23,7 +23,7 @@ def test_inheritance_effective_attributes(sample_spec):
     assert "statement" in eff
     assert eff["statement"].required is True
     # 'donor' has no parents, only its own attributes.
-    assert set(effective_attributes(sample_spec, "donor")) == {"name", "dac_code"}
+    assert set(effective_attributes(sample_spec, "donor")) == {"name", "org_code"}
 
 
 def test_is_subtype(sample_spec):

@@ -19,7 +19,7 @@ extract(sources, graph_spec, extractors) -> graph        # the facade (the whole
 Build **inside-out**: the data model and canonical JSON first (everything is
 defined in terms of them), then the join + facade skeleton with a trivial
 extractor, then real extractor strategies, then the verifier/eval harness and the
-UNHCR corpus, then downstream *contracts* (not implementations).
+RBM corpus, then downstream *contracts* (not implementations).
 
 ## Milestones
 
@@ -27,8 +27,8 @@ UNHCR corpus, then downstream *contracts* (not implementations).
 |---|---|---|
 | **v0.1 — Spine** | Grammar + LPG + canonical JSON + validation | `GraphSpec`/`Graph` round-trip through canonical JSON deterministically; instance validation against grammar; `extract()` facade exists end-to-end with the pattern extractor; tests green locally |
 | **v0.2 — Extractors** | Strategy layer + bindings/join + evidence | pattern + query (DuckDB/JMESPath) + LLM (schema-as-extractor) strategies; `join(spec, bindings)`; per-element evidence (provenance + grounding + confidence); facade wires them; tests with real sample sources |
-| **v0.3 — Evaluation** | Verifier protocol + kinds + corpus runner + UNHCR | `Verifier` protocol; deterministic kinds + `llm_rubric`; corpus runner with roll-up P/R/F1; `unhcr-rbm` grammar + 3 synthetic docs + expected graph + verifier overrides; eval runs green |
-| **v0.4 — Downstream contracts** | Export adapters + annotated-graph + renderer/RAG seams | canonical→{networkx, cytoscape, dot/mermaid, rdf-star} export; `AnnotatedGraph` contract + `GraphRenderer`/`view` projections; RAG-readiness affordances; consumer-package split (`creel-unhcr`) |
+| **v0.3 — Evaluation** | Verifier protocol + kinds + corpus runner + RBM example | `Verifier` protocol; deterministic kinds + `llm_rubric`; corpus runner with roll-up P/R/F1; `rbm` grammar + 3 synthetic docs + expected graph + verifier overrides; eval runs green |
+| **v0.4 — Downstream contracts** | Export adapters + annotated-graph + renderer/RAG seams | canonical→{networkx, cytoscape, dot/mermaid, rdf-star} export; `AnnotatedGraph` contract + `GraphRenderer`/`view` projections; RAG-readiness affordances; consumer-package split |
 | **v0.5 — Hardening** | Docs, CI activation, release | README/usage docs; activate wads CI; first intentional PyPI release; monorepo graduation as needed |
 
 ---
@@ -154,19 +154,19 @@ UNHCR corpus, then downstream *contracts* (not implementations).
   downgrades confidence + flags `needs_review`.
 - **6.7** Tests: each verifier kind; a known-good and known-bad extraction scored.
 
-## EPIC 7 — UNHCR RBM first consumer  `domain-unhcr` `evaluation`
-*Prove the engine on the real first use case. (D14)*
+## EPIC 7 — RBM first consumer (generic results-based-management example)  `domain-rbm` `evaluation`
+*Prove the engine on the first-consumer use case. (D14)*
 
-- **7.1** `unhcr-rbm` grammar: COMPASS results taxonomy spine (impact/outcome/
-  output; donors, projects, cross-cutting areas); IATI-shaped `funds` and
-  `measured-by` edges; DAC-marker `addresses` edge; level-aware optional `target`.
+- **7.1** `rbm` grammar: a results taxonomy spine (impact/outcome/
+  output; donors, projects, cross-cutting areas); standard-shaped `funds` and
+  `measured-by` edges; policy-marker `addresses` edge; level-aware optional `target`.
 - **7.2** Three synthetic-but-realistic test docs (prose donor agreement excerpt,
   project results matrix table, indicator table) — seeded from report 11.
 - **7.3** Expected graph + per-element verifier overrides (numeric_tolerance on
   amounts/indicator values; llm_rubric on prose objective statements).
 - **7.4** End-to-end eval: extract from the 3 docs with all 3 strategy families →
   score against expected → report. Catches schema-join regressions.
-- **7.5** *(v0.4)* Graduate to `creel-unhcr` package member.
+- **7.5** *(v0.4)* Graduate to a dedicated consumer package member.
 
 ## EPIC 8 — Downstream contracts (enabled, not implemented)  `downstream`
 *Enable §6 of the vision without building consumers. (D8, D9 RAG-readiness, D15, D-OP9)*
@@ -196,7 +196,7 @@ UNHCR corpus, then downstream *contracts* (not implementations).
 ## EPIC 9 — Docs, examples & release  `infra` `documentation`
 - **9.1** README: essential-in-a-few-lines → paragraphs → details; easy example
   first (schema-as-extractor on a tiny doc), advanced after.
-- **9.2** `examples/` worked notebooks/scripts: minimal, query, UNHCR.
+- **9.2** `examples/` worked notebooks/scripts: minimal, query, RBM.
 - **9.3** Activate wads CI; first intentional release; epythet docs.
 
 ## EPIC 10 — Document ingestion layer  `extraction` `provenance`
@@ -243,4 +243,4 @@ The facade came up **early** (after a trivial pattern extractor) so every later
 strategy and verifier plugs into a working end-to-end pipe. Round-2 research (R13
 ingestion, R14 granularity) reorders the *remaining* work: **ingestion (EPIC 10)
 and the granularity/ER-aware LLM extractor (EPIC 4.4 + EPIC 11)** now precede the
-downstream contracts, because the real (messy, multi-format) corpus needs them.
+downstream contracts, because the realistic (messy, multi-format) corpus needs them.
