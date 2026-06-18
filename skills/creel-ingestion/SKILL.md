@@ -1,6 +1,8 @@
 ---
 name: creel-ingestion
 description: Use when building or changing creel's document ingestion layer — turning raw files (PDF, DOCX, XLSX, HTML, Markdown, images) into Sources the extractors consume. Covers the route-by-format + quality-gate escalation strategy, the structure-preserving local default (Docling), grounding/provenance requirements (page/cell/char-span/bbox), the permissive-license discipline, and when to escalate to OCR/VLM or a multimodal model (Claude native PDF + Citations). Trigger on work in creel/ingest/, file loaders, format handling, OCR, or document parsing. Authoritative source: misc/docs/research/13-document-ingestion.md and decision D-OP7.
+metadata:
+  audience: developers
 ---
 
 # creel ingestion (D-OP7)

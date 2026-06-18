@@ -1,6 +1,8 @@
 ---
 name: creel-eval
 description: Use when building or extending creel's evaluation/verification subsystem, or when writing tests for extraction. Covers the Verifier Protocol, the verifier-kind taxonomy (exact/normalized/numeric_tolerance/set_match/graph_match/schema_constraint/semantic_similarity/llm_rubric/composite), how an LLM-instruction (G-Eval) verifier is specified and run, the test-corpus layout ({sources, expected_graph, verifier_overrides?}), per-element→per-type→per-graph score roll-up, and the rule that comparisons are pluggable verifiers — NOT hardcoded equality. Trigger on work in creel/verify/, the eval runner, the RBM corpus, or any extraction test.
+metadata:
+  audience: developers
 ---
 
 # creel evaluation & verifiers

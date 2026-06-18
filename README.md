@@ -90,6 +90,33 @@ g = extract(prose, spec, {"donor": ("llm", {})},
             services={"llm": aix_client()}, on_missing_binding="skip")
 ```
 
+## Skills (the AI-native interface)
+
+creel is **AI-first**, and that includes how you *learn and drive it*. It ships
+**agent skills** — `SKILL.md` cheat-sheets that make Claude (and any `gh skill`-aware
+agent: Copilot, Cursor, Codex, Gemini) actually good at using creel, instead of
+guessing from docstrings. They install with `pip` (bundled, offline) **or** `gh skill`:
+
+```bash
+# All consumer skills ride along with the package:
+pip install creel            # creel/data/skills/* is bundled in the wheel
+
+# …or install individually into your agent (cross-agent, pinnable):
+gh skill install thorwhalen/creel creel-extract       # the end-to-end workflow
+gh skill install thorwhalen/creel creel-grammar       # author a typed GraphSpec
+gh skill install thorwhalen/creel creel-bindings      # choose extractor strategies
+gh skill install thorwhalen/creel creel-evaluation    # pluggable verifiers (≠ ==)
+gh skill install thorwhalen/creel creel-ai            # real LLM extraction
+gh skill install thorwhalen/creel creel-projections   # resolve / view / export / trace
+# add --agent <copilot|cursor|codex|gemini|claude> to target a host; @vX.Y.Z to pin
+```
+
+Once installed, just ask in plain language ("extract a graph from these documents with
+creel", "write a verifier for the amounts") — the matching skill triggers automatically.
+The skills cross-reference each other, so an agent that starts at `creel-extract` is
+handed off to `creel-grammar`/`creel-bindings`/`creel-ai`/`creel-evaluation` as needed.
+Prefer hand-written API calls? Scroll on — everything below still applies.
+
 ## What you get
 
 - **Labeled Property Graph** — attributes (funding amounts, indicator values) live *on
