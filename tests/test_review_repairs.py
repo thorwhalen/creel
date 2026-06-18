@@ -25,8 +25,8 @@ def test_slug_keeps_unicode_distinct_and_ascii_stable():
 
     assert slug("日本") != slug("中国")  # distinct non-Latin names don't collapse
     assert slug("café") == "café"
-    assert slug("Government of Norway") == "government-of-norway"  # ASCII unchanged
-    assert slug("WASH") == "wash"
+    assert slug("Foundation Alpha") == "foundation-alpha"  # ASCII unchanged
+    assert slug("Water Access") == "water-access"
     assert slug("!!!") == "x"  # all-punctuation -> fallback
 
 

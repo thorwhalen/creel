@@ -22,7 +22,7 @@ def slug(value: Any) -> str:
     Unicode-aware so distinct non-Latin names (e.g. ``"日本"`` vs ``"中国"``) get
     distinct ids instead of all collapsing to the ASCII fallback — silent node
     merges were a real data-loss risk for international corpora. ASCII inputs slug
-    exactly as before (e.g. ``"Government of Norway" -> "government-of-norway"``).
+    exactly as before (e.g. ``"Foundation Alpha" -> "foundation-alpha"``).
     """
     normalized = unicodedata.normalize("NFKC", str(value)).strip().casefold()
     out: list[str] = []
