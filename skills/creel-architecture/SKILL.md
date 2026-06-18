@@ -1,6 +1,8 @@
 ---
 name: creel-architecture
 description: Use when working anywhere inside the creel package internals — the source-to-graph extraction engine. Covers the architecture map (layers/modules), the 15 design decisions D1–D15, the key Protocol interfaces, the canonical JSON contract, the two-layer (grammar vs bindings) join, and where each choice is justified in the research. Trigger when adding/changing core modules, wiring the extract() facade, the graph model, the spec/grammar layer, or canonical JSON; or when a design question needs the authoritative answer.
+metadata:
+  audience: developers
 ---
 
 # creel architecture

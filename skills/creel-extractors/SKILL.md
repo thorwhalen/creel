@@ -1,6 +1,8 @@
 ---
 name: creel-extractors
 description: Use when adding, changing, or wiring an extraction strategy in creel — the pluggable mechanisms that detect and pull a graph element's value(s) from sources. Covers the Extractor Protocol, the three strategy families (LLM/NL-description, query over structured sources, pattern/function), the registry + entry points, the schema-as-extractor default, the bindings→join→facade flow, and how every extraction attaches an evidence record (provenance + grounding + confidence). Trigger on work in creel/extract/, bindings.py, join.py, facade.py, or evidence.py.
+metadata:
+  audience: developers
 ---
 
 # creel extractors

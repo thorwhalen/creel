@@ -27,9 +27,28 @@ implemented in it.
 - **Deep research** — `misc/docs/research/01..12-*.md` (each design choice cites
   the report that justifies it, e.g. `[R08]`).
 
-Skills: `creel-architecture` (the map), `creel-extractors` (strategy layer),
-`creel-eval` (the verifier/evaluation subsystem). Invoke the matching one when
-working in that area.
+## Skills
+
+creel ships an AI-native skill layer (the SKILL.md files Claude reads from
+`.claude/skills/`, which are relative symlinks into the canonical locations).
+
+**Consumer skills** — for anyone *using* creel (real files in `creel/data/skills/`,
+so they ride along with `pip install creel` and are `gh skill`-installable):
+- `creel-extract` — the entry/orchestrator: the `extract(...) -> graph` workflow.
+- `creel-grammar` — author a typed `GraphSpec` (node/edge types, attributes on edges).
+- `creel-bindings` — map grammar elements to extractor strategies (regex / query / LLM).
+- `creel-evaluation` — the pluggable-Verifier subsystem (correctness ≠ `==`).
+- `creel-ai` — real LLM usage (inject a client, schema-as-extractor, judges, resolution).
+- `creel-projections` — downstream: resolve / reify / view / export / annotate / trace.
+
+**Dev/maintainer skills** — for working *inside* the engine (real files in top-level
+`skills/`; do NOT ship): `creel-architecture` (the map + D1–D15), `creel-extractors`
+(strategy layer internals), `creel-eval` (verifier subsystem internals), `creel-ingestion`
+(the ingestion layer). Invoke the matching one when working in that area.
+
+Layout authority: the `skill-package-setup` convention — real files in exactly one
+non-hidden location, per-skill relative symlinks in `.claude/skills/`. When editing a
+skill, edit the real file (under `creel/data/skills/` or `skills/`), not the symlink.
 
 ## The load-bearing ideas (do not violate without recording a decision)
 
