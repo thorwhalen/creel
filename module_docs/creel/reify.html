@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.reify &mdash; creel 0.1.0 documentation</title>
+  <title>creel.reify &mdash; creel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -128,7 +128,7 @@ type into a node carrying the edge’s attributes, linked to its original endpoi
 two connector edges; <a class="reference internal" href="#creel.reify.unreify" title="creel.reify.unreify"><code class="xref py py-func docutils literal notranslate"><span class="pre">unreify()</span></code></a> inverts it. The pair is <strong>lossless</strong> — a
 round-trip reproduces the original graph (a tested invariant).</p>
 <p>Use it per-edge-type, on demand, when a relation becomes genuinely n-ary — e.g. an
-indicator reading that needs shared <code class="docutils literal notranslate"><span class="pre">Period</span></code>/<code class="docutils literal notranslate"><span class="pre">Source</span></code>/AGD-dimension nodes, or that
+indicator reading that needs shared <code class="docutils literal notranslate"><span class="pre">Period</span></code>/<code class="docutils literal notranslate"><span class="pre">Source</span></code>/disaggregation-dimension nodes, or that
 will be merged across reporting periods (the node-based resolver then dedups it; see
 <a class="reference internal" href="resolve.html#module-creel.resolve" title="creel.resolve"><code class="xref py py-mod docutils literal notranslate"><span class="pre">creel.resolve</span></code></a>). Until then, keep the simpler attributed edge (decision #12).</p>
 <p><code class="docutils literal notranslate"><span class="pre">measured_by</span></code> example:</p>

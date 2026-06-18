@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.ingest.loaders &mdash; creel 0.1.0 documentation</title>
+  <title>creel.ingest.loaders &mdash; creel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -179,8 +179,12 @@
 <span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;.text&quot;</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_text</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load plain text as a ``text`` source.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span>
-                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">})</span></div>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
+        <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">},</span>
+    <span class="p">)</span></div>
 
 
 
@@ -189,8 +193,12 @@
 <span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.md&quot;</span><span class="p">,</span> <span class="s2">&quot;.markdown&quot;</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_markdown</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load Markdown as-is (it is already LLM-native and structure-preserving).&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span>
-                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;markdown&quot;</span><span class="p">})</span></div>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
+        <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;markdown&quot;</span><span class="p">},</span>
+    <span class="p">)</span></div>
 
 
 
@@ -200,7 +208,9 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">load_csv</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load CSV into a ``table`` source (``list[dict]`` rows; cell-addressable).&quot;&quot;&quot;</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))))</span>
-    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;csv&quot;</span><span class="p">})</span></div>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;csv&quot;</span><span class="p">}</span>
+    <span class="p">)</span></div>
 
 
 
@@ -209,8 +219,12 @@
 <span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.tsv&quot;</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_tsv</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load TSV into a ``table`` source.&quot;&quot;&quot;</span>
-    <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;tsv&quot;</span><span class="p">})</span></div>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;tsv&quot;</span><span class="p">}</span>
+    <span class="p">)</span></div>
 
 
 
@@ -219,8 +233,12 @@
 <span class="nd">@register_loader</span><span class="p">(</span><span class="s2">&quot;.json&quot;</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_json</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load JSON into a ``json`` source (parsed object).&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)),</span> <span class="n">kind</span><span class="o">=</span><span class="n">JSON</span><span class="p">,</span>
-                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;json&quot;</span><span class="p">})</span></div>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="p">,</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)),</span>
+        <span class="n">kind</span><span class="o">=</span><span class="n">JSON</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;json&quot;</span><span class="p">},</span>
+    <span class="p">)</span></div>
 
 
 
@@ -238,10 +256,17 @@
     <span class="n">wb</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">data_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">active</span>
     <span class="n">rows_iter</span> <span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">(</span><span class="n">values_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;col</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">rows_iter</span><span class="p">,</span> <span class="p">()))]</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;col</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">rows_iter</span><span class="p">,</span> <span class="p">()))</span>
+    <span class="p">]</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows_iter</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TABLE</span><span class="p">,</span>
-                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;xlsx&quot;</span><span class="p">,</span> <span class="s2">&quot;sheet&quot;</span><span class="p">:</span> <span class="n">ws</span><span class="o">.</span><span class="n">title</span><span class="p">})</span></div>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="p">,</span>
+        <span class="n">rows</span><span class="p">,</span>
+        <span class="n">kind</span><span class="o">=</span><span class="n">TABLE</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;xlsx&quot;</span><span class="p">,</span> <span class="s2">&quot;sheet&quot;</span><span class="p">:</span> <span class="n">ws</span><span class="o">.</span><span class="n">title</span><span class="p">},</span>
+    <span class="p">)</span></div>
 
 
 
@@ -251,8 +276,13 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">load_html</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Source</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract main content from HTML to Markdown (trafilatura; strips boilerplate).&quot;&quot;&quot;</span>
     <span class="n">trafilatura</span> <span class="o">=</span> <span class="n">_require</span><span class="p">(</span><span class="s2">&quot;trafilatura&quot;</span><span class="p">,</span> <span class="s2">&quot;[ingest]&quot;</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">trafilatura</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;markdown&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;html&quot;</span><span class="p">})</span></div>
+    <span class="n">text</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">trafilatura</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;markdown&quot;</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;html&quot;</span><span class="p">}</span>
+    <span class="p">)</span></div>
 
 
 
@@ -269,8 +299,12 @@
     <span class="n">dc</span> <span class="o">=</span> <span class="n">_require</span><span class="p">(</span><span class="s2">&quot;docling.document_converter&quot;</span><span class="p">,</span> <span class="s2">&quot;[ingest]&quot;</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">dc</span><span class="o">.</span><span class="n">DocumentConverter</span><span class="p">()</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
     <span class="n">markdown</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">export_to_markdown</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">markdown</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span>
-                  <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)})</span></div>
+    <span class="k">return</span> <span class="n">Source</span><span class="p">(</span>
+        <span class="n">source_id</span><span class="p">,</span>
+        <span class="n">markdown</span><span class="p">,</span>
+        <span class="n">kind</span><span class="o">=</span><span class="n">TEXT</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)},</span>
+    <span class="p">)</span></div>
 
 
 

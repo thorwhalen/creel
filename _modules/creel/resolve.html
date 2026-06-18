@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.resolve &mdash; creel 0.1.0 documentation</title>
+  <title>creel.resolve &mdash; creel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -116,8 +116,8 @@
 <span></span><span class="sd">&quot;&quot;&quot;Entity resolution — merge nodes that name the same real entity (decision #14 / D-OP8).</span>
 
 <span class="sd">Messy multi-source documents (field-written, non-native English, OCR&#39;d) name the</span>
-<span class="sd">same entity in different ways — &quot;Government of Norway&quot; / &quot;Norway (Govt.)&quot; /</span>
-<span class="sd">&quot;Norwegian MFA&quot;. Per the changed decision #14 (report R14 §5), resolution is a</span>
+<span class="sd">same entity in different ways — &quot;Foundation Alpha&quot; / &quot;Alpha Fnd. (MFA)&quot; /</span>
+<span class="sd">&quot;the Alpha foundation&quot;. Per the changed decision #14 (report R14 §5), resolution is a</span>
 <span class="sd">**required**, pluggable cascade — *blocking → matching → merging* — defaulting to</span>
 <span class="sd">cheap deterministic strategies (exact id → normalize-before-merge → registry) with</span>
 <span class="sd">hooks for embedding/LLM adjudication.</span>
@@ -133,13 +133,34 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">runtime_checkable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Mapping</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Protocol</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">runtime_checkable</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">creel.extract.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">slug</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">creel.graph.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">Node</span>
 
 <span class="c1"># Tokens stripped during entity normalization (legal forms + honorifics).</span>
-<span class="n">_LEGAL</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;inc&quot;</span><span class="p">,</span> <span class="s2">&quot;ltd&quot;</span><span class="p">,</span> <span class="s2">&quot;llc&quot;</span><span class="p">,</span> <span class="s2">&quot;corp&quot;</span><span class="p">,</span> <span class="s2">&quot;co&quot;</span><span class="p">,</span> <span class="s2">&quot;company&quot;</span><span class="p">,</span> <span class="s2">&quot;gmbh&quot;</span><span class="p">,</span> <span class="s2">&quot;plc&quot;</span><span class="p">,</span> <span class="s2">&quot;sa&quot;</span><span class="p">,</span> <span class="s2">&quot;ag&quot;</span><span class="p">,</span> <span class="s2">&quot;srl&quot;</span><span class="p">,</span> <span class="s2">&quot;bv&quot;</span><span class="p">}</span>
+<span class="n">_LEGAL</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;inc&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ltd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;llc&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;corp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;co&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;company&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gmbh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;plc&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sa&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;srl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bv&quot;</span><span class="p">,</span>
+<span class="p">}</span>
 <span class="n">_HONORIFIC</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dr&quot;</span><span class="p">,</span> <span class="s2">&quot;mr&quot;</span><span class="p">,</span> <span class="s2">&quot;mrs&quot;</span><span class="p">,</span> <span class="s2">&quot;ms&quot;</span><span class="p">,</span> <span class="s2">&quot;prof&quot;</span><span class="p">,</span> <span class="s2">&quot;mme&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;the&quot;</span><span class="p">}</span>
 
 
@@ -203,7 +224,7 @@
 <a class="viewcode-back" href="../../module_docs/creel/resolve.html#creel.RegistryResolver">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">RegistryResolver</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve mentions to canonical ids via an authoritative lookup table (e.g. IATI/DAC).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve mentions to canonical ids via an authoritative lookup table (an org registry).&quot;&quot;&quot;</span>
 
     <span class="n">registry</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
     <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
@@ -212,7 +233,9 @@
         <span class="n">value</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">normalize_entity</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">normalize_entity</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">ca</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_canon</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
@@ -241,7 +264,11 @@
     <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">same</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">judge</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))))</span></div>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">judge</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
 
 
@@ -284,6 +311,14 @@
     <span class="n">merged</span><span class="p">:</span> <span class="n">Graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
     <span class="n">merges</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
 
+    <span class="c1"># index per-attribute evidence (keys shaped ``(element_id, attr)``, A1) by id so</span>
+    <span class="c1"># it can be remapped onto the canonical node — otherwise value-level provenance</span>
+    <span class="c1"># is silently lost on every merge (D8).</span>
+    <span class="n">attr_evidence</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">ev</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">attr_evidence</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ev</span><span class="p">))</span>
+
     <span class="n">blocks</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
         <span class="n">blocks</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">types</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
@@ -296,29 +331,45 @@
                 <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">node</span><span class="o">.</span><span class="n">attributes</span><span class="p">,</span> <span class="o">**</span><span class="n">attributes</span><span class="p">}</span>
                 <span class="n">canonical_of</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">cid</span>
             <span class="n">merged</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">cid</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">types</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">)</span>
+            <span class="c1"># carry evidence for EVERY cluster member onto cid (first-wins, matching</span>
+            <span class="c1"># the attribute merge): element-level + per-attribute (A1).</span>
             <span class="k">if</span> <span class="n">cid</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">:</span>
                 <span class="n">merged</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">:</span>
-                <span class="n">merged</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">cluster</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">cluster</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">:</span>
+                    <span class="n">merged</span><span class="o">.</span><span class="n">evidence</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">cid</span><span class="p">,</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">member</span><span class="o">.</span><span class="n">id</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">ev</span> <span class="ow">in</span> <span class="n">attr_evidence</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">member</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="p">()):</span>
+                    <span class="n">merged</span><span class="o">.</span><span class="n">evidence</span><span class="o">.</span><span class="n">setdefault</span><span class="p">((</span><span class="n">cid</span><span class="p">,</span> <span class="n">attr</span><span class="p">),</span> <span class="n">ev</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">merges</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;canonical&quot;</span><span class="p">:</span> <span class="n">cid</span><span class="p">,</span> <span class="s2">&quot;merged&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">cluster</span><span class="p">)})</span>
+                <span class="n">merges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">{</span><span class="s2">&quot;canonical&quot;</span><span class="p">:</span> <span class="n">cid</span><span class="p">,</span> <span class="s2">&quot;merged&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">cluster</span><span class="p">)}</span>
+                <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
         <span class="n">source</span> <span class="o">=</span> <span class="n">canonical_of</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">canonical_of</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="ow">and</span> <span class="n">merged</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">target</span><span class="p">)):</span>
             <span class="k">continue</span>
-        <span class="n">merged</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">edge</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
-                        <span class="n">attributes</span><span class="o">=</span><span class="n">edge</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span>
+        <span class="n">merged</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span>
+            <span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">edge</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+            <span class="n">attributes</span><span class="o">=</span><span class="n">edge</span><span class="o">.</span><span class="n">attributes</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">edge</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">:</span>
             <span class="n">merged</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">[</span><span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">ev</span> <span class="ow">in</span> <span class="n">attr_evidence</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="p">()):</span>  <span class="c1"># per-attribute edge evidence (A1)</span>
+            <span class="n">merged</span><span class="o">.</span><span class="n">evidence</span><span class="p">[(</span><span class="n">edge</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">attr</span><span class="p">)]</span> <span class="o">=</span> <span class="n">ev</span>
 
     <span class="n">merged</span><span class="o">.</span><span class="n">report</span><span class="p">[</span><span class="s2">&quot;merges&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">merges</span>
     <span class="k">return</span> <span class="n">merged</span></div>
 
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_cluster</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Node</span><span class="p">],</span> <span class="n">resolver</span><span class="p">:</span> <span class="n">Resolver</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_cluster</span><span class="p">(</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Node</span><span class="p">],</span> <span class="n">resolver</span><span class="p">:</span> <span class="n">Resolver</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]]:</span>
     <span class="n">parent</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">n</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>

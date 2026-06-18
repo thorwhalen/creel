@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.bindings &mdash; creel 0.1.0 documentation</title>
+  <title>creel.bindings &mdash; creel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -150,6 +150,9 @@ types), rather than once per element. <code class="docutils literal notranslate"
 <dt class="sig sig-object py" id="creel.bindings.ExtractorBinding.build">
 <span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="extract/protocol.html#creel.extract.protocol.Extractor" title="creel.extract.protocol.Extractor"><span class="pre">Extractor</span></a></span></span><a class="reference internal" href="../../_modules/creel/bindings.html#ExtractorBinding.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.bindings.ExtractorBinding.build" title="Link to this definition"></a></dt>
 <dd><p>Instantiate the bound extractor (direct callable wins over a named strategy).</p>
+<p>Raises a binding-level <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code> (naming the element and strategy)
+for a malformed config or missing required params, instead of leaking a
+<code class="docutils literal notranslate"><span class="pre">dict</span></code>-internals or <code class="docutils literal notranslate"><span class="pre">__init__</span></code> traceback to the caller.</p>
 </dd></dl>
 
 </dd></dl>

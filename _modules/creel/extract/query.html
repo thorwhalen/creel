@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.extract.query &mdash; creel 0.1.0 documentation</title>
+  <title>creel.extract.query &mdash; creel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -153,25 +153,41 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_attrs</span><span class="p">(</span><span class="n">record</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">mapping</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-    <span class="n">picked</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="n">record</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">record</span><span class="p">}</span>
+    <span class="n">picked</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">a</span><span class="p">:</span> <span class="n">record</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">record</span>
+    <span class="p">}</span>
     <span class="k">return</span> <span class="n">apply_casts</span><span class="p">(</span><span class="n">picked</span><span class="p">,</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;casts&quot;</span><span class="p">,</span> <span class="p">{}))</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_record_to_node</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExtractedNode</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_record_to_node</span><span class="p">(</span>
+    <span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExtractedNode</span><span class="p">:</span>
     <span class="n">el_type</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">element_id</span>
     <span class="k">if</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_template&quot;</span><span class="p">):</span>
         <span class="n">node_id</span> <span class="o">=</span> <span class="n">fill_template</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;id_template&quot;</span><span class="p">],</span> <span class="n">record</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_from&quot;</span><span class="p">):</span>
-        <span class="n">node_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">el_type</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">slug</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;id_from&#39;</span><span class="p">]])</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;id_from&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">record</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;query node mapping for </span><span class="si">{</span><span class="n">element_id</span><span class="si">!r}</span><span class="s2">: id_from column </span><span class="si">{</span><span class="n">col</span><span class="si">!r}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;not in record; available columns: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">record</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="n">node_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">el_type</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">slug</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="n">col</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">node_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">el_type</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">evidence</span> <span class="o">=</span> <span class="n">deterministic_evidence</span><span class="p">(</span>
-        <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span> <span class="n">generated_by</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;query:</span><span class="si">{</span><span class="n">element_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">grounding</span><span class="o">=</span><span class="n">grounder</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+        <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span>
+        <span class="n">generated_by</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;query:</span><span class="si">{</span><span class="n">element_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">grounding</span><span class="o">=</span><span class="n">grounder</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">record</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">ExtractedNode</span><span class="p">(</span><span class="n">node_id</span><span class="p">,</span> <span class="n">el_type</span><span class="p">,</span> <span class="n">_attrs</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">mapping</span><span class="p">),</span> <span class="n">evidence</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_record_to_edge</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExtractedEdge</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_record_to_edge</span><span class="p">(</span>
+    <span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExtractedEdge</span><span class="p">:</span>
     <span class="n">el_type</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">element_id</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;source_template&quot;</span><span class="p">,</span> <span class="s2">&quot;target_template&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
@@ -182,13 +198,17 @@
         <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">el_type</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="p">)</span>
     <span class="n">evidence</span> <span class="o">=</span> <span class="n">deterministic_evidence</span><span class="p">(</span>
-        <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span> <span class="n">generated_by</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;query:</span><span class="si">{</span><span class="n">element_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">grounding</span><span class="o">=</span><span class="n">grounder</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+        <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span>
+        <span class="n">generated_by</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;query:</span><span class="si">{</span><span class="n">element_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">grounding</span><span class="o">=</span><span class="n">grounder</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">record</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">ExtractedEdge</span><span class="p">(</span>
-        <span class="n">edge_id</span><span class="p">,</span> <span class="n">el_type</span><span class="p">,</span>
+        <span class="n">edge_id</span><span class="p">,</span>
+        <span class="n">el_type</span><span class="p">,</span>
         <span class="n">fill_template</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;source_template&quot;</span><span class="p">],</span> <span class="n">record</span><span class="p">),</span>
         <span class="n">fill_template</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;target_template&quot;</span><span class="p">],</span> <span class="n">record</span><span class="p">),</span>
-        <span class="n">_attrs</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">mapping</span><span class="p">),</span> <span class="n">evidence</span><span class="p">,</span>
+        <span class="n">_attrs</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">mapping</span><span class="p">),</span>
+        <span class="n">evidence</span><span class="p">,</span>
     <span class="p">)</span>
 
 
@@ -201,16 +221,34 @@
     <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">record</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">records</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;edge&quot;</span><span class="p">:</span>
-            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_record_to_edge</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span>
-                                         <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="o">=</span><span class="n">grounder</span><span class="p">))</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">_record_to_edge</span><span class="p">(</span>
+                    <span class="n">record</span><span class="p">,</span>
+                    <span class="n">i</span><span class="p">,</span>
+                    <span class="n">mapping</span><span class="p">,</span>
+                    <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span>
+                    <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span><span class="p">,</span>
+                    <span class="n">grounder</span><span class="o">=</span><span class="n">grounder</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_record_to_node</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span>
-                                         <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="o">=</span><span class="n">grounder</span><span class="p">))</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">_record_to_node</span><span class="p">(</span>
+                    <span class="n">record</span><span class="p">,</span>
+                    <span class="n">i</span><span class="p">,</span>
+                    <span class="n">mapping</span><span class="p">,</span>
+                    <span class="n">source_id</span><span class="o">=</span><span class="n">source_id</span><span class="p">,</span>
+                    <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span><span class="p">,</span>
+                    <span class="n">grounder</span><span class="o">=</span><span class="n">grounder</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
     <span class="k">return</span> <span class="n">Extraction</span><span class="p">(</span><span class="n">nodes</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_cell_grounder</span><span class="p">(</span><span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Grounder</span><span class="p">:</span>
-    <span class="n">primary</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_from&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="s2">&quot;row&quot;</span><span class="p">)</span>
+    <span class="n">primary</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_from&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">next</span><span class="p">(</span>
+        <span class="nb">iter</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="s2">&quot;row&quot;</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="p">(</span><span class="n">CellSelector</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">primary</span><span class="p">)),)</span>
 
 
@@ -220,10 +258,14 @@
 <span class="nd">@register_extractor</span><span class="p">(</span><span class="s2">&quot;table_map&quot;</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_table_map_extractor</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">records_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an extractor that maps rows of the table source ``records_source``.&quot;&quot;&quot;</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">extractor</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ExtractionContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Extraction</span><span class="p">:</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">records_source</span><span class="p">)</span>
         <span class="n">records</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="k">if</span> <span class="n">src</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
-        <span class="k">return</span> <span class="n">_map_records</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">records_source</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">element_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_map_records</span><span class="p">(</span>
+            <span class="n">records</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">records_source</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">element_id</span>
+        <span class="p">)</span>
+
     <span class="k">return</span> <span class="n">extractor</span></div>
 
 
@@ -232,13 +274,19 @@
 <div class="viewcode-block" id="make_sql_extractor">
 <a class="viewcode-back" href="../../../module_docs/creel/extract/query.html#creel.extract.make_sql_extractor">[docs]</a>
 <span class="nd">@register_extractor</span><span class="p">(</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">make_sql_extractor</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">records_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sql</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span> <span class="o">**</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_sql_extractor</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span> <span class="n">records_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sql</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span> <span class="o">**</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an extractor that runs parameterized DuckDB ``sql`` over the table, then maps.&quot;&quot;&quot;</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">extractor</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ExtractionContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Extraction</span><span class="p">:</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">records_source</span><span class="p">)</span>
         <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="k">if</span> <span class="n">src</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">_duckdb_query</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">_map_records</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">records_source</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">element_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_map_records</span><span class="p">(</span>
+            <span class="n">result</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">records_source</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">element_id</span>
+        <span class="p">)</span>
+
     <span class="k">return</span> <span class="n">extractor</span></div>
 
 
@@ -255,10 +303,12 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">rows</span><span class="p">:</span>
             <span class="n">cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-            <span class="n">quoted</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">)</span>
-            <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CREATE TABLE t (</span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&quot; VARCHAR&quot;&quot;&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">cols</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+            <span class="n">quoted</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_qident</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">)</span>
+            <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;CREATE TABLE t (</span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_qident</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="si">}</span><span class="s2"> VARCHAR&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">cols</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span>
+            <span class="p">)</span>
             <span class="n">con</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;INSERT INTO t (</span><span class="si">{</span><span class="n">quoted</span><span class="si">}</span><span class="s1">) VALUES (</span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">cols</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;INSERT INTO t (</span><span class="si">{</span><span class="n">quoted</span><span class="si">}</span><span class="s2">) VALUES (</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">cols</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
                 <span class="p">[[</span><span class="n">_as_str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">],</span>
             <span class="p">)</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -266,6 +316,12 @@
         <span class="k">return</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_qident</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quote a SQL identifier safely (double any internal quote), so a column name</span>
+<span class="sd">    from an untrusted header can&#39;t break out of the DDL.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;&quot;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_as_str</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
@@ -277,15 +333,26 @@
 <a class="viewcode-back" href="../../../module_docs/creel/extract/query.html#creel.extract.make_json_extractor">[docs]</a>
 <span class="nd">@register_extractor</span><span class="p">(</span><span class="s2">&quot;json_query&quot;</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_json_extractor</span><span class="p">(</span>
-    <span class="o">*</span><span class="p">,</span> <span class="n">records_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">select</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">where</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Mapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">records_source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">select</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">where</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Mapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">mapping</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an extractor that selects records from a JSON source, then maps them.&quot;&quot;&quot;</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">extractor</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">ExtractionContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Extraction</span><span class="p">:</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">records_source</span><span class="p">)</span>
         <span class="n">records</span> <span class="o">=</span> <span class="n">_json_select</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">content</span> <span class="k">if</span> <span class="n">src</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[],</span> <span class="n">select</span><span class="p">,</span> <span class="n">where</span><span class="p">)</span>
         <span class="n">grounder</span> <span class="o">=</span> <span class="n">_jsonpath_grounder</span><span class="p">(</span><span class="n">records_source</span><span class="p">,</span> <span class="n">select</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">_map_records</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="n">records_source</span><span class="p">,</span>
-                            <span class="n">element_id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">element_id</span><span class="p">,</span> <span class="n">grounder</span><span class="o">=</span><span class="n">grounder</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_map_records</span><span class="p">(</span>
+            <span class="n">records</span><span class="p">,</span>
+            <span class="n">mapping</span><span class="p">,</span>
+            <span class="n">source_id</span><span class="o">=</span><span class="n">records_source</span><span class="p">,</span>
+            <span class="n">element_id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">element_id</span><span class="p">,</span>
+            <span class="n">grounder</span><span class="o">=</span><span class="n">grounder</span><span class="p">,</span>
+        <span class="p">)</span>
+
     <span class="k">return</span> <span class="n">extractor</span></div>
 
 
@@ -296,7 +363,9 @@
         <span class="kn">import</span><span class="w"> </span><span class="nn">jmespath</span>  <span class="c1"># local import: optional [query] extra</span>
 
         <span class="n">found</span> <span class="o">=</span> <span class="n">jmespath</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-        <span class="n">records</span> <span class="o">=</span> <span class="n">found</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">([]</span> <span class="k">if</span> <span class="n">found</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[</span><span class="n">found</span><span class="p">])</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">found</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">([]</span> <span class="k">if</span> <span class="n">found</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[</span><span class="n">found</span><span class="p">])</span>
+        <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">records</span> <span class="o">=</span> <span class="p">[</span><span class="n">records</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">where</span><span class="p">:</span>
@@ -309,17 +378,45 @@
         <span class="n">value</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">op</span><span class="p">,</span> <span class="n">operand</span> <span class="ow">in</span> <span class="n">cond</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$gt&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">operand</span><span class="p">):</span>
-                    <span class="k">return</span> <span class="kc">False</span>
-                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$lt&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">operand</span><span class="p">):</span>
-                    <span class="k">return</span> <span class="kc">False</span>
-                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$in&quot;</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">operand</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="kc">False</span>
-                <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$ne&quot;</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">==</span> <span class="n">operand</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">op</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;$gt&quot;</span><span class="p">,</span> <span class="s2">&quot;$lt&quot;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">_ordered</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">operand</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$in&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operand</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;$in operand must be a list/tuple/set, &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">operand</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">operand</span><span class="si">!r}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">operand</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$ne&quot;</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">==</span> <span class="n">operand</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">False</span>
         <span class="k">elif</span> <span class="n">value</span> <span class="o">!=</span> <span class="n">cond</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_as_number</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_ordered</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">operand</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">op</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compare for ``$gt``/``$lt``, coercing numeric-looking strings (CSV/JSON values</span>
+<span class="sd">    are often strings) and treating an incomparable pair as non-matching, not a crash.&quot;&quot;&quot;</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">_as_number</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">_as_number</span><span class="p">(</span><span class="n">operand</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># not both numeric -&gt; compare as-is, tolerate mismatch</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">value</span><span class="p">,</span> <span class="n">operand</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;$gt&quot;</span> <span class="k">else</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_jsonpath_grounder</span><span class="p">(</span><span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">select</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Grounder</span><span class="p">:</span>

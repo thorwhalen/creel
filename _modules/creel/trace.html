@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.trace &mdash; creel 0.1.0 documentation</title>
+  <title>creel.trace &mdash; creel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -143,7 +143,9 @@
 <span class="c1"># --- A1: per-attribute grounding ----------------------------------------------</span>
 <div class="viewcode-block" id="set_attribute_evidence">
 <a class="viewcode-back" href="../../module_docs/creel/trace.html#creel.set_attribute_evidence">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">set_attribute_evidence</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">element_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">evidence</span><span class="p">:</span> <span class="n">Evidence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_attribute_evidence</span><span class="p">(</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">element_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">evidence</span><span class="p">:</span> <span class="n">Evidence</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Attach an evidence record to a specific attribute value (key ``(id, attribute)``).&quot;&quot;&quot;</span>
     <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="p">[(</span><span class="n">element_id</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)]</span> <span class="o">=</span> <span class="n">evidence</span></div>
 
@@ -151,7 +153,9 @@
 
 <div class="viewcode-block" id="attribute_evidence">
 <a class="viewcode-back" href="../../module_docs/creel/trace.html#creel.attribute_evidence">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">attribute_evidence</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">element_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Evidence</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">attribute_evidence</span><span class="p">(</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">element_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Evidence</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the per-attribute evidence for ``(element_id, attribute)``, or the</span>
 <span class="sd">    element-level evidence as a fallback, or ``None``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">element_id</span><span class="p">,</span> <span class="n">attribute</span><span class="p">))</span> <span class="ow">or</span> <span class="n">graph</span><span class="o">.</span><span class="n">evidence</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element_id</span><span class="p">)</span></div>
@@ -179,7 +183,9 @@
                     <span class="n">src</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">source_id</span> <span class="ow">or</span> <span class="s2">&quot;?&quot;</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_spans</span><span class="p">[</span><span class="n">src</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">selector</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">selector</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
                 <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;CellSelector&quot;</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_cells</span><span class="p">[</span><span class="n">selector</span><span class="o">.</span><span class="n">source_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">selector</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">selector</span><span class="o">.</span><span class="n">column</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_cells</span><span class="p">[</span><span class="n">selector</span><span class="o">.</span><span class="n">source_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">selector</span><span class="o">.</span><span class="n">column</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                    <span class="p">)</span>
                 <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;PageSelector&quot;</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">selector</span><span class="o">.</span><span class="n">source_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">selector</span><span class="o">.</span><span class="n">page</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
 
@@ -194,14 +200,20 @@
 <a class="viewcode-back" href="../../module_docs/creel/trace.html#creel.TraceIndex.elements_overlapping">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">elements_overlapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Evidence keys whose text span overlaps ``[start, end)`` (range query).&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spans</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">end</span> <span class="ow">and</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">k</span> <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spans</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">end</span> <span class="ow">and</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">e</span>
+        <span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="TraceIndex.elements_in_cell">
 <a class="viewcode-back" href="../../module_docs/creel/trace.html#creel.TraceIndex.elements_in_cell">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">elements_in_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Evidence keys grounded in table cell ``(row, column)``.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cells</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">row</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">==</span> <span class="n">column</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">k</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cells</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">row</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">==</span> <span class="n">column</span>
+        <span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="TraceIndex.elements_on_page">
@@ -225,8 +237,9 @@
 
 <div class="viewcode-block" id="reanchor">
 <a class="viewcode-back" href="../../module_docs/creel/trace.html#creel.reanchor">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">reanchor</span><span class="p">(</span><span class="n">selector</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">hint</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-             <span class="n">fuzzy</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">reanchor</span><span class="p">(</span>
+    <span class="n">selector</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">hint</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">fuzzy</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Re-locate a ``TextQuoteSelector`` in (possibly changed) ``text``.</span>
 
 <span class="sd">    Strategy (Hypothes.is-style): exact match → disambiguate multiple hits by</span>
@@ -247,9 +260,11 @@
         <span class="n">best</span><span class="p">,</span> <span class="n">best_score</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;-inf&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">positions</span><span class="p">:</span>
             <span class="n">score</span> <span class="o">=</span> <span class="mf">0.0</span>
-            <span class="k">if</span> <span class="n">prefix</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)):</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">prefix</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">))</span> <span class="p">:</span> <span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
                 <span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">if</span> <span class="n">suffix</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="n">p</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">exact</span><span class="p">):</span><span class="n">p</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">exact</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">suffix</span><span class="p">)]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">suffix</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">suffix</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span>
+                <span class="n">p</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">exact</span><span class="p">)</span> <span class="p">:</span> <span class="n">p</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">exact</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">suffix</span><span class="p">)</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">suffix</span><span class="p">):</span>
                 <span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">hint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">score</span> <span class="o">-=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="n">hint</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-6</span>
@@ -261,7 +276,9 @@
     <span class="n">matcher</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">SequenceMatcher</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">exact</span><span class="p">)</span>
     <span class="n">match</span> <span class="o">=</span> <span class="n">matcher</span><span class="o">.</span><span class="n">find_longest_match</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">exact</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">match</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.6</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">exact</span><span class="p">))):</span>
-        <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">exact</span><span class="p">)</span>
+        <span class="c1"># span the ACTUAL matched fragment, not the original quote length, so the</span>
+        <span class="c1"># returned offsets never overshoot the text on a partial fuzzy match</span>
+        <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="n">match</span><span class="o">.</span><span class="n">size</span>
     <span class="k">return</span> <span class="kc">None</span></div>
 
 </pre></div>

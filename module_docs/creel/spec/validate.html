@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.spec.validate &mdash; creel 0.1.0 documentation</title>
+  <title>creel.spec.validate &mdash; creel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -84,6 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#creel.spec.validate.ValidationIssue"><code class="docutils literal notranslate"><span class="pre">ValidationIssue</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creel.spec.validate.validate_attributes"><code class="docutils literal notranslate"><span class="pre">validate_attributes()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creel.spec.validate.validate_graph"><code class="docutils literal notranslate"><span class="pre">validate_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creel.spec.validate.validate_spec"><code class="docutils literal notranslate"><span class="pre">validate_spec()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../temporal.html">creel.temporal</a></li>
@@ -158,6 +159,15 @@ checked here so the model can be re-asked with the specific failures.</p>
 <dd><p>Return the list of grammar-conformance issues for <code class="docutils literal notranslate"><span class="pre">graph</span></code> under <code class="docutils literal notranslate"><span class="pre">spec</span></code>.</p>
 <p>With <code class="docutils literal notranslate"><span class="pre">raise_on_error=True</span></code>, raises <a class="reference internal" href="#creel.spec.validate.GraphValidationError" title="creel.spec.validate.GraphValidationError"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphValidationError</span></code></a> if any issue
 is found instead of returning the list.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="creel.spec.validate.validate_spec">
+<span class="sig-prename descclassname"><span class="pre">creel.spec.validate.</span></span><span class="sig-name descname"><span class="pre">validate_spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="model.html#creel.spec.model.GraphSpec" title="creel.spec.model.GraphSpec"><span class="pre">GraphSpec</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#creel.spec.validate.ValidationIssue" title="creel.spec.validate.ValidationIssue"><span class="pre">ValidationIssue</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/creel/spec/validate.html#validate_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.spec.validate.validate_spec" title="Link to this definition"></a></dt>
+<dd><p>Check the grammar’s own referential integrity (independent of any instance).</p>
+<p>Every edge endpoint type and every <code class="docutils literal notranslate"><span class="pre">is_a</span></code> parent must resolve to a declared
+node type — otherwise a spec that references a nonexistent node-type is silently
+accepted and never caught. Returns <code class="docutils literal notranslate"><span class="pre">[]</span></code> for a sound grammar.</p>
 </dd></dl>
 
 </section>

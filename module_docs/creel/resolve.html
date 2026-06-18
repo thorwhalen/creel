@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.resolve &mdash; creel 0.1.0 documentation</title>
+  <title>creel.resolve &mdash; creel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -140,8 +140,8 @@
 <span id="creel-resolve"></span><h1>creel.resolve<a class="headerlink" href="#module-creel.resolve" title="Link to this heading"></a></h1>
 <p>Entity resolution — merge nodes that name the same real entity (decision #14 / D-OP8).</p>
 <p>Messy multi-source documents (field-written, non-native English, OCR’d) name the
-same entity in different ways — “Government of Norway” / “Norway (Govt.)” /
-“Norwegian MFA”. Per the changed decision #14 (report R14 §5), resolution is a
+same entity in different ways — “Foundation Alpha” / “Alpha Fnd. (MFA)” /
+“the Alpha foundation”. Per the changed decision #14 (report R14 §5), resolution is a
 <strong>required</strong>, pluggable cascade — <em>blocking → matching → merging</em> — defaulting to
 cheap deterministic strategies (exact id → normalize-before-merge → registry) with
 hooks for embedding/LLM adjudication.</p>
@@ -184,7 +184,7 @@ Reserve this for pairs the cheap resolvers leave ambiguous — it is the costly 
 <dl class="py class">
 <dt class="sig sig-object py" id="creel.resolve.RegistryResolver">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">creel.resolve.</span></span><span class="sig-name descname"><span class="pre">RegistryResolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">registry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'name'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/creel/resolve.html#RegistryResolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.RegistryResolver" title="Link to this definition"></a></dt>
-<dd><p>Resolve mentions to canonical ids via an authoritative lookup table (e.g. IATI/DAC).</p>
+<dd><p>Resolve mentions to canonical ids via an authoritative lookup table (an org registry).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="creel.resolve.RegistryResolver.canonical_id">
 <span class="sig-name descname"><span class="pre">canonical_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="graph/model.html#creel.graph.model.Node" title="creel.graph.model.Node"><span class="pre">Node</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/creel/resolve.html#RegistryResolver.canonical_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#creel.resolve.RegistryResolver.canonical_id" title="Link to this definition"></a></dt>

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>creel.graph.model &mdash; creel 0.1.0 documentation</title>
+  <title>creel.graph.model &mdash; creel 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -128,12 +128,12 @@
 <span class="sd">-------</span>
 <span class="sd">&gt;&gt;&gt; g = Graph()</span>
 <span class="sd">&gt;&gt;&gt; _ = g.add_node(&quot;d:gov-x&quot;, types=(&quot;donor&quot;,), attributes={&quot;name&quot;: &quot;Government X&quot;})</span>
-<span class="sd">&gt;&gt;&gt; _ = g.add_node(&quot;p:wash&quot;, types=(&quot;project&quot;,), attributes={&quot;title&quot;: &quot;WASH&quot;})</span>
-<span class="sd">&gt;&gt;&gt; _ = g.add_edge(&quot;f:1&quot;, source=&quot;d:gov-x&quot;, target=&quot;p:wash&quot;, type=&quot;funds&quot;,</span>
+<span class="sd">&gt;&gt;&gt; _ = g.add_node(&quot;p:water&quot;, types=(&quot;project&quot;,), attributes={&quot;title&quot;: &quot;Water Access&quot;})</span>
+<span class="sd">&gt;&gt;&gt; _ = g.add_edge(&quot;f:1&quot;, source=&quot;d:gov-x&quot;, target=&quot;p:water&quot;, type=&quot;funds&quot;,</span>
 <span class="sd">...                 attributes={&quot;amount&quot;: 1_000_000, &quot;currency&quot;: &quot;USD&quot;})</span>
-<span class="sd">&gt;&gt;&gt; _ = g.add_edge(&quot;f:2&quot;, source=&quot;d:gov-x&quot;, target=&quot;p:wash&quot;, type=&quot;funds&quot;,</span>
+<span class="sd">&gt;&gt;&gt; _ = g.add_edge(&quot;f:2&quot;, source=&quot;d:gov-x&quot;, target=&quot;p:water&quot;, type=&quot;funds&quot;,</span>
 <span class="sd">...                 attributes={&quot;amount&quot;: 500_000, &quot;currency&quot;: &quot;USD&quot;})</span>
-<span class="sd">&gt;&gt;&gt; sorted(e.id for e in g.edges_between(&quot;d:gov-x&quot;, &quot;p:wash&quot;))   # parallel edges kept</span>
+<span class="sd">&gt;&gt;&gt; sorted(e.id for e in g.edges_between(&quot;d:gov-x&quot;, &quot;p:water&quot;))   # parallel edges kept</span>
 <span class="sd">[&#39;f:1&#39;, &#39;f:2&#39;]</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -213,7 +213,17 @@
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
             <span class="n">merged_types</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">((</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;types&quot;</span><span class="p">,</span> <span class="p">()),</span> <span class="o">*</span><span class="n">types</span><span class="p">)))</span>
             <span class="n">data</span><span class="p">[</span><span class="s2">&quot;types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_types</span>
-            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">,</span> <span class="p">{}),</span> <span class="o">**</span><span class="n">attributes</span><span class="p">}</span>
+            <span class="n">old_attrs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="c1"># Surface value conflicts (two extractors disagree) instead of silently</span>
+            <span class="c1"># discarding the prior value — auditability (D8). Merge stays last-wins.</span>
+            <span class="n">conflicts</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;node&quot;</span><span class="p">:</span> <span class="n">node_id</span><span class="p">,</span> <span class="s2">&quot;attribute&quot;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s2">&quot;old&quot;</span><span class="p">:</span> <span class="n">old_attrs</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="s2">&quot;new&quot;</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">old_attrs</span> <span class="ow">and</span> <span class="n">old_attrs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">!=</span> <span class="n">v</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">conflicts</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">report</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;attribute_conflicts&quot;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">conflicts</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">old_attrs</span><span class="p">,</span> <span class="o">**</span><span class="n">attributes</span><span class="p">}</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_g</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node_id</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="n">types</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">node_id</span><span class="p">)</span></div>
