@@ -135,5 +135,7 @@ def reanchor(
     matcher = difflib.SequenceMatcher(None, text, exact)
     match = matcher.find_longest_match(0, len(text), 0, len(exact))
     if match.size >= max(3, int(0.6 * len(exact))):
-        return match.a, match.a + len(exact)
+        # span the ACTUAL matched fragment, not the original quote length, so the
+        # returned offsets never overshoot the text on a partial fuzzy match
+        return match.a, match.a + match.size
     return None

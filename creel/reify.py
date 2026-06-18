@@ -182,5 +182,11 @@ def unreify(
 
 
 def _carry_evidence(src: Graph, dst: Graph, element_id: str) -> None:
+    """Carry an element's evidence across the reify/unreify boundary — both the
+    element-level record AND every per-attribute ``(element_id, attr)`` record (A1),
+    so value-level provenance survives the lossless round-trip (D8)."""
     if element_id in src.evidence:
         dst.evidence[element_id] = src.evidence[element_id]
+    for key, ev in src.evidence.items():
+        if isinstance(key, tuple) and len(key) == 2 and key[0] == element_id:
+            dst.evidence[key] = ev

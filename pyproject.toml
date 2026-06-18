@@ -39,8 +39,10 @@ docs = [
     "sphinx-rtd-theme>=1.0",
 ]
 # --- functional extras (each behind a Protocol/strategy seam; lazily imported) ---
+# Generic LLM extra → the default provider client (aix). `pip install creel[llm]`
+# then `services={"llm": aix_client()}`. See also [anthropic] for the direct SDK.
 llm = [
-    "instructor>=1",
+    "aix>=0.1",
 ]
 query = [
     "duckdb>=0.10",

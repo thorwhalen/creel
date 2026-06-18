@@ -163,8 +163,10 @@ class LLMExtractor:
         client = ctx.services.get("llm")
         if client is None:
             raise ValueError(
-                "LLMExtractor needs an LLM client at ctx.services['llm'] (install creel[llm] "
-                "or inject one)."
+                "LLMExtractor needs an LLM client at ctx.services['llm']. Install a "
+                "provider extra and pass its factory, e.g. `pip install creel[aix]` then "
+                "`services={'llm': aix_client()}` (or creel[anthropic] / anthropic_client), "
+                "or inject any object with a `complete_json(prompt, schema, system=None)` method."
             )
         et = ctx.element_type
         policy = self._policy(ctx, et)

@@ -82,6 +82,22 @@ that pass against a real model via `aix` (run when an API key is present).
 GitHub Pages. CI is live (tests on push/PR; publish-on-push-to-main). **Closed epics:
 1, 2, 3, 4, 5, 6, 8, 9, 11.**
 
+## Hardening — post-release adversarial review (2026-06-18)
+
+A three-front adversarial review (core path · verifier/eval/post-processing ·
+API/docs) found and we fixed ~20 confirmed defects, each now pinned by a test in
+`tests/test_review_repairs.py` (164 offline tests). Highlights: Unicode-safe `slug`
+(non-Latin names no longer collapse to one id → silent node loss); global regex-edge
+ids (cross-source duplicates no longer crash `extract`); `cast_value` tolerates
+dates/codes and casts lists element-wise; `graph_match` drops vacuously-true
+components (empty extraction scores 0, not 0.667) and assigns parallel edges without
+double-credit; **resolve/reify carry per-attribute & non-canonical-member evidence**
+(closing a D8 auditability hole); fuzzy `reanchor` no longer overshoots the text;
+GraphML escapes hostile attribute names; canonical JSON rejects NaN/Inf; spec
+referential integrity is checked (`validate_spec`); binding/facade errors name the
+element and suggest `on_missing_binding='skip'`; `__version__` derives from package
+metadata; the dead `[llm]` extra now aliases the default provider.
+
 ## Remaining
 
 **Deferred — `creel-core` / consumer-package workspace split (EPIC 7.5, D-OP3).**

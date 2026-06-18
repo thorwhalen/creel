@@ -59,6 +59,7 @@ assert validate_graph(graph, spec) == []
 print("== canonical JSON ==")
 print(to_canonical_json(graph))
 print("\n== Mermaid ==")
+# label_attr picks an attribute for node labels; nodes lacking it fall back to their id
 print(to_mermaid(graph, label_attr="name"))
 print("\n== RDF-star Turtle (amount annotates the funds edge) ==")
 print(to_turtle(graph))

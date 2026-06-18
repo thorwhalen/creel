@@ -164,6 +164,14 @@ def resolve_graph(graph: Graph, resolver: Resolver, *, context: Any = None) -> G
     merged: Graph = Graph()
     merges: list[dict[str, Any]] = []
 
+    # index per-attribute evidence (keys shaped ``(element_id, attr)``, A1) by id so
+    # it can be remapped onto the canonical node — otherwise value-level provenance
+    # is silently lost on every merge (D8).
+    attr_evidence: dict[str, list[tuple[Any, Any]]] = defaultdict(list)
+    for key, ev in graph.evidence.items():
+        if isinstance(key, tuple) and len(key) == 2:
+            attr_evidence[key[0]].append((key[1], ev))
+
     blocks: dict[tuple, list[Node]] = defaultdict(list)
     for node in graph.nodes():
         blocks[node.types].append(node)
@@ -176,10 +184,15 @@ def resolve_graph(graph: Graph, resolver: Resolver, *, context: Any = None) -> G
                 attributes = {**node.attributes, **attributes}
                 canonical_of[node.id] = cid
             merged.add_node(cid, types=cluster[0].types, attributes=attributes)
+            # carry evidence for EVERY cluster member onto cid (first-wins, matching
+            # the attribute merge): element-level + per-attribute (A1).
             if cid in graph.evidence:
                 merged.evidence[cid] = graph.evidence[cid]
-            elif cluster[0].id in graph.evidence:
-                merged.evidence[cid] = graph.evidence[cluster[0].id]
+            for member in cluster:
+                if member.id in graph.evidence:
+                    merged.evidence.setdefault(cid, graph.evidence[member.id])
+                for attr, ev in attr_evidence.get(member.id, ()):
+                    merged.evidence.setdefault((cid, attr), ev)
             if len(cluster) > 1:
                 merges.append(
                     {"canonical": cid, "merged": sorted(n.id for n in cluster)}
@@ -199,6 +212,8 @@ def resolve_graph(graph: Graph, resolver: Resolver, *, context: Any = None) -> G
         )
         if edge.id in graph.evidence:
             merged.evidence[edge.id] = graph.evidence[edge.id]
+        for attr, ev in attr_evidence.get(edge.id, ()):  # per-attribute edge evidence (A1)
+            merged.evidence[(edge.id, attr)] = ev
 
     merged.report["merges"] = merges
     return merged

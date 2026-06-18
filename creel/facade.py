@@ -70,18 +70,31 @@ def extract(
     services = dict(services or {})
 
     fallback = None
+    default_llm_fallback = False
     if on_missing_binding == SCHEMA_AS_EXTRACTOR:
         if schema_as_extractor is None:
-            # Default: the schema-as-extractor LLM strategy (raises at call time if no
-            # services["llm"] is provided). Lazy import to keep core import light.
+            # Default: the schema-as-extractor LLM strategy. Lazy import to keep core
+            # import light.
             from creel.extract.llm import schema_as_extractor as _llm_fallback
 
             schema_as_extractor = _llm_fallback
+            default_llm_fallback = True
         fallback = schema_as_extractor
     plan = join(graph_spec, bindings, schema_as_extractor=fallback)
 
     if plan.unbound and on_missing_binding == ERROR:
         raise ValueError(f"no extractor bound for elements: {list(plan.unbound)}")
+    if default_llm_fallback and "llm" not in services:
+        # Elements routed to the default schema-as-extractor LLM fallback need a
+        # client; fail early and actionably rather than deep inside the extractor.
+        routed = [s.element_id for s in plan.steps if s.binding_source == "schema_as_extractor"]
+        if routed:
+            raise ValueError(
+                f"elements {routed} have no extractor binding, and the default "
+                f"schema-as-extractor fallback needs an LLM client at services['llm']. Either "
+                f"bind those elements, inject a client (e.g. services={{'llm': aix_client()}}), "
+                f"or pass on_missing_binding='skip'."
+            )
 
     graph = Graph()
     graph.report["unbound_elements"] = list(plan.unbound)

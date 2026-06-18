@@ -22,8 +22,14 @@ slides/reports — is a *projection* of that one graph.
 pip install creel                 # core: pydantic, jsonschema, networkx
 pip install "creel[query]"        # SQL/JSON query extractors (duckdb, jmespath)
 pip install "creel[ingest]"       # document loaders (docling, trafilatura, openpyxl, python-docx)
-pip install "creel[aix]"          # real LLM extraction/judging/embedding via aix
+pip install "creel[aix]"          # real LLM extraction/judging/embedding via aix (default)
+pip install "creel[anthropic]"    # real LLM extraction via the Anthropic SDK directly
+pip install "creel[semantic]"     # LinkML authoring + RDF-star/Turtle export (linkml, rdflib)
 ```
+
+Other extras: `graphdb` (Neo4j/Oxigraph), `er` (Splink entity resolution), `eval`
+(DeepEval), `ocr`. The headline ones above cover most use; `pip install "creel[llm]"`
+is an alias for the default provider (`aix`).
 
 ## A first taste
 
@@ -68,10 +74,18 @@ print(g.evidence)                            # every element traced back to its 
 ### With a real LLM (schema-as-extractor)
 
 The attribute `description`s become the extraction instruction; the LLM client is
-injected (no provider SDK in the core):
+injected (no provider SDK in the core). This block is self-contained:
 
 ```python
+from creel import GraphSpec, NodeType, AttrSchema, extract
 from creel.extract.llm import aix_client
+
+spec = GraphSpec(node_types=(
+    NodeType("donor", description="An entity that provides funding.",
+             attributes=(AttrSchema("name", required=True,
+                                    description="The donor's official name."),)),
+))
+prose = "Donor: Foundation Alpha (ref 301). Donor: Agency Beta (ref 918)."
 g = extract(prose, spec, {"donor": ("llm", {})},
             services={"llm": aix_client()}, on_missing_binding="skip")
 ```

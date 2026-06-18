@@ -112,9 +112,11 @@ class RegexEdgeExtractor:
         edge_type = self.edge_type or ctx.element_id
         regex = re.compile(self.pattern, self.flags)
         edges: list[ExtractedEdge] = []
+        i = -1  # global across sources: identical matches in two sources must not collide
         for src in ctx.sources.texts():
             text = src.content
-            for i, match in enumerate(regex.finditer(text)):
+            for match in regex.finditer(text):
+                i += 1
                 groups = {k: v for k, v in match.groupdict().items() if v is not None}
                 source_id = fill_template(self.source_id_template, groups)
                 target_id = fill_template(self.target_id_template, groups)

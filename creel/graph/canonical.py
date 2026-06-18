@@ -75,6 +75,12 @@ CANONICAL_GRAPH_SCHEMA: dict[str, Any] = {
 }
 
 
+def _str_keyed(attrs: Mapping[Any, Any]) -> dict[str, Any]:
+    """Coerce attribute keys to ``str`` so ``sort_keys=True`` can't crash on mixed
+    int/str keys (JSON object keys are strings anyway)."""
+    return {str(k): v for k, v in attrs.items()}
+
+
 def to_canonical_dict(
     graph: Graph, *, spec: Optional[GraphSpec] = None
 ) -> dict[str, Any]:
@@ -84,7 +90,7 @@ def to_canonical_dict(
     so a reader knows which grammar the instance claims to conform to.
     """
     nodes = {
-        node.id: {"types": list(node.types), "attributes": dict(node.attributes)}
+        node.id: {"types": list(node.types), "attributes": _str_keyed(node.attributes)}
         for node in graph.nodes()
     }
     edges = [
@@ -93,7 +99,7 @@ def to_canonical_dict(
             "source": edge.source,
             "target": edge.target,
             "type": edge.type,
-            "attributes": dict(edge.attributes),
+            "attributes": _str_keyed(edge.attributes),
         }
         for edge in sorted(graph.edges(), key=lambda e: e.id)
     ]
@@ -122,6 +128,7 @@ def to_canonical_json(
         sort_keys=True,
         ensure_ascii=False,
         indent=indent,
+        allow_nan=False,  # NaN/Infinity are not valid JSON — fail loud, keep output portable
     )
 
 

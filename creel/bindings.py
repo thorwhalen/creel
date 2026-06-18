@@ -40,11 +40,27 @@ class ExtractorBinding:
             object.__setattr__(self, "elements", tuple(self.elements))
 
     def build(self) -> Extractor:
-        """Instantiate the bound extractor (direct callable wins over a named strategy)."""
+        """Instantiate the bound extractor (direct callable wins over a named strategy).
+
+        Raises a binding-level :class:`ValueError` (naming the element and strategy)
+        for a malformed config or missing required params, instead of leaking a
+        ``dict``-internals or ``__init__`` traceback to the caller.
+        """
         if self.extractor is not None:
             return self.extractor
         if self.strategy is not None:
-            return build_extractor(self.strategy, **dict(self.config))
+            if not isinstance(self.config, Mapping):
+                raise ValueError(
+                    f"binding for {self.element_id!r} ({self.strategy!r}): config must be "
+                    f"a mapping of params, got {type(self.config).__name__}: {self.config!r}"
+                )
+            try:
+                return build_extractor(self.strategy, **dict(self.config))
+            except TypeError as exc:
+                raise ValueError(
+                    f"binding for {self.element_id!r} ({self.strategy!r}) has invalid "
+                    f"params {dict(self.config)!r}: {exc}"
+                ) from None
         raise ValueError(
             f"binding for {self.element_id!r} has neither a strategy nor an extractor"
         )
