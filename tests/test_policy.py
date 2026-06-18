@@ -10,7 +10,7 @@ from creel.sources import Source, SourceBundle
 SPEC = GraphSpec(node_types=(
     NodeType("donor", attributes=(AttrSchema("name", required=True),)),
 ))
-SOURCE = "Donor: Government of Norway."
+SOURCE = "Donor: Foundation Alpha."
 
 
 class SequenceLLM:
@@ -41,14 +41,14 @@ def test_policy_resolution_chain():
 
 
 def test_self_consistency_majority_vote_and_confidence():
-    # 3 samples: two agree on "Government of Norway", one differs -> modal wins, 2/3 agreement
-    a = {"items": [{"name": "Government of Norway"}]}
-    b = {"items": [{"name": "Govt of Norway"}]}
+    # 3 samples: two agree on "Foundation Alpha", one differs -> modal wins, 2/3 agreement
+    a = {"items": [{"name": "Foundation Alpha"}]}
+    b = {"items": [{"name": "Agency Beta"}]}
     llm = SequenceLLM([a, a, b])
     ext = LLMExtractor()
     out = ext(_ctx(ExtractionPolicy(self_consistency_samples=3), llm))
     assert llm.calls == 3                                   # one call per sample
-    assert [n.attributes["name"] for n in out.nodes] == ["Government of Norway"]
+    assert [n.attributes["name"] for n in out.nodes] == ["Foundation Alpha"]
     conf = out.nodes[0].evidence.confidence
     assert conf.method == "self_consistency"
     assert conf.score == pytest.approx(2 / 3)
@@ -64,7 +64,7 @@ def test_low_agreement_flags_needs_review():
 
 
 def test_default_single_pass_uses_one_call():
-    llm = SequenceLLM([{"items": [{"name": "Government of Norway"}]}])
+    llm = SequenceLLM([{"items": [{"name": "Foundation Alpha"}]}])
     out = LLMExtractor()(_ctx(ExtractionPolicy(), llm))  # samples=1
     assert llm.calls == 1
     # grounded (name occurs in source) -> verbalized confidence, not flagged
@@ -73,9 +73,9 @@ def test_default_single_pass_uses_one_call():
 
 
 def test_policy_via_services_through_facade():
-    llm = SequenceLLM([{"items": [{"name": "Government of Norway"}]}] * 3)
+    llm = SequenceLLM([{"items": [{"name": "Foundation Alpha"}]}] * 3)
     g = extract(SOURCE, SPEC, {"donor": ("llm", {})},
                 services={"llm": llm, "policy": ExtractionPolicy(self_consistency_samples=3)},
                 on_missing_binding="skip")
     assert llm.calls == 3  # the policy drove self-consistency through the facade
-    assert g.node("donor:government-of-norway").attributes["name"] == "Government of Norway"
+    assert g.node("donor:foundation-alpha").attributes["name"] == "Foundation Alpha"

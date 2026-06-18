@@ -41,12 +41,12 @@ secondary job is to make those downstream uses as easy as possible to build
 without prescribing how they must be built.
 
 **First application.** The package is being built with one concrete first use in
-mind: UNHCR ESA Bureau use case #3 (the strategic frame) — extracting, from a
-pile of project and donor documents, a graph of donors, objectives,
-cross-cutting areas, projects, outputs, outcomes, and indicators, with funding
-amounts and indicator values on the edges. But the package itself is **general**:
-the UN case is the first consumer of a tool meant to serve any source-to-graph
-problem.
+mind: a results-based-management (RBM) consumer (the first concrete use) —
+extracting, from a pile of project and donor documents, a graph of donors,
+objectives, cross-cutting areas, projects, outputs, outcomes, and indicators,
+with funding amounts and indicator values on the edges. But the package itself is
+**general**: that case is merely the first consumer of a tool meant to serve any
+source-to-graph problem.
 
 ---
 
@@ -60,7 +60,7 @@ grammar has exactly two general classes of element:
 
 Each of these two classes can carry a **taxonomy** — a set of subtypes — and each
 subtype can be further subdivided, recursively, into more specific classes. (In
-the UN case, for example, node subtypes include *Donor*, *Objective*,
+the RBM case, for example, node subtypes include *Donor*, *Objective*,
 *Cross-cutting area*, *Project*, *Output*, *Outcome*, and *Indicator*; edge
 subtypes include relations such as *funds*, *delivers*, *contributes-to*,
 *advances*, and *addresses*.)
@@ -221,5 +221,5 @@ strategies, and produces a clean, auditable, typed graph as a single source of
 truth. Its core mission is extraction; it is designed to *enable* — without
 implementing — downstream persistence/query (graph DBs, knowledge bases, RAG) and
 downstream annotation-and-rendering into analysis media (tables, slides, reports,
-video). It is being built first for the UNHCR ESA strategic-frame use case, but is
-general by design.
+video). It is being built first for a results-based-management (RBM) consumer, but
+is general by design.

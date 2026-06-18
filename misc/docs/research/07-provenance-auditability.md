@@ -97,16 +97,16 @@ HITL for extraction is mature and convergent [19][20][21]: route to human review
 // evidence[element_id]  (kept physically separate from the graph spec)
 {
   "provenance": {                       // PROV-lite (+ PAV where useful)
-    "derived_from": "src:unhcr-esa-frame.pdf#doc",
+    "derived_from": "src:results-framework.pdf#doc",
     "generated_by": { "strategy": "llm", "extractor": "objective.detect.v1" },
     "attributed_to": { "agent": "claude-opus-4-8", "kind": "model" },
     "generated_at": "2026-06-16T12:00:00Z",
     "version": 1
   },
   "grounding": [                        // W3C Web Annotation selectors
-    { "source": "src:unhcr-esa-frame.pdf",
+    { "source": "src:results-framework.pdf",
       "selector": { "type": "TextQuoteSelector",
-                    "exact": "USD 4.2 million", "prefix": "allocated ", "suffix": " to WASH" },
+                    "exact": "USD 4.2 million", "prefix": "allocated ", "suffix": " to the program" },
       "secondary": { "type": "TextPositionSelector", "start": 18432, "end": 18446 } }
   ],
   "confidence": {                       // method-tagged, never bare

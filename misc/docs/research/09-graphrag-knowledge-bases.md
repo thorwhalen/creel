@@ -11,7 +11,7 @@ The field splits into two construction postures, and creel sits upstream of both
 1. **Build-the-graph-from-text systems** (Microsoft GraphRAG, LlamaIndex `PropertyGraphIndex`, LightRAG, HippoRAG, Graphiti). These run their *own* LLM extraction over raw documents to produce the graph. Creel competes with / replaces this extraction layer — its output can be injected to *skip* their extraction step.
 2. **Bring-your-own-graph systems** (Neo4j GraphRAG package, any graph DB + retriever). These assume a graph already exists and provide retrieval patterns over it. Creel's output feeds these directly.
 
-This distinction matters for creel's design: its highest-leverage role is as the **trusted, auditable extraction front-end** whose output can be *loaded into* any of these systems, bypassing their opaque, non-auditable LLM extraction. The UNHCR ESA use case (donors → objectives → projects → outputs → outcomes → indicators, with funding amounts and indicator values on edges) is precisely the kind of structured, attribute-rich graph that generic LLM extractors handle poorly but creel's typed grammar + strategy-based extractors handle well.
+This distinction matters for creel's design: its highest-leverage role is as the **trusted, auditable extraction front-end** whose output can be *loaded into* any of these systems, bypassing their opaque, non-auditable LLM extraction. The first-consumer use case (donors → objectives → projects → outputs → outcomes → indicators, with funding amounts and indicator values on edges) is precisely the kind of structured, attribute-rich graph that generic LLM extractors handle poorly but creel's typed grammar + strategy-based extractors handle well.
 
 ## Comparative analysis
 
@@ -52,7 +52,7 @@ A BYO-graph retrieval toolkit over native Neo4j. It offers Vector, Vector-Cypher
 
 ### Graphiti / Zep (temporal)
 
-Purpose-built for *agent memory* with continuous, real-time ingestion. Its bi-temporal edges and "invalidate-don't-delete" conflict resolution make it the reference design for **versioned/temporal graph KBs** [4][11][12]. It resolves new entities against existing nodes on ingest and uses semantic + keyword + graph search to detect conflicts. For creel, Graphiti is relevant less as a direct target and more as the **model to imitate** if/when creel emits *change-sets* over time (the UNHCR strategic frame evolves across planning cycles — last year's funding amount on an edge should be superseded, not overwritten).
+Purpose-built for *agent memory* with continuous, real-time ingestion. Its bi-temporal edges and "invalidate-don't-delete" conflict resolution make it the reference design for **versioned/temporal graph KBs** [4][11][12]. It resolves new entities against existing nodes on ingest and uses semantic + keyword + graph search to detect conflicts. For creel, Graphiti is relevant less as a direct target and more as the **model to imitate** if/when creel emits *change-sets* over time (a results framework evolves across planning cycles — last year's funding amount on an edge should be superseded, not overwritten).
 
 ### LightRAG & HippoRAG
 
@@ -64,7 +64,7 @@ Across the entity-resolution literature, the consistent recommendations are: cre
 
 ## Design implications for creel
 
-1. **Emit a labeled-property-graph-shaped JSON, not bare triples.** Creel's grammar already has typed node-types, typed edge-types, and typed attributes on *both* nodes and edges — this maps exactly onto LlamaIndex `EntityNode`/relations-with-properties and Neo4j LPG. Do **not** flatten to subject-predicate-object; that would throw away on-edge attributes (funding amounts, indicator values) that are central to the UNHCR case and are the hardest thing for downstream systems to reconstruct.
+1. **Emit a labeled-property-graph-shaped JSON, not bare triples.** Creel's grammar already has typed node-types, typed edge-types, and typed attributes on *both* nodes and edges — this maps exactly onto LlamaIndex `EntityNode`/relations-with-properties and Neo4j LPG. Do **not** flatten to subject-predicate-object; that would throw away on-edge attributes (funding amounts, indicator values) that are central to the first-consumer case and are the hardest thing for downstream systems to reconstruct.
 
 2. **Stable, deterministic IDs are non-negotiable and belong in core.** Every node and edge must carry a stable ID that survives re-extraction and incremental runs. Without it, *every* downstream system (Graphiti's resolve-against-existing, GraphRAG/LightRAG incremental updates, Neo4j `MERGE`, HippoRAG synonym links) either breaks or duplicates. Derive IDs deterministically (e.g. hash of canonical-type + canonical-key attributes) so the same real-world entity gets the same ID across runs. This is the SSOT discipline applied to identity.
 
@@ -72,7 +72,7 @@ Across the entity-resolution literature, the consistent recommendations are: cre
 
 4. **Add an optional, derivable `text_for_embedding` field per element — RAG-readiness without coupling.** Every system embeds entities/relations using a short natural-language description. Creel already produces descriptions for LLM-strategy elements; expose an optional, lazily-computed `text_for_embedding` (default: synthesized from type + attributes + description) so the graph is embeddings-ready, but compute *no* embeddings in core (no vector-store dependency, progressive disclosure).
 
-5. **Design the output as an append-friendly change-set, with optional temporal stamps on edges.** To flow into temporal KBs (Graphiti) and to support the UNHCR multi-cycle reality, make the canonical output expressible as additive change-sets and allow optional `valid_from`/`valid_to` (and ingestion timestamp) attributes on edges. Default is non-temporal (a plain snapshot); the temporal fields are an opt-in affordance. Crucially, prefer **invalidate-don't-delete** semantics in any update adapter so audit history survives — this matches both Graphiti and creel's auditability ethos.
+5. **Design the output as an append-friendly change-set, with optional temporal stamps on edges.** To flow into temporal KBs (Graphiti) and to support the multi-cycle planning reality, make the canonical output expressible as additive change-sets and allow optional `valid_from`/`valid_to` (and ingestion timestamp) attributes on edges. Default is non-temporal (a plain snapshot); the temporal fields are an opt-in affordance. Crucially, prefer **invalidate-don't-delete** semantics in any update adapter so audit history survives — this matches both Graphiti and creel's auditability ethos.
 
 6. **Ship downstream integration as thin, optional adapters — keep the core graph-DB-agnostic.** Per creel's strategy-pattern + DI posture, provide separate optional packages/modules (`creel.export.llamaindex`, `creel.export.neo4j`, `creel.export.graphrag_parquet`, etc.) that translate the canonical JSON into each target's load format. The core depends on none of them. This is the "downstream enabled, not implemented in core" principle made concrete, and it lets creel's auditable extraction *replace* the opaque LLM-extraction step inside GraphRAG/LightRAG/PropertyGraphIndex.
 

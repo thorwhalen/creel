@@ -53,7 +53,7 @@ def test_extraction_carries_deterministic_evidence_with_grounding():
 
 
 def test_regex_edge_builds_endpoints_and_excludes_ref_groups():
-    text = "Government X funds WASH programme with USD 1000000."
+    text = "Government X funds Water programme with USD 1000000."
     ex = RegexEdgeExtractor(
         pattern=r"(?P<donor>[\w ]+?) funds (?P<project>[\w ]+?) with (?P<currency>[A-Z]{3}) (?P<amount>[\d,]+)",
         source_id_template="donor:{donor}",
@@ -63,7 +63,7 @@ def test_regex_edge_builds_endpoints_and_excludes_ref_groups():
     )
     edge = ex(_ctx("funds", text)).edges[0]
     assert edge.source == "donor:government-x"
-    assert edge.target == "project:wash-programme"
+    assert edge.target == "project:water-programme"
     assert edge.attributes == {"currency": "USD", "amount": 1_000_000}
 
 

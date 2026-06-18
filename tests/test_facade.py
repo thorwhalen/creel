@@ -17,19 +17,19 @@ from creel.graph.canonical import validate_canonical, to_canonical_dict
 SOURCE = """\
 Donor: Government X
 Donor: Foundation Y
-Project: WASH programme
-Project: Shelter programme
+Project: Water programme
+Project: Housing programme
 
-Government X funds WASH programme with USD 1000000.
-Foundation Y funds Shelter programme with EUR 500000.
-Government X funds Shelter programme with USD 250000.
+Government X funds Water programme with USD 1000000.
+Foundation Y funds Housing programme with EUR 500000.
+Government X funds Housing programme with USD 250000.
 """
 
 
 @pytest.fixture
-def unhcr_mini_spec() -> GraphSpec:
+def rbm_mini_spec() -> GraphSpec:
     return GraphSpec(
-        id="unhcr-mini",
+        id="rbm-mini",
         enums=(EnumDef("Currency", ("USD", "EUR", "CHF")),),
         node_types=(
             NodeType("donor", attributes=(AttrSchema("name", required=True),)),
@@ -65,34 +65,34 @@ def bindings() -> dict:
     }
 
 
-def test_extract_builds_expected_graph(unhcr_mini_spec, bindings):
-    g = extract(SOURCE, unhcr_mini_spec, bindings, on_missing_binding="skip")
+def test_extract_builds_expected_graph(rbm_mini_spec, bindings):
+    g = extract(SOURCE, rbm_mini_spec, bindings, on_missing_binding="skip")
     assert {n.id for n in g.nodes_of_type("donor")} == {"donor:government-x", "donor:foundation-y"}
     assert {n.id for n in g.nodes_of_type("project")} == {
-        "project:wash-programme",
-        "project:shelter-programme",
+        "project:water-programme",
+        "project:housing-programme",
     }
-    # three funding edges, one of them a parallel funding (Gov X -> Shelter)
+    # three funding edges, one of them a parallel funding (Gov X -> Housing)
     funds = list(g.edges_of_type("funds"))
     assert len(funds) == 3
     amounts = sorted(e.attributes["amount"] for e in funds)
     assert amounts == [250000, 500000, 1000000]
 
 
-def test_extracted_graph_conforms_to_grammar(unhcr_mini_spec, bindings):
-    g = extract(SOURCE, unhcr_mini_spec, bindings, on_missing_binding="skip")
-    assert validate_graph(g, unhcr_mini_spec) == []
+def test_extracted_graph_conforms_to_grammar(rbm_mini_spec, bindings):
+    g = extract(SOURCE, rbm_mini_spec, bindings, on_missing_binding="skip")
+    assert validate_graph(g, rbm_mini_spec) == []
 
 
-def test_extracted_graph_serialises_to_valid_canonical_json(unhcr_mini_spec, bindings):
-    g = extract(SOURCE, unhcr_mini_spec, bindings, on_missing_binding="skip")
-    validate_canonical(to_canonical_dict(g, spec=unhcr_mini_spec))
+def test_extracted_graph_serialises_to_valid_canonical_json(rbm_mini_spec, bindings):
+    g = extract(SOURCE, rbm_mini_spec, bindings, on_missing_binding="skip")
+    validate_canonical(to_canonical_dict(g, spec=rbm_mini_spec))
     # deterministic round-trippable text
     assert to_canonical_json(g) == to_canonical_json(g)
 
 
-def test_every_element_has_evidence(unhcr_mini_spec, bindings):
-    g = extract(SOURCE, unhcr_mini_spec, bindings, on_missing_binding="skip")
+def test_every_element_has_evidence(rbm_mini_spec, bindings):
+    g = extract(SOURCE, rbm_mini_spec, bindings, on_missing_binding="skip")
     for node in g.nodes():
         assert node.id in g.evidence
     for edge in g.edges():
@@ -100,11 +100,11 @@ def test_every_element_has_evidence(unhcr_mini_spec, bindings):
         assert g.evidence[edge.id].confidence.method == "deterministic"
 
 
-def test_unbound_elements_reported_not_extracted(unhcr_mini_spec):
+def test_unbound_elements_reported_not_extracted(rbm_mini_spec):
     # Only bind 'donor'; 'project' and 'funds' are unbound and must be reported.
     g = extract(
         SOURCE,
-        unhcr_mini_spec,
+        rbm_mini_spec,
         {"donor": ("regex_node", {"pattern": r"Donor:\s*(?P<name>.+)", "id_attribute": "name"})},
         on_missing_binding="skip",
     )
@@ -112,11 +112,11 @@ def test_unbound_elements_reported_not_extracted(unhcr_mini_spec):
     assert list(g.nodes_of_type("project")) == []
 
 
-def test_missing_endpoint_edges_are_skipped_and_recorded(unhcr_mini_spec):
+def test_missing_endpoint_edges_are_skipped_and_recorded(rbm_mini_spec):
     # Bind only 'funds' (no nodes extracted) -> every edge has missing endpoints.
     g = extract(
         SOURCE,
-        unhcr_mini_spec,
+        rbm_mini_spec,
         {
             "funds": (
                 "regex_edge",
@@ -135,16 +135,16 @@ def test_missing_endpoint_edges_are_skipped_and_recorded(unhcr_mini_spec):
     assert all(s["reason"] == "missing-endpoint" for s in g.report["skipped_edges"])
 
 
-def test_on_missing_binding_error_raises(unhcr_mini_spec):
+def test_on_missing_binding_error_raises(rbm_mini_spec):
     with pytest.raises(ValueError):
-        extract(SOURCE, unhcr_mini_spec, {}, on_missing_binding="error")
+        extract(SOURCE, rbm_mini_spec, {}, on_missing_binding="error")
 
 
-def test_direct_callable_binding(unhcr_mini_spec):
+def test_direct_callable_binding(rbm_mini_spec):
     from creel.extract.protocol import Extraction, ExtractedNode
 
     def donor_extractor(ctx):
         return Extraction(nodes=[ExtractedNode("donor:custom", "donor", {"name": "Custom"})])
 
-    g = extract(SOURCE, unhcr_mini_spec, {"donor": donor_extractor}, on_missing_binding="skip")
+    g = extract(SOURCE, rbm_mini_spec, {"donor": donor_extractor}, on_missing_binding="skip")
     assert g.node("donor:custom").attributes["name"] == "Custom"

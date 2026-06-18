@@ -18,10 +18,10 @@ from creel.trace import (
 
 def test_per_attribute_grounding_a1():
     g = Graph()
-    g.add_node("d:1", types=("donor",), attributes={"name": "Gov X", "dac_code": "301"})
+    g.add_node("d:1", types=("donor",), attributes={"name": "Gov X", "org_code": "301"})
     ev = deterministic_evidence(source_id="s", generated_by="t")
-    set_attribute_evidence(g, "d:1", "dac_code", ev)
-    assert attribute_evidence(g, "d:1", "dac_code") is ev
+    set_attribute_evidence(g, "d:1", "org_code", ev)
+    assert attribute_evidence(g, "d:1", "org_code") is ev
     # fallback to element-level evidence when no per-attribute record exists
     g.evidence["d:1"] = ev
     assert attribute_evidence(g, "d:1", "name") is ev
@@ -49,15 +49,15 @@ def test_reverse_trace_index_a3():
 
 def test_reanchor_unique_and_context_disambiguation_a4():
     # quote moved (text changed upstream) -> exact match relocates it
-    sel = TextQuoteSelector(exact="Government of Norway", prefix="Donor: ", suffix=" (DAC")
-    text = "Intro paragraph added.\n\nDonor: Government of Norway (DAC 301)."
+    sel = TextQuoteSelector(exact="Foundation Alpha", prefix="Donor: ", suffix=" (ref")
+    text = "Intro paragraph added.\n\nDonor: Foundation Alpha (ref 301)."
     span = reanchor(sel, text)
-    assert span is not None and text[span[0]:span[1]] == "Government of Norway"
+    assert span is not None and text[span[0]:span[1]] == "Foundation Alpha"
     # disambiguate two occurrences by prefix context
-    sel2 = TextQuoteSelector(exact="Norway", prefix="of ", suffix="")
-    text2 = "Norway. The Government of Norway funds it."
+    sel2 = TextQuoteSelector(exact="Alpha", prefix="of ", suffix="")
+    text2 = "Alpha. The Foundation of Alpha funds it."
     s = reanchor(sel2, text2)
-    assert text2[s[0]:s[1]] == "Norway" and s[0] > 10  # picked the 'of Norway' one
+    assert text2[s[0]:s[1]] == "Alpha" and s[0] > 10  # picked the 'of Alpha' one
 
 
 def test_verify_and_fuzzy_fallback():

@@ -1,6 +1,6 @@
 ---
 name: creel-eval
-description: Use when building or extending creel's evaluation/verification subsystem, or when writing tests for extraction. Covers the Verifier Protocol, the verifier-kind taxonomy (exact/normalized/numeric_tolerance/set_match/graph_match/schema_constraint/semantic_similarity/llm_rubric/composite), how an LLM-instruction (G-Eval) verifier is specified and run, the test-corpus layout ({sources, expected_graph, verifier_overrides?}), per-element→per-type→per-graph score roll-up, and the rule that comparisons are pluggable verifiers — NOT hardcoded equality. Trigger on work in creel/verify/, the eval runner, the UNHCR corpus, or any extraction test.
+description: Use when building or extending creel's evaluation/verification subsystem, or when writing tests for extraction. Covers the Verifier Protocol, the verifier-kind taxonomy (exact/normalized/numeric_tolerance/set_match/graph_match/schema_constraint/semantic_similarity/llm_rubric/composite), how an LLM-instruction (G-Eval) verifier is specified and run, the test-corpus layout ({sources, expected_graph, verifier_overrides?}), per-element→per-type→per-graph score roll-up, and the rule that comparisons are pluggable verifiers — NOT hardcoded equality. Trigger on work in creel/verify/, the eval runner, the RBM corpus, or any extraction test.
 ---
 
 # creel evaluation & verifiers
@@ -89,5 +89,5 @@ matches the field's nature:
 
 When adding a new verifier kind: implement the Protocol, register it, add a
 self-test with a known-good and known-bad pair, and document the kind in this
-table. The `unhcr-rbm` corpus (EPIC 7) is the integration test that exercises all
+table. The `rbm` corpus (EPIC 7) is the integration test that exercises all
 three extractor families against one shared grammar — keep it green.

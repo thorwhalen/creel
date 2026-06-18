@@ -13,12 +13,12 @@ Example
 -------
 >>> g = Graph()
 >>> _ = g.add_node("d:gov-x", types=("donor",), attributes={"name": "Government X"})
->>> _ = g.add_node("p:wash", types=("project",), attributes={"title": "WASH"})
->>> _ = g.add_edge("f:1", source="d:gov-x", target="p:wash", type="funds",
+>>> _ = g.add_node("p:water", types=("project",), attributes={"title": "Water Access"})
+>>> _ = g.add_edge("f:1", source="d:gov-x", target="p:water", type="funds",
 ...                 attributes={"amount": 1_000_000, "currency": "USD"})
->>> _ = g.add_edge("f:2", source="d:gov-x", target="p:wash", type="funds",
+>>> _ = g.add_edge("f:2", source="d:gov-x", target="p:water", type="funds",
 ...                 attributes={"amount": 500_000, "currency": "USD"})
->>> sorted(e.id for e in g.edges_between("d:gov-x", "p:wash"))   # parallel edges kept
+>>> sorted(e.id for e in g.edges_between("d:gov-x", "p:water"))   # parallel edges kept
 ['f:1', 'f:2']
 """
 
