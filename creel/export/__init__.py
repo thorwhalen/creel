@@ -64,15 +64,18 @@ def to_graphml(graph: Graph) -> str:
     node_attrs = sorted({k for n in graph.nodes() for k in n.attributes} | {"types"})
     edge_attrs = sorted({k for e in graph.edges() for k in e.attributes} | {"type"})
     keys, kid = [], {}
-    for attr in node_attrs:
-        kid[("node", attr)] = f"nd_{attr}"
+    # Key ids are POSITIONAL (nd_0, ed_0, …) — never the raw attribute name — so an
+    # attribute name containing a quote/`<`/`&`/space can't produce malformed XML or
+    # an invalid GraphML key id. The human name lives (escaped) only in attr.name.
+    for i, attr in enumerate(node_attrs):
+        kid[("node", attr)] = f"nd_{i}"
         keys.append(
-            f'  <key id="nd_{attr}" for="node" attr.name="{_x(attr)}" attr.type="string"/>'
+            f'  <key id="nd_{i}" for="node" attr.name="{_x(attr)}" attr.type="string"/>'
         )
-    for attr in edge_attrs:
-        kid[("edge", attr)] = f"ed_{attr}"
+    for i, attr in enumerate(edge_attrs):
+        kid[("edge", attr)] = f"ed_{i}"
         keys.append(
-            f'  <key id="ed_{attr}" for="edge" attr.name="{_x(attr)}" attr.type="string"/>'
+            f'  <key id="ed_{i}" for="edge" attr.name="{_x(attr)}" attr.type="string"/>'
         )
 
     lines = [
@@ -83,7 +86,9 @@ def to_graphml(graph: Graph) -> str:
     ]
     for n in _nodes(graph):
         lines.append(f'    <node id="{_x(n.id)}">')
-        lines.append(f'      <data key="nd_types">{_x(",".join(n.types))}</data>')
+        lines.append(
+            f'      <data key="{kid[("node", "types")]}">{_x(",".join(n.types))}</data>'
+        )
         for k in sorted(n.attributes):
             lines.append(
                 f'      <data key="{kid[("node", k)]}">{_x(str(n.attributes[k]))}</data>'
@@ -93,7 +98,7 @@ def to_graphml(graph: Graph) -> str:
         lines.append(
             f'    <edge id="{_x(e.id)}" source="{_x(e.source)}" target="{_x(e.target)}">'
         )
-        lines.append(f'      <data key="ed_type">{_x(e.type)}</data>')
+        lines.append(f'      <data key="{kid[("edge", "type")]}">{_x(e.type)}</data>')
         for k in sorted(e.attributes):
             lines.append(
                 f'      <data key="{kid[("edge", k)]}">{_x(str(e.attributes[k]))}</data>'
@@ -187,10 +192,15 @@ def _iri(text: str) -> str:
 
 def _lit(value: Any) -> str:
     """Render a Turtle literal (numbers/bools bare; everything else a JSON string)."""
+    import math
+
     if isinstance(value, bool):
         return "true" if value else "false"
-    if isinstance(value, (int, float)):
+    if isinstance(value, int):
         return str(value)
+    if isinstance(value, float):
+        # NaN/Infinity are not valid Turtle numeric literals — emit as a string
+        return str(value) if math.isfinite(value) else json.dumps(str(value))
     return json.dumps(str(value))
 
 

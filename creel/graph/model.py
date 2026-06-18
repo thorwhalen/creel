@@ -88,7 +88,17 @@ class Graph:
             data = self._g.nodes[node_id]
             merged_types = tuple(dict.fromkeys((*data.get("types", ()), *types)))
             data["types"] = merged_types
-            data["attributes"] = {**data.get("attributes", {}), **attributes}
+            old_attrs = data.get("attributes", {})
+            # Surface value conflicts (two extractors disagree) instead of silently
+            # discarding the prior value — auditability (D8). Merge stays last-wins.
+            conflicts = [
+                {"node": node_id, "attribute": k, "old": old_attrs[k], "new": v}
+                for k, v in attributes.items()
+                if k in old_attrs and old_attrs[k] != v
+            ]
+            if conflicts:
+                self.report.setdefault("attribute_conflicts", []).extend(conflicts)
+            data["attributes"] = {**old_attrs, **attributes}
         else:
             self._g.add_node(node_id, types=types, attributes=attributes)
         return self.node(node_id)

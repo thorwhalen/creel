@@ -120,7 +120,12 @@ from creel.spec import (
     validate_graph,
 )
 
-__version__ = "0.1.0"
+try:  # single source of truth = the installed package metadata (pyproject version)
+    from importlib.metadata import PackageNotFoundError, version as _pkg_version
+
+    __version__ = _pkg_version("creel")
+except PackageNotFoundError:  # not installed (e.g. running from a source checkout)
+    __version__ = "0.0.0+unknown"
 
 __all__ = [
     # grammar

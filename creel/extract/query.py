@@ -53,7 +53,13 @@ def _record_to_node(
     if mapping.get("id_template"):
         node_id = fill_template(mapping["id_template"], record)
     elif mapping.get("id_from"):
-        node_id = f"{el_type}:{slug(record[mapping['id_from']])}"
+        col = mapping["id_from"]
+        if col not in record:
+            raise KeyError(
+                f"query node mapping for {element_id!r}: id_from column {col!r} "
+                f"not in record; available columns: {sorted(record)}"
+            )
+        node_id = f"{el_type}:{slug(record[col])}"
     else:
         node_id = f"{el_type}:{i}"
     evidence = deterministic_evidence(
@@ -176,9 +182,9 @@ def _duckdb_query(rows: list[dict], sql: str, params: list) -> list[dict]:
     try:
         if rows:
             cols = list(rows[0].keys())
-            quoted = ", ".join(f'"{c}"' for c in cols)
+            quoted = ", ".join(_qident(c) for c in cols)
             con.execute(
-                f'CREATE TABLE t ({", ".join(f""""{c}" VARCHAR""" for c in cols)})'
+                f'CREATE TABLE t ({", ".join(f"{_qident(c)} VARCHAR" for c in cols)})'
             )
             con.executemany(
                 f"INSERT INTO t ({quoted}) VALUES ({', '.join('?' for _ in cols)})",
@@ -189,6 +195,12 @@ def _duckdb_query(rows: list[dict], sql: str, params: list) -> list[dict]:
         return [dict(zip(names, row)) for row in cur.fetchall()]
     finally:
         con.close()
+
+
+def _qident(name: str) -> str:
+    """Quote a SQL identifier safely (double any internal quote), so a column name
+    from an untrusted header can't break out of the DDL."""
+    return '"' + str(name).replace('"', '""') + '"'
 
 
 def _as_str(value: Any) -> Any:
@@ -242,17 +254,45 @@ def _matches(record: Mapping[str, Any], where: Mapping[str, Any]) -> bool:
         value = record.get(field)
         if isinstance(cond, Mapping):
             for op, operand in cond.items():
-                if op == "$gt" and not (value is not None and value > operand):
-                    return False
-                if op == "$lt" and not (value is not None and value < operand):
-                    return False
-                if op == "$in" and value not in operand:
-                    return False
-                if op == "$ne" and value == operand:
+                if op in ("$gt", "$lt"):
+                    if value is None or not _ordered(value, operand, op):
+                        return False
+                elif op == "$in":
+                    if not isinstance(operand, (list, tuple, set)):
+                        raise ValueError(
+                            f"$in operand must be a list/tuple/set, "
+                            f"got {type(operand).__name__}: {operand!r}"
+                        )
+                    if value not in operand:
+                        return False
+                elif op == "$ne" and value == operand:
                     return False
         elif value != cond:
             return False
     return True
+
+
+def _as_number(x: Any) -> Optional[float]:
+    if isinstance(x, bool):
+        return None
+    if isinstance(x, (int, float)):
+        return float(x)
+    try:
+        return float(str(x).strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def _ordered(value: Any, operand: Any, op: str) -> bool:
+    """Compare for ``$gt``/``$lt``, coercing numeric-looking strings (CSV/JSON values
+    are often strings) and treating an incomparable pair as non-matching, not a crash."""
+    a, b = _as_number(value), _as_number(operand)
+    if a is None or b is None:  # not both numeric -> compare as-is, tolerate mismatch
+        a, b = value, operand
+    try:
+        return a > b if op == "$gt" else a < b
+    except TypeError:
+        return False
 
 
 def _jsonpath_grounder(source_id: str, select: Optional[str]) -> Grounder:

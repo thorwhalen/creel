@@ -56,13 +56,42 @@ def validate_graph(
     With ``raise_on_error=True``, raises :class:`GraphValidationError` if any issue
     is found instead of returning the list.
     """
-    issues: list[ValidationIssue] = []
+    issues: list[ValidationIssue] = list(validate_spec(spec))
     for node in graph.nodes():
         issues.extend(_check_node(node, spec))
     for edge in graph.edges():
         issues.extend(_check_edge(edge, graph, spec))
     if raise_on_error and issues:
         raise GraphValidationError(issues)
+    return issues
+
+
+def validate_spec(spec: GraphSpec) -> list[ValidationIssue]:
+    """Check the grammar's own referential integrity (independent of any instance).
+
+    Every edge endpoint type and every ``is_a`` parent must resolve to a declared
+    node type — otherwise a spec that references a nonexistent node-type is silently
+    accepted and never caught. Returns ``[]`` for a sound grammar.
+    """
+    issues: list[ValidationIssue] = []
+    node_ids = {nt.id for nt in spec.node_types}
+    for et in spec.edge_types:
+        for role, expected in (("subject", et.subject_type), ("object", et.object_type)):
+            if expected is not None and expected not in node_ids:
+                issues.append(
+                    ValidationIssue(
+                        "spec", et.id, "unknown-endpoint-type",
+                        f"{role}_type {expected!r} is not a declared node type",
+                    )
+                )
+    for nt in spec.node_types:
+        if nt.is_a is not None and nt.is_a not in node_ids:
+            issues.append(
+                ValidationIssue(
+                    "spec", nt.id, "unknown-parent-type",
+                    f"is_a {nt.is_a!r} is not a declared node type",
+                )
+            )
     return issues
 
 

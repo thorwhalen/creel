@@ -24,6 +24,7 @@ from creel.spec.validate import (
     GraphValidationError,
     ValidationIssue,
     validate_graph,
+    validate_spec,
 )
 
 __all__ = [
@@ -38,6 +39,7 @@ __all__ = [
     "GraphValidationError",
     "ValidationIssue",
     "validate_graph",
+    "validate_spec",
     "to_linkml",
     "load_linkml",
     "generate_json_schema",

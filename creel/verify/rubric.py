@@ -132,9 +132,32 @@ def _parse_judge(raw: Any) -> tuple[float, str]:
 
 
 def _extract_json(text: str) -> str:
-    """Best-effort extraction of the first ``{...}`` JSON object from judge text."""
+    """Extract the first **balanced** ``{...}`` object from judge text.
+
+    Uses brace-counting (string-aware) rather than ``rfind("}")`` so a judge that
+    appends prose containing a ``}`` after a valid object doesn't break parsing.
+    """
     start = text.find("{")
-    end = text.rfind("}")
-    if start != -1 and end != -1 and end > start:
-        return text[start : end + 1]
-    return text
+    if start == -1:
+        return text
+    depth = 0
+    in_str = False
+    escape = False
+    for i in range(start, len(text)):
+        ch = text[i]
+        if in_str:
+            if escape:
+                escape = False
+            elif ch == "\\":
+                escape = True
+            elif ch == '"':
+                in_str = False
+        elif ch == '"':
+            in_str = True
+        elif ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start : i + 1]
+    return text[start:]  # unbalanced; let json.loads raise a clear error

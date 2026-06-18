@@ -40,19 +40,28 @@ class GraphMatch:
     def __call__(self, actual: Graph, expected: Graph, *, context=None) -> Verdict:
         spec = self.spec or (context.spec if context else None)
 
-        node_pr = _set_prf(
-            {n.id for n in actual.nodes()}, {n.id for n in expected.nodes()}
-        )
+        node_a = {n.id for n in actual.nodes()}
+        node_e = {n.id for n in expected.nodes()}
+        node_pr = _set_prf(node_a, node_e)
         edge_pr = _edge_prf(actual, expected)
         attr = self._attribute_score(actual, expected, spec, context)
 
-        components = [
-            (self.node_weight, node_pr["f1"]),
-            (self.edge_weight, edge_pr["f1"]),
-            (self.attr_weight, attr["score"]),
-        ]
-        total_w = sum(w for w, _ in components) or 1.0
-        score = sum(w * s for w, s in components) / total_w
+        # Only blend components that actually MEASURED something. A vacuously-true
+        # 1.0 (no expected edges, or no attributes compared) must not inflate the
+        # score — an empty extraction should score 0, not 0.667.
+        components = []
+        if node_a or node_e:
+            components.append((self.node_weight, node_pr["f1"]))
+        if edge_pr["expected_total"] or edge_pr["actual_total"]:
+            components.append((self.edge_weight, edge_pr["f1"]))
+        if attr["compared"]:
+            components.append((self.attr_weight, attr["score"]))
+
+        if not components:  # both graphs empty -> trivially perfect
+            score = 1.0
+        else:
+            total_w = sum(w for w, _ in components) or 1.0
+            score = sum(w * s for w, s in components) / total_w
         return Verdict(
             score,
             passed_at(score, self.threshold),
@@ -61,6 +70,8 @@ class GraphMatch:
         )
 
     def _attribute_score(self, actual, expected, spec, context) -> dict[str, Any]:
+        from collections import defaultdict
+
         scores: list[float] = []
         mismatches: list[dict[str, Any]] = []
         for exp_node in expected.nodes():
@@ -76,13 +87,33 @@ class GraphMatch:
                 mismatches,
                 "node",
             )
+        # Assign each expected edge to a DISTINCT actual edge within its
+        # (type, source, target) group, greedily by attribute overlap, so no single
+        # actual edge backs two expected parallel edges (which inflated credit).
+        exp_by_key: dict[tuple, list[Edge]] = defaultdict(list)
         for exp_edge in expected.edges():
-            act = _find_matching_edge(actual, exp_edge)
-            if act is None:
-                continue
-            self._score_element(
-                act, exp_edge, exp_edge.type, spec, context, scores, mismatches, "edge"
+            exp_by_key[_edge_key(exp_edge)].append(exp_edge)
+        for (type_id, src, tgt), exp_edges in exp_by_key.items():
+            cands = [e for e in actual.edges_between(src, tgt) if e.type == type_id]
+            pairs = sorted(
+                (
+                    (_overlap(exp_edges[ei], cands[ai]), ei, ai)
+                    for ei in range(len(exp_edges))
+                    for ai in range(len(cands))
+                ),
+                key=lambda t: -t[0],
             )
+            used_exp: set[int] = set()
+            used_act: set[int] = set()
+            for _, ei, ai in pairs:
+                if ei in used_exp or ai in used_act:
+                    continue
+                used_exp.add(ei)
+                used_act.add(ai)
+                self._score_element(
+                    cands[ai], exp_edges[ei], type_id, spec, context,
+                    scores, mismatches, "edge",
+                )
         score = sum(scores) / len(scores) if scores else 1.0
         return {"score": score, "compared": len(scores), "mismatches": mismatches}
 
@@ -159,24 +190,9 @@ def _edge_prf(actual: Graph, expected: Graph) -> dict[str, Any]:
     }
 
 
-def _find_matching_edge(actual: Graph, expected_edge: Edge) -> Optional[Edge]:
-    """Find an actual edge with the same (type, source, target); for parallels, the
-    one whose attributes best match (most equal values)."""
-    candidates = [
-        e
-        for e in actual.edges_between(expected_edge.source, expected_edge.target)
-        if e.type == expected_edge.type
-    ]
-    if not candidates:
-        return None
-    if len(candidates) == 1:
-        return candidates[0]
-
-    def overlap(edge: Edge) -> int:
-        return sum(
-            1
-            for k, v in expected_edge.attributes.items()
-            if edge.attributes.get(k) == v
-        )
-
-    return max(candidates, key=overlap)
+def _overlap(expected_edge: Edge, edge: Edge) -> int:
+    """Count attribute values an actual edge shares with an expected one (for greedy
+    alignment of parallel edges)."""
+    return sum(
+        1 for k, v in expected_edge.attributes.items() if edge.attributes.get(k) == v
+    )
