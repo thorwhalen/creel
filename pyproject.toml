@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "creel"
-version = "0.1.3"
+version = "0.1.4"
 description = "Extract linked information from a mess or sources"
 readme = "README.md"
 requires-python = ">=3.10"
