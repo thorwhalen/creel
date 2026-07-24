@@ -10,18 +10,31 @@ version = "0.1.4"
 description = "Extract linked information from a mess or sources"
 readme = "README.md"
 requires-python = ">=3.10"
-keywords = []
+keywords = [
+    "information-extraction",
+    "entity-extraction",
+    "entity-resolution",
+    "knowledge-graph",
+    "llm",
+]
+license = "MIT"
 authors = [
     { name = "Thor Whalen" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
     "pydantic>=2",
     "jsonschema>=4",
     "networkx>=3",
 ]
-
-[project.license]
-text = "mit"
 
 [project.urls]
 Homepage = "https://github.com/thorwhalen/creel"
