@@ -85,10 +85,11 @@ Because LLM output is non-deterministic, exact-match assertions are infeasible; 
 
 ```python
 class VerdictScore(TypedDict):
-    score: float          # normalized [0,1]; 1.0 == fully correct
-    passed: bool          # score >= threshold
-    reason: str           # auditable explanation (esp. for LLM verifiers)
-    details: dict         # per-component scores, matched pairs, etc.
+    score: float  # normalized [0,1]; 1.0 == fully correct
+    passed: bool  # score >= threshold
+    reason: str  # auditable explanation (esp. for LLM verifiers)
+    details: dict  # per-component scores, matched pairs, etc.
+
 
 class Verifier(Protocol):
     def verify(self, actual, expected, *, context: VerifyContext) -> VerdictScore: ...

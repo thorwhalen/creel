@@ -77,11 +77,14 @@ picks `NumericTolerance` for numeric-ranged attributes and `NormalizedMatch`
 otherwise. Override per `(type, attr)` (or just `attr`) via `attribute_verifiers`:
 
 ```python
-GraphMatch(spec=spec, attribute_verifiers={
-    ("funds", "amount"): NumericTolerance(rel_tol=0.001),  # amounts: tolerance
-    ("addresses", "marker"): ExactMatch(),                 # code: exact
-    ("outcome", "statement"): NormalizedMatch(),           # prose: normalized
-})
+GraphMatch(
+    spec=spec,
+    attribute_verifiers={
+        ("funds", "amount"): NumericTolerance(rel_tol=0.001),  # amounts: tolerance
+        ("addresses", "marker"): ExactMatch(),  # code: exact
+        ("outcome", "statement"): NormalizedMatch(),  # prose: normalized
+    },
+)
 ```
 
 ## llm_rubric: a verifier defined by a sentence
@@ -103,8 +106,9 @@ class — handy when the choice travels as data (a corpus case, a binding, confi
 
 ```python
 from creel import build_verifier, available_verifiers
-available_verifiers()                                  # the registered kind names
-v = build_verifier("numeric_tolerance", abs_tol=1.0)   # == NumericTolerance(abs_tol=1.0)
+
+available_verifiers()  # the registered kind names
+v = build_verifier("numeric_tolerance", abs_tol=1.0)  # == NumericTolerance(abs_tol=1.0)
 ```
 
 When no built-in kind is *right*, register your own — a `Verifier` is just a callable
@@ -115,11 +119,13 @@ name-addressable (the dual of `register_extractor` in **creel-bindings**):
 from creel import register_verifier
 from creel.verify.protocol import Verdict
 
-@register_verifier("startswith")           # factory: (**config) -> Verifier
+
+@register_verifier("startswith")  # factory: (**config) -> Verifier
 def make_startswith(*, n=3):
     def verify(actual, expected, *, context=None):
         ok = str(actual)[:n] == str(expected)[:n]
         return Verdict(score=1.0 if ok else 0.0, passed=ok, reason=f"first {n} chars")
+
     return verify
 ```
 
@@ -138,11 +144,11 @@ from creel.evaluation import CorpusCase, evaluate_case, evaluate_corpus
 
 case = CorpusCase(
     name="rbm",
-    sources=sources,               # from creel-extract / creel.ingest
-    spec=spec,                     # the grammar under test (creel-grammar)
-    bindings=bindings,             # extractor strategies (creel-bindings)
-    expected_graph=expected_graph, # your gold graph
-    attribute_verifiers={          # per-(type,attr) overrides
+    sources=sources,  # from creel-extract / creel.ingest
+    spec=spec,  # the grammar under test (creel-grammar)
+    bindings=bindings,  # extractor strategies (creel-bindings)
+    expected_graph=expected_graph,  # your gold graph
+    attribute_verifiers={  # per-(type,attr) overrides
         ("funds", "amount"): NumericTolerance(),
         ("output", "statement"): NormalizedMatch(),
     },
@@ -150,12 +156,12 @@ case = CorpusCase(
     # verifier=...,                  # override the default GraphMatch entirely
 )
 
-result = evaluate_case(case)        # -> CaseResult
+result = evaluate_case(case)  # -> CaseResult
 print(result.score, result.passed)
 print(result.verdict.details["attributes"]["mismatches"])  # what disagreed
 
-corpus = evaluate_corpus([case])   # -> CorpusResult
-print(corpus.summary())            # mean_score, pass_rate, per-case scores
+corpus = evaluate_corpus([case])  # -> CorpusResult
+print(corpus.summary())  # mean_score, pass_rate, per-case scores
 ```
 
 `evaluate_case` extracts the actual graph, then scores it with `case.verifier` or a
@@ -172,21 +178,30 @@ from creel.verify.kinds import NumericTolerance
 from creel.verify.protocol import VerificationContext
 from creel.verify.rubric import LLMRubric
 
+
 def make_graph(amount):
     g = Graph()
     g.add_node("d:gov-x", types=("donor",), attributes={"name": "Government X"})
     g.add_node("p:water", types=("project",), attributes={"title": "Water Access"})
-    g.add_edge("f:1", source="d:gov-x", target="p:water", type="funds",
-               attributes={"amount": amount, "currency": "USD"})
+    g.add_edge(
+        "f:1",
+        source="d:gov-x",
+        target="p:water",
+        type="funds",
+        attributes={"amount": amount, "currency": "USD"},
+    )
     return g
+
 
 expected = make_graph(1_000_000)
 actual = make_graph(1_000_000.4)  # float, slightly off — == would fail
 
 # numeric_tolerance override lets the tiny amount difference pass
-verifier = GraphMatch(attribute_verifiers={("funds", "amount"): NumericTolerance(abs_tol=1.0)})
+verifier = GraphMatch(
+    attribute_verifiers={("funds", "amount"): NumericTolerance(abs_tol=1.0)}
+)
 verdict = verifier(actual, expected)
-print(verdict.score, verdict.passed)            # 1.0 True
+print(verdict.score, verdict.passed)  # 1.0 True
 print(verdict.details["attributes"]["mismatches"])  # []
 
 # llm_rubric with a FAKE injected judge (deterministic)
@@ -194,7 +209,7 @@ fake_judge = lambda prompt: {"score": 1.0, "reason": "semantically equivalent"}
 ctx = VerificationContext(services={"judge": fake_judge})
 rubric = LLMRubric(criterion="Both name the same donor.")
 v = rubric("Government X", "Govt of X", context=ctx)
-print(v.score, v.passed, v.reason)              # 1.0 True semantically equivalent
+print(v.score, v.passed, v.reason)  # 1.0 True semantically equivalent
 ```
 
 ## Gotchas

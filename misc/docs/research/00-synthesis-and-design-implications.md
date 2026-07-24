@@ -412,6 +412,7 @@ from typing import Protocol, runtime_checkable, Any, Iterable, Mapping, Sequence
 
 # ---- The facade -----------------------------------------------------------
 
+
 def extract(
     sources: "SourceBundle",
     graph_spec: "GraphSpec",
@@ -431,25 +432,27 @@ def extract(
 
 # ---- Grammar (graph-definition / SSOT) ------------------------------------
 
+
 @dataclass(frozen=True)
 class AttrSchema:
     name: str
-    range: str                              # "string"|"integer"|"decimal"|<enum>|<class>
+    range: str  # "string"|"integer"|"decimal"|<enum>|<class>
     required: bool = False
     multivalued: bool = False
-    enum: Sequence[str] | None = None       # constrained value-set
-    minimum: float | None = None            # range constraints (enforced in verify, not decode)
+    enum: Sequence[str] | None = None  # constrained value-set
+    minimum: float | None = None  # range constraints (enforced in verify, not decode)
     maximum: float | None = None
     pattern: str | None = None
-    description: str | None = None          # doubles as the schema-as-extractor instruction
+    description: str | None = None  # doubles as the schema-as-extractor instruction
 
 
 @dataclass(frozen=True)
 class ElementType:
     """A node-type or edge-type; a path in a recursively-subdivided taxonomy."""
-    id: str                                 # dotted taxonomy path, e.g. "result.outcome"
-    is_a: str | None = None                 # single-inheritance parent
-    mixins: Sequence[str] = ()              # multiple-inheritance
+
+    id: str  # dotted taxonomy path, e.g. "result.outcome"
+    is_a: str | None = None  # single-inheritance parent
+    mixins: Sequence[str] = ()  # multiple-inheritance
     attributes: Mapping[str, AttrSchema] = field(default_factory=dict)
 
 
@@ -461,19 +464,22 @@ class EdgeType(ElementType):
 
 # ---- Extraction strategy (the core contract) ------------------------------
 
+
 @dataclass(frozen=True)
 class ExtractionContext:
-    element_id: str                         # address in the taxonomy
-    element_type: ElementType               # typed attributes for this node/edge type
+    element_id: str  # address in the taxonomy
+    element_type: ElementType  # typed attributes for this node/edge type
     sources: "SourceBundle"
     cache: "Cache"
-    services: Mapping[str, Any] = field(default_factory=dict)  # injected llm client, resolver...
+    services: Mapping[str, Any] = field(
+        default_factory=dict
+    )  # injected llm client, resolver...
 
 
 @dataclass(frozen=True)
 class Extraction:
-    value: Any                              # node(s)/edge(s)/attribute value(s)
-    provenance: "Provenance"                # source span(s) -> auditability
+    value: Any  # node(s)/edge(s)/attribute value(s)
+    provenance: "Provenance"  # source span(s) -> auditability
     confidence: "Confidence | None" = None
 
 
@@ -484,19 +490,23 @@ class Extractor(Protocol):
 
 # ---- Verification (the evaluation-time dual) ------------------------------
 
-class VerdictScore(Protocol):               # TypedDict in practice
-    score: float                            # normalized [0, 1]; 1.0 == fully correct
-    passed: bool                            # score >= threshold
-    reason: str                             # auditable explanation (mandatory for LLM judges)
-    details: dict                           # per-component scores, matched pairs
+
+class VerdictScore(Protocol):  # TypedDict in practice
+    score: float  # normalized [0, 1]; 1.0 == fully correct
+    passed: bool  # score >= threshold
+    reason: str  # auditable explanation (mandatory for LLM judges)
+    details: dict  # per-component scores, matched pairs
 
 
 @runtime_checkable
 class Verifier(Protocol):
-    def verify(self, actual: Any, expected: Any, *, context: ExtractionContext) -> VerdictScore: ...
+    def verify(
+        self, actual: Any, expected: Any, *, context: ExtractionContext
+    ) -> VerdictScore: ...
 
 
 # ---- Caching (deterministic, exact-match, pluggable) ----------------------
+
 
 @runtime_checkable
 class Cache(Protocol):
@@ -506,12 +516,16 @@ class Cache(Protocol):
 
 # ---- Downstream rendering (no concrete renderers in core) -----------------
 
+
 @runtime_checkable
 class GraphRenderer(Protocol):
     name: str
     output_media_type: str
     consumes_annotations: bool
-    def render(self, graph: "AnnotatedGraph", *, options: dict | None = None) -> "RenderArtifact": ...
+
+    def render(
+        self, graph: "AnnotatedGraph", *, options: dict | None = None
+    ) -> "RenderArtifact": ...
 ```
 
 ### Data flow

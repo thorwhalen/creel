@@ -37,8 +37,8 @@ canonical node. `report["merges"]` lists each merge.
 ```python
 from creel.resolve import NormalizeResolver, resolve_graph
 
-merged = resolve_graph(g, NormalizeResolver(key="name"))   # cheap default
-merged.report["merges"]   # [{"canonical": ..., "merged": [...]}, ...]
+merged = resolve_graph(g, NormalizeResolver(key="name"))  # cheap default
+merged.report["merges"]  # [{"canonical": ..., "merged": [...]}, ...]
 ```
 
 Resolvers (all are `Resolver` Protocols — callables, not class trees):
@@ -56,6 +56,7 @@ Resolvers (all are `Resolver` Protocols — callables, not class trees):
 
 ```python
 from creel.resolve import CascadeResolver, NormalizeResolver, LLMResolver
+
 cascade = CascadeResolver([NormalizeResolver(key="name"), LLMResolver(judge=judge)])
 ```
 
@@ -76,8 +77,8 @@ reproduces the original (evidence rides along, including per-attribute records).
 ```python
 from creel.reify import reify, unreify
 
-reified  = reify(g, "funds", node_type="funding")    # edge -> node + two connector edges
-original = unreify(reified, "funds", node_type="funding")   # back, byte-identical
+reified = reify(g, "funds", node_type="funding")  # edge -> node + two connector edges
+original = unreify(reified, "funds", node_type="funding")  # back, byte-identical
 ```
 
 Per-edge-type: other edges are untouched. `node_type`/connector names must be fresh
@@ -97,14 +98,22 @@ renderers (concrete PNG/HTML renderers live in consumer packages).
 
 ```python
 from creel.view import (
-    to_node_edge_records, to_table, to_dot, to_mermaid, to_cytoscape,
+    to_node_edge_records,
+    to_table,
+    to_dot,
+    to_mermaid,
+    to_cytoscape,
 )
 
-to_node_edge_records(g)   # {"nodes": [{"id","types",**attrs}], "edges": [{"id","type","source","target",**attrs}]}
-to_table(g, "donor")      # rows for one node-type OR edge-type → DataFrame/CSV
-to_dot(g, label_attr="name")       # Graphviz DOT string
-to_mermaid(g, label_attr="name")   # Mermaid flowchart (ids aliased n0/n1 so colons are safe)
-to_cytoscape(g)           # Cytoscape.js {"elements": {...}} — the reference interactive view
+to_node_edge_records(
+    g
+)  # {"nodes": [{"id","types",**attrs}], "edges": [{"id","type","source","target",**attrs}]}
+to_table(g, "donor")  # rows for one node-type OR edge-type → DataFrame/CSV
+to_dot(g, label_attr="name")  # Graphviz DOT string
+to_mermaid(
+    g, label_attr="name"
+)  # Mermaid flowchart (ids aliased n0/n1 so colons are safe)
+to_cytoscape(g)  # Cytoscape.js {"elements": {...}} — the reference interactive view
 ```
 
 `to_embedding_records(g)` emits one `{"id","kind","type","text"}` per element for
@@ -117,9 +126,9 @@ graph+vector **RAG** indexing.
 ```python
 from creel.export import to_jgf, to_graphml, to_cypher, to_turtle
 
-to_jgf(g)       # JSON Graph Format dict (de-facto JSON interchange)
-to_graphml(g)   # GraphML XML string (Gephi / yEd / NetworkX)
-to_turtle(g)    # RDF-star Turtle; edge attributes annotate quoted triples << s p o >>
+to_jgf(g)  # JSON Graph Format dict (de-facto JSON interchange)
+to_graphml(g)  # GraphML XML string (Gephi / yEd / NetworkX)
+to_turtle(g)  # RDF-star Turtle; edge attributes annotate quoted triples << s p o >>
 ```
 
 `to_cypher(g)` returns **parameterized** `(statement, params)` pairs — values live in
@@ -141,10 +150,14 @@ they differ only by `motivation` and provenance `attributed_kind`
 from creel.annotate import Annotation, Selection, IDENTIFYING, TAGGING
 from creel.evidence import TextQuoteSelector
 
-machine = Annotation("a1", target="d:1", body="major bilateral donor", motivation=IDENTIFYING)
+machine = Annotation(
+    "a1", target="d:1", body="major bilateral donor", motivation=IDENTIFYING
+)
 sel = Selection("s1", "donor_agreement", TextQuoteSelector(exact="Government X"))
-human = Annotation("a2", target=sel, body="d:1", motivation=TAGGING)   # span -> node
-attr  = Annotation("a3", target=("f:1", "amount"), body="verified")    # per-attribute target
+human = Annotation("a2", target=sel, body="d:1", motivation=TAGGING)  # span -> node
+attr = Annotation(
+    "a3", target=("f:1", "amount"), body="verified"
+)  # per-attribute target
 ```
 
 `AnnotatedGraph(graph, annotations=..., presentation=...)` is the three-layer render
@@ -159,21 +172,27 @@ changing it (the canonical graph never moves):
 
 ```python
 from creel.trace import (
-    set_attribute_evidence, attribute_evidence, TraceIndex, reanchor, verify_anchor,
+    set_attribute_evidence,
+    attribute_evidence,
+    TraceIndex,
+    reanchor,
+    verify_anchor,
 )
 
 # A1 — per-attribute grounding: a single value, not just the node, traces to its span
 set_attribute_evidence(g, "d:1", "org_code", ev)
-attribute_evidence(g, "d:1", "org_code")          # falls back to element-level evidence
+attribute_evidence(g, "d:1", "org_code")  # falls back to element-level evidence
 
 # A3 — reverse index: which elements did this source span / cell / page produce?
 idx = TraceIndex(g)
-idx.elements_at("doc", 15)                  # evidence keys whose span contains offset 15
-idx.elements_in_cell("tbl", 2, "amount")    # keys grounded in a table cell
+idx.elements_at("doc", 15)  # evidence keys whose span contains offset 15
+idx.elements_in_cell("tbl", 2, "amount")  # keys grounded in a table cell
 idx.elements_on_page("doc", 3)
 
 # A4 — reanchor a quote after the source is edited / re-OCR'd (exact → context → fuzzy)
-span = reanchor(selector, new_text)         # (start, end) or None; verify_anchor() for a quick check
+span = reanchor(
+    selector, new_text
+)  # (start, end) or None; verify_anchor() for a quick check
 ```
 
 ## Verify before you project — and the sibling skills

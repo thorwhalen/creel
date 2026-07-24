@@ -39,8 +39,14 @@ Declare a grammar, extract a graph from prose, validate it, emit canonical JSON:
 
 ```python
 from creel import (
-    GraphSpec, NodeType, EdgeType, AttrSchema, EnumDef,
-    extract, validate_graph, to_canonical_json,
+    GraphSpec,
+    NodeType,
+    EdgeType,
+    AttrSchema,
+    EnumDef,
+    extract,
+    validate_graph,
+    to_canonical_json,
 )
 
 spec = GraphSpec(
@@ -50,27 +56,45 @@ spec = GraphSpec(
         NodeType("project", attributes=(AttrSchema("title", required=True),)),
     ),
     edge_types=(
-        EdgeType("funds", subject_type="donor", object_type="project",
-                 attributes=(AttrSchema("amount", range="integer", required=True, minimum=0),
-                             AttrSchema("currency", range="Currency", required=True))),
+        EdgeType(
+            "funds",
+            subject_type="donor",
+            object_type="project",
+            attributes=(
+                AttrSchema("amount", range="integer", required=True, minimum=0),
+                AttrSchema("currency", range="Currency", required=True),
+            ),
+        ),
     ),
 )
 
 # Deterministic pattern extractors (no LLM): regex over prose.
 bindings = {
-    "donor": ("regex_node", {"pattern": r"Donor:\s*(?P<name>.+)", "id_attribute": "name"}),
-    "project": ("regex_node", {"pattern": r"Project:\s*(?P<title>.+)", "id_attribute": "title"}),
-    "funds": ("regex_edge", {
-        "pattern": r"(?P<donor>[\w ]+?) funds (?P<project>[\w ]+?) with (?P<currency>[A-Z]{3}) (?P<amount>\d+)",
-        "source_id_template": "donor:{donor}", "target_id_template": "project:{project}",
-        "casts": {"amount": "int"}, "exclude_groups": ("donor", "project")}),
+    "donor": (
+        "regex_node",
+        {"pattern": r"Donor:\s*(?P<name>.+)", "id_attribute": "name"},
+    ),
+    "project": (
+        "regex_node",
+        {"pattern": r"Project:\s*(?P<title>.+)", "id_attribute": "title"},
+    ),
+    "funds": (
+        "regex_edge",
+        {
+            "pattern": r"(?P<donor>[\w ]+?) funds (?P<project>[\w ]+?) with (?P<currency>[A-Z]{3}) (?P<amount>\d+)",
+            "source_id_template": "donor:{donor}",
+            "target_id_template": "project:{project}",
+            "casts": {"amount": "int"},
+            "exclude_groups": ("donor", "project"),
+        },
+    ),
 }
 src = "Donor: Gov X\nProject: Water\nGov X funds Water with USD 1000000"
 
 g = extract(src, spec, bindings, on_missing_binding="skip")
 assert validate_graph(g, spec) == []
-print(to_canonical_json(g))                 # deterministic, git-diffable JSON
-print(g.evidence)                            # every element traced back to its source span
+print(to_canonical_json(g))  # deterministic, git-diffable JSON
+print(g.evidence)  # every element traced back to its source span
 ```
 
 ### With a real LLM (schema-as-extractor)
@@ -82,14 +106,27 @@ injected (no provider SDK in the core). This block is self-contained:
 from creel import GraphSpec, NodeType, AttrSchema, extract
 from creel.extract.llm import aix_client
 
-spec = GraphSpec(node_types=(
-    NodeType("donor", description="An entity that provides funding.",
-             attributes=(AttrSchema("name", required=True,
-                                    description="The donor's official name."),)),
-))
+spec = GraphSpec(
+    node_types=(
+        NodeType(
+            "donor",
+            description="An entity that provides funding.",
+            attributes=(
+                AttrSchema(
+                    "name", required=True, description="The donor's official name."
+                ),
+            ),
+        ),
+    )
+)
 prose = "Donor: Foundation Alpha (ref 301). Donor: Agency Beta (ref 918)."
-g = extract(prose, spec, {"donor": ("llm", {})},
-            services={"llm": aix_client()}, on_missing_binding="skip")
+g = extract(
+    prose,
+    spec,
+    {"donor": ("llm", {})},
+    services={"llm": aix_client()},
+    on_missing_binding="skip",
+)
 ```
 
 ## Skills (the AI-native interface)

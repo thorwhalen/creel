@@ -32,18 +32,26 @@ pip install creel[aix]        # default provider client (uses aix's configured m
 
 ```python
 from creel import GraphSpec, NodeType, AttrSchema, extract
-from creel.extract.llm import aix_client            # or: anthropic_client
+from creel.extract.llm import aix_client  # or: anthropic_client
 
-spec = GraphSpec(node_types=(
-    NodeType("donor", description="An entity that provides funding.",
-             attributes=(AttrSchema("name", required=True,
-                                    description="The donor's official name."),)),
-))
+spec = GraphSpec(
+    node_types=(
+        NodeType(
+            "donor",
+            description="An entity that provides funding.",
+            attributes=(
+                AttrSchema(
+                    "name", required=True, description="The donor's official name."
+                ),
+            ),
+        ),
+    )
+)
 g = extract(
     "Donor: Foundation Alpha (ref 301). Donor: Agency Beta (ref 918).",
     spec,
-    {"donor": ("llm", {})},                # bind the donor element to the LLM strategy
-    services={"llm": aix_client()},        # inject the client (the swappable seam)
+    {"donor": ("llm", {})},  # bind the donor element to the LLM strategy
+    services={"llm": aix_client()},  # inject the client (the swappable seam)
     on_missing_binding="skip",
 )
 ```
@@ -107,13 +115,14 @@ On the returned graph these live in the evidence sidecar, keyed by element id:
 from creel import ExtractionPolicy
 
 policy = ExtractionPolicy(
-    self_consistency_samples=3,   # draw N samples, keep the modal result;
-                                  # confidence becomes the agreement fraction
-    review_below=0.5,             # flag needs_review below this score
-    max_retries=2,                # validate-retry attempts
+    self_consistency_samples=3,  # draw N samples, keep the modal result;
+    # confidence becomes the agreement fraction
+    review_below=0.5,  # flag needs_review below this score
+    max_retries=2,  # validate-retry attempts
 )
-g = extract(src, spec, {"donor": ("llm", {})},
-            services={"llm": client, "policy": policy})   # global policy for the run
+g = extract(
+    src, spec, {"donor": ("llm", {})}, services={"llm": client, "policy": policy}
+)  # global policy for the run
 ```
 
 Inject the policy one of two ways: globally via `services={"policy": policy}` (above),
@@ -135,7 +144,9 @@ from creel.verify.rubric import LLMRubric
 from creel.verify.protocol import VerificationContext
 
 ctx = VerificationContext(services={"judge": aix_judge()})
-verdict = LLMRubric(criterion="Both describe the same outcome.")(actual, expected, context=ctx)
+verdict = LLMRubric(criterion="Both describe the same outcome.")(
+    actual, expected, context=ctx
+)
 # verdict.score (0..1), verdict.passed, verdict.reason
 ```
 
@@ -149,8 +160,9 @@ verdict = LLMRubric(criterion="Both describe the same outcome.")(actual, expecte
 from creel.extract.llm import aix_entity_judge
 from creel.resolve import LLMResolver, CascadeResolver, NormalizeResolver
 
-resolver = CascadeResolver([NormalizeResolver(key="name"),
-                            LLMResolver(judge=aix_entity_judge(), key="name")])
+resolver = CascadeResolver(
+    [NormalizeResolver(key="name"), LLMResolver(judge=aix_entity_judge(), key="name")]
+)
 g = extract(sources, spec, bindings, services={"llm": client}, resolve=resolver)
 ```
 
@@ -162,17 +174,25 @@ of the seam. Real-LLM tests are marked `@pytest.mark.llm` and skipped without a 
 ```python
 class FakeLLM:
     "Routes by the element id mentioned in the prompt (mirrors tests/test_extract_llm.py)."
+
     def __init__(self, by_element):
         self.by_element = by_element
+
     def complete_json(self, *, prompt, schema, system=None):
         for element_id, items in self.by_element.items():
             if f"every {element_id} (" in prompt:
                 return {"items": items}
         return {"items": []}
 
+
 fake = FakeLLM({"donor": [{"name": "Foundation Alpha"}]})
-g = extract("Donor: Foundation Alpha.", spec, {"donor": ("llm", {})},
-            services={"llm": fake}, on_missing_binding="skip")
+g = extract(
+    "Donor: Foundation Alpha.",
+    spec,
+    {"donor": ("llm", {})},
+    services={"llm": fake},
+    on_missing_binding="skip",
+)
 ```
 
 Run offline tests with `pytest -m "not llm"`; run live ones occasionally with a key.

@@ -35,12 +35,14 @@ spec = GraphSpec(
     ),
     edge_types=(
         EdgeType(
-            "funds", subject_type="donor", object_type="project",
+            "funds",
+            subject_type="donor",
+            object_type="project",
             attributes=(AttrSchema("amount", range="decimal", minimum=0),),
         ),
     ),
 )
-spec.node_type("donor").id            # 'donor'
+spec.node_type("donor").id  # 'donor'
 spec.edge_type("funds").subject_type  # 'donor'
 ```
 
@@ -53,7 +55,9 @@ node-types the edge connects:
 
 ```python
 EdgeType(
-    "funds", subject_type="donor", object_type="project",
+    "funds",
+    subject_type="donor",
+    object_type="project",
     attributes=(
         AttrSchema("amount", range="decimal", required=True, minimum=0),
         AttrSchema("currency", range="Currency", required=True),
@@ -98,10 +102,9 @@ its own plus all inherited; an own attribute overrides an inherited one of the s
 name. `abstract=True` marks a type you never instantiate directly.
 
 ```python
-NodeType("result", abstract=True,
-         attributes=(AttrSchema("statement", required=True),))
-NodeType("outcome", is_a="result")   # inherits the required 'statement'
-NodeType("output",  is_a="result")
+NodeType("result", abstract=True, attributes=(AttrSchema("statement", required=True),))
+NodeType("outcome", is_a="result")  # inherits the required 'statement'
+NodeType("output", is_a="result")
 ```
 
 `mixins=(...)` adds multiple inheritance. Use `effective_attributes(spec, "outcome")`
@@ -116,6 +119,7 @@ list of issues — empty means sound:
 
 ```python
 from creel.spec.validate import validate_spec, validate_graph
+
 assert validate_spec(spec) == []
 ```
 
@@ -124,7 +128,7 @@ assert validate_spec(spec) == []
 range/enum/bounds/pattern). Pass `raise_on_error=True` to raise instead of return:
 
 ```python
-issues = validate_graph(graph, spec)              # list[ValidationIssue]
+issues = validate_graph(graph, spec)  # list[ValidationIssue]
 validate_graph(graph, spec, raise_on_error=True)  # raises GraphValidationError
 ```
 
@@ -136,12 +140,16 @@ emit external-validator and typed-access artifacts:
 
 ```python
 from creel.spec.linkml import (
-    to_linkml, load_linkml, generate_json_schema, generate_pydantic,
+    to_linkml,
+    load_linkml,
+    generate_json_schema,
+    generate_pydantic,
 )
-schema = to_linkml(spec)                # GraphSpec -> LinkML dict (yaml.safe_dump-able)
-spec2 = load_linkml(schema)             # LinkML (dict or .yaml path) -> GraphSpec
+
+schema = to_linkml(spec)  # GraphSpec -> LinkML dict (yaml.safe_dump-able)
+spec2 = load_linkml(schema)  # LinkML (dict or .yaml path) -> GraphSpec
 json_schema = generate_json_schema(spec)  # a $def per type, with bounds/enums
-models = generate_pydantic(spec)          # one Pydantic model per node/edge type
+models = generate_pydantic(spec)  # one Pydantic model per node/edge type
 ```
 
 Edges become LinkML classes flagged `represents_relationship: true`. The
@@ -163,38 +171,60 @@ spec = GraphSpec(
     ),
     node_types=(
         # abstract parent: shared, required attribute inherited by subtypes
-        NodeType("result", abstract=True,
-                 attributes=(AttrSchema("statement", required=True,
-                                        description="The measurable change."),)),
-        NodeType("outcome", is_a="result",
-                 description="A change in the served population."),
-        NodeType("output", is_a="result",
-                 description="A product or service delivered."),
-        NodeType("donor", attributes=(
-            AttrSchema("name", required=True),
-            AttrSchema("org_code", pattern=r"^\d{3,5}$"),
-        )),
-        NodeType("project", attributes=(
-            AttrSchema("title", required=True),
-            AttrSchema("code", pattern=r"^PRJ-\d+$"),
-        )),
+        NodeType(
+            "result",
+            abstract=True,
+            attributes=(
+                AttrSchema(
+                    "statement", required=True, description="The measurable change."
+                ),
+            ),
+        ),
+        NodeType(
+            "outcome", is_a="result", description="A change in the served population."
+        ),
+        NodeType(
+            "output", is_a="result", description="A product or service delivered."
+        ),
+        NodeType(
+            "donor",
+            attributes=(
+                AttrSchema("name", required=True),
+                AttrSchema("org_code", pattern=r"^\d{3,5}$"),
+            ),
+        ),
+        NodeType(
+            "project",
+            attributes=(
+                AttrSchema("title", required=True),
+                AttrSchema("code", pattern=r"^PRJ-\d+$"),
+            ),
+        ),
     ),
     edge_types=(
         # first-class edge: amount/currency live ON the edge
-        EdgeType("funds", subject_type="donor", object_type="project",
-                 attributes=(
-                     AttrSchema("amount", range="decimal", required=True, minimum=0,
-                                description="Amount funded, in the given currency."),
-                     AttrSchema("currency", range="Currency", required=True),
-                     AttrSchema("transaction_type", range="TransactionType",
-                                required=True),
-                 )),
+        EdgeType(
+            "funds",
+            subject_type="donor",
+            object_type="project",
+            attributes=(
+                AttrSchema(
+                    "amount",
+                    range="decimal",
+                    required=True,
+                    minimum=0,
+                    description="Amount funded, in the given currency.",
+                ),
+                AttrSchema("currency", range="Currency", required=True),
+                AttrSchema("transaction_type", range="TransactionType", required=True),
+            ),
+        ),
         EdgeType("delivers", subject_type="project", object_type="output"),
         EdgeType("contributes_to", subject_type="output", object_type="outcome"),
     ),
 )
 
-assert validate_spec(spec) == []   # grammar is referentially sound
+assert validate_spec(spec) == []  # grammar is referentially sound
 ```
 
 ## Next steps

@@ -50,8 +50,11 @@ extension to a loader and tags each `Source` with the right `kind`:
 
 ```python
 from creel import ingest, ingest_paths
-src    = ingest("report.pdf")                  # one file -> Source(id="report", kind="text", ...)
-bundle = ingest_paths(["a.md", "data.csv"])    # many -> SourceBundle (md->text, csv->table)
+
+src = ingest("report.pdf")  # one file -> Source(id="report", kind="text", ...)
+bundle = ingest_paths(
+    ["a.md", "data.csv"]
+)  # many -> SourceBundle (md->text, csv->table)
 g = extract(bundle, spec, bindings)
 ```
 
@@ -69,7 +72,8 @@ as `text`.
 
 ```python
 from creel.ingest.loaders import supported_extensions, register_loader
-supported_extensions()        # every routed extension (regardless of backend installed)
+
+supported_extensions()  # every routed extension (regardless of backend installed)
 ```
 
 A file whose extension routes to an uninstalled backend raises a clear `ImportError`
@@ -94,30 +98,37 @@ A file whose extension routes to an uninstalled backend raises a clear `ImportEr
 Read it with typed accessors:
 
 ```python
-g.nodes()                  # iterate Node(id, types, attributes)
-g.edges()                  # iterate Edge(id, source, target, type, attributes)
-g.node(id) / g.edge(id)    # one element by id
-g.nodes_of_type("donor")   # filter by node label
-g.edges_of_type("funds")   # filter by edge type
-g.evidence[element_id]     # audit record: provenance + grounding span + confidence
-g.report                   # run diagnostics: unbound_elements, skipped_edges, ...
+g.nodes()  # iterate Node(id, types, attributes)
+g.edges()  # iterate Edge(id, source, target, type, attributes)
+g.node(id) / g.edge(id)  # one element by id
+g.nodes_of_type("donor")  # filter by node label
+g.edges_of_type("funds")  # filter by edge type
+g.evidence[element_id]  # audit record: provenance + grounding span + confidence
+g.report  # run diagnostics: unbound_elements, skipped_edges, ...
 ```
 
 Validate against the grammar, then serialise to **deterministic, git-diffable JSON**:
 
 ```python
 from creel import validate_graph, to_canonical_json, from_canonical_json
-issues = validate_graph(g, spec)        # [] means the graph conforms
-text = to_canonical_json(g)             # stable keys + id-sorted edges → one-line diffs
-g2 = from_canonical_json(text)          # round-trips byte-identically
+
+issues = validate_graph(g, spec)  # [] means the graph conforms
+text = to_canonical_json(g)  # stable keys + id-sorted edges → one-line diffs
+g2 = from_canonical_json(text)  # round-trips byte-identically
 ```
 
 ## Complete minimal example (regex bindings, no LLM)
 
 ```python
 from creel import (
-    GraphSpec, NodeType, EdgeType, AttrSchema, EnumDef,
-    extract, validate_graph, to_canonical_json,
+    GraphSpec,
+    NodeType,
+    EdgeType,
+    AttrSchema,
+    EnumDef,
+    extract,
+    validate_graph,
+    to_canonical_json,
 )
 
 spec = GraphSpec(
@@ -127,29 +138,47 @@ spec = GraphSpec(
         NodeType("project", attributes=(AttrSchema("title", required=True),)),
     ),
     edge_types=(
-        EdgeType("funds", subject_type="donor", object_type="project",
-                 attributes=(AttrSchema("amount", range="integer", required=True, minimum=0),
-                             AttrSchema("currency", range="Currency", required=True))),
+        EdgeType(
+            "funds",
+            subject_type="donor",
+            object_type="project",
+            attributes=(
+                AttrSchema("amount", range="integer", required=True, minimum=0),
+                AttrSchema("currency", range="Currency", required=True),
+            ),
+        ),
     ),
 )
 
 bindings = {
-    "donor": ("regex_node", {"pattern": r"Donor:\s*(?P<name>.+)", "id_attribute": "name"}),
-    "project": ("regex_node", {"pattern": r"Project:\s*(?P<title>.+)", "id_attribute": "title"}),
-    "funds": ("regex_edge", {
-        "pattern": r"(?P<donor>[\w ]+?) funds (?P<project>[\w ]+?) with (?P<currency>[A-Z]{3}) (?P<amount>\d+)",
-        "source_id_template": "donor:{donor}", "target_id_template": "project:{project}",
-        "casts": {"amount": "int"}, "exclude_groups": ("donor", "project")}),
+    "donor": (
+        "regex_node",
+        {"pattern": r"Donor:\s*(?P<name>.+)", "id_attribute": "name"},
+    ),
+    "project": (
+        "regex_node",
+        {"pattern": r"Project:\s*(?P<title>.+)", "id_attribute": "title"},
+    ),
+    "funds": (
+        "regex_edge",
+        {
+            "pattern": r"(?P<donor>[\w ]+?) funds (?P<project>[\w ]+?) with (?P<currency>[A-Z]{3}) (?P<amount>\d+)",
+            "source_id_template": "donor:{donor}",
+            "target_id_template": "project:{project}",
+            "casts": {"amount": "int"},
+            "exclude_groups": ("donor", "project"),
+        },
+    ),
 }
 
 src = "Donor: Gov X\nProject: Water\nGov X funds Water with USD 1000000"
 
 g = extract(src, spec, bindings, on_missing_binding="skip")
-assert validate_graph(g, spec) == []                    # conforms to the grammar
+assert validate_graph(g, spec) == []  # conforms to the grammar
 funds = next(iter(g.edges_of_type("funds")))
-assert funds.attributes["amount"] == 1000000            # amount lives ON the edge
-print(to_canonical_json(g))                             # deterministic JSON
-print(g.evidence[funds.id].to_dict())                   # traced back to the source span
+assert funds.attributes["amount"] == 1000000  # amount lives ON the edge
+print(to_canonical_json(g))  # deterministic JSON
+print(g.evidence[funds.id].to_dict())  # traced back to the source span
 ```
 
 Use `on_missing_binding="skip"` whenever you have not bound every element (e.g. pure

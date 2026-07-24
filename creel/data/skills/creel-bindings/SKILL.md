@@ -30,10 +30,10 @@ Pipeline: `creel-grammar` (define elements) → **creel-bindings** (this skill) 
 
 ```python
 bindings = {
-    "donor":  ("regex_node", {"pattern": ...}),   # (strategy_name, pure-data params)
-    "funds":  ("table_map",  {...}),               # another strategy
-    "outcome": ("llm", {}),                         # LLM default — see creel-ai
-    "indicator": my_callable,                       # a bare (ctx) -> Extraction callable
+    "donor": ("regex_node", {"pattern": ...}),  # (strategy_name, pure-data params)
+    "funds": ("table_map", {...}),  # another strategy
+    "outcome": ("llm", {}),  # LLM default — see creel-ai
+    "indicator": my_callable,  # a bare (ctx) -> Extraction callable
 }
 ```
 
@@ -185,17 +185,29 @@ without touching old ones):
 ```python
 from creel import register_extractor, Extraction, ExtractedNode
 
-@register_extractor("upper_words")          # factory: (**config) -> Extractor
+
+@register_extractor("upper_words")  # factory: (**config) -> Extractor
 def make_upper_words(*, min_len=2):
-    def extract_upper(ctx):                  # an Extractor: (ExtractionContext) -> Extraction
+    def extract_upper(ctx):  # an Extractor: (ExtractionContext) -> Extraction
         text = "\n".join(s.content for s in ctx.sources.texts())
-        return Extraction(nodes=[
-            ExtractedNode(id=f"{ctx.element_type.id}:{w.lower()}",
-                          type=ctx.element_type.id, attributes={"name": w})
-            for w in text.split() if w.isupper() and len(w) >= min_len])
+        return Extraction(
+            nodes=[
+                ExtractedNode(
+                    id=f"{ctx.element_type.id}:{w.lower()}",
+                    type=ctx.element_type.id,
+                    attributes={"name": w},
+                )
+                for w in text.split()
+                if w.isupper() and len(w) >= min_len
+            ]
+        )
+
     return extract_upper
 
-bindings = {"org": ("upper_words", {"min_len": 2})}   # now usable by name; in available_extractors()
+
+bindings = {
+    "org": ("upper_words", {"min_len": 2})
+}  # now usable by name; in available_extractors()
 ```
 
 Third-party packages can ship strategies via the `creel.extractors` entry-point
@@ -222,22 +234,52 @@ from creel.facade import extract
 from creel.sources import Source, SourceBundle, TABLE
 
 # donors from PROSE (regex_node); project + funds from a TABLE (table_map)
-sources = SourceBundle([
-    Source("agreement", "Donor: Foundation Alpha (ref 12345)."),
-    Source("funding", [{"donor_name": "Foundation Alpha",
-                        "project_title": "Clean Water", "amt": "1,000,000"}], kind=TABLE),
-])
+sources = SourceBundle(
+    [
+        Source("agreement", "Donor: Foundation Alpha (ref 12345)."),
+        Source(
+            "funding",
+            [
+                {
+                    "donor_name": "Foundation Alpha",
+                    "project_title": "Clean Water",
+                    "amt": "1,000,000",
+                }
+            ],
+            kind=TABLE,
+        ),
+    ]
+)
 bindings = {
-    "donor": ("regex_node", {
-        "pattern": r"Donor:\s*(?P<name>[A-Za-z ]+?)\s*\(ref\s*(?P<org_code>\d+)\)",
-        "id_attribute": "name"}),
-    "project": ("table_map", {
-        "records_source": "funding", "kind": "node", "type": "project",
-        "id_template": "project:{project_title}", "attributes": {"title": "project_title"}}),
-    "funds": ("table_map", {
-        "records_source": "funding", "kind": "edge", "type": "funds",
-        "source_template": "donor:{donor_name}", "target_template": "project:{project_title}",
-        "attributes": {"amount": "amt"}, "casts": {"amount": "int"}}),
+    "donor": (
+        "regex_node",
+        {
+            "pattern": r"Donor:\s*(?P<name>[A-Za-z ]+?)\s*\(ref\s*(?P<org_code>\d+)\)",
+            "id_attribute": "name",
+        },
+    ),
+    "project": (
+        "table_map",
+        {
+            "records_source": "funding",
+            "kind": "node",
+            "type": "project",
+            "id_template": "project:{project_title}",
+            "attributes": {"title": "project_title"},
+        },
+    ),
+    "funds": (
+        "table_map",
+        {
+            "records_source": "funding",
+            "kind": "edge",
+            "type": "funds",
+            "source_template": "donor:{donor_name}",
+            "target_template": "project:{project_title}",
+            "attributes": {"amount": "amt"},
+            "casts": {"amount": "int"},
+        },
+    ),
 }
 graph = extract(sources, spec, bindings, on_missing_binding="skip")
 # -> donor:foundation-alpha, project:clean-water, funds edge with amount=1000000

@@ -21,6 +21,8 @@ synthesis §"The evaluation/verifier subsystem" + report `08-extraction-evaluati
 @runtime_checkable
 class Verifier(Protocol):
     def verify(self, actual, expected, *, context) -> VerdictScore: ...
+
+
 # VerdictScore: {score: float in [0,1], passed: bool, reason: str, details: dict}
 ```
 

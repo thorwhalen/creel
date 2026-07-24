@@ -78,19 +78,20 @@ Renderers must **not** live in creel core (core stays an extraction engine). Def
 ```python
 from typing import Protocol, Any, runtime_checkable
 
+
 @runtime_checkable
 class GraphRenderer(Protocol):
     # Declarative metadata so a registry/facade can pick a renderer.
-    name: str                      # e.g. "cytoscape", "dot", "pptx"
-    output_media_type: str         # e.g. "text/html", "image/svg+xml", "application/pptx"
-    consumes_annotations: bool     # whether it uses the overlay
+    name: str  # e.g. "cytoscape", "dot", "pptx"
+    output_media_type: str  # e.g. "text/html", "image/svg+xml", "application/pptx"
+    consumes_annotations: bool  # whether it uses the overlay
 
     def render(
         self,
-        graph: "AnnotatedGraph",   # the minimal contract above
+        graph: "AnnotatedGraph",  # the minimal contract above
         *,
         options: dict[str, Any] | None = None,
-    ) -> "RenderArtifact": ...     # bytes/path/handle + media_type + metadata
+    ) -> "RenderArtifact": ...  # bytes/path/handle + media_type + metadata
 ```
 
 Design notes tied to creel's posture:

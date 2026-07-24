@@ -77,29 +77,36 @@ The core contract is one Protocol. Everything else composes around it.
 from typing import Protocol, runtime_checkable, Any
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True)
 class ExtractionContext:
-    element_id: str            # address in the taxonomy
-    element_schema: "AttrSchema"   # typed attributes for this node/edge type
-    sources: "SourceBundle"    # the heterogeneous inputs
+    element_id: str  # address in the taxonomy
+    element_schema: "AttrSchema"  # typed attributes for this node/edge type
+    sources: "SourceBundle"  # the heterogeneous inputs
     # ... run-scoped services (llm client, cache) injected here
+
 
 @dataclass(frozen=True)
 class Extraction:
-    value: Any                 # extracted attribute value(s) / node(s) / edge(s)
-    provenance: "Provenance"   # source span(s) -> auditability
+    value: Any  # extracted attribute value(s) / node(s) / edge(s)
+    provenance: "Provenance"  # source span(s) -> auditability
     confidence: float | None = None
+
 
 @runtime_checkable
 class Extractor(Protocol):
     def extract(self, ctx: ExtractionContext) -> Extraction: ...
 
-@runtime_checkable
-class Verifier(Protocol):
-    def verify(self, extraction: Extraction, ctx: ExtractionContext) -> "Verification": ...
 
 @runtime_checkable
-class Renderer(Protocol):            # downstream, same shape
+class Verifier(Protocol):
+    def verify(
+        self, extraction: Extraction, ctx: ExtractionContext
+    ) -> "Verification": ...
+
+
+@runtime_checkable
+class Renderer(Protocol):  # downstream, same shape
     def render(self, graph: "Graph", *, target: str) -> bytes | str: ...
 ```
 
@@ -110,16 +117,22 @@ Registry skeleton (decorator for in-tree, entry points for external):
 ```python
 _REGISTRY: dict[str, type[Extractor] | callable] = {}
 
-def register_extractor(name):                      # decorator registry [5]
-    def deco(obj): _REGISTRY[name] = obj; return obj
+
+def register_extractor(name):  # decorator registry [5]
+    def deco(obj):
+        _REGISTRY[name] = obj
+        return obj
+
     return deco
+
 
 def load_extractor(name):
     if name in _REGISTRY:
         return _REGISTRY[name]
-    from importlib.metadata import entry_points     # third-party plugins [6][7]
+    from importlib.metadata import entry_points  # third-party plugins [6][7]
+
     (ep,) = [e for e in entry_points(group="creel.extractors") if e.name == name]
-    return ep.load()                                # lazy import
+    return ep.load()  # lazy import
 ```
 
 Third-party packages then advertise:
