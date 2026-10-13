@@ -55,7 +55,7 @@ docs = [
 # Generic LLM extra → the default provider client (aix). `pip install creel[llm]`
 # then `services={"llm": aix_client()}`. See also [anthropic] for the direct SDK.
 llm = [
-    "aix>=0.1",
+    "aix>=0.0.39",  # 0.1 was never released; ask/embed exist since 0.0.25
 ]
 query = [
     "duckdb>=0.10",
@@ -94,7 +94,7 @@ anthropic = [
     "anthropic>=0.40",
 ]
 aix = [
-    "aix>=0.1",
+    "aix>=0.0.39",  # 0.1 was never released; ask/embed exist since 0.0.25
 ]
 
 [tool.ruff]
