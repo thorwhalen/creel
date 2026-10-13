@@ -1,0 +1,20 @@
+creel.verify.protocol
+=====================
+
+.. automodule:: creel.verify.protocol
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      passed_at
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Verdict
+      VerificationContext
+      Verifier
+   

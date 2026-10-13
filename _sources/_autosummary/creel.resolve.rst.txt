@@ -1,0 +1,23 @@
+creel.resolve
+=============
+
+.. automodule:: creel.resolve
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      normalize_entity
+      resolve_graph
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CascadeResolver
+      LLMResolver
+      NormalizeResolver
+      RegistryResolver
+      Resolver
+   

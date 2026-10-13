@@ -1,4 +1,0 @@
-creel.temporal
-==============
-.. automodule:: creel.temporal
-   :members:

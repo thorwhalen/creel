@@ -1,0 +1,43 @@
+creel.verify
+============
+
+.. automodule:: creel.verify
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      schema_description_verifier
+      available_verifiers
+      build_verifier
+      register_verifier
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Verdict
+      VerificationContext
+      Verifier
+      ExactMatch
+      NormalizedMatch
+      NumericTolerance
+      SetMatch
+      SchemaConstraint
+      SemanticSimilarity
+      Composite
+      GraphMatch
+      LLMRubric
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   graph_match
+   kinds
+   protocol
+   registry
+   rubric

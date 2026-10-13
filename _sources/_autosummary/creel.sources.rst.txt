@@ -1,0 +1,25 @@
+creel.sources
+=============
+
+.. automodule:: creel.sources
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      TEXT
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      coerce_sources
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Source
+      SourceBundle
+   

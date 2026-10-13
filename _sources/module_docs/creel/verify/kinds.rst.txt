@@ -1,4 +1,0 @@
-creel.verify.kinds
-==================
-.. automodule:: creel.verify.kinds
-   :members:

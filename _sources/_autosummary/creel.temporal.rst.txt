@@ -1,0 +1,22 @@
+creel.temporal
+==============
+
+.. automodule:: creel.temporal
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      VALID_FROM
+      VALID_TO
+      OBSERVED_AT
+      RECORDED_AT
+      RESERVED
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      is_temporal_attribute
+   

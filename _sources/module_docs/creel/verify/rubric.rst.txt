@@ -1,4 +1,0 @@
-creel.verify.rubric
-===================
-.. automodule:: creel.verify.rubric
-   :members:

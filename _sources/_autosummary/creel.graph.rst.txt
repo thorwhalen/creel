@@ -1,0 +1,32 @@
+creel.graph
+===========
+
+.. automodule:: creel.graph
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      from_canonical_dict
+      from_canonical_json
+      to_canonical_dict
+      to_canonical_json
+      validate_canonical
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Edge
+      Graph
+      Node
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   canonical
+   model

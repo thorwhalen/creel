@@ -1,0 +1,12 @@
+creel.policy
+============
+
+.. automodule:: creel.policy
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ExtractionPolicy
+   

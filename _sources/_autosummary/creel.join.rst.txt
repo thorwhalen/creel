@@ -1,0 +1,25 @@
+creel.join
+==========
+
+.. automodule:: creel.join
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      SchemaAsExtractor
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      join
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ResolvedPlan
+      ResolvedStep
+   

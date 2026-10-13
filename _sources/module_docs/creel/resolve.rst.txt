@@ -1,4 +1,0 @@
-creel.resolve
-=============
-.. automodule:: creel.resolve
-   :members:

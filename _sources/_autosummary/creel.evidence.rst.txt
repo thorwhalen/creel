@@ -1,0 +1,32 @@
+creel.evidence
+==============
+
+.. automodule:: creel.evidence
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      SOFTWARE_AGENT
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      deterministic_evidence
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BoundingBoxSelector
+      CellSelector
+      Confidence
+      Evidence
+      JsonPathSelector
+      PageSelector
+      Provenance
+      TextPositionSelector
+      TextQuoteSelector
+   

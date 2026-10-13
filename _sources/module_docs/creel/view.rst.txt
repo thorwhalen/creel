@@ -1,4 +1,0 @@
-creel.view
-==========
-.. automodule:: creel.view
-   :members:

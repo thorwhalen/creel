@@ -1,0 +1,39 @@
+# creel
+
+> Extract linked information from a mess or sources
+
+
+## Pages in this subsection
+
+- [creel](creel.html.md): creel — a general, AI-powered source-to-graph extraction engine.
+- [creel.annotate](creel.annotate.html.md): Annotations — the standoff overlay for machine insight AND human coding (D-OP9 / A2).
+- [creel.bindings](creel.bindings.html.md): The extraction-metadata layer: which strategy populates each grammar element.
+- [creel.evaluation](creel.evaluation.html.md): The evaluation runner — score an extraction corpus with pluggable verifiers.
+- [creel.evidence](creel.evidence.html.md): Evidence — the separable per-element audit record (provenance + grounding + confidence).
+- [creel.export](creel.export.html.md): Export adapters — interchange formats for the canonical graph (EPIC 3.4 / 8.4).
+- [creel.facade](creel.facade.html.md): The facade: &#96;extract(sources, graph_spec, extractors) -&gt; graph&#96;.
+- [creel.graph](creel.graph.html.md): creel graph layer: the in-memory LPG and its canonical JSON serialisation.
+- [creel.graph.canonical](creel.graph.canonical.html.md): Canonical JSON for creel graphs — the deterministic, versioned on-disk truth.
+- [creel.graph.model](creel.graph.model.html.md): The in-memory Labeled Property Graph (LPG) — creel’s runtime source of truth.
+- [creel.join](creel.join.html.md): Join the grammar and the extraction-metadata layers into a runnable plan.
+- [creel.policy](creel.policy.html.md): ExtractionPolicy — the operational policy layer for LLM extraction (decision #13).
+- [creel.render](creel.render.html.md): The renderer contract — the three-layer annotated-graph renderers consume (D15).
+- [creel.resolve](creel.resolve.html.md): Entity resolution — merge nodes that name the same real entity (decision #14 / D-OP8).
+- [creel.sources](creel.sources.html.md): Sources — the heterogeneous inputs creel reads.
+- [creel.spec](creel.spec.html.md): creel grammar layer: declare &#42;what&#42; graph to extract, and validate instances.
+- [creel.spec.linkml](creel.spec.linkml.html.md): LinkML bridge + schema codegen for the grammar (EPIC 2.4, decision D3).
+- [creel.spec.model](creel.spec.model.html.md): The grammar layer: a typed description of &#42;what&#42; graph creel should extract.
+- [creel.spec.validate](creel.spec.validate.html.md): Validate an instance &#96;Graph&#96; against a &#96;GraphSpec&#96;.
+- [creel.temporal](creel.temporal.html.md): Reserved temporal vocabulary (decision #15 / D-OP9 — reserved, not yet enforced).
+- [creel.trace](creel.trace.html.md): Bidirectional source↔graph traceability (ADR D-OP9 — A1, A3, A4).
+- [creel.verify](creel.verify.html.md): creel evaluation layer: pluggable verifiers (not hardcoded equality).
+- [creel.verify.graph_match](creel.verify.graph_match.html.md): &#96;graph_match&#96; — compare a whole extracted graph to an expected one.
+- [creel.verify.kinds](creel.verify.kinds.html.md): The verifier-kind taxonomy — pick the comparison that matches the field’s nature.
+- [creel.verify.protocol](creel.verify.protocol.html.md): The verifier contract — the evaluation-time dual of the extractor contract.
+- [creel.verify.registry](creel.verify.registry.html.md): Verifier discovery: a decorator registry + entry points (group &#96;creel.verifiers&#96;).
+- [creel.verify.rubric](creel.verify.rubric.html.md): &#96;llm_rubric&#96; — a verifier defined purely by natural-language instructions.
+- [creel.view](creel.view.html.md): Projections of the graph into views — “one model, many views” (decision D15).
+
+## Optional
+
+- [Top-level llms.txt](../llms.txt): Complete documentation index.

@@ -1,4 +1,0 @@
-creel.policy
-============
-.. automodule:: creel.policy
-   :members:

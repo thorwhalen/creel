@@ -1,4 +1,0 @@
-creel.spec
-==========
-.. automodule:: creel.spec
-   :members:

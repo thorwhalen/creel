@@ -1,4 +1,0 @@
-creel.annotate
-==============
-.. automodule:: creel.annotate
-   :members:

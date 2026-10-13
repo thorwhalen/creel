@@ -1,4 +1,0 @@
-creel.facade
-============
-.. automodule:: creel.facade
-   :members:

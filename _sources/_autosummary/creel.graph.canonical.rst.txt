@@ -1,0 +1,24 @@
+creel.graph.canonical
+=====================
+
+.. automodule:: creel.graph.canonical
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      CANONICAL_SCHEMA_URL
+      CANONICAL_VERSION
+      CANONICAL_GRAPH_SCHEMA
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      from_canonical_dict
+      from_canonical_json
+      to_canonical_dict
+      to_canonical_json
+      validate_canonical
+   

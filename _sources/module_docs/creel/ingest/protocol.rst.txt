@@ -1,4 +1,0 @@
-creel.ingest.protocol
-=====================
-.. automodule:: creel.ingest.protocol
-   :members:

@@ -1,0 +1,19 @@
+creel.bindings
+==============
+
+.. automodule:: creel.bindings
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      coerce_bindings
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ExtractorBinding
+      ExtractorBindings
+   

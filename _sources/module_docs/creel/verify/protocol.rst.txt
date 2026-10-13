@@ -1,4 +1,0 @@
-creel.verify.protocol
-=====================
-.. automodule:: creel.verify.protocol
-   :members:

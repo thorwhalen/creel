@@ -1,0 +1,18 @@
+creel.verify.kinds
+==================
+
+.. automodule:: creel.verify.kinds
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Composite
+      ExactMatch
+      NormalizedMatch
+      NumericTolerance
+      SchemaConstraint
+      SemanticSimilarity
+      SetMatch
+   

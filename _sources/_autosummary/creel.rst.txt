@@ -1,0 +1,138 @@
+﻿creel
+=====
+
+.. automodule:: creel
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      effective_attributes
+      validate_graph
+      to_canonical_json
+      from_canonical_json
+      to_canonical_dict
+      from_canonical_dict
+      validate_canonical
+      extract
+      ingest
+      ingest_paths
+      coerce_sources
+      register_extractor
+      available_extractors
+      resolve_graph
+      normalize_entity
+      reify
+      unreify
+      to_node_edge_records
+      to_table
+      to_dot
+      to_mermaid
+      to_cytoscape
+      to_embedding_records
+      reanchor
+      verify_anchor
+      set_attribute_evidence
+      attribute_evidence
+      to_jgf
+      to_graphml
+      to_cypher
+      to_turtle
+      schema_description_verifier
+      build_verifier
+      register_verifier
+      available_verifiers
+      evaluate_case
+      evaluate_corpus
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AttrSchema
+      EnumDef
+      ElementType
+      NodeType
+      EdgeType
+      GraphSpec
+      ValidationIssue
+      Graph
+      Node
+      Edge
+      Source
+      SourceBundle
+      Extractor
+      ExtractionContext
+      Extraction
+      ExtractedNode
+      ExtractedEdge
+      RegexNodeExtractor
+      RegexEdgeExtractor
+      Cache
+      NullCache
+      DictCache
+      ExtractorBinding
+      ExtractorBindings
+      ExtractionPolicy
+      Resolver
+      NormalizeResolver
+      RegistryResolver
+      LLMResolver
+      CascadeResolver
+      Annotation
+      Selection
+      AnnotatedGraph
+      GraphRenderer
+      RenderArtifact
+      TraceIndex
+      Evidence
+      Provenance
+      Confidence
+      TextQuoteSelector
+      TextPositionSelector
+      Verifier
+      Verdict
+      VerificationContext
+      ExactMatch
+      NormalizedMatch
+      NumericTolerance
+      SetMatch
+      SchemaConstraint
+      SemanticSimilarity
+      Composite
+      GraphMatch
+      LLMRubric
+      CorpusCase
+      CaseResult
+      CorpusResult
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      GraphValidationError
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   annotate
+   bindings
+   evaluation
+   evidence
+   export
+   facade
+   graph
+   join
+   policy
+   render
+   resolve
+   sources
+   spec
+   temporal
+   trace
+   verify
+   view

@@ -1,0 +1,15 @@
+creel.spec.linkml
+=================
+
+.. automodule:: creel.spec.linkml
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      to_linkml
+      load_linkml
+      generate_json_schema
+      generate_pydantic
+   

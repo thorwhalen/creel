@@ -1,0 +1,18 @@
+creel.verify.rubric
+===================
+
+.. automodule:: creel.verify.rubric
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      schema_description_verifier
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      LLMRubric
+   

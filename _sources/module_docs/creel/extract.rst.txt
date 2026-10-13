@@ -1,4 +1,0 @@
-creel.extract
-=============
-.. automodule:: creel.extract
-   :members:

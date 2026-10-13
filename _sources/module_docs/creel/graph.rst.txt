@@ -1,4 +1,0 @@
-creel.graph
-===========
-.. automodule:: creel.graph
-   :members:

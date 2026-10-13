@@ -1,0 +1,21 @@
+creel.evaluation
+================
+
+.. automodule:: creel.evaluation
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      evaluate_case
+      evaluate_corpus
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CaseResult
+      CorpusCase
+      CorpusResult
+   

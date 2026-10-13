@@ -1,0 +1,21 @@
+creel.trace
+===========
+
+.. automodule:: creel.trace
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      attribute_evidence
+      reanchor
+      set_attribute_evidence
+      verify_anchor
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      TraceIndex
+   

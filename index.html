@@ -1,615 +1,543 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt" type="text/markdown">
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt"><link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="API reference" href="api.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>creel</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
 
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to creel’s documentation! &mdash; creel 0.1.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-
+<style>
+  body {
+    --color-code-background: #f0f0f0;
+  --color-code-foreground: black;
+  --color-brand-primary: #006981;
+  --color-brand-content: #006981;
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=fd825880"></script>
-      <script src="_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
-      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="creel" href="module_docs/creel.html" /> 
-</head>
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #24cde6;
+  --color-brand-content: #24cde6;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #24cde6;
+  --color-brand-content: #24cde6;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
 
-          
-          
-          <a href="#" class="icon icon-home">
-            creel
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel.html">creel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/annotate.html">creel.annotate</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/bindings.html">creel.bindings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/evaluation.html">creel.evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/evidence.html">creel.evidence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/export.html">creel.export</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract.html">creel.extract</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/cache.html">creel.extract.cache</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/llm.html">creel.extract.llm</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/pattern.html">creel.extract.pattern</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/protocol.html">creel.extract.protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/query.html">creel.extract.query</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/registry.html">creel.extract.registry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/transforms.html">creel.extract.transforms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/facade.html">creel.facade</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/graph.html">creel.graph</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/graph/canonical.html">creel.graph.canonical</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/graph/model.html">creel.graph.model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/ingest.html">creel.ingest</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/join.html">creel.join</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/policy.html">creel.policy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/reify.html">creel.reify</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/render.html">creel.render</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/resolve.html">creel.resolve</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/sources.html">creel.sources</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/spec.html">creel.spec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/spec/linkml.html">creel.spec.linkml</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/spec/model.html">creel.spec.model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/spec/validate.html">creel.spec.validate</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/temporal.html">creel.temporal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/trace.html">creel.trace</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify.html">creel.verify</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/kinds.html">creel.verify.kinds</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/protocol.html">creel.verify.protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/registry.html">creel.verify.registry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/rubric.html">creel.verify.rubric</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/view.html">creel.view</a></li>
-</ul>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
 
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">creel</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to creel’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-creel-s-documentation">
-<h1>Welcome to creel’s documentation!<a class="headerlink" href="#welcome-to-creel-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel.html">creel</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.AnnotatedGraph"><code class="docutils literal notranslate"><span class="pre">AnnotatedGraph</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Annotation"><code class="docutils literal notranslate"><span class="pre">Annotation</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.AttrSchema"><code class="docutils literal notranslate"><span class="pre">AttrSchema</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Cache"><code class="docutils literal notranslate"><span class="pre">Cache</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.CascadeResolver"><code class="docutils literal notranslate"><span class="pre">CascadeResolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.CaseResult"><code class="docutils literal notranslate"><span class="pre">CaseResult</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Composite"><code class="docutils literal notranslate"><span class="pre">Composite</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Confidence"><code class="docutils literal notranslate"><span class="pre">Confidence</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.CorpusCase"><code class="docutils literal notranslate"><span class="pre">CorpusCase</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.CorpusResult"><code class="docutils literal notranslate"><span class="pre">CorpusResult</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.DictCache"><code class="docutils literal notranslate"><span class="pre">DictCache</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Edge"><code class="docutils literal notranslate"><span class="pre">Edge</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.EdgeType"><code class="docutils literal notranslate"><span class="pre">EdgeType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ElementType"><code class="docutils literal notranslate"><span class="pre">ElementType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.EnumDef"><code class="docutils literal notranslate"><span class="pre">EnumDef</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Evidence"><code class="docutils literal notranslate"><span class="pre">Evidence</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ExactMatch"><code class="docutils literal notranslate"><span class="pre">ExactMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ExtractedEdge"><code class="docutils literal notranslate"><span class="pre">ExtractedEdge</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ExtractedNode"><code class="docutils literal notranslate"><span class="pre">ExtractedNode</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Extraction"><code class="docutils literal notranslate"><span class="pre">Extraction</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ExtractionContext"><code class="docutils literal notranslate"><span class="pre">ExtractionContext</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ExtractionPolicy"><code class="docutils literal notranslate"><span class="pre">ExtractionPolicy</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Extractor"><code class="docutils literal notranslate"><span class="pre">Extractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ExtractorBinding"><code class="docutils literal notranslate"><span class="pre">ExtractorBinding</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ExtractorBindings"><code class="docutils literal notranslate"><span class="pre">ExtractorBindings</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Graph"><code class="docutils literal notranslate"><span class="pre">Graph</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.GraphMatch"><code class="docutils literal notranslate"><span class="pre">GraphMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.GraphRenderer"><code class="docutils literal notranslate"><span class="pre">GraphRenderer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.GraphSpec"><code class="docutils literal notranslate"><span class="pre">GraphSpec</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.GraphValidationError"><code class="docutils literal notranslate"><span class="pre">GraphValidationError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.LLMResolver"><code class="docutils literal notranslate"><span class="pre">LLMResolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.LLMRubric"><code class="docutils literal notranslate"><span class="pre">LLMRubric</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.NodeType"><code class="docutils literal notranslate"><span class="pre">NodeType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.NormalizeResolver"><code class="docutils literal notranslate"><span class="pre">NormalizeResolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.NormalizedMatch"><code class="docutils literal notranslate"><span class="pre">NormalizedMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.NullCache"><code class="docutils literal notranslate"><span class="pre">NullCache</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.NumericTolerance"><code class="docutils literal notranslate"><span class="pre">NumericTolerance</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Provenance"><code class="docutils literal notranslate"><span class="pre">Provenance</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.RegexEdgeExtractor"><code class="docutils literal notranslate"><span class="pre">RegexEdgeExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.RegexNodeExtractor"><code class="docutils literal notranslate"><span class="pre">RegexNodeExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.RegistryResolver"><code class="docutils literal notranslate"><span class="pre">RegistryResolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.RenderArtifact"><code class="docutils literal notranslate"><span class="pre">RenderArtifact</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Resolver"><code class="docutils literal notranslate"><span class="pre">Resolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.SchemaConstraint"><code class="docutils literal notranslate"><span class="pre">SchemaConstraint</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Selection"><code class="docutils literal notranslate"><span class="pre">Selection</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.SemanticSimilarity"><code class="docutils literal notranslate"><span class="pre">SemanticSimilarity</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.SetMatch"><code class="docutils literal notranslate"><span class="pre">SetMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Source"><code class="docutils literal notranslate"><span class="pre">Source</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.SourceBundle"><code class="docutils literal notranslate"><span class="pre">SourceBundle</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.TextPositionSelector"><code class="docutils literal notranslate"><span class="pre">TextPositionSelector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.TextQuoteSelector"><code class="docutils literal notranslate"><span class="pre">TextQuoteSelector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.TraceIndex"><code class="docutils literal notranslate"><span class="pre">TraceIndex</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ValidationIssue"><code class="docutils literal notranslate"><span class="pre">ValidationIssue</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Verdict"><code class="docutils literal notranslate"><span class="pre">Verdict</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.VerificationContext"><code class="docutils literal notranslate"><span class="pre">VerificationContext</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.Verifier"><code class="docutils literal notranslate"><span class="pre">Verifier</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.attribute_evidence"><code class="docutils literal notranslate"><span class="pre">attribute_evidence()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.available_extractors"><code class="docutils literal notranslate"><span class="pre">available_extractors()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.available_verifiers"><code class="docutils literal notranslate"><span class="pre">available_verifiers()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.build_verifier"><code class="docutils literal notranslate"><span class="pre">build_verifier()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.coerce_sources"><code class="docutils literal notranslate"><span class="pre">coerce_sources()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.effective_attributes"><code class="docutils literal notranslate"><span class="pre">effective_attributes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.evaluate_case"><code class="docutils literal notranslate"><span class="pre">evaluate_case()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.evaluate_corpus"><code class="docutils literal notranslate"><span class="pre">evaluate_corpus()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.extract"><code class="docutils literal notranslate"><span class="pre">extract()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.from_canonical_dict"><code class="docutils literal notranslate"><span class="pre">from_canonical_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.from_canonical_json"><code class="docutils literal notranslate"><span class="pre">from_canonical_json()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ingest"><code class="docutils literal notranslate"><span class="pre">ingest()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.ingest_paths"><code class="docutils literal notranslate"><span class="pre">ingest_paths()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.normalize_entity"><code class="docutils literal notranslate"><span class="pre">normalize_entity()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.reanchor"><code class="docutils literal notranslate"><span class="pre">reanchor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.register_extractor"><code class="docutils literal notranslate"><span class="pre">register_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.register_verifier"><code class="docutils literal notranslate"><span class="pre">register_verifier()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.reify"><code class="docutils literal notranslate"><span class="pre">reify()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.resolve_graph"><code class="docutils literal notranslate"><span class="pre">resolve_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.schema_description_verifier"><code class="docutils literal notranslate"><span class="pre">schema_description_verifier()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.set_attribute_evidence"><code class="docutils literal notranslate"><span class="pre">set_attribute_evidence()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_canonical_dict"><code class="docutils literal notranslate"><span class="pre">to_canonical_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_canonical_json"><code class="docutils literal notranslate"><span class="pre">to_canonical_json()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_cypher"><code class="docutils literal notranslate"><span class="pre">to_cypher()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_cytoscape"><code class="docutils literal notranslate"><span class="pre">to_cytoscape()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_dot"><code class="docutils literal notranslate"><span class="pre">to_dot()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_embedding_records"><code class="docutils literal notranslate"><span class="pre">to_embedding_records()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_graphml"><code class="docutils literal notranslate"><span class="pre">to_graphml()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_jgf"><code class="docutils literal notranslate"><span class="pre">to_jgf()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_mermaid"><code class="docutils literal notranslate"><span class="pre">to_mermaid()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_node_edge_records"><code class="docutils literal notranslate"><span class="pre">to_node_edge_records()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_table"><code class="docutils literal notranslate"><span class="pre">to_table()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.to_turtle"><code class="docutils literal notranslate"><span class="pre">to_turtle()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.unreify"><code class="docutils literal notranslate"><span class="pre">unreify()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.validate_canonical"><code class="docutils literal notranslate"><span class="pre">validate_canonical()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.validate_graph"><code class="docutils literal notranslate"><span class="pre">validate_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel.html#creel.verify_anchor"><code class="docutils literal notranslate"><span class="pre">verify_anchor()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/annotate.html">creel.annotate</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/annotate.html#creel.annotate.Annotation"><code class="docutils literal notranslate"><span class="pre">Annotation</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/annotate.html#creel.annotate.Selection"><code class="docutils literal notranslate"><span class="pre">Selection</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/bindings.html">creel.bindings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/bindings.html#creel.bindings.ExtractorBinding"><code class="docutils literal notranslate"><span class="pre">ExtractorBinding</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/bindings.html#creel.bindings.ExtractorBindings"><code class="docutils literal notranslate"><span class="pre">ExtractorBindings</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/bindings.html#creel.bindings.coerce_bindings"><code class="docutils literal notranslate"><span class="pre">coerce_bindings()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/evaluation.html">creel.evaluation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evaluation.html#creel.evaluation.CaseResult"><code class="docutils literal notranslate"><span class="pre">CaseResult</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evaluation.html#creel.evaluation.CorpusCase"><code class="docutils literal notranslate"><span class="pre">CorpusCase</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evaluation.html#creel.evaluation.CorpusResult"><code class="docutils literal notranslate"><span class="pre">CorpusResult</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evaluation.html#creel.evaluation.evaluate_case"><code class="docutils literal notranslate"><span class="pre">evaluate_case()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evaluation.html#creel.evaluation.evaluate_corpus"><code class="docutils literal notranslate"><span class="pre">evaluate_corpus()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/evidence.html">creel.evidence</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.BoundingBoxSelector"><code class="docutils literal notranslate"><span class="pre">BoundingBoxSelector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.CellSelector"><code class="docutils literal notranslate"><span class="pre">CellSelector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.Confidence"><code class="docutils literal notranslate"><span class="pre">Confidence</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.Evidence"><code class="docutils literal notranslate"><span class="pre">Evidence</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.JsonPathSelector"><code class="docutils literal notranslate"><span class="pre">JsonPathSelector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.PageSelector"><code class="docutils literal notranslate"><span class="pre">PageSelector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.Provenance"><code class="docutils literal notranslate"><span class="pre">Provenance</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.SOFTWARE_AGENT"><code class="docutils literal notranslate"><span class="pre">SOFTWARE_AGENT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.TextPositionSelector"><code class="docutils literal notranslate"><span class="pre">TextPositionSelector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.TextQuoteSelector"><code class="docutils literal notranslate"><span class="pre">TextQuoteSelector</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/evidence.html#creel.evidence.deterministic_evidence"><code class="docutils literal notranslate"><span class="pre">deterministic_evidence()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/export.html">creel.export</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/export.html#creel.export.to_cypher"><code class="docutils literal notranslate"><span class="pre">to_cypher()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/export.html#creel.export.to_graphml"><code class="docutils literal notranslate"><span class="pre">to_graphml()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/export.html#creel.export.to_jgf"><code class="docutils literal notranslate"><span class="pre">to_jgf()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/export.html#creel.export.to_turtle"><code class="docutils literal notranslate"><span class="pre">to_turtle()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract.html">creel.extract</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.Cache"><code class="docutils literal notranslate"><span class="pre">Cache</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.ClusterLLMExtractor"><code class="docutils literal notranslate"><span class="pre">ClusterLLMExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.DictCache"><code class="docutils literal notranslate"><span class="pre">DictCache</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.ExtractedEdge"><code class="docutils literal notranslate"><span class="pre">ExtractedEdge</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.ExtractedNode"><code class="docutils literal notranslate"><span class="pre">ExtractedNode</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.Extraction"><code class="docutils literal notranslate"><span class="pre">Extraction</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.ExtractionContext"><code class="docutils literal notranslate"><span class="pre">ExtractionContext</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.Extractor"><code class="docutils literal notranslate"><span class="pre">Extractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.LLMClient"><code class="docutils literal notranslate"><span class="pre">LLMClient</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.LLMExtractor"><code class="docutils literal notranslate"><span class="pre">LLMExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.NullCache"><code class="docutils literal notranslate"><span class="pre">NullCache</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.RegexEdgeExtractor"><code class="docutils literal notranslate"><span class="pre">RegexEdgeExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.RegexNodeExtractor"><code class="docutils literal notranslate"><span class="pre">RegexNodeExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.aix_client"><code class="docutils literal notranslate"><span class="pre">aix_client()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.aix_embedder"><code class="docutils literal notranslate"><span class="pre">aix_embedder()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.aix_entity_judge"><code class="docutils literal notranslate"><span class="pre">aix_entity_judge()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.aix_judge"><code class="docutils literal notranslate"><span class="pre">aix_judge()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.anthropic_client"><code class="docutils literal notranslate"><span class="pre">anthropic_client()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.available_extractors"><code class="docutils literal notranslate"><span class="pre">available_extractors()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.build_extractor"><code class="docutils literal notranslate"><span class="pre">build_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.build_instruction"><code class="docutils literal notranslate"><span class="pre">build_instruction()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.cache_key"><code class="docutils literal notranslate"><span class="pre">cache_key()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.compile_output_schema"><code class="docutils literal notranslate"><span class="pre">compile_output_schema()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.make_cluster_llm_extractor"><code class="docutils literal notranslate"><span class="pre">make_cluster_llm_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.make_function_extractor"><code class="docutils literal notranslate"><span class="pre">make_function_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.make_json_extractor"><code class="docutils literal notranslate"><span class="pre">make_json_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.make_llm_extractor"><code class="docutils literal notranslate"><span class="pre">make_llm_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.make_sql_extractor"><code class="docutils literal notranslate"><span class="pre">make_sql_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.make_table_map_extractor"><code class="docutils literal notranslate"><span class="pre">make_table_map_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract.html#creel.extract.register_extractor"><code class="docutils literal notranslate"><span class="pre">register_extractor()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/cache.html">creel.extract.cache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/cache.html#creel.extract.cache.Cache"><code class="docutils literal notranslate"><span class="pre">Cache</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/cache.html#creel.extract.cache.DictCache"><code class="docutils literal notranslate"><span class="pre">DictCache</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/cache.html#creel.extract.cache.NullCache"><code class="docutils literal notranslate"><span class="pre">NullCache</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/cache.html#creel.extract.cache.cache_key"><code class="docutils literal notranslate"><span class="pre">cache_key()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/llm.html">creel.extract.llm</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.ClusterLLMExtractor"><code class="docutils literal notranslate"><span class="pre">ClusterLLMExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.LLMClient"><code class="docutils literal notranslate"><span class="pre">LLMClient</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.LLMExtractor"><code class="docutils literal notranslate"><span class="pre">LLMExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.aix_client"><code class="docutils literal notranslate"><span class="pre">aix_client()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.aix_embedder"><code class="docutils literal notranslate"><span class="pre">aix_embedder()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.aix_entity_judge"><code class="docutils literal notranslate"><span class="pre">aix_entity_judge()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.aix_judge"><code class="docutils literal notranslate"><span class="pre">aix_judge()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.anthropic_client"><code class="docutils literal notranslate"><span class="pre">anthropic_client()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.build_instruction"><code class="docutils literal notranslate"><span class="pre">build_instruction()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.compile_output_schema"><code class="docutils literal notranslate"><span class="pre">compile_output_schema()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.items_to_extraction"><code class="docutils literal notranslate"><span class="pre">items_to_extraction()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.make_cluster_llm_extractor"><code class="docutils literal notranslate"><span class="pre">make_cluster_llm_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.make_llm_extractor"><code class="docutils literal notranslate"><span class="pre">make_llm_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/llm.html#creel.extract.llm.schema_as_extractor"><code class="docutils literal notranslate"><span class="pre">schema_as_extractor()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/pattern.html">creel.extract.pattern</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/pattern.html#creel.extract.pattern.RegexEdgeExtractor"><code class="docutils literal notranslate"><span class="pre">RegexEdgeExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/pattern.html#creel.extract.pattern.RegexNodeExtractor"><code class="docutils literal notranslate"><span class="pre">RegexNodeExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/pattern.html#creel.extract.pattern.make_function_extractor"><code class="docutils literal notranslate"><span class="pre">make_function_extractor()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/protocol.html">creel.extract.protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/protocol.html#creel.extract.protocol.ExtractedEdge"><code class="docutils literal notranslate"><span class="pre">ExtractedEdge</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/protocol.html#creel.extract.protocol.ExtractedNode"><code class="docutils literal notranslate"><span class="pre">ExtractedNode</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/protocol.html#creel.extract.protocol.Extraction"><code class="docutils literal notranslate"><span class="pre">Extraction</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/protocol.html#creel.extract.protocol.ExtractionContext"><code class="docutils literal notranslate"><span class="pre">ExtractionContext</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/protocol.html#creel.extract.protocol.Extractor"><code class="docutils literal notranslate"><span class="pre">Extractor</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/query.html">creel.extract.query</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/query.html#creel.extract.query.make_json_extractor"><code class="docutils literal notranslate"><span class="pre">make_json_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/query.html#creel.extract.query.make_sql_extractor"><code class="docutils literal notranslate"><span class="pre">make_sql_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/query.html#creel.extract.query.make_table_map_extractor"><code class="docutils literal notranslate"><span class="pre">make_table_map_extractor()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/registry.html">creel.extract.registry</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/registry.html#creel.extract.registry.available_extractors"><code class="docutils literal notranslate"><span class="pre">available_extractors()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/registry.html#creel.extract.registry.build_extractor"><code class="docutils literal notranslate"><span class="pre">build_extractor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/registry.html#creel.extract.registry.get_extractor_factory"><code class="docutils literal notranslate"><span class="pre">get_extractor_factory()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/registry.html#creel.extract.registry.register_extractor"><code class="docutils literal notranslate"><span class="pre">register_extractor()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/extract/transforms.html">creel.extract.transforms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/transforms.html#creel.extract.transforms.apply_casts"><code class="docutils literal notranslate"><span class="pre">apply_casts()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/transforms.html#creel.extract.transforms.cast_value"><code class="docutils literal notranslate"><span class="pre">cast_value()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/transforms.html#creel.extract.transforms.fill_template"><code class="docutils literal notranslate"><span class="pre">fill_template()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/extract/transforms.html#creel.extract.transforms.slug"><code class="docutils literal notranslate"><span class="pre">slug()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/facade.html">creel.facade</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/facade.html#creel.facade.extract"><code class="docutils literal notranslate"><span class="pre">extract()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/graph.html">creel.graph</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph.html#creel.graph.Edge"><code class="docutils literal notranslate"><span class="pre">Edge</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph.html#creel.graph.Graph"><code class="docutils literal notranslate"><span class="pre">Graph</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph.html#creel.graph.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph.html#creel.graph.from_canonical_dict"><code class="docutils literal notranslate"><span class="pre">from_canonical_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph.html#creel.graph.from_canonical_json"><code class="docutils literal notranslate"><span class="pre">from_canonical_json()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph.html#creel.graph.to_canonical_dict"><code class="docutils literal notranslate"><span class="pre">to_canonical_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph.html#creel.graph.to_canonical_json"><code class="docutils literal notranslate"><span class="pre">to_canonical_json()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph.html#creel.graph.validate_canonical"><code class="docutils literal notranslate"><span class="pre">validate_canonical()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/graph/canonical.html">creel.graph.canonical</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/canonical.html#public-surface">Public surface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/canonical.html#creel.graph.canonical.CANONICAL_GRAPH_SCHEMA"><code class="docutils literal notranslate"><span class="pre">CANONICAL_GRAPH_SCHEMA</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/canonical.html#creel.graph.canonical.CANONICAL_SCHEMA_URL"><code class="docutils literal notranslate"><span class="pre">CANONICAL_SCHEMA_URL</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/canonical.html#creel.graph.canonical.CANONICAL_VERSION"><code class="docutils literal notranslate"><span class="pre">CANONICAL_VERSION</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/canonical.html#creel.graph.canonical.from_canonical_dict"><code class="docutils literal notranslate"><span class="pre">from_canonical_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/canonical.html#creel.graph.canonical.from_canonical_json"><code class="docutils literal notranslate"><span class="pre">from_canonical_json()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/canonical.html#creel.graph.canonical.to_canonical_dict"><code class="docutils literal notranslate"><span class="pre">to_canonical_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/canonical.html#creel.graph.canonical.to_canonical_json"><code class="docutils literal notranslate"><span class="pre">to_canonical_json()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/canonical.html#creel.graph.canonical.validate_canonical"><code class="docutils literal notranslate"><span class="pre">validate_canonical()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/graph/model.html">creel.graph.model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/model.html#creel.graph.model.Edge"><code class="docutils literal notranslate"><span class="pre">Edge</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/model.html#creel.graph.model.Graph"><code class="docutils literal notranslate"><span class="pre">Graph</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/graph/model.html#creel.graph.model.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/ingest.html">creel.ingest</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest.html#creel.ingest.Loader"><code class="docutils literal notranslate"><span class="pre">Loader</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest.html#creel.ingest.ingest"><code class="docutils literal notranslate"><span class="pre">ingest()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest.html#creel.ingest.ingest_paths"><code class="docutils literal notranslate"><span class="pre">ingest_paths()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest.html#creel.ingest.loader_for"><code class="docutils literal notranslate"><span class="pre">loader_for()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest.html#creel.ingest.register_loader"><code class="docutils literal notranslate"><span class="pre">register_loader()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest.html#creel.ingest.supported_extensions"><code class="docutils literal notranslate"><span class="pre">supported_extensions()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/ingest/loaders.html">creel.ingest.loaders</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.load_csv"><code class="docutils literal notranslate"><span class="pre">load_csv()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.load_docling"><code class="docutils literal notranslate"><span class="pre">load_docling()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.load_html"><code class="docutils literal notranslate"><span class="pre">load_html()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.load_json"><code class="docutils literal notranslate"><span class="pre">load_json()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.load_markdown"><code class="docutils literal notranslate"><span class="pre">load_markdown()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.load_text"><code class="docutils literal notranslate"><span class="pre">load_text()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.load_tsv"><code class="docutils literal notranslate"><span class="pre">load_tsv()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.load_xlsx"><code class="docutils literal notranslate"><span class="pre">load_xlsx()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.loader_for"><code class="docutils literal notranslate"><span class="pre">loader_for()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.register_loader"><code class="docutils literal notranslate"><span class="pre">register_loader()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/loaders.html#creel.ingest.loaders.supported_extensions"><code class="docutils literal notranslate"><span class="pre">supported_extensions()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/ingest/protocol.html">creel.ingest.protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/ingest/protocol.html#creel.ingest.protocol.Loader"><code class="docutils literal notranslate"><span class="pre">Loader</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/join.html">creel.join</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/join.html#creel.join.ResolvedPlan"><code class="docutils literal notranslate"><span class="pre">ResolvedPlan</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/join.html#creel.join.ResolvedStep"><code class="docutils literal notranslate"><span class="pre">ResolvedStep</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/join.html#creel.join.SchemaAsExtractor"><code class="docutils literal notranslate"><span class="pre">SchemaAsExtractor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/join.html#creel.join.join"><code class="docutils literal notranslate"><span class="pre">join()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/policy.html">creel.policy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/policy.html#creel.policy.ExtractionPolicy"><code class="docutils literal notranslate"><span class="pre">ExtractionPolicy</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/reify.html">creel.reify</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/reify.html#creel.reify.reify"><code class="docutils literal notranslate"><span class="pre">reify()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/reify.html#creel.reify.unreify"><code class="docutils literal notranslate"><span class="pre">unreify()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/render.html">creel.render</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/render.html#creel.render.AnnotatedGraph"><code class="docutils literal notranslate"><span class="pre">AnnotatedGraph</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/render.html#creel.render.GraphRenderer"><code class="docutils literal notranslate"><span class="pre">GraphRenderer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/render.html#creel.render.RenderArtifact"><code class="docutils literal notranslate"><span class="pre">RenderArtifact</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/resolve.html">creel.resolve</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/resolve.html#creel.resolve.CascadeResolver"><code class="docutils literal notranslate"><span class="pre">CascadeResolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/resolve.html#creel.resolve.LLMResolver"><code class="docutils literal notranslate"><span class="pre">LLMResolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/resolve.html#creel.resolve.NormalizeResolver"><code class="docutils literal notranslate"><span class="pre">NormalizeResolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/resolve.html#creel.resolve.RegistryResolver"><code class="docutils literal notranslate"><span class="pre">RegistryResolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/resolve.html#creel.resolve.Resolver"><code class="docutils literal notranslate"><span class="pre">Resolver</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/resolve.html#creel.resolve.normalize_entity"><code class="docutils literal notranslate"><span class="pre">normalize_entity()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/resolve.html#creel.resolve.resolve_graph"><code class="docutils literal notranslate"><span class="pre">resolve_graph()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/sources.html">creel.sources</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/sources.html#creel.sources.Source"><code class="docutils literal notranslate"><span class="pre">Source</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/sources.html#creel.sources.SourceBundle"><code class="docutils literal notranslate"><span class="pre">SourceBundle</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/sources.html#creel.sources.TEXT"><code class="docutils literal notranslate"><span class="pre">TEXT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/sources.html#creel.sources.coerce_sources"><code class="docutils literal notranslate"><span class="pre">coerce_sources()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/spec.html">creel.spec</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.AttrSchema"><code class="docutils literal notranslate"><span class="pre">AttrSchema</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.EdgeType"><code class="docutils literal notranslate"><span class="pre">EdgeType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.ElementType"><code class="docutils literal notranslate"><span class="pre">ElementType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.EnumDef"><code class="docutils literal notranslate"><span class="pre">EnumDef</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.GraphSpec"><code class="docutils literal notranslate"><span class="pre">GraphSpec</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.GraphValidationError"><code class="docutils literal notranslate"><span class="pre">GraphValidationError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.NodeType"><code class="docutils literal notranslate"><span class="pre">NodeType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.ValidationIssue"><code class="docutils literal notranslate"><span class="pre">ValidationIssue</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.effective_attributes"><code class="docutils literal notranslate"><span class="pre">effective_attributes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.generate_json_schema"><code class="docutils literal notranslate"><span class="pre">generate_json_schema()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.generate_pydantic"><code class="docutils literal notranslate"><span class="pre">generate_pydantic()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.load_linkml"><code class="docutils literal notranslate"><span class="pre">load_linkml()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.to_linkml"><code class="docutils literal notranslate"><span class="pre">to_linkml()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.validate_graph"><code class="docutils literal notranslate"><span class="pre">validate_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec.html#creel.spec.validate_spec"><code class="docutils literal notranslate"><span class="pre">validate_spec()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/spec/linkml.html">creel.spec.linkml</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/linkml.html#creel.spec.linkml.generate_json_schema"><code class="docutils literal notranslate"><span class="pre">generate_json_schema()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/linkml.html#creel.spec.linkml.generate_pydantic"><code class="docutils literal notranslate"><span class="pre">generate_pydantic()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/linkml.html#creel.spec.linkml.load_linkml"><code class="docutils literal notranslate"><span class="pre">load_linkml()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/linkml.html#creel.spec.linkml.to_linkml"><code class="docutils literal notranslate"><span class="pre">to_linkml()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/spec/model.html">creel.spec.model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/model.html#creel.spec.model.AttrSchema"><code class="docutils literal notranslate"><span class="pre">AttrSchema</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/model.html#creel.spec.model.EdgeType"><code class="docutils literal notranslate"><span class="pre">EdgeType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/model.html#creel.spec.model.ElementType"><code class="docutils literal notranslate"><span class="pre">ElementType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/model.html#creel.spec.model.EnumDef"><code class="docutils literal notranslate"><span class="pre">EnumDef</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/model.html#creel.spec.model.GraphSpec"><code class="docutils literal notranslate"><span class="pre">GraphSpec</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/model.html#creel.spec.model.NodeType"><code class="docutils literal notranslate"><span class="pre">NodeType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/model.html#creel.spec.model.PRIMITIVE_RANGES"><code class="docutils literal notranslate"><span class="pre">PRIMITIVE_RANGES</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/model.html#creel.spec.model.effective_attributes"><code class="docutils literal notranslate"><span class="pre">effective_attributes()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/spec/validate.html">creel.spec.validate</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/validate.html#creel.spec.validate.GraphValidationError"><code class="docutils literal notranslate"><span class="pre">GraphValidationError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/validate.html#creel.spec.validate.ValidationIssue"><code class="docutils literal notranslate"><span class="pre">ValidationIssue</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/validate.html#creel.spec.validate.validate_attributes"><code class="docutils literal notranslate"><span class="pre">validate_attributes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/validate.html#creel.spec.validate.validate_graph"><code class="docutils literal notranslate"><span class="pre">validate_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/spec/validate.html#creel.spec.validate.validate_spec"><code class="docutils literal notranslate"><span class="pre">validate_spec()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/temporal.html">creel.temporal</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/temporal.html#creel.temporal.OBSERVED_AT"><code class="docutils literal notranslate"><span class="pre">OBSERVED_AT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/temporal.html#creel.temporal.RECORDED_AT"><code class="docutils literal notranslate"><span class="pre">RECORDED_AT</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/temporal.html#creel.temporal.RESERVED"><code class="docutils literal notranslate"><span class="pre">RESERVED</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/temporal.html#creel.temporal.VALID_FROM"><code class="docutils literal notranslate"><span class="pre">VALID_FROM</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/temporal.html#creel.temporal.VALID_TO"><code class="docutils literal notranslate"><span class="pre">VALID_TO</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/temporal.html#creel.temporal.is_temporal_attribute"><code class="docutils literal notranslate"><span class="pre">is_temporal_attribute()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/trace.html">creel.trace</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/trace.html#creel.trace.TraceIndex"><code class="docutils literal notranslate"><span class="pre">TraceIndex</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/trace.html#creel.trace.attribute_evidence"><code class="docutils literal notranslate"><span class="pre">attribute_evidence()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/trace.html#creel.trace.reanchor"><code class="docutils literal notranslate"><span class="pre">reanchor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/trace.html#creel.trace.set_attribute_evidence"><code class="docutils literal notranslate"><span class="pre">set_attribute_evidence()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/trace.html#creel.trace.verify_anchor"><code class="docutils literal notranslate"><span class="pre">verify_anchor()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify.html">creel.verify</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.Composite"><code class="docutils literal notranslate"><span class="pre">Composite</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.ExactMatch"><code class="docutils literal notranslate"><span class="pre">ExactMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.GraphMatch"><code class="docutils literal notranslate"><span class="pre">GraphMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.LLMRubric"><code class="docutils literal notranslate"><span class="pre">LLMRubric</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.NormalizedMatch"><code class="docutils literal notranslate"><span class="pre">NormalizedMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.NumericTolerance"><code class="docutils literal notranslate"><span class="pre">NumericTolerance</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.SchemaConstraint"><code class="docutils literal notranslate"><span class="pre">SchemaConstraint</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.SemanticSimilarity"><code class="docutils literal notranslate"><span class="pre">SemanticSimilarity</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.SetMatch"><code class="docutils literal notranslate"><span class="pre">SetMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.Verdict"><code class="docutils literal notranslate"><span class="pre">Verdict</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.VerificationContext"><code class="docutils literal notranslate"><span class="pre">VerificationContext</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.Verifier"><code class="docutils literal notranslate"><span class="pre">Verifier</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.available_verifiers"><code class="docutils literal notranslate"><span class="pre">available_verifiers()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.build_verifier"><code class="docutils literal notranslate"><span class="pre">build_verifier()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.register_verifier"><code class="docutils literal notranslate"><span class="pre">register_verifier()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify.html#creel.verify.schema_description_verifier"><code class="docutils literal notranslate"><span class="pre">schema_description_verifier()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/graph_match.html">creel.verify.graph_match</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/graph_match.html#creel.verify.graph_match.GraphMatch"><code class="docutils literal notranslate"><span class="pre">GraphMatch</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/kinds.html">creel.verify.kinds</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/kinds.html#creel.verify.kinds.Composite"><code class="docutils literal notranslate"><span class="pre">Composite</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/kinds.html#creel.verify.kinds.ExactMatch"><code class="docutils literal notranslate"><span class="pre">ExactMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/kinds.html#creel.verify.kinds.NormalizedMatch"><code class="docutils literal notranslate"><span class="pre">NormalizedMatch</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/kinds.html#creel.verify.kinds.NumericTolerance"><code class="docutils literal notranslate"><span class="pre">NumericTolerance</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/kinds.html#creel.verify.kinds.SchemaConstraint"><code class="docutils literal notranslate"><span class="pre">SchemaConstraint</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/kinds.html#creel.verify.kinds.SemanticSimilarity"><code class="docutils literal notranslate"><span class="pre">SemanticSimilarity</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/kinds.html#creel.verify.kinds.SetMatch"><code class="docutils literal notranslate"><span class="pre">SetMatch</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/protocol.html">creel.verify.protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/protocol.html#creel.verify.protocol.Verdict"><code class="docutils literal notranslate"><span class="pre">Verdict</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/protocol.html#creel.verify.protocol.VerificationContext"><code class="docutils literal notranslate"><span class="pre">VerificationContext</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/protocol.html#creel.verify.protocol.Verifier"><code class="docutils literal notranslate"><span class="pre">Verifier</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/protocol.html#creel.verify.protocol.passed_at"><code class="docutils literal notranslate"><span class="pre">passed_at()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/registry.html">creel.verify.registry</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/registry.html#creel.verify.registry.available_verifiers"><code class="docutils literal notranslate"><span class="pre">available_verifiers()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/registry.html#creel.verify.registry.build_verifier"><code class="docutils literal notranslate"><span class="pre">build_verifier()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/registry.html#creel.verify.registry.get_verifier_factory"><code class="docutils literal notranslate"><span class="pre">get_verifier_factory()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/registry.html#creel.verify.registry.register_verifier"><code class="docutils literal notranslate"><span class="pre">register_verifier()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/verify/rubric.html">creel.verify.rubric</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/rubric.html#creel.verify.rubric.LLMRubric"><code class="docutils literal notranslate"><span class="pre">LLMRubric</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/verify/rubric.html#creel.verify.rubric.schema_description_verifier"><code class="docutils literal notranslate"><span class="pre">schema_description_verifier()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/creel/view.html">creel.view</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/view.html#creel.view.to_cytoscape"><code class="docutils literal notranslate"><span class="pre">to_cytoscape()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/view.html#creel.view.to_dot"><code class="docutils literal notranslate"><span class="pre">to_dot()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/view.html#creel.view.to_embedding_records"><code class="docutils literal notranslate"><span class="pre">to_embedding_records()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/view.html#creel.view.to_mermaid"><code class="docutils literal notranslate"><span class="pre">to_mermaid()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/view.html#creel.view.to_node_edge_records"><code class="docutils literal notranslate"><span class="pre">to_node_edge_records()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/creel/view.html#creel.view.to_table"><code class="docutils literal notranslate"><span class="pre">to_table()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>Release: 0.1.4</p>
-<p>Last change: Jul 24, 2026</p>
-</section>
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="module_docs/creel.html" class="btn btn-neutral float-right" title="creel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
     </div>
+    <div class="header-center">
+      <a href="#"><div class="brand">creel</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+  
+  <span class="sidebar-brand-text">creel</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_autosummary/creel.html">creel</a><input aria-label="Toggle navigation of creel" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.annotate.html">creel.annotate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.bindings.html">creel.bindings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.evaluation.html">creel.evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.evidence.html">creel.evidence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.export.html">creel.export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.facade.html">creel.facade</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="_autosummary/creel.graph.html">creel.graph</a><input aria-label="Toggle navigation of creel.graph" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.graph.canonical.html">creel.graph.canonical</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.graph.model.html">creel.graph.model</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.join.html">creel.join</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.policy.html">creel.policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.render.html">creel.render</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.resolve.html">creel.resolve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.sources.html">creel.sources</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="_autosummary/creel.spec.html">creel.spec</a><input aria-label="Toggle navigation of creel.spec" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.spec.linkml.html">creel.spec.linkml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.spec.model.html">creel.spec.model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.spec.validate.html">creel.spec.validate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.temporal.html">creel.temporal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.trace.html">creel.trace</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="_autosummary/creel.verify.html">creel.verify</a><input aria-label="Toggle navigation of creel.verify" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.verify.graph_match.html">creel.verify.graph_match</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.verify.kinds.html">creel.verify.kinds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.verify.protocol.html">creel.verify.protocol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.verify.registry.html">creel.verify.registry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/creel.verify.rubric.html">creel.verify.rubric</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/creel.view.html">creel.view</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ai-agents.html">For AI agents</a></li>
+</ul>
 
-  <hr/>
+</div>
+</div>
 
-  <div role="contentinfo">
-    <p></p>
-  </div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/index.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <!-- generated by epythet -->
+<section id="creel">
+<h1>creel<a class="headerlink" href="#creel" title="Link to this heading">¶</a></h1>
+<p><strong>Extract a typed graph from a mess of sources.</strong></p>
+<p>creel is a general, AI-powered <strong>source-to-graph extraction engine</strong>. You give it
+(a) <strong>sources</strong> — freeform prose, tables, JSON, PDFs; (b) a <strong>grammar</strong> of the graph
+you want — its node-types and edge-types and the typed values they carry; and (c)
+<strong>extractors</strong> — pluggable strategies that know how to find each element. creel returns
+a clean, auditable, typed <strong>property graph</strong> as a single source of truth, canonically a
+JSON graph specification:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extract</span><span class="p">(</span><span class="n">sources</span><span class="p">,</span> <span class="n">graph_spec</span><span class="p">,</span> <span class="n">extractors</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">graph</span>
+</pre></div>
+</div>
+<p>Everything downstream — persistence, query, graph-RAG, annotation, rendering to
+slides/reports — is a <em>projection</em> of that one graph.</p>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>creel<span class="w">                 </span><span class="c1"># core: pydantic, jsonschema, networkx</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"creel[query]"</span><span class="w">        </span><span class="c1"># SQL/JSON query extractors (duckdb, jmespath)</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"creel[ingest]"</span><span class="w">       </span><span class="c1"># file loaders: PDF/DOCX/PPTX via docling, HTML via trafilatura, XLSX via openpyxl</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"creel[aix]"</span><span class="w">          </span><span class="c1"># real LLM extraction/judging/embedding via aix (default)</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"creel[anthropic]"</span><span class="w">    </span><span class="c1"># real LLM extraction via the Anthropic SDK directly</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"creel[semantic]"</span><span class="w">     </span><span class="c1"># LinkML .yaml round-trip + RDF/SHACL validation (pyyaml, linkml, rdflib, pyshacl)</span>
+</pre></div>
+</div>
+<p>LinkML <em>dict</em> authoring and RDF-star/Turtle <em>export</em> are pure-Python and need no
+extra — <code class="docutils literal notranslate"><span class="pre">[semantic]</span></code> only adds <code class="docutils literal notranslate"><span class="pre">.yaml</span></code>-file authoring and downstream validators.
+Other extras reserve optional backends: <code class="docutils literal notranslate"><span class="pre">graphdb</span></code> (Neo4j/Oxigraph), <code class="docutils literal notranslate"><span class="pre">er</span></code> (Splink),
+<code class="docutils literal notranslate"><span class="pre">eval</span></code> (DeepEval), <code class="docutils literal notranslate"><span class="pre">ocr</span></code> (Tesseract). The headline ones above cover most use;
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">&quot;creel[llm]&quot;</span></code> is an alias for the default provider (<code class="docutils literal notranslate"><span class="pre">aix</span></code>).</p>
+</section>
+<section id="a-first-taste">
+<h2>A first taste<a class="headerlink" href="#a-first-taste" title="Link to this heading">¶</a></h2>
+<p>Declare a grammar, extract a graph from prose, validate it, emit canonical JSON:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">creel</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GraphSpec</span><span class="p">,</span>
+    <span class="n">NodeType</span><span class="p">,</span>
+    <span class="n">EdgeType</span><span class="p">,</span>
+    <span class="n">AttrSchema</span><span class="p">,</span>
+    <span class="n">EnumDef</span><span class="p">,</span>
+    <span class="n">extract</span><span class="p">,</span>
+    <span class="n">validate_graph</span><span class="p">,</span>
+    <span class="n">to_canonical_json</span><span class="p">,</span>
+<span class="p">)</span>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+<span class="n">spec</span> <span class="o">=</span> <span class="n">GraphSpec</span><span class="p">(</span>
+    <span class="n">enums</span><span class="o">=</span><span class="p">(</span><span class="n">EnumDef</span><span class="p">(</span><span class="s2">"Currency"</span><span class="p">,</span> <span class="p">(</span><span class="s2">"USD"</span><span class="p">,</span> <span class="s2">"EUR"</span><span class="p">)),),</span>
+    <span class="n">node_types</span><span class="o">=</span><span class="p">(</span>
+        <span class="n">NodeType</span><span class="p">(</span><span class="s2">"donor"</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">(</span><span class="n">AttrSchema</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">),)),</span>
+        <span class="n">NodeType</span><span class="p">(</span><span class="s2">"project"</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="p">(</span><span class="n">AttrSchema</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">),)),</span>
+    <span class="p">),</span>
+    <span class="n">edge_types</span><span class="o">=</span><span class="p">(</span>
+        <span class="n">EdgeType</span><span class="p">(</span>
+            <span class="s2">"funds"</span><span class="p">,</span>
+            <span class="n">subject_type</span><span class="o">=</span><span class="s2">"donor"</span><span class="p">,</span>
+            <span class="n">object_type</span><span class="o">=</span><span class="s2">"project"</span><span class="p">,</span>
+            <span class="n">attributes</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">AttrSchema</span><span class="p">(</span><span class="s2">"amount"</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="s2">"integer"</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                <span class="n">AttrSchema</span><span class="p">(</span><span class="s2">"currency"</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="s2">"Currency"</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">)</span>
 
-</footer>
+<span class="c1"># Deterministic pattern extractors (no LLM): regex over prose.</span>
+<span class="n">bindings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"donor"</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s2">"regex_node"</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">"pattern"</span><span class="p">:</span> <span class="sa">r</span><span class="s2">"Donor:\s*(?P&lt;name&gt;.+)"</span><span class="p">,</span> <span class="s2">"id_attribute"</span><span class="p">:</span> <span class="s2">"name"</span><span class="p">},</span>
+    <span class="p">),</span>
+    <span class="s2">"project"</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s2">"regex_node"</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">"pattern"</span><span class="p">:</span> <span class="sa">r</span><span class="s2">"Project:\s*(?P&lt;title&gt;.+)"</span><span class="p">,</span> <span class="s2">"id_attribute"</span><span class="p">:</span> <span class="s2">"title"</span><span class="p">},</span>
+    <span class="p">),</span>
+    <span class="s2">"funds"</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s2">"regex_edge"</span><span class="p">,</span>
+        <span class="p">{</span>
+            <span class="s2">"pattern"</span><span class="p">:</span> <span class="sa">r</span><span class="s2">"(?P&lt;donor&gt;[\w ]+?) funds (?P&lt;project&gt;[\w ]+?) with (?P&lt;currency&gt;[A-Z]</span><span class="si">{3}</span><span class="s2">) (?P&lt;amount&gt;\d+)"</span><span class="p">,</span>
+            <span class="s2">"source_id_template"</span><span class="p">:</span> <span class="s2">"donor:</span><span class="si">{donor}</span><span class="s2">"</span><span class="p">,</span>
+            <span class="s2">"target_id_template"</span><span class="p">:</span> <span class="s2">"project:</span><span class="si">{project}</span><span class="s2">"</span><span class="p">,</span>
+            <span class="s2">"casts"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"amount"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">},</span>
+            <span class="s2">"exclude_groups"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"donor"</span><span class="p">,</span> <span class="s2">"project"</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+<span class="n">src</span> <span class="o">=</span> <span class="s2">"Donor: Gov X</span><span class="se">\n</span><span class="s2">Project: Water</span><span class="se">\n</span><span class="s2">Gov X funds Water with USD 1000000"</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">bindings</span><span class="p">,</span> <span class="n">on_missing_binding</span><span class="o">=</span><span class="s2">"skip"</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">validate_graph</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">to_canonical_json</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>  <span class="c1"># deterministic, git-diffable JSON</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">evidence</span><span class="p">)</span>  <span class="c1"># every element traced back to its source span</span>
+</pre></div>
+</div>
+<section id="with-a-real-llm-schema-as-extractor">
+<h3>With a real LLM (schema-as-extractor)<a class="headerlink" href="#with-a-real-llm-schema-as-extractor" title="Link to this heading">¶</a></h3>
+<p>The attribute <code class="docutils literal notranslate"><span class="pre">description</span></code>s become the extraction instruction; the LLM client is
+injected (no provider SDK in the core). This block is self-contained:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">creel</span><span class="w"> </span><span class="kn">import</span> <span class="n">GraphSpec</span><span class="p">,</span> <span class="n">NodeType</span><span class="p">,</span> <span class="n">AttrSchema</span><span class="p">,</span> <span class="n">extract</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">creel.extract.llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">aix_client</span>
+
+<span class="n">spec</span> <span class="o">=</span> <span class="n">GraphSpec</span><span class="p">(</span>
+    <span class="n">node_types</span><span class="o">=</span><span class="p">(</span>
+        <span class="n">NodeType</span><span class="p">(</span>
+            <span class="s2">"donor"</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"An entity that provides funding."</span><span class="p">,</span>
+            <span class="n">attributes</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">AttrSchema</span><span class="p">(</span>
+                    <span class="s2">"name"</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"The donor's official name."</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">prose</span> <span class="o">=</span> <span class="s2">"Donor: Foundation Alpha (ref 301). Donor: Agency Beta (ref 918)."</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span>
+    <span class="n">prose</span><span class="p">,</span>
+    <span class="n">spec</span><span class="p">,</span>
+    <span class="p">{</span><span class="s2">"donor"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"llm"</span><span class="p">,</span> <span class="p">{})},</span>
+    <span class="n">services</span><span class="o">=</span><span class="p">{</span><span class="s2">"llm"</span><span class="p">:</span> <span class="n">aix_client</span><span class="p">()},</span>
+    <span class="n">on_missing_binding</span><span class="o">=</span><span class="s2">"skip"</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="skills-the-ai-native-interface">
+<h2>Skills (the AI-native interface)<a class="headerlink" href="#skills-the-ai-native-interface" title="Link to this heading">¶</a></h2>
+<p>creel is <strong>AI-first</strong>, and that includes how you <em>learn and drive it</em>. It ships
+<strong>agent skills</strong> — <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> cheat-sheets that make Claude (and any <code class="docutils literal notranslate"><span class="pre">gh</span> <span class="pre">skill</span></code>-aware
+agent: Copilot, Cursor, Codex, Gemini) actually good at using creel, instead of
+guessing from docstrings. They install with <code class="docutils literal notranslate"><span class="pre">pip</span></code> (bundled, offline) <strong>or</strong> <code class="docutils literal notranslate"><span class="pre">gh</span> <span class="pre">skill</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># All consumer skills ride along with the package:</span>
+pip<span class="w"> </span>install<span class="w"> </span>creel<span class="w">            </span><span class="c1"># creel/data/skills/* is bundled in the wheel</span>
+
+<span class="c1"># …or install individually into your agent (cross-agent, pinnable):</span>
+gh<span class="w"> </span>skill<span class="w"> </span>install<span class="w"> </span>thorwhalen/creel<span class="w"> </span>creel-extract<span class="w">       </span><span class="c1"># the end-to-end workflow</span>
+gh<span class="w"> </span>skill<span class="w"> </span>install<span class="w"> </span>thorwhalen/creel<span class="w"> </span>creel-grammar<span class="w">       </span><span class="c1"># author a typed GraphSpec</span>
+gh<span class="w"> </span>skill<span class="w"> </span>install<span class="w"> </span>thorwhalen/creel<span class="w"> </span>creel-bindings<span class="w">      </span><span class="c1"># choose extractor strategies</span>
+gh<span class="w"> </span>skill<span class="w"> </span>install<span class="w"> </span>thorwhalen/creel<span class="w"> </span>creel-evaluation<span class="w">    </span><span class="c1"># pluggable verifiers (≠ ==)</span>
+gh<span class="w"> </span>skill<span class="w"> </span>install<span class="w"> </span>thorwhalen/creel<span class="w"> </span>creel-ai<span class="w">            </span><span class="c1"># real LLM extraction</span>
+gh<span class="w"> </span>skill<span class="w"> </span>install<span class="w"> </span>thorwhalen/creel<span class="w"> </span>creel-projections<span class="w">   </span><span class="c1"># resolve / view / export / trace</span>
+<span class="c1"># add --agent &lt;copilot|cursor|codex|gemini|claude&gt; to target a host; @vX.Y.Z to pin</span>
+</pre></div>
+</div>
+<p>Once installed, just ask in plain language (“extract a graph from these documents with
+creel”, “write a verifier for the amounts”) — the matching skill triggers automatically.
+The skills cross-reference each other, so an agent that starts at <code class="docutils literal notranslate"><span class="pre">creel-extract</span></code> is
+handed off to <code class="docutils literal notranslate"><span class="pre">creel-grammar</span></code>/<code class="docutils literal notranslate"><span class="pre">creel-bindings</span></code>/<code class="docutils literal notranslate"><span class="pre">creel-ai</span></code>/<code class="docutils literal notranslate"><span class="pre">creel-evaluation</span></code> as needed.
+Prefer hand-written API calls? Scroll on — everything below still applies.</p>
+</section>
+<section id="what-you-get">
+<h2>What you get<a class="headerlink" href="#what-you-get" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Labeled Property Graph</strong> — attributes (funding amounts, indicator values) live <em>on
+edges</em>, which have their own identity; deterministic, git-diffable canonical JSON.</p></li>
+<li><p><strong>Three extractor families</strong> behind one <code class="docutils literal notranslate"><span class="pre">Extractor</span></code> protocol: deterministic
+<strong>pattern/function</strong>, <strong>query</strong> (DuckDB SQL / JMESPath over structured sources), and
+<strong>LLM</strong> (schema-as-extractor, validate-retry, faithfulness gate) — plus <strong>cluster-pass</strong>
+(extract several coupled types in one LLM call).</p></li>
+<li><p><strong>Ingestion</strong> (<code class="docutils literal notranslate"><span class="pre">ingest()</span></code>): route-by-format file loaders (md/csv/json/txt built-in;
+PDF/DOCX/XLSX/HTML via extras).</p></li>
+<li><p><strong>Auditability</strong>: every node/edge/value carries a separable <strong>evidence</strong> record
+(provenance + grounding selector back to the exact source span + confidence). A
+<strong>reverse-trace index</strong> answers “which elements did this passage produce?”, and a
+re-anchoring resolver keeps highlights valid across re-ingestion.</p></li>
+<li><p><strong>Evaluation by pluggable verifiers, not <code class="docutils literal notranslate"><span class="pre">==</span></code></strong>: <code class="docutils literal notranslate"><span class="pre">numeric_tolerance</span></code>, <code class="docutils literal notranslate"><span class="pre">set_match</span></code>,
+<code class="docutils literal notranslate"><span class="pre">graph_match</span></code> (partial credit), <code class="docutils literal notranslate"><span class="pre">llm_rubric</span></code> (NL-defined, G-Eval), … with a corpus runner.</p></li>
+<li><p><strong>Entity resolution</strong> cascade (normalize → registry → LLM), the <strong>reify</strong> edge↔node
+toggle, <strong>views</strong> (DOT/Mermaid/Cytoscape/tables), and <strong>export</strong> adapters (JGF, GraphML,
+parameterized Cypher, RDF-star).</p></li>
+</ul>
+</section>
+<section id="design-docs">
+<h2>Design &amp; docs<a class="headerlink" href="#design-docs" title="Link to this heading">¶</a></h2>
+<p>The full reasoning lives in the research + design docs: start with the
+<a class="reference internal" href="#misc/docs/research/00-synthesis-and-design-implications.md"><span class="xref myst">synthesis</span></a> (decisions
+D1–D15), then the <a class="reference internal" href="#misc/docs/design/ROADMAP.md"><span class="xref myst">roadmap</span></a>, the
+<a class="reference internal" href="#misc/docs/design/DECISIONS.md"><span class="xref myst">decision log</span></a>, and the
+<a class="reference internal" href="#misc/docs/design/PROGRESS.md"><span class="xref myst">progress log</span></a>. A worked example is in
+<a class="reference internal" href="#examples/"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">examples/</span></code></span></a>.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<p>MIT.</p>
+<p class="epythet-aggregates">This documentation as a single file: <a href="creel.md">creel.md</a> (Markdown, for agents).</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-10-13 20:24 UTC from <a href="https://github.com/thorwhalen/creel/commit/6a3174f68c7664592c583f14b178817e224424c9">6a3174f</a> (main) · creel 0.1.5 · <a href="about-this-build.html">about this build</a></p>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="api.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">API reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">creel</a><ul>
+<li><a class="reference internal" href="#install">Install</a></li>
+<li><a class="reference internal" href="#a-first-taste">A first taste</a><ul>
+<li><a class="reference internal" href="#with-a-real-llm-schema-as-extractor">With a real LLM (schema-as-extractor)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#skills-the-ai-native-interface">Skills (the AI-native interface)</a></li>
+<li><a class="reference internal" href="#what-you-get">What you get</a></li>
+<li><a class="reference internal" href="#design-docs">Design &amp; docs</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script src="_static/documentation_options.js?v=5964c245"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=fd10adb8"></script>
+    </body>
 </html>

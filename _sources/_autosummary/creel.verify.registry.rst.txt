@@ -1,0 +1,15 @@
+creel.verify.registry
+=====================
+
+.. automodule:: creel.verify.registry
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      available_verifiers
+      build_verifier
+      get_verifier_factory
+      register_verifier
+   

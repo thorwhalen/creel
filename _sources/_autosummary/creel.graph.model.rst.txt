@@ -1,0 +1,14 @@
+creel.graph.model
+=================
+
+.. automodule:: creel.graph.model
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Edge
+      Graph
+      Node
+   

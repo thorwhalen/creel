@@ -1,0 +1,45 @@
+creel.spec
+==========
+
+.. automodule:: creel.spec
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      effective_attributes
+      validate_graph
+      validate_spec
+      to_linkml
+      load_linkml
+      generate_json_schema
+      generate_pydantic
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AttrSchema
+      EdgeType
+      ElementType
+      EnumDef
+      GraphSpec
+      NodeType
+      ValidationIssue
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      GraphValidationError
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   linkml
+   model
+   validate

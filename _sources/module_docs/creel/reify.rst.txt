@@ -1,4 +1,0 @@
-creel.reify
-===========
-.. automodule:: creel.reify
-   :members:

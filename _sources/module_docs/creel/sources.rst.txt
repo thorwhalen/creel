@@ -1,4 +1,0 @@
-creel.sources
-=============
-.. automodule:: creel.sources
-   :members:

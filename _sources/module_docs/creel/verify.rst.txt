@@ -1,4 +1,0 @@
-creel.verify
-============
-.. automodule:: creel.verify
-   :members:

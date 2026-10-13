@@ -1,4 +1,0 @@
-creel.ingest
-============
-.. automodule:: creel.ingest
-   :members:

@@ -1,0 +1,12 @@
+creel.facade
+============
+
+.. automodule:: creel.facade
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      extract
+   

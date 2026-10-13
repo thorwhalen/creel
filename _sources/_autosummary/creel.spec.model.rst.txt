@@ -1,0 +1,29 @@
+creel.spec.model
+================
+
+.. automodule:: creel.spec.model
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      PRIMITIVE_RANGES
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      effective_attributes
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AttrSchema
+      EdgeType
+      ElementType
+      EnumDef
+      GraphSpec
+      NodeType
+   

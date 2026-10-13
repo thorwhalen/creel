@@ -1,0 +1,12 @@
+creel.verify.graph\_match
+=========================
+
+.. automodule:: creel.verify.graph_match
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      GraphMatch
+   

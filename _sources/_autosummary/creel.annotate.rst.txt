@@ -1,0 +1,13 @@
+creel.annotate
+==============
+
+.. automodule:: creel.annotate
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Annotation
+      Selection
+   

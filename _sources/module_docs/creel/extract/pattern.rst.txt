@@ -1,4 +1,0 @@
-creel.extract.pattern
-=====================
-.. automodule:: creel.extract.pattern
-   :members:

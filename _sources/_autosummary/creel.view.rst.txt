@@ -1,0 +1,17 @@
+creel.view
+==========
+
+.. automodule:: creel.view
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      to_cytoscape
+      to_dot
+      to_embedding_records
+      to_mermaid
+      to_node_edge_records
+      to_table
+   

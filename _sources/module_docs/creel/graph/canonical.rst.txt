@@ -1,4 +1,0 @@
-creel.graph.canonical
-=====================
-.. automodule:: creel.graph.canonical
-   :members:
