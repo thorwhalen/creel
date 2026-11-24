@@ -46,6 +46,7 @@ dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
     "ruff>=0.1.0",
+    "lacing>=0.0.123",  # so CI runs tests/test_to_lacing.py instead of skipping it
 ]
 docs = [
     "sphinx>=6.0",
@@ -77,6 +78,10 @@ eval = [
 ]
 er = [
     "splink>=4",
+]
+# creel annotations into lacing's annotation envelope (creel.export.to_lacing).
+lacing = [
+    "lacing>=0.0.123",
 ]
 # Ingestion default: local, structure-preserving, PERMISSIVELY-licensed (R13).
 # Deliberately excludes AGPL/GPL parsers (PyMuPDF4LLM, Marker) — those, plus
