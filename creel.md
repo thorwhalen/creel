@@ -1,4 +1,4 @@
-> built 2026-10-13 20:24 UTC from 6a3174f (main) · creel 0.1.5. Details: build_info.json
+> built 2026-11-24 00:22 UTC from 4d07151 (main) · creel 0.1.6. Details: build_info.json
 
 # index.html.md
 
@@ -287,7 +287,7 @@ default); unresolved elements fall back to schema-as-extractor at join time.
 |--------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
 | [`ExtractorBindings`](_autosummary/creel.bindings.html.md#creel.bindings.ExtractorBindings)([bindings])                   | A collection of [`ExtractorBinding`](_autosummary/creel.bindings.html.md#creel.bindings.ExtractorBinding), looked up by element id. |
 
-### *class* creel.bindings.ExtractorBinding(element_id, strategy=None, config=<factory>, extractor=None, elements=None)
+### *class* creel.bindings.ExtractorBinding(element_id, strategy=None, config=dict(), extractor=None, elements=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -387,7 +387,7 @@ Whether the case met its verifier’s threshold.
 
 The case’s normalised score in `[0, 1]`.
 
-### *class* creel.evaluation.CorpusCase(name, sources, spec, bindings, expected_graph, verifier=None, attribute_verifiers=<factory>, services=<factory>, on_missing_binding='skip')
+### *class* creel.evaluation.CorpusCase(name, sources, spec, bindings, expected_graph, verifier=None, attribute_verifiers=dict(), services=dict(), on_missing_binding='skip')
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -678,6 +678,163 @@ them downstream by also reifying on the edge id if needed.
 * **Return type:**
   [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
 
+### Modules
+
+| [`to_lacing`](_autosummary/creel.export.to_lacing.html.md#module-creel.export.to_lacing)   | creel → lacing: carry a creel annotation into lacing's envelope, source link intact.   |
+|--------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+
+
+# _autosummary/creel.export.to_lacing.html.md
+
+# creel.export.to_lacing
+
+creel → lacing: carry a creel annotation into lacing’s envelope, source link intact.
+
+A [`creel.annotate.Annotation`](_autosummary/creel.annotate.html.md#creel.annotate.Annotation) knows where a fact came from: its `target` can be
+a [`Selection`](_autosummary/creel.annotate.html.md#creel.annotate.Selection) (a source region plus a grounding selector) and its
+`provenance` says whether a model or a person made it. lacing’s
+`lacing.Annotation` is what decks, videos and reports render, but lacing has no
+source selector of its own (its `Reference` is media, node or annotation). This
+adapter is the bridge thorwhalen/loomun#35 and its ADR-0012 call for: one function
+that maps the envelope and the provenance, and keeps the whole creel record in the
+body, so a rendered fact can always drill back to its source.
+
+```pycon
+>>> from creel.annotate import Annotation, Selection
+>>> from creel.evidence import Provenance, TextQuoteSelector, SOFTWARE_AGENT
+>>> sel = Selection("s1", "report.pdf", TextQuoteSelector(exact="revenue grew 12%"))
+>>> note = Annotation(
+...     "a1", sel, "fact:revenue-growth", motivation="identifying",
+...     provenance=Provenance("report.pdf", "llm:extract", attributed_to="model-x",
+...                           attributed_kind=SOFTWARE_AGENT),
+... )
+>>> ann = to_lacing_annotation(note)
+>>> source_selection(ann)["source"]
+'report.pdf'
+```
+
+Needs lacing: `pip install creel[lacing]`. Nothing here is imported until called.
+
+### Module Attributes
+
+| [`CREEL_BODY_SCHEMA_URI`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.CREEL_BODY_SCHEMA_URI)   | The lacing `body_schema_uri` under which a creel annotation travels.       |
+|--------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| [`DEFAULT_TIER`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.DEFAULT_TIER)            | Default lacing tier for exported creel annotations.                        |
+| [`CREEL_ID_NAMESPACE`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.CREEL_ID_NAMESPACE)      | The `uuid5` namespace that turns a creel annotation id into a lacing UUID. |
+| [`ACTIVITY_BY_KIND`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.ACTIVITY_BY_KIND)        | a model's output is inferred, a person's coding is authored.               |
+| [`SOURCE_PATH_PREFIX`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.SOURCE_PATH_PREFIX)      | The path prefix of the `NodeRef` built for each kind of creel target.      |
+
+### Functions
+
+| [`lacing_id`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.lacing_id)(creel_id, \*[, namespace])              | The lacing UUID for a creel annotation id: stable across exports.                                         |
+|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| [`node_path`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.node_path)(target)                                 | The `NodeRef.scene_path` that stands for a creel `target`.                                                |
+| [`register_creel_body_schema`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.register_creel_body_schema)()                      | Register [`CREEL_BODY_SCHEMA_URI`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.CREEL_BODY_SCHEMA_URI) with lacing (idempotent). |
+| [`source_selection`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.source_selection)(lacing_annotation)               | The source region a lacing annotation made by this adapter points at, if any.                             |
+| [`to_lacing_annotation`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.to_lacing_annotation)(annotation, \*[, tier, ...]) | A `lacing.Annotation` carrying *annotation*, source link intact.                                          |
+
+### creel.export.to_lacing.ACTIVITY_BY_KIND *= {'person': 'create', 'software_agent': 'infer'}*
+
+a model’s output is
+inferred, a person’s coding is authored. Unknown kinds read as imported, and a
+software agent whose confidence method is deterministic derived, not inferred.
+
+* **Type:**
+  `Provenance.activity` by creel `attributed_kind`
+
+### creel.export.to_lacing.CREEL_BODY_SCHEMA_URI *= 'annot://schema/creel-annotation/v1'*
+
+The lacing `body_schema_uri` under which a creel annotation travels. The body is
+[`creel.annotate.Annotation.to_dict()`](_autosummary/creel.annotate.html.md#creel.annotate.Annotation.to_dict), unchanged.
+
+### creel.export.to_lacing.CREEL_ID_NAMESPACE *= UUID('9d6c3f0e-5b6a-5c1e-9a4e-6372656c0001')*
+
+The `uuid5` namespace that turns a creel annotation id into a lacing UUID.
+Fixed, so exporting the same annotation twice gives the same lacing id.
+
+### creel.export.to_lacing.DEFAULT_TIER *= 'creel'*
+
+Default lacing tier for exported creel annotations.
+
+### creel.export.to_lacing.SOURCE_PATH_PREFIX *= 'creel/source'*
+
+The path prefix of the `NodeRef` built for each kind of creel target.
+
+### creel.export.to_lacing.lacing_id(creel_id, , namespace=UUID('9d6c3f0e-5b6a-5c1e-9a4e-6372656c0001'))
+
+The lacing UUID for a creel annotation id: stable across exports.
+
+```pycon
+>>> lacing_id("a1") == lacing_id("a1") != lacing_id("a2")
+True
+```
+
+* **Return type:**
+  [`UUID`](https://docs.python.org/3/library/uuid.html#uuid.UUID)
+
+### creel.export.to_lacing.node_path(target)
+
+The `NodeRef.scene_path` that stands for a creel `target`.
+
+A source selection points at its source, a graph element at the element, and an
+`(element_id, attribute)` pair at that attribute of the element. The precise
+region (the selector) is in the body: see [`source_selection()`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.source_selection).
+
+A `/` or `%` inside an id is percent-escaped, so `("a", "b")` and
+`"a/b"` never share a path.
+
+```pycon
+>>> node_path("n1"), node_path(("n1", "name")), node_path("a/b")
+('creel/element/n1', 'creel/element/n1/name', 'creel/element/a%2Fb')
+```
+
+* **Return type:**
+  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
+
+### creel.export.to_lacing.register_creel_body_schema()
+
+Register [`CREEL_BODY_SCHEMA_URI`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.CREEL_BODY_SCHEMA_URI) with lacing (idempotent).
+
+Called by [`to_lacing_annotation()`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.to_lacing_annotation), so lacing can validate the body.
+
+* **Return type:**
+  [`None`](https://docs.python.org/3/builtins/constants.html#None)
+
+### creel.export.to_lacing.source_selection(lacing_annotation)
+
+The source region a lacing annotation made by this adapter points at, if any.
+
+The drill-in: `{"id", "source", "selector"}` as
+[`creel.annotate.Selection.to_dict()`](_autosummary/creel.annotate.html.md#creel.annotate.Selection.to_dict) wrote it, or `None` when the creel
+target was a graph element rather than a source region.
+
+* **Return type:**
+  [`Optional`](https://docs.python.org/3/library/typing.html#typing.Optional)[[`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)]
+
+### creel.export.to_lacing.to_lacing_annotation(annotation, , tier='creel', reference=None, attributed_to=None, generated_by=None, namespace=UUID('9d6c3f0e-5b6a-5c1e-9a4e-6372656c0001'))
+
+A `lacing.Annotation` carrying *annotation*, source link intact.
+
+* **Parameters:**
+  * **annotation** ([`Annotation`](_autosummary/creel.annotate.html.md#creel.annotate.Annotation)) – The creel annotation.
+  * **tier** ([`str`](https://docs.python.org/3/builtins/stdtypes.html#str)) – The lacing tier it goes in.
+  * **reference** ([`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`Any`](https://docs.python.org/3/library/typing.html#typing.Any), [`Callable`](https://docs.python.org/3/library/typing.html#typing.Callable)[[[`Annotation`](_autosummary/creel.annotate.html.md#creel.annotate.Annotation)], [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)], [`None`](https://docs.python.org/3/builtins/constants.html#None)]) – What it annotates in lacing: a lacing `Reference`, or a function
+    of the creel annotation that returns one. Default: a `NodeRef` at
+    [`node_path()`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.node_path), a point at time 0 (a document region has no time).
+  * **attributed_to** ([`Optional`](https://docs.python.org/3/library/typing.html#typing.Optional)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)]) – Who is responsible, when the creel provenance does not say.
+    Required in that case: lacing records a responsible party on everything.
+  * **generated_by** ([`Optional`](https://docs.python.org/3/library/typing.html#typing.Optional)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str)]) – lacing’s `was_generated_by`. Default:
+    `adapter:creel@<creel version>`, as lacing’s own loaders stamp what they
+    import; the creel extractor id stays in the body’s provenance.
+  * **namespace** ([`UUID`](https://docs.python.org/3/library/uuid.html#uuid.UUID)) – The `uuid5` namespace of the lacing ids. creel ids are chosen
+    per corpus, and lacing ids are unique across a whole store, so give each
+    corpus its own namespace (`uuid.uuid5(CREEL_ID_NAMESPACE, corpus)`)
+    when several share one lacing store.
+
+The lacing id is [`lacing_id()`](_autosummary/creel.export.to_lacing.html.md#creel.export.to_lacing.lacing_id) of the creel id in *namespace*, so
+re-exporting is idempotent. `was_derived_from` holds the lacing id of the record a creel
+revision supersedes (`was_revision_of`). The body is the full creel record.
+
 
 # _autosummary/creel.facade.html.md
 
@@ -857,7 +1014,7 @@ codec ([`creel.graph.canonical`](_autosummary/creel.graph.canonical.html.md#modu
 | [`Graph`](_autosummary/creel.graph.html.md#creel.graph.Graph)()                                        | A labeled property (multi-)graph with stable ids on nodes and edges.           |
 | [`Node`](_autosummary/creel.graph.html.md#creel.graph.Node)(id, types[, attributes])                  | An immutable view of a graph node: its id, type label(s), and attributes.      |
 
-### *class* creel.graph.Edge(id, source, target, type, attributes=<factory>)
+### *class* creel.graph.Edge(id, source, target, type, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -984,7 +1141,7 @@ Return a copy of the underlying `networkx.MultiDiGraph`.
 * **Return type:**
   `MultiDiGraph`
 
-### *class* creel.graph.Node(id, types, attributes=<factory>)
+### *class* creel.graph.Node(id, types, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1081,7 +1238,7 @@ wrapper enforces creel’s invariants (globally-unique edge ids, typed accessors
 | [`Graph`](_autosummary/creel.graph.model.html.md#creel.graph.model.Graph)()                                        | A labeled property (multi-)graph with stable ids on nodes and edges.           |
 | [`Node`](_autosummary/creel.graph.model.html.md#creel.graph.model.Node)(id, types[, attributes])                  | An immutable view of a graph node: its id, type label(s), and attributes.      |
 
-### *class* creel.graph.model.Edge(id, source, target, type, attributes=<factory>)
+### *class* creel.graph.model.Edge(id, source, target, type, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1208,7 +1365,7 @@ Return a copy of the underlying `networkx.MultiDiGraph`.
 * **Return type:**
   `MultiDiGraph`
 
-### *class* creel.graph.model.Node(id, types, attributes=<factory>)
+### *class* creel.graph.model.Node(id, types, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1349,7 +1506,7 @@ downstream view/export projections ([`creel.view`](_autosummary/creel.view.html.
 | [`GraphValidationError`](_autosummary/creel.html.md#creel.GraphValidationError)(issues)   | Raised by [`validate_graph()`](_autosummary/creel.html.md#creel.validate_graph) when `raise_on_error` and issues exist.   |
 |---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
 
-### *class* creel.AnnotatedGraph(graph, annotations=(), presentation=<factory>)
+### *class* creel.AnnotatedGraph(graph, annotations=(), presentation=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1453,7 +1610,7 @@ Whether the case met its verifier’s threshold.
 
 The case’s normalised score in `[0, 1]`.
 
-### *class* creel.Composite(components=<factory>, threshold=0.5)
+### *class* creel.Composite(components=tuple(), threshold=0.5)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1472,7 +1629,7 @@ Serialise to a plain dict, omitting an unset `verified` flag.
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.CorpusCase(name, sources, spec, bindings, expected_graph, verifier=None, attribute_verifiers=<factory>, services=<factory>, on_missing_binding='skip')
+### *class* creel.CorpusCase(name, sources, spec, bindings, expected_graph, verifier=None, attribute_verifiers=dict(), services=dict(), on_missing_binding='skip')
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1519,7 +1676,7 @@ Store `value` under `key`.
 * **Return type:**
   [`None`](https://docs.python.org/3/builtins/constants.html#None)
 
-### *class* creel.Edge(id, source, target, type, attributes=<factory>)
+### *class* creel.Edge(id, source, target, type, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1583,13 +1740,13 @@ Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 `score=1.0` iff `actual == expected`; else `0.0`. The auditable default.
 
-### *class* creel.ExtractedEdge(id, type, source, target, attributes=<factory>, evidence=None)
+### *class* creel.ExtractedEdge(id, type, source, target, attributes=dict(), evidence=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 An edge instance produced by an extractor (first-class, with own attributes).
 
-### *class* creel.ExtractedNode(id, type, attributes=<factory>, evidence=None)
+### *class* creel.ExtractedNode(id, type, attributes=dict(), evidence=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1605,7 +1762,7 @@ The result of running one extractor: the nodes and/or edges it found.
 
 True if the extraction produced no nodes and no edges.
 
-### *class* creel.ExtractionContext(element_id, element_type, sources, spec, cache=<factory>, services=<factory>, config=<factory>, element_types=())
+### *class* creel.ExtractionContext(element_id, element_type, sources, spec, cache=NullCache(), services=dict(), config=dict(), element_types=())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1623,7 +1780,7 @@ The cluster of element types this pass covers (D-OP8). Defaults to just
 of each in a single LLM pass. `element_id`/`element_type` are the primary
 (first) of the cluster, so single-element extractors are unaffected.
 
-### *class* creel.ExtractionPolicy(max_retries=2, self_consistency_samples=1, review_below=0.5, overrides=<factory>)
+### *class* creel.ExtractionPolicy(max_retries=2, self_consistency_samples=1, review_below=0.5, overrides=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1652,7 +1809,7 @@ A strategy that extracts instances of one grammar element from sources.
 
 Any callable `(ExtractionContext) -> Extraction` satisfies this Protocol.
 
-### *class* creel.ExtractorBinding(element_id, strategy=None, config=<factory>, extractor=None, elements=None)
+### *class* creel.ExtractorBinding(element_id, strategy=None, config=dict(), extractor=None, elements=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1821,7 +1978,7 @@ Return a copy of the underlying `networkx.MultiDiGraph`.
 * **Return type:**
   `MultiDiGraph`
 
-### *class* creel.GraphMatch(spec=None, attribute_verifiers=<factory>, node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
+### *class* creel.GraphMatch(spec=None, attribute_verifiers=dict(), node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1921,7 +2078,7 @@ Grade `actual` (optionally against `expected`) by a natural-language criterion.
 Set `reference_free=True` to grade `actual` against the criterion alone (no
 gold value). `threshold` sets the pass bar.
 
-### *class* creel.Node(id, types, attributes=<factory>)
+### *class* creel.Node(id, types, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -1933,7 +2090,7 @@ Bases: [`ElementType`](_autosummary/creel.spec.model.html.md#creel.spec.model.El
 
 A node-type (a.k.a. point type). Carries typed attributes and a taxonomy.
 
-### *class* creel.NormalizeResolver(key='name', aliases=<factory>)
+### *class* creel.NormalizeResolver(key='name', aliases=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2011,7 +2168,7 @@ Serialise to a plain dict, omitting unset optional keys.
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.RegexEdgeExtractor(pattern, source_id_template, target_id_template, edge_type=None, flags=0, casts=<factory>, exclude_groups=())
+### *class* creel.RegexEdgeExtractor(pattern, source_id_template, target_id_template, edge_type=None, flags=0, casts=dict(), exclude_groups=())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2021,7 +2178,7 @@ Produce first-class edges from regex matches over text sources.
 the captured groups (e.g. `"donor:{donor}"`); remaining groups not consumed by
 the templates become edge attributes.
 
-### *class* creel.RegexNodeExtractor(pattern, node_type=None, flags=0, id_attribute=None, casts=<factory>)
+### *class* creel.RegexNodeExtractor(pattern, node_type=None, flags=0, id_attribute=None, casts=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2044,7 +2201,7 @@ The registry’s canonical id for the cluster.
 * **Return type:**
   [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
 
-### *class* creel.RenderArtifact(content, media_type, metadata=<factory>)
+### *class* creel.RenderArtifact(content, media_type, metadata=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2102,7 +2259,7 @@ Set-based precision/recall/F1 over (canonicalised) collections.
 `key` maps each item to a hashable canonical form before comparing (so dicts
 or fuzzy items can be aligned). `score` is the F1.
 
-### *class* creel.Source(id, content, kind='text', schema=None, metadata=<factory>)
+### *class* creel.Source(id, content, kind='text', schema=None, metadata=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2204,7 +2361,7 @@ Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 A single grammar-conformance problem found in an instance graph.
 
-### *class* creel.Verdict(score, passed, reason='', details=<factory>)
+### *class* creel.Verdict(score, passed, reason='', details=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2217,7 +2374,7 @@ Serialise to a plain dict (reasons retained for audit).
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.VerificationContext(element_type=None, spec=None, services=<factory>, config=<factory>)
+### *class* creel.VerificationContext(element_type=None, spec=None, services=dict(), config=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2691,7 +2848,7 @@ The deterministic extractor families ignore it (they are always
 | [`ExtractionPolicy`](_autosummary/creel.policy.html.md#creel.policy.ExtractionPolicy)([max_retries, ...])   | How the LLM extractor should try, escalate, and flag for review.   |
 |-----------------------------------------------------------------------------------------|--------------------------------------------------------------------|
 
-### *class* creel.policy.ExtractionPolicy(max_retries=2, self_consistency_samples=1, review_below=0.5, overrides=<factory>)
+### *class* creel.policy.ExtractionPolicy(max_retries=2, self_consistency_samples=1, review_below=0.5, overrides=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2735,7 +2892,7 @@ tables) that concrete renderers build on.
 | [`GraphRenderer`](_autosummary/creel.render.html.md#creel.render.GraphRenderer)(\*args, \*\*kwargs)               | Render an [`AnnotatedGraph`](_autosummary/creel.render.html.md#creel.render.AnnotatedGraph) into a [`RenderArtifact`](_autosummary/creel.render.html.md#creel.render.RenderArtifact). |
 | [`RenderArtifact`](_autosummary/creel.render.html.md#creel.render.RenderArtifact)(content, media_type[, metadata]) | The output of a renderer: content (str/bytes/dict) + its media type.                                                                              |
 
-### *class* creel.render.AnnotatedGraph(graph, annotations=(), presentation=<factory>)
+### *class* creel.render.AnnotatedGraph(graph, annotations=(), presentation=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2761,7 +2918,7 @@ Produce the rendered artifact.
 * **Return type:**
   [`RenderArtifact`](_autosummary/creel.render.html.md#creel.render.RenderArtifact)
 
-### *class* creel.render.RenderArtifact(content, media_type, metadata=<factory>)
+### *class* creel.render.RenderArtifact(content, media_type, metadata=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2823,7 +2980,7 @@ Adjudicate hard pairs with an injected judge `(name_a, name_b) -> bool`.
 The judge is injected (testable with a fake; an LLM in production via `creel[llm]`).
 Reserve this for pairs the cheap resolvers leave ambiguous — it is the costly tail.
 
-### *class* creel.resolve.NormalizeResolver(key='name', aliases=<factory>)
+### *class* creel.resolve.NormalizeResolver(key='name', aliases=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -2912,7 +3069,7 @@ sources becomes a bundle, etc. (progressive disclosure).
 |--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | [`SourceBundle`](_autosummary/creel.sources.html.md#creel.sources.SourceBundle)([sources])                         | An addressable, iterable collection of [`Source`](_autosummary/creel.sources.html.md#creel.sources.Source) objects. |
 
-### *class* creel.sources.Source(id, content, kind='text', schema=None, metadata=<factory>)
+### *class* creel.sources.Source(id, content, kind='text', schema=None, metadata=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -3710,7 +3867,7 @@ the expected graph share them). Edges are matched by their canonical key
 | [`GraphMatch`](_autosummary/creel.verify.graph_match.html.md#creel.verify.graph_match.GraphMatch)([spec, attribute_verifiers, ...])   | Score an `actual` `Graph` against an `expected` one (partial credit).   |
 |-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
 
-### *class* creel.verify.graph_match.GraphMatch(spec=None, attribute_verifiers=<factory>, node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
+### *class* creel.verify.graph_match.GraphMatch(spec=None, attribute_verifiers=dict(), node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -3751,7 +3908,7 @@ and the registry. Importing this package registers the built-in verifier kinds.
 | [`GraphMatch`](_autosummary/creel.verify.html.md#creel.verify.GraphMatch)([spec, attribute_verifiers, ...])     | Score an `actual` `Graph` against an `expected` one (partial credit).           |
 | [`LLMRubric`](_autosummary/creel.verify.html.md#creel.verify.LLMRubric)(criterion[, threshold, ...])           | Grade `actual` (optionally against `expected`) by a natural-language criterion. |
 
-### *class* creel.verify.Composite(components=<factory>, threshold=0.5)
+### *class* creel.verify.Composite(components=tuple(), threshold=0.5)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -3763,7 +3920,7 @@ Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 `score=1.0` iff `actual == expected`; else `0.0`. The auditable default.
 
-### *class* creel.verify.GraphMatch(spec=None, attribute_verifiers=<factory>, node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
+### *class* creel.verify.GraphMatch(spec=None, attribute_verifiers=dict(), node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -3819,7 +3976,7 @@ Set-based precision/recall/F1 over (canonicalised) collections.
 `key` maps each item to a hashable canonical form before comparing (so dicts
 or fuzzy items can be aligned). `score` is the F1.
 
-### *class* creel.verify.Verdict(score, passed, reason='', details=<factory>)
+### *class* creel.verify.Verdict(score, passed, reason='', details=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -3832,7 +3989,7 @@ Serialise to a plain dict (reasons retained for audit).
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.verify.VerificationContext(element_type=None, spec=None, services=<factory>, config=<factory>)
+### *class* creel.verify.VerificationContext(element_type=None, spec=None, services=dict(), config=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -3917,7 +4074,7 @@ Each kind is a callable verifier; each is registered so a binding can name it.
 | [`SemanticSimilarity`](_autosummary/creel.verify.kinds.html.md#creel.verify.kinds.SemanticSimilarity)([threshold])                  | Similarity of free text.                                                     |
 | [`SetMatch`](_autosummary/creel.verify.kinds.html.md#creel.verify.kinds.SetMatch)([key, threshold])                       | Set-based precision/recall/F1 over (canonicalised) collections.              |
 
-### *class* creel.verify.kinds.Composite(components=<factory>, threshold=0.5)
+### *class* creel.verify.kinds.Composite(components=tuple(), threshold=0.5)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -4000,7 +4157,7 @@ scores, matched pairs) — the exact shape the whole eval ecosystem converged on
 | [`VerificationContext`](_autosummary/creel.verify.protocol.html.md#creel.verify.protocol.VerificationContext)([element_type, spec, ...]) | Optional context a verifier may consult (element schema, services, config). |
 | [`Verifier`](_autosummary/creel.verify.protocol.html.md#creel.verify.protocol.Verifier)(\*args, \*\*kwargs)                   | A strategy that scores an `actual` value against an `expected` one.         |
 
-### *class* creel.verify.protocol.Verdict(score, passed, reason='', details=<factory>)
+### *class* creel.verify.protocol.Verdict(score, passed, reason='', details=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -4013,7 +4170,7 @@ Serialise to a plain dict (reasons retained for audit).
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.verify.protocol.VerificationContext(element_type=None, spec=None, services=<factory>, config=<factory>)
+### *class* creel.verify.protocol.VerificationContext(element_type=None, spec=None, services=dict(), config=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -4229,18 +4386,18 @@ rows for that edge-type (else an empty list).
 
 # About this build
 
-This documentation was built on **2026-10-13 20:24 UTC** from commit <a href="https://github.com/thorwhalen/creel/commit/6a3174f68c7664592c583f14b178817e224424c9"><code>6a3174f</code></a> on branch <code>main</code>, for **creel 0.1.5** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-24 00:22 UTC** from commit <a href="https://github.com/thorwhalen/creel/commit/4d071518da40b0c66a888d5f4631364ac61a4cec"><code>4d07151</code></a> on branch <code>main</code>, for **creel 0.1.6** (from <code>pyproject.toml</code>).
 
 #### WARNING
 The documentation and the package may be misaligned:
 
-- The documented version (0.1.5) is behind the latest release on PyPI (0.1.6): `pip install creel` gives newer code than these docs describe.
+- The documented version (0.1.6) is behind the latest release on PyPI (0.1.7): `pip install creel` gives newer code than these docs describe.
 
 ## Source
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/creel/commit/6a3174f68c7664592c583f14b178817e224424c9"><code>6a3174f68c7664592c583f14b178817e224424c9</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/creel/commit/4d071518da40b0c66a888d5f4631364ac61a4cec"><code>4d071518da40b0c66a888d5f4631364ac61a4cec</code></a> |
 | Branch              | <code>main</code>                                                                                                                                       |
 | Tags at this commit | none                                                                                                                                                    |
 | Working tree        | clean                                                                                                                                                   |
@@ -4251,18 +4408,18 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/creel</code>                                                              |
-| Run          | <a href="https://github.com/thorwhalen/creel/actions/runs/38462416894">38462416894</a>     |
+| Run          | <a href="https://github.com/thorwhalen/creel/actions/runs/45296388908">45296388908</a>     |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>6a3174f68c7664592c583f14b178817e224424c9</code> (in the history of the built commit) |
+| Event commit | <code>4d071518da40b0c66a888d5f4631364ac61a4cec</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.17  |
-| Sphinx   | 9.1.0   |
+| epythet  | 0.2.25  |
+| Sphinx   | 9.1.1   |
 | docutils | 0.22.4  |
-| Python   | 3.12.15 |
+| Python   | 3.12.16 |
 
 ## Configuration as resolved
 
@@ -4278,14 +4435,14 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/creel/0.1.6/">0.1.6</a>, newer than the documented version (0.1.5).
+Latest release: <a href="https://pypi.org/project/creel/0.1.7/">0.1.7</a>, newer than the documented version (0.1.6).
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/creel && cd creel
-git checkout 6a3174f68c7664592c583f14b178817e224424c9
-pip install "epythet==0.2.17"
+git checkout 4d071518da40b0c66a888d5f4631364ac61a4cec
+pip install "epythet==0.2.25"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 

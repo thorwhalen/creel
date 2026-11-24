@@ -130,7 +130,7 @@ downstream view/export projections ([`creel.view`](creel.view.html.md#module-cre
 | [`GraphValidationError`](#creel.GraphValidationError)(issues)   | Raised by [`validate_graph()`](#creel.validate_graph) when `raise_on_error` and issues exist.   |
 |---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
 
-### *class* creel.AnnotatedGraph(graph, annotations=(), presentation=<factory>)
+### *class* creel.AnnotatedGraph(graph, annotations=(), presentation=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -234,7 +234,7 @@ Whether the case met its verifier’s threshold.
 
 The case’s normalised score in `[0, 1]`.
 
-### *class* creel.Composite(components=<factory>, threshold=0.5)
+### *class* creel.Composite(components=tuple(), threshold=0.5)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -253,7 +253,7 @@ Serialise to a plain dict, omitting an unset `verified` flag.
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.CorpusCase(name, sources, spec, bindings, expected_graph, verifier=None, attribute_verifiers=<factory>, services=<factory>, on_missing_binding='skip')
+### *class* creel.CorpusCase(name, sources, spec, bindings, expected_graph, verifier=None, attribute_verifiers=dict(), services=dict(), on_missing_binding='skip')
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -300,7 +300,7 @@ Store `value` under `key`.
 * **Return type:**
   [`None`](https://docs.python.org/3/builtins/constants.html#None)
 
-### *class* creel.Edge(id, source, target, type, attributes=<factory>)
+### *class* creel.Edge(id, source, target, type, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -364,13 +364,13 @@ Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 `score=1.0` iff `actual == expected`; else `0.0`. The auditable default.
 
-### *class* creel.ExtractedEdge(id, type, source, target, attributes=<factory>, evidence=None)
+### *class* creel.ExtractedEdge(id, type, source, target, attributes=dict(), evidence=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 An edge instance produced by an extractor (first-class, with own attributes).
 
-### *class* creel.ExtractedNode(id, type, attributes=<factory>, evidence=None)
+### *class* creel.ExtractedNode(id, type, attributes=dict(), evidence=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -386,7 +386,7 @@ The result of running one extractor: the nodes and/or edges it found.
 
 True if the extraction produced no nodes and no edges.
 
-### *class* creel.ExtractionContext(element_id, element_type, sources, spec, cache=<factory>, services=<factory>, config=<factory>, element_types=())
+### *class* creel.ExtractionContext(element_id, element_type, sources, spec, cache=NullCache(), services=dict(), config=dict(), element_types=())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -404,7 +404,7 @@ The cluster of element types this pass covers (D-OP8). Defaults to just
 of each in a single LLM pass. `element_id`/`element_type` are the primary
 (first) of the cluster, so single-element extractors are unaffected.
 
-### *class* creel.ExtractionPolicy(max_retries=2, self_consistency_samples=1, review_below=0.5, overrides=<factory>)
+### *class* creel.ExtractionPolicy(max_retries=2, self_consistency_samples=1, review_below=0.5, overrides=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -433,7 +433,7 @@ A strategy that extracts instances of one grammar element from sources.
 
 Any callable `(ExtractionContext) -> Extraction` satisfies this Protocol.
 
-### *class* creel.ExtractorBinding(element_id, strategy=None, config=<factory>, extractor=None, elements=None)
+### *class* creel.ExtractorBinding(element_id, strategy=None, config=dict(), extractor=None, elements=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -602,7 +602,7 @@ Return a copy of the underlying `networkx.MultiDiGraph`.
 * **Return type:**
   `MultiDiGraph`
 
-### *class* creel.GraphMatch(spec=None, attribute_verifiers=<factory>, node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
+### *class* creel.GraphMatch(spec=None, attribute_verifiers=dict(), node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -702,7 +702,7 @@ Grade `actual` (optionally against `expected`) by a natural-language criterion.
 Set `reference_free=True` to grade `actual` against the criterion alone (no
 gold value). `threshold` sets the pass bar.
 
-### *class* creel.Node(id, types, attributes=<factory>)
+### *class* creel.Node(id, types, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -714,7 +714,7 @@ Bases: [`ElementType`](creel.spec.model.html.md#creel.spec.model.ElementType)
 
 A node-type (a.k.a. point type). Carries typed attributes and a taxonomy.
 
-### *class* creel.NormalizeResolver(key='name', aliases=<factory>)
+### *class* creel.NormalizeResolver(key='name', aliases=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -792,7 +792,7 @@ Serialise to a plain dict, omitting unset optional keys.
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.RegexEdgeExtractor(pattern, source_id_template, target_id_template, edge_type=None, flags=0, casts=<factory>, exclude_groups=())
+### *class* creel.RegexEdgeExtractor(pattern, source_id_template, target_id_template, edge_type=None, flags=0, casts=dict(), exclude_groups=())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -802,7 +802,7 @@ Produce first-class edges from regex matches over text sources.
 the captured groups (e.g. `"donor:{donor}"`); remaining groups not consumed by
 the templates become edge attributes.
 
-### *class* creel.RegexNodeExtractor(pattern, node_type=None, flags=0, id_attribute=None, casts=<factory>)
+### *class* creel.RegexNodeExtractor(pattern, node_type=None, flags=0, id_attribute=None, casts=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -825,7 +825,7 @@ The registry’s canonical id for the cluster.
 * **Return type:**
   [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
 
-### *class* creel.RenderArtifact(content, media_type, metadata=<factory>)
+### *class* creel.RenderArtifact(content, media_type, metadata=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -883,7 +883,7 @@ Set-based precision/recall/F1 over (canonicalised) collections.
 `key` maps each item to a hashable canonical form before comparing (so dicts
 or fuzzy items can be aligned). `score` is the F1.
 
-### *class* creel.Source(id, content, kind='text', schema=None, metadata=<factory>)
+### *class* creel.Source(id, content, kind='text', schema=None, metadata=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -985,7 +985,7 @@ Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 A single grammar-conformance problem found in an instance graph.
 
-### *class* creel.Verdict(score, passed, reason='', details=<factory>)
+### *class* creel.Verdict(score, passed, reason='', details=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -998,7 +998,7 @@ Serialise to a plain dict (reasons retained for audit).
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.VerificationContext(element_type=None, spec=None, services=<factory>, config=<factory>)
+### *class* creel.VerificationContext(element_type=None, spec=None, services=dict(), config=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

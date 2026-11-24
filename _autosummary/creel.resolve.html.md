@@ -51,7 +51,7 @@ Adjudicate hard pairs with an injected judge `(name_a, name_b) -> bool`.
 The judge is injected (testable with a fake; an LLM in production via `creel[llm]`).
 Reserve this for pairs the cheap resolvers leave ambiguous — it is the costly tail.
 
-### *class* creel.resolve.NormalizeResolver(key='name', aliases=<factory>)
+### *class* creel.resolve.NormalizeResolver(key='name', aliases=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

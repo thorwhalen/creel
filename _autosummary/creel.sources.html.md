@@ -27,7 +27,7 @@ sources becomes a bundle, etc. (progressive disclosure).
 |--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | [`SourceBundle`](#creel.sources.SourceBundle)([sources])                         | An addressable, iterable collection of [`Source`](#creel.sources.Source) objects. |
 
-### *class* creel.sources.Source(id, content, kind='text', schema=None, metadata=<factory>)
+### *class* creel.sources.Source(id, content, kind='text', schema=None, metadata=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

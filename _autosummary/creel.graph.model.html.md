@@ -32,7 +32,7 @@ wrapper enforces creel’s invariants (globally-unique edge ids, typed accessors
 | [`Graph`](#creel.graph.model.Graph)()                                        | A labeled property (multi-)graph with stable ids on nodes and edges.           |
 | [`Node`](#creel.graph.model.Node)(id, types[, attributes])                  | An immutable view of a graph node: its id, type label(s), and attributes.      |
 
-### *class* creel.graph.model.Edge(id, source, target, type, attributes=<factory>)
+### *class* creel.graph.model.Edge(id, source, target, type, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -159,7 +159,7 @@ Return a copy of the underlying `networkx.MultiDiGraph`.
 * **Return type:**
   `MultiDiGraph`
 
-### *class* creel.graph.model.Node(id, types, attributes=<factory>)
+### *class* creel.graph.model.Node(id, types, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

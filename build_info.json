@@ -1,39 +1,39 @@
 {
   "schema_version": 1,
-  "built_at": "2026-10-13T20:24:47Z",
+  "built_at": "2026-11-24T00:22:08Z",
   "package": {
     "name": "creel",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "display_name": "creel",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "6a3174f68c7664592c583f14b178817e224424c9",
-    "short_commit": "6a3174f",
+    "commit": "4d071518da40b0c66a888d5f4631364ac61a4cec",
+    "short_commit": "4d07151",
     "branch": "main",
     "tags": [],
     "dirty": false,
     "remote_url": "https://github.com/thorwhalen/creel",
-    "commit_url": "https://github.com/thorwhalen/creel/commit/6a3174f68c7664592c583f14b178817e224424c9",
+    "commit_url": "https://github.com/thorwhalen/creel/commit/4d071518da40b0c66a888d5f4631364ac61a4cec",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "thorwhalen/creel",
-    "sha": "6a3174f68c7664592c583f14b178817e224424c9",
+    "sha": "4d071518da40b0c66a888d5f4631364ac61a4cec",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "38462416894",
-    "run_url": "https://github.com/thorwhalen/creel/actions/runs/38462416894",
+    "run_id": "45296388908",
+    "run_url": "https://github.com/thorwhalen/creel/actions/runs/45296388908",
     "server_url": "https://github.com"
   },
   "tools": {
-    "epythet": "0.2.17",
-    "sphinx": "9.1.0",
+    "epythet": "0.2.25",
+    "sphinx": "9.1.1",
     "docutils": "0.22.4",
-    "python": "3.12.15"
+    "python": "3.12.16"
   },
   "config": {
     "theme": "auto",
@@ -55,21 +55,21 @@
     "docs_dir": "docsrc"
   },
   "site": {
-    "modules_documented": 28,
-    "objects_documented": 409
+    "modules_documented": 29,
+    "objects_documented": 419
   },
   "pypi": {
     "checked": true,
-    "latest": "0.1.6",
+    "latest": "0.1.7",
     "relation": "behind",
     "error": null
   },
-  "reproduce": "git clone https://github.com/thorwhalen/creel && cd creel\ngit checkout 6a3174f68c7664592c583f14b178817e224424c9\npip install \"epythet==0.2.17\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/thorwhalen/creel && cd creel\ngit checkout 4d071518da40b0c66a888d5f4631364ac61a4cec\npip install \"epythet==0.2.25\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": false,
     "notes": [
-      "The documented version (0.1.5) is behind the latest release on PyPI (0.1.6): `pip install creel` gives newer code than these docs describe."
+      "The documented version (0.1.6) is behind the latest release on PyPI (0.1.7): `pip install creel` gives newer code than these docs describe."
     ]
   }
 }

@@ -17,7 +17,7 @@ the expected graph share them). Edges are matched by their canonical key
 | [`GraphMatch`](#creel.verify.graph_match.GraphMatch)([spec, attribute_verifiers, ...])   | Score an `actual` `Graph` against an `expected` one (partial credit).   |
 |-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
 
-### *class* creel.verify.graph_match.GraphMatch(spec=None, attribute_verifiers=<factory>, node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
+### *class* creel.verify.graph_match.GraphMatch(spec=None, attribute_verifiers=dict(), node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

@@ -2,18 +2,18 @@
 
 # About this build
 
-This documentation was built on **2026-10-13 20:24 UTC** from commit <a href="https://github.com/thorwhalen/creel/commit/6a3174f68c7664592c583f14b178817e224424c9"><code>6a3174f</code></a> on branch <code>main</code>, for **creel 0.1.5** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-24 00:22 UTC** from commit <a href="https://github.com/thorwhalen/creel/commit/4d071518da40b0c66a888d5f4631364ac61a4cec"><code>4d07151</code></a> on branch <code>main</code>, for **creel 0.1.6** (from <code>pyproject.toml</code>).
 
 #### WARNING
 The documentation and the package may be misaligned:
 
-- The documented version (0.1.5) is behind the latest release on PyPI (0.1.6): `pip install creel` gives newer code than these docs describe.
+- The documented version (0.1.6) is behind the latest release on PyPI (0.1.7): `pip install creel` gives newer code than these docs describe.
 
 ## Source
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/creel/commit/6a3174f68c7664592c583f14b178817e224424c9"><code>6a3174f68c7664592c583f14b178817e224424c9</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/creel/commit/4d071518da40b0c66a888d5f4631364ac61a4cec"><code>4d071518da40b0c66a888d5f4631364ac61a4cec</code></a> |
 | Branch              | <code>main</code>                                                                                                                                       |
 | Tags at this commit | none                                                                                                                                                    |
 | Working tree        | clean                                                                                                                                                   |
@@ -24,18 +24,18 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/creel</code>                                                              |
-| Run          | <a href="https://github.com/thorwhalen/creel/actions/runs/38462416894">38462416894</a>     |
+| Run          | <a href="https://github.com/thorwhalen/creel/actions/runs/45296388908">45296388908</a>     |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>6a3174f68c7664592c583f14b178817e224424c9</code> (in the history of the built commit) |
+| Event commit | <code>4d071518da40b0c66a888d5f4631364ac61a4cec</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.17  |
-| Sphinx   | 9.1.0   |
+| epythet  | 0.2.25  |
+| Sphinx   | 9.1.1   |
 | docutils | 0.22.4  |
-| Python   | 3.12.15 |
+| Python   | 3.12.16 |
 
 ## Configuration as resolved
 
@@ -51,14 +51,14 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/creel/0.1.6/">0.1.6</a>, newer than the documented version (0.1.5).
+Latest release: <a href="https://pypi.org/project/creel/0.1.7/">0.1.7</a>, newer than the documented version (0.1.6).
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/creel && cd creel
-git checkout 6a3174f68c7664592c583f14b178817e224424c9
-pip install "epythet==0.2.17"
+git checkout 4d071518da40b0c66a888d5f4631364ac61a4cec
+pip install "epythet==0.2.25"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 

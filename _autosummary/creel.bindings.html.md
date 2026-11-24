@@ -23,7 +23,7 @@ default); unresolved elements fall back to schema-as-extractor at join time.
 |--------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
 | [`ExtractorBindings`](#creel.bindings.ExtractorBindings)([bindings])                   | A collection of [`ExtractorBinding`](#creel.bindings.ExtractorBinding), looked up by element id. |
 
-### *class* creel.bindings.ExtractorBinding(element_id, strategy=None, config=<factory>, extractor=None, elements=None)
+### *class* creel.bindings.ExtractorBinding(element_id, strategy=None, config=dict(), extractor=None, elements=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

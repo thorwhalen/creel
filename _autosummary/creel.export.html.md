@@ -56,3 +56,8 @@ them downstream by also reifying on the edge id if needed.
 
 * **Return type:**
   [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
+
+### Modules
+
+| [`to_lacing`](creel.export.to_lacing.html.md#module-creel.export.to_lacing)   | creel → lacing: carry a creel annotation into lacing's envelope, source link intact.   |
+|--------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|

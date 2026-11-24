@@ -18,7 +18,7 @@ tables) that concrete renderers build on.
 | [`GraphRenderer`](#creel.render.GraphRenderer)(\*args, \*\*kwargs)               | Render an [`AnnotatedGraph`](#creel.render.AnnotatedGraph) into a [`RenderArtifact`](#creel.render.RenderArtifact). |
 | [`RenderArtifact`](#creel.render.RenderArtifact)(content, media_type[, metadata]) | The output of a renderer: content (str/bytes/dict) + its media type.                                                                              |
 
-### *class* creel.render.AnnotatedGraph(graph, annotations=(), presentation=<factory>)
+### *class* creel.render.AnnotatedGraph(graph, annotations=(), presentation=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -44,7 +44,7 @@ Produce the rendered artifact.
 * **Return type:**
   [`RenderArtifact`](#creel.render.RenderArtifact)
 
-### *class* creel.render.RenderArtifact(content, media_type, metadata=<factory>)
+### *class* creel.render.RenderArtifact(content, media_type, metadata=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

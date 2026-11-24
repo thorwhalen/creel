@@ -1,0 +1,26 @@
+creel.export.to\_lacing
+=======================
+
+.. automodule:: creel.export.to_lacing
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      CREEL_BODY_SCHEMA_URI
+      DEFAULT_TIER
+      CREEL_ID_NAMESPACE
+      ACTIVITY_BY_KIND
+      SOURCE_PATH_PREFIX
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      lacing_id
+      node_path
+      register_creel_body_schema
+      source_selection
+      to_lacing_annotation
+   

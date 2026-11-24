@@ -25,7 +25,7 @@ scores, matched pairs) — the exact shape the whole eval ecosystem converged on
 | [`VerificationContext`](#creel.verify.protocol.VerificationContext)([element_type, spec, ...]) | Optional context a verifier may consult (element schema, services, config). |
 | [`Verifier`](#creel.verify.protocol.Verifier)(\*args, \*\*kwargs)                   | A strategy that scores an `actual` value against an `expected` one.         |
 
-### *class* creel.verify.protocol.Verdict(score, passed, reason='', details=<factory>)
+### *class* creel.verify.protocol.Verdict(score, passed, reason='', details=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -38,7 +38,7 @@ Serialise to a plain dict (reasons retained for audit).
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.verify.protocol.VerificationContext(element_type=None, spec=None, services=<factory>, config=<factory>)
+### *class* creel.verify.protocol.VerificationContext(element_type=None, spec=None, services=dict(), config=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

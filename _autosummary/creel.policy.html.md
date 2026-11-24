@@ -16,7 +16,7 @@ The deterministic extractor families ignore it (they are always
 | [`ExtractionPolicy`](#creel.policy.ExtractionPolicy)([max_retries, ...])   | How the LLM extractor should try, escalate, and flag for review.   |
 |-----------------------------------------------------------------------------------------|--------------------------------------------------------------------|
 
-### *class* creel.policy.ExtractionPolicy(max_retries=2, self_consistency_samples=1, review_below=0.5, overrides=<factory>)
+### *class* creel.policy.ExtractionPolicy(max_retries=2, self_consistency_samples=1, review_below=0.5, overrides=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

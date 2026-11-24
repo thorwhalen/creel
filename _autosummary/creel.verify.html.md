@@ -30,7 +30,7 @@ and the registry. Importing this package registers the built-in verifier kinds.
 | [`GraphMatch`](#creel.verify.GraphMatch)([spec, attribute_verifiers, ...])     | Score an `actual` `Graph` against an `expected` one (partial credit).           |
 | [`LLMRubric`](#creel.verify.LLMRubric)(criterion[, threshold, ...])           | Grade `actual` (optionally against `expected`) by a natural-language criterion. |
 
-### *class* creel.verify.Composite(components=<factory>, threshold=0.5)
+### *class* creel.verify.Composite(components=tuple(), threshold=0.5)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -42,7 +42,7 @@ Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 `score=1.0` iff `actual == expected`; else `0.0`. The auditable default.
 
-### *class* creel.verify.GraphMatch(spec=None, attribute_verifiers=<factory>, node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
+### *class* creel.verify.GraphMatch(spec=None, attribute_verifiers=dict(), node_weight=1.0, edge_weight=1.0, attr_weight=1.0, threshold=0.8)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -98,7 +98,7 @@ Set-based precision/recall/F1 over (canonicalised) collections.
 `key` maps each item to a hashable canonical form before comparing (so dicts
 or fuzzy items can be aligned). `score` is the F1.
 
-### *class* creel.verify.Verdict(score, passed, reason='', details=<factory>)
+### *class* creel.verify.Verdict(score, passed, reason='', details=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -111,7 +111,7 @@ Serialise to a plain dict (reasons retained for audit).
 * **Return type:**
   [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`Any`](https://docs.python.org/3/library/typing.html#typing.Any)]
 
-### *class* creel.verify.VerificationContext(element_type=None, spec=None, services=<factory>, config=<factory>)
+### *class* creel.verify.VerificationContext(element_type=None, spec=None, services=dict(), config=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

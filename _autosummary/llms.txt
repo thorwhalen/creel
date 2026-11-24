@@ -11,6 +11,7 @@
 - [creel.evaluation](creel.evaluation.html.md): The evaluation runner — score an extraction corpus with pluggable verifiers.
 - [creel.evidence](creel.evidence.html.md): Evidence — the separable per-element audit record (provenance + grounding + confidence).
 - [creel.export](creel.export.html.md): Export adapters — interchange formats for the canonical graph (EPIC 3.4 / 8.4).
+- [creel.export.to_lacing](creel.export.to_lacing.html.md): creel → lacing: carry a creel annotation into lacing’s envelope, source link intact.
 - [creel.facade](creel.facade.html.md): The facade: &#96;extract(sources, graph_spec, extractors) -&gt; graph&#96;.
 - [creel.graph](creel.graph.html.md): creel graph layer: the in-memory LPG and its canonical JSON serialisation.
 - [creel.graph.canonical](creel.graph.canonical.html.md): Canonical JSON for creel graphs — the deterministic, versioned on-disk truth.

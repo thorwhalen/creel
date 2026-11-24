@@ -13,3 +13,10 @@ creel.export
       to_cypher
       to_turtle
    
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   to_lacing

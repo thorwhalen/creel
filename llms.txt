@@ -13,6 +13,7 @@
 - [creel.evaluation](_autosummary/creel.evaluation.html.md): The evaluation runner — score an extraction corpus with pluggable verifiers.
 - [creel.evidence](_autosummary/creel.evidence.html.md): Evidence — the separable per-element audit record (provenance + grounding + confidence).
 - [creel.export](_autosummary/creel.export.html.md): Export adapters — interchange formats for the canonical graph (EPIC 3.4 / 8.4).
+- [creel.export.to_lacing](_autosummary/creel.export.to_lacing.html.md): creel → lacing: carry a creel annotation into lacing’s envelope, source link intact.
 - [creel.facade](_autosummary/creel.facade.html.md): The facade: &#96;extract(sources, graph_spec, extractors) -&gt; graph&#96;.
 - [creel.graph](_autosummary/creel.graph.html.md): creel graph layer: the in-memory LPG and its canonical JSON serialisation.
 - [creel.graph.canonical](_autosummary/creel.graph.canonical.html.md): Canonical JSON for creel graphs — the deterministic, versioned on-disk truth.
@@ -36,7 +37,7 @@
 - [creel.verify.rubric](_autosummary/creel.verify.rubric.html.md): &#96;llm_rubric&#96; — a verifier defined purely by natural-language instructions.
 - [creel.view](_autosummary/creel.view.html.md): Projections of the graph into views — “one model, many views” (decision D15).
 - [For AI agents](ai-agents.html.md): &#96;creel&#96; ships artifacts for coding agents alongside its code. This page lists
-- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-10-13 20:24 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-24 00:22 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
 
 ## Optional
 

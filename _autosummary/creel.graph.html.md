@@ -21,7 +21,7 @@ codec ([`creel.graph.canonical`](creel.graph.canonical.html.md#module-creel.grap
 | [`Graph`](#creel.graph.Graph)()                                        | A labeled property (multi-)graph with stable ids on nodes and edges.           |
 | [`Node`](#creel.graph.Node)(id, types[, attributes])                  | An immutable view of a graph node: its id, type label(s), and attributes.      |
 
-### *class* creel.graph.Edge(id, source, target, type, attributes=<factory>)
+### *class* creel.graph.Edge(id, source, target, type, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
@@ -148,7 +148,7 @@ Return a copy of the underlying `networkx.MultiDiGraph`.
 * **Return type:**
   `MultiDiGraph`
 
-### *class* creel.graph.Node(id, types, attributes=<factory>)
+### *class* creel.graph.Node(id, types, attributes=dict())
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

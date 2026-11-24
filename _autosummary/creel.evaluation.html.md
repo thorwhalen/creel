@@ -40,7 +40,7 @@ Whether the case met its verifier’s threshold.
 
 The case’s normalised score in `[0, 1]`.
 
-### *class* creel.evaluation.CorpusCase(name, sources, spec, bindings, expected_graph, verifier=None, attribute_verifiers=<factory>, services=<factory>, on_missing_binding='skip')
+### *class* creel.evaluation.CorpusCase(name, sources, spec, bindings, expected_graph, verifier=None, attribute_verifiers=dict(), services=dict(), on_missing_binding='skip')
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 

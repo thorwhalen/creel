@@ -23,7 +23,7 @@ Each kind is a callable verifier; each is registered so a binding can name it.
 | [`SemanticSimilarity`](#creel.verify.kinds.SemanticSimilarity)([threshold])                  | Similarity of free text.                                                     |
 | [`SetMatch`](#creel.verify.kinds.SetMatch)([key, threshold])                       | Set-based precision/recall/F1 over (canonicalised) collections.              |
 
-### *class* creel.verify.kinds.Composite(components=<factory>, threshold=0.5)
+### *class* creel.verify.kinds.Composite(components=tuple(), threshold=0.5)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
